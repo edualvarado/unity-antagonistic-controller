@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AntagonisticController : MonoBehaviour
+public class AntagonisticController
 {
-
     public float _kI, _kD, _kPL, _kPH;
     public float _PL, _PH, _P, _I, _D;
     public float _previousError;
@@ -35,5 +34,4 @@ public class AntagonisticController : MonoBehaviour
 
         return _PL * _kPL + _PH * _kPH + _I * _kI + _D * _kD;
     }
-
 }

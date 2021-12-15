@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PDController : MonoBehaviour
+public class PDController
 {
-
     public float _kI, _kD, _kP;
     public float _P, _I, _D;
     public float _previousError;
@@ -30,5 +29,4 @@ public class PDController : MonoBehaviour
 
         return _P * _kP + _I * _kI + _D * _kD;
     }
-
 }

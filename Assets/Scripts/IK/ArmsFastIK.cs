@@ -1,9 +1,9 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class FastIKFabric : MonoBehaviour
+public class ArmsFastIK : MonoBehaviour
 {
     /// <summary>
     /// Chain length of bones
@@ -119,7 +119,7 @@ public class FastIKFabric : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(activateIK)
+        if (activateIK)
         {
             ResolveIK();
         }
@@ -133,11 +133,11 @@ public class FastIKFabric : MonoBehaviour
 
     public void SetTarget(Vector3 pos, Vector3 normal, float reactionTime, bool isMovingInitially, int hand)
     {
-        if(hand == 0)
+        if (hand == 0)
         {
             rotationToNormal = Quaternion.LookRotation(new Vector3(-normal.z, 0, normal.x), Vector3.Cross(new Vector3(-normal.z, 0, normal.x), normal));
         }
-        else if(hand == 1)
+        else if (hand == 1)
         {
             // TODO: FIX HAND ROTATION
             rotationToNormal = Quaternion.LookRotation(new Vector3(-normal.z, 0, -normal.x), Vector3.Cross(new Vector3(-normal.z, 0, -normal.x), normal));

@@ -2153,8 +2153,9 @@ MonoBehaviour:
   interpolateLeftArm: 1
   interpolateRightArm: 1
   lowerInterpolation: 0
-  fixArmsToKinematic: 0
   blendingFactorSpine: 0
+  fixLeftArmKinematic: 0
+  fixRightArmKinematic: 0
 --- !u!1 &6315175421000089941
 GameObject:
   m_ObjectHideFlags: 0
