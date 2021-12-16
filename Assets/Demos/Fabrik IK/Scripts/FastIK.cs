@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class FastIKFabric : MonoBehaviour
+public class FastIK : MonoBehaviour
 {
     /// <summary>
     /// Chain length of bones
@@ -110,116 +110,12 @@ public class FastIKFabric : MonoBehaviour
 
     private void Update()
     {
-        if (!activateIK)
-        {
-            SetTarget(this.transform);
-        }
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if(activateIK)
-        {
-            ResolveIK();
-        }
-    }
-
-
-    public void SetTarget(Transform target)
-    {
-        Target.transform.position = target.transform.position;
-    }
-
-    public void SetTarget(Vector3 pos, Vector3 normal, float reactionTime, bool isMovingInitially, int hand)
-    {
-        if(hand == 0)
-        {
-            rotationToNormal = Quaternion.LookRotation(new Vector3(-normal.z, 0, normal.x), Vector3.Cross(new Vector3(-normal.z, 0, normal.x), normal));
-        }
-        else if(hand == 1)
-        {
-            // TODO: FIX HAND ROTATION
-            rotationToNormal = Quaternion.LookRotation(new Vector3(-normal.z, 0, -normal.x), Vector3.Cross(new Vector3(-normal.z, 0, -normal.x), normal));
-        }
-
-        if (isMovingInitially)
-            StartCoroutine(MoveHand(pos, rotationToNormal, reactionTime));
-        else
-        {
-            Target.transform.position = pos;
-            Target.transform.rotation = rotationToNormal;
-        }
-    }
-
-    public void SetTargetOrigin(Vector3 pos, Quaternion rot, float reactionTime, bool isReturningInitially)
-    {
-        /*
-        if (isReturningInitially)
-            StartCoroutine(MoveHandOrigin(pos, rot, reactionTime));
-        */
-
-        // For the moment, just put back instantaneously
-        activateIK = false;
-
-    }
-
-    /// <summary>
-    /// Coroutine that performs the motion part.
-    /// </summary>
-    /// <param name="endPos"></param>
-    /// <param name="endRot"></param>
-    /// <param name="moveTime"></param>
-    /// <returns></returns>
-    IEnumerator MoveHand(Vector3 endPos, Quaternion endRot, float moveTime)
-    {
-        // Store the initial, current position and rotation for the interpolation.
-        Vector3 startPos = Target.transform.position;
-        Quaternion startRot = Target.transform.rotation;
-
-        // Initialize the time.
-        float timeElapsed = 0;
-
-        do
-        {
-            timeElapsed += Time.deltaTime;
-            float normalizedTime = timeElapsed / moveTime;
-
-            // We could also apply some animation curve(e.g.Easing.EaseInOutCubic) to make the foot go smoother.
-            //normalizedTime = Easing.EaseInOutCubic(normalizedTime);
-
-            Target.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime);
-            Target.transform.rotation = Quaternion.Slerp(startRot, endRot, normalizedTime);
-
-            yield return null;
-        }
-        while (timeElapsed < moveTime);
-    }
-
-    IEnumerator MoveHandOrigin(Vector3 endPos, Quaternion endRot, float moveTime)
-    {
-
-        // Store the initial, current position and rotation for the interpolation.
-        Vector3 startPos = Target.transform.position;
-        Quaternion startRot = Target.transform.rotation;
-
-        // Initialize the time.
-        float timeElapsed = 0;
-
-        do
-        {
-            timeElapsed += Time.deltaTime;
-            float normalizedTime = timeElapsed / moveTime;
-
-            Target.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime);
-            Target.transform.rotation = Quaternion.Slerp(startRot, endRot, normalizedTime);
-
-            yield return null;
-        }
-        while (timeElapsed < moveTime);
-
-        // Once the coroutine finishes, deactivate IK for this hand.
-        activateIK = false;
+        ResolveIK();
     }
 
     private void ResolveIK()
