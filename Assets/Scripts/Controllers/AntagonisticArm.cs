@@ -6,6 +6,7 @@ public class AntagonisticArm : MonoBehaviour
 {
     [Header("Antagonistic - X")]
     public bool applyTorqueX;
+    public float torqueAppliedX;
     public float pLX;
     public float pHX;
     public float iX;
@@ -19,6 +20,7 @@ public class AntagonisticArm : MonoBehaviour
 
     [Header("Antagonistic - Y")]
     public bool applyTorqueY;
+    public float torqueAppliedY;
     public float pLY;
     public float pHY;
     public float iY;
@@ -30,11 +32,28 @@ public class AntagonisticArm : MonoBehaviour
     public float eqAngleY;
     private AntagonisticController _AntPIDY;
 
+    [Header("Antagonistic - Z")]
+    public bool applyTorqueZ;
+    public float torqueAppliedZ;
+    public float pLZ;
+    public float pHZ;
+    public float iZ;
+    public float dZ;
+    public float minAngleZ;
+    public float maxAngleZ;
+    public float slopeZ;
+    public float interceptZ;
+    public float eqAngleZ;
+    private AntagonisticController _AntPIDZ; 
+
     [Header("Debug")]
     public Vector3 currentAngle;
     public Rigidbody _rbAnt;
     public ConfigurableJoint _jointAnt;
     public Transform sphereAnt;
+    public RelaxBar barX;
+    public RelaxBar barY;
+    public RelaxBar barZ;
 
     [Header("Experimental")]
     public Vector3 distance3D;
@@ -42,6 +61,7 @@ public class AntagonisticArm : MonoBehaviour
     public Vector3 externalForce;
     public float externalTorqueMagnitudeX;
     public Vector3 externalTorqueVector;
+    public bool applyGravity;
     public Vector3 gravityAcc;
     public float gravityTorqueMagnitudeX;
     public Vector3 gravityTorqueVector;
@@ -51,6 +71,12 @@ public class AntagonisticArm : MonoBehaviour
     {
         _AntPIDX = new AntagonisticController(pLX, pHX, iX, dX);
         _AntPIDY = new AntagonisticController(pLY, pHY, iY, dY);
+        _AntPIDZ = new AntagonisticController(pLZ, pHZ, iZ, dZ);
+
+        barX.SetMaxRelax(3000f);
+        barY.SetMaxRelax(3000f);
+        barZ.SetMaxRelax(3000f);
+
     }
 
     // Update is called once per frame
@@ -93,6 +119,16 @@ public class AntagonisticArm : MonoBehaviour
         _AntPIDX.KD = dX;
         _AntPIDY.KI = iY;
         _AntPIDY.KD = dY;
+        _AntPIDZ.KI = iZ;
+        _AntPIDZ.KD = dZ;
+
+        // Set bars
+        barX.SetRelax((pLX + pHX));
+        barY.SetRelax((pLY + pHY));
+        barZ.SetRelax((pLZ + pHZ));
+
+        // Enable/Unable Gravity
+        _rbAnt.useGravity = applyGravity;
 
         // Get current joint angle
         currentAngle = jointRotation(_jointAnt);
@@ -120,16 +156,27 @@ public class AntagonisticArm : MonoBehaviour
         // Now, we create a controller for each axis. Each will contain an intercept and slope.
         // Here, we define the torques that we expect the controller to counteract.
 
-        Debug.Log("gravityTorqueVector.x: " + gravityTorqueVector.x);
-        Debug.Log("the other: " + _rbAnt.mass * Physics.gravity.y * Vector3.Distance(sphereAnt.position, _rbAnt.worldCenterOfMass) * Mathf.Sin((90 - currentAngle.x) * Mathf.Deg2Rad));
-
         // Put - because Unity uses left-hand rule. I leave the Debugs lines with left hand.
         interceptX = (- gravityTorqueVector.x - externalTorqueVector.x) / (maxAngleX - eqAngleX);
         slopeX = (minAngleX - eqAngleX) / (eqAngleX - maxAngleX);
 
+        interceptY = (-gravityTorqueVector.y - externalTorqueVector.y) / (maxAngleY - eqAngleY);
+        slopeY = (minAngleY - eqAngleY) / (eqAngleY - maxAngleY);
+
+        interceptZ = (-gravityTorqueVector.z - externalTorqueVector.z) / (maxAngleZ - eqAngleZ);
+        slopeZ = (minAngleZ - eqAngleZ) / (eqAngleZ - maxAngleZ);
+
         pHX = pLX * slopeX + interceptX;
         _AntPIDX.KPH = pHX;
         _AntPIDX.KPL = pLX;
+
+        pHY = pLY * slopeY + interceptY;
+        _AntPIDY.KPH = pHY;
+        _AntPIDY.KPL = pLY;
+
+        pHZ = pLZ * slopeZ + interceptZ;
+        _AntPIDZ.KPH = pHZ;
+        _AntPIDZ.KPL = pLZ;
 
         float angleLowErrorX = minAngleX - currentAngle.x;
         float angleHighErrorX = maxAngleX - currentAngle.x;
@@ -137,16 +184,48 @@ public class AntagonisticArm : MonoBehaviour
         //Debug.Log("angleLowErrorX: " + angleLowErrorX);
         //Debug.Log("angleHighErrorX: " + angleHighErrorX);
 
-        float torqueAppliedX = _AntPIDX.GetOutput(angleLowErrorX, angleHighErrorX, Time.fixedDeltaTime);
-        //Debug.Log("torqueApplied in Ant: " + torqueApplied);
+        float angleLowErrorY = minAngleY - currentAngle.y;
+        float angleHighErrorY = maxAngleY - currentAngle.y;
+        //Debug.Log("currentAngle.y: " + currentAngle.y);
+        //Debug.Log("angleLowErrorY: " + angleLowErrorY);
+        //Debug.Log("angleHighErrorY: " + angleHighErrorY);
+
+        float angleLowErrorZ = minAngleZ - currentAngle.z;
+        float angleHighErrorZ = maxAngleZ - currentAngle.z;
+        //Debug.Log("currentAngle.y: " + currentAngle.y);
+        //Debug.Log("angleLowErrorY: " + angleLowErrorY);
+        //Debug.Log("angleHighErrorY: " + angleHighErrorY);
+
+        torqueAppliedX = _AntPIDX.GetOutput(angleLowErrorX, angleHighErrorX, Time.fixedDeltaTime);
+        //Debug.Log("torqueApplied in Ant: " + torqueAppliedX);
         //Debug.Log("Angle Gravity Force in Ant: " + (90f + _joint.angle));
         //Debug.Log("Gravity in Ant: " + _rb.mass * Physics.gravity.y * Vector3.Distance(_joint.connectedAnchor, _rb.worldCenterOfMass) * Mathf.Sin((90 + _jointAnt.angle) * Mathf.Deg2Rad));
         //Debug.Log("---------------");
         //Debug.Log("Difference in Ant: " + (_rbAnt.mass * Physics.gravity.y * Vector3.Distance(_jointAnt.connectedAnchor, _rbAnt.worldCenterOfMass) * Mathf.Sin((90 + _jointAnt.angle) * Mathf.Deg2Rad) - torqueApplied));
 
-        if(applyTorqueX)
+        // CAUTION -> Had to switch High and Low errors...
+        torqueAppliedY = _AntPIDY.GetOutput(angleHighErrorY, angleLowErrorY, Time.fixedDeltaTime);
+        //Debug.Log("torqueApplied in Ant: " + torqueAppliedY);
+        //Debug.Log("Angle Gravity Force in Ant: " + (90f + _joint.angle));
+        //Debug.Log("Gravity in Ant: " + _rb.mass * Physics.gravity.y * Vector3.Distance(_joint.connectedAnchor, _rb.worldCenterOfMass) * Mathf.Sin((90 + _jointAnt.angle) * Mathf.Deg2Rad));
+        //Debug.Log("---------------");
+        //Debug.Log("Difference in Ant: " + (_rbAnt.mass * Physics.gravity.y * Vector3.Distance(_jointAnt.connectedAnchor, _rbAnt.worldCenterOfMass) * Mathf.Sin((90 + _jointAnt.angle) * Mathf.Deg2Rad) - torqueApplied));
+
+        torqueAppliedZ = _AntPIDZ.GetOutput(angleHighErrorZ, angleLowErrorZ, Time.fixedDeltaTime);
+        //Debug.Log("torqueApplied in Ant: " + torqueAppliedY);
+        //Debug.Log("Angle Gravity Force in Ant: " + (90f + _joint.angle));
+        //Debug.Log("Gravity in Ant: " + _rb.mass * Physics.gravity.y * Vector3.Distance(_joint.connectedAnchor, _rb.worldCenterOfMass) * Mathf.Sin((90 + _jointAnt.angle) * Mathf.Deg2Rad));
+        //Debug.Log("---------------");
+        //Debug.Log("Difference in Ant: " + (_rbAnt.mass * Physics.gravity.y * Vector3.Distance(_jointAnt.connectedAnchor, _rbAnt.worldCenterOfMass) * Mathf.Sin((90 + _jointAnt.angle) * Mathf.Deg2Rad) - torqueApplied));
+
+        if (applyTorqueX)
             _rbAnt.AddRelativeTorque(torqueAppliedX * Vector3.right);
 
+        if (applyTorqueY)
+            _rbAnt.AddRelativeTorque(torqueAppliedY * Vector3.forward);
+
+        if (applyTorqueZ)
+            _rbAnt.AddRelativeTorque(torqueAppliedZ * Vector3.up);
     }
 
     public Quaternion getJointRotation(ConfigurableJoint joint)
