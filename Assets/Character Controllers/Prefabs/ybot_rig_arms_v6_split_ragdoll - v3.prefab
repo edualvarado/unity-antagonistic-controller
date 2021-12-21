@@ -69,7 +69,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3092514555677672677}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -680,7 +680,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3092514555815212891}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3425,6 +3425,7 @@ GameObject:
   - component: {fileID: 3092514557077734545}
   - component: {fileID: 3092514557077734550}
   - component: {fileID: 2011953607276263716}
+  - component: {fileID: 5999695423489722657}
   m_Layer: 8
   m_Name: mixamorig:RightArm
   m_TagString: Untagged
@@ -3588,6 +3589,64 @@ FixedJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &5999695423489722657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3092514557077734554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54ff4427a385d0842b6ee5af527aabf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applyTorqueX: 0
+  torqueAppliedX: 0
+  pLX: 0
+  pHX: 0
+  iX: 0
+  dX: 0
+  minAngleX: 0
+  maxAngleX: 0
+  slopeX: 0
+  interceptX: 0
+  eqAngleX: 0
+  applyTorqueY: 0
+  torqueAppliedY: 0
+  pLY: 0
+  pHY: 0
+  iY: 0
+  dY: 0
+  minAngleY: 0
+  maxAngleY: 0
+  slopeY: 0
+  interceptY: 0
+  eqAngleY: 0
+  applyTorqueZ: 0
+  torqueAppliedZ: 0
+  pLZ: 0
+  pHZ: 0
+  iZ: 0
+  dZ: 0
+  minAngleZ: 0
+  maxAngleZ: 0
+  slopeZ: 0
+  interceptZ: 0
+  eqAngleZ: 0
+  currentAngle: {x: 0, y: 0, z: 0}
+  _rbAnt: {fileID: 0}
+  _jointAnt: {fileID: 0}
+  sphereAnt: {fileID: 0}
+  distance3D: {x: 0, y: 0, z: 0}
+  applyExternalForce: 0
+  externalForce: {x: 0, y: 0, z: 0}
+  externalTorqueMagnitudeX: 0
+  externalTorqueVector: {x: 0, y: 0, z: 0}
+  applyGravity: 0
+  gravityAcc: {x: 0, y: 0, z: 0}
+  gravityTorqueMagnitudeX: 0
+  gravityTorqueVector: {x: 0, y: 0, z: 0}
 --- !u!1 &3092514557192630459
 GameObject:
   m_ObjectHideFlags: 0

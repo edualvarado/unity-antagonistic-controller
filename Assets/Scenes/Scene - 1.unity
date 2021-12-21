@@ -223,11 +223,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3092514555941674830, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
   m_PrefabInstance: {fileID: 326928771356862519}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &79551454 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3092514557077734554, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-  m_PrefabInstance: {fileID: 326928771356862519}
-  m_PrefabAsset: {fileID: 0}
 --- !u!54 &79551455 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 3092514557077734548, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
@@ -238,32 +233,6 @@ ConfigurableJoint:
   m_CorrespondingSourceObject: {fileID: 3092514557077734550, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
   m_PrefabInstance: {fileID: 326928771356862519}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &79551459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79551454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 878c2eb53803bb444a4dffc53afa964c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pL: 0
-  pH: 0
-  i: 0
-  d: 0
-  minAngle: -30
-  maxAngle: 30
-  currentAngle: {x: 0, y: 0, z: 0}
-  slope: 0
-  intercept: 0
-  eqAngle: 0
-  _rbAnt: {fileID: 79551455}
-  _jointAnt: {fileID: 79551456}
-  sphereAnt: {fileID: 24281788}
-  torqueApplied: 0
 --- !u!1 &132957507
 GameObject:
   m_ObjectHideFlags: 3
@@ -855,7 +824,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556606207}
-  m_LocalRotation: {x: 0.09056765, y: -0.7643994, z: 0.110101216, w: 0.62878364}
+  m_LocalRotation: {x: 0.09056764, y: -0.7643994, z: 0.11010123, w: 0.6287836}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1801,6 +1770,84 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3292f5d9c7e7f9c4986836952855ad7f, type: 3}
+--- !u!1 &1202285162 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3092514556177529418, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
+  m_PrefabInstance: {fileID: 326928771356862519}
+  m_PrefabAsset: {fileID: 0}
+--- !u!153 &1202285163 stripped
+ConfigurableJoint:
+  m_CorrespondingSourceObject: {fileID: 3092514556177529415, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
+  m_PrefabInstance: {fileID: 326928771356862519}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1202285165 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 3092514556177529414, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
+  m_PrefabInstance: {fileID: 326928771356862519}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1202285166 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3092514556177529413, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
+  m_PrefabInstance: {fileID: 326928771356862519}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1202285167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202285162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54ff4427a385d0842b6ee5af527aabf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applyTorqueX: 0
+  torqueAppliedX: 0
+  pLX: 60
+  pHX: 100
+  iX: 0
+  dX: 100
+  minAngleX: -30
+  maxAngleX: 30
+  slopeX: 0
+  interceptX: 0
+  eqAngleX: 0
+  applyTorqueY: 0
+  torqueAppliedY: 0
+  pLY: 60
+  pHY: 100
+  iY: 0
+  dY: 100
+  minAngleY: -30
+  maxAngleY: 30
+  slopeY: 0
+  interceptY: 0
+  eqAngleY: 0
+  applyTorqueZ: 0
+  torqueAppliedZ: 0
+  pLZ: 60
+  pHZ: 100
+  iZ: 0
+  dZ: 100
+  minAngleZ: -30
+  maxAngleZ: 30
+  slopeZ: 0
+  interceptZ: 0
+  eqAngleZ: 0
+  currentAngle: {x: 0, y: 0, z: 0}
+  _rbAnt: {fileID: 1202285165}
+  _jointAnt: {fileID: 1202285163}
+  sphereAnt: {fileID: 1202285166}
+  distance3D: {x: 0, y: 0, z: 0}
+  applyExternalForce: 0
+  externalForce: {x: 0, y: 0, z: 0}
+  externalTorqueMagnitudeX: 0
+  externalTorqueVector: {x: 0, y: 0, z: 0}
+  applyGravity: 0
+  gravityAcc: {x: 0, y: 0, z: 0}
+  gravityTorqueMagnitudeX: 0
+  gravityTorqueVector: {x: 0, y: 0, z: 0}
 --- !u!1 &1222499801 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7430153439370299418, guid: 2c1b2992ae767784c8c782f02206eb13, type: 3}
@@ -3001,14 +3048,6 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 6695905180708791425}
-    - target: {fileID: 3092514555677672679, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3092514555815212885, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3092514556147115353, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
       propertyPath: m_ConnectedBody
       value: 
@@ -3061,7 +3100,40 @@ PrefabInstance:
       propertyPath: m_Name
       value: ybot_rig_arms_v6_split_ragdoll - v3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
+      propertyPath: dZ
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
+      propertyPath: pHZ
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
+      propertyPath: pLZ
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
+      propertyPath: _rbAnt
+      value: 
+      objectReference: {fileID: 79551455}
+    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
+      propertyPath: _jointAnt
+      value: 
+      objectReference: {fileID: 79551456}
+    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
+      propertyPath: maxAngleZ
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
+      propertyPath: minAngleZ
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
+      propertyPath: sphereAnt
+      value: 
+      objectReference: {fileID: 24281788}
+    m_RemovedComponents:
+    - {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
 --- !u!1001 &581516833910153581
 PrefabInstance:
