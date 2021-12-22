@@ -218,21 +218,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &24281788 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3092514555941674830, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-  m_PrefabInstance: {fileID: 326928771356862519}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &79551455 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 3092514557077734548, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-  m_PrefabInstance: {fileID: 326928771356862519}
-  m_PrefabAsset: {fileID: 0}
---- !u!153 &79551456 stripped
-ConfigurableJoint:
-  m_CorrespondingSourceObject: {fileID: 3092514557077734550, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-  m_PrefabInstance: {fileID: 326928771356862519}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &132957507
 GameObject:
   m_ObjectHideFlags: 3
@@ -1770,84 +1755,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3292f5d9c7e7f9c4986836952855ad7f, type: 3}
---- !u!1 &1202285162 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3092514556177529418, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-  m_PrefabInstance: {fileID: 326928771356862519}
-  m_PrefabAsset: {fileID: 0}
---- !u!153 &1202285163 stripped
-ConfigurableJoint:
-  m_CorrespondingSourceObject: {fileID: 3092514556177529415, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-  m_PrefabInstance: {fileID: 326928771356862519}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &1202285165 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 3092514556177529414, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-  m_PrefabInstance: {fileID: 326928771356862519}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1202285166 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3092514556177529413, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-  m_PrefabInstance: {fileID: 326928771356862519}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1202285167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1202285162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54ff4427a385d0842b6ee5af527aabf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  applyTorqueX: 0
-  torqueAppliedX: 0
-  pLX: 60
-  pHX: 100
-  iX: 0
-  dX: 100
-  minAngleX: -30
-  maxAngleX: 30
-  slopeX: 0
-  interceptX: 0
-  eqAngleX: 0
-  applyTorqueY: 0
-  torqueAppliedY: 0
-  pLY: 60
-  pHY: 100
-  iY: 0
-  dY: 100
-  minAngleY: -30
-  maxAngleY: 30
-  slopeY: 0
-  interceptY: 0
-  eqAngleY: 0
-  applyTorqueZ: 0
-  torqueAppliedZ: 0
-  pLZ: 60
-  pHZ: 100
-  iZ: 0
-  dZ: 100
-  minAngleZ: -30
-  maxAngleZ: 30
-  slopeZ: 0
-  interceptZ: 0
-  eqAngleZ: 0
-  currentAngle: {x: 0, y: 0, z: 0}
-  _rbAnt: {fileID: 1202285165}
-  _jointAnt: {fileID: 1202285163}
-  sphereAnt: {fileID: 1202285166}
-  distance3D: {x: 0, y: 0, z: 0}
-  applyExternalForce: 0
-  externalForce: {x: 0, y: 0, z: 0}
-  externalTorqueMagnitudeX: 0
-  externalTorqueVector: {x: 0, y: 0, z: 0}
-  applyGravity: 0
-  gravityAcc: {x: 0, y: 0, z: 0}
-  gravityTorqueMagnitudeX: 0
-  gravityTorqueVector: {x: 0, y: 0, z: 0}
 --- !u!1 &1222499801 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7430153439370299418, guid: 2c1b2992ae767784c8c782f02206eb13, type: 3}
@@ -3100,40 +3007,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: ybot_rig_arms_v6_split_ragdoll - v3
       objectReference: {fileID: 0}
-    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-      propertyPath: dZ
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-      propertyPath: pHZ
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-      propertyPath: pLZ
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-      propertyPath: _rbAnt
-      value: 
-      objectReference: {fileID: 79551455}
-    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-      propertyPath: _jointAnt
-      value: 
-      objectReference: {fileID: 79551456}
-    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-      propertyPath: maxAngleZ
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-      propertyPath: minAngleZ
-      value: -30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
-      propertyPath: sphereAnt
-      value: 
-      objectReference: {fileID: 24281788}
-    m_RemovedComponents:
-    - {fileID: 5999695423489722657, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab5632a9acf511b49917849a284eddb0, type: 3}
 --- !u!1001 &581516833910153581
 PrefabInstance:
