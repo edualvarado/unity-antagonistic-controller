@@ -1873,7 +1873,7 @@ ConfigurableJoint:
   m_YMotion: 1
   m_ZMotion: 1
   m_AngularXMotion: 1
-  m_AngularYMotion: 0
+  m_AngularYMotion: 1
   m_AngularZMotion: 0
   m_LinearLimitSpring:
     spring: 0
@@ -1979,21 +1979,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   applyTorqueX: 0
   torqueAppliedX: 0
-  pLX: 150
+  pLX: 0.05
   pHX: 0
   iX: 0
-  dX: 1
-  minAngleX: -30
-  maxAngleX: 30
+  dX: 0.01
+  minAngleX: 0
+  maxAngleX: 180
   slopeX: 0
   interceptX: 0
   eqAngleX: 0
   applyTorqueY: 0
   torqueAppliedY: 0
-  pLY: 150
+  pLY: 0.05
   pHY: 0
   iY: 0
-  dY: 1
+  dY: 0.01
   minAngleY: -30
   maxAngleY: 30
   slopeY: 0
@@ -2001,10 +2001,10 @@ MonoBehaviour:
   eqAngleY: 0
   applyTorqueZ: 0
   torqueAppliedZ: 0
-  pLZ: 150
+  pLZ: 0.05
   pHZ: 0
   iZ: 0
-  dZ: 1
+  dZ: 0.01
   minAngleZ: -30
   maxAngleZ: 30
   slopeZ: 0
@@ -2015,7 +2015,7 @@ MonoBehaviour:
   printTorqueY: 0
   printTorqueZ: 0
   currentAngle: {x: 0, y: 0, z: 0}
-  currentAngle2: {x: 0, y: 0, z: 0}
+  currentAngleQuaternion: {x: 0, y: 0, z: 0, w: 0}
   _rbAnt: {fileID: 3092514556177529414}
   _jointAnt: {fileID: 3092514556177529415}
   sphereAnt: {fileID: 3092514556177529413}
@@ -3528,7 +3528,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!136 &3092514557077734545
 CapsuleCollider:
   m_ObjectHideFlags: 0

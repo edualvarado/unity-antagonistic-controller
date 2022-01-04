@@ -52,8 +52,7 @@ public class AntagonisticArmComplexV2 : MonoBehaviour
     public bool printTorqueY = false;
     public bool printTorqueZ = false;
     public Vector3 currentAngle;
-    public Vector3 currentAngle2;
-    public Vector3 currentAngle3;
+    public Quaternion currentAngleQuaternion;
     public Rigidbody _rbAnt;
     public ConfigurableJoint _jointAnt;
     public Transform sphereAnt;
@@ -70,6 +69,11 @@ public class AntagonisticArmComplexV2 : MonoBehaviour
     public float gravityTorqueMagnitudeX;
     public Vector3 gravityTorqueVector;
     public Vector3 gravityTorqueVectorLocal;
+
+    private void Awake()
+    {
+        currentAngle = transform.localEulerAngles;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -124,34 +128,6 @@ public class AntagonisticArmComplexV2 : MonoBehaviour
         }
     }
 
-    public static Vector3 GetSignedEulerAngles(Vector3 angles)
-    {
-        Vector3 signedAngles = Vector3.zero;
-        for (int i = 0; i < 3; i++)
-        {
-            signedAngles[i] = (angles[i] + 180f) % 360f - 180f;
-        }
-        return -signedAngles;
-    }
-
-    public float CalcEulerSafeX(float x)
-    {
-        if (x >= -90 && x <= 90)
-            return x;
-        x = x % 180;
-        if (x > 0)
-            x -= 180;
-        else
-            x += 180;
-        return x;
-    }
-
-    public Vector3 EulerSafeX(Vector3 eulerAngles)
-    {
-        eulerAngles.x = CalcEulerSafeX(eulerAngles.x);
-        return eulerAngles;
-    }
-
     private void FixedUpdate()
     {
         // Controller Gains
@@ -165,14 +141,16 @@ public class AntagonisticArmComplexV2 : MonoBehaviour
         // Enable/Unable Gravity
         _rbAnt.useGravity = applyGravity;
 
-        // Get current joint angle
+        //// TODO ////
+        
+        // Get current joint angle -> ERROR GIMBAL LOCK
         currentAngle = jointRotation(_jointAnt);
-        //currentAngle2 = GetSignedEulerAngles(transform.rotation.eulerAngles);
-        //currentAngle3 = EulerSafeX(currentAngle);
         Debug.Log("currentAngle: " + currentAngle);
-        //Debug.Log("currentAngle2: " + currentAngle2);
-        //Debug.Log("currentAngle3: " + currentAngle3);
 
+        currentAngleQuaternion = jointRotationQuaternion(_jointAnt);
+        Debug.Log("currentAngleQuaternion: " + currentAngleQuaternion);
+
+        //////////////
 
         // Distance from root to the RB COM
         distance3D = _rbAnt.worldCenterOfMass - transform.position;
@@ -210,6 +188,7 @@ public class AntagonisticArmComplexV2 : MonoBehaviour
 
             float angleLowErrorX = minAngleX - currentAngle.x;
             float angleHighErrorX = maxAngleX - currentAngle.x;
+
             if (printTorqueX)
             {
                 Debug.Log("currentAngle.x: " + currentAngle.x);
@@ -297,15 +276,8 @@ public class AntagonisticArmComplexV2 : MonoBehaviour
         //if (applyTorqueY)
         //    _rbAnt.AddRelativeTorque(torqueAppliedY * Vector3.forward);
 
-        //if (applyTorqueZ)
-        //    _rbAnt.AddRelativeTorque(torqueAppliedZ * Vector3.forward);
-    }
-
-    public Quaternion getJointRotation(ConfigurableJoint joint)
-    {
-        //Debug.Log("joint.axis: " + joint.axis);
-        //Debug.Log("joint.connectedBody.transform.rotation.eulerAngles: " + joint.connectedBody.transform.rotation.eulerAngles);
-        return (Quaternion.FromToRotation(joint.axis, joint.connectedBody.transform.rotation.eulerAngles));
+        if (applyTorqueZ)
+            _rbAnt.AddRelativeTorque(torqueAppliedZ * Vector3.forward);
     }
 
     public float to180(float v)
@@ -316,19 +288,35 @@ public class AntagonisticArmComplexV2 : MonoBehaviour
         }
         return v;
     }
+
     Vector3 jointRotation(ConfigurableJoint joint)
     {
+        // First Debug option - TODO: FIX
+        float xAngle = Vector3.Angle(joint.connectedBody.transform.forward, joint.GetComponent<Rigidbody>().transform.forward);
+        float yAngle = Vector3.Angle(joint.connectedBody.transform.up, joint.GetComponent<Rigidbody>().transform.up);
+        float zAngle = Vector3.SignedAngle(joint.connectedBody.transform.right, joint.GetComponent<Rigidbody>().transform.right, Vector3.right);
+
+        var currentEulerAngles = new Vector3(xAngle, 0f, zAngle);
+
+        return currentEulerAngles;
+    }
+
+    Quaternion jointRotationQuaternion(ConfigurableJoint joint)
+    {
+        // TODO: This needs to be very improved!
+
         Quaternion localRotation = Quaternion.Inverse(this.transform.parent.rotation) * this.transform.rotation;
-        Debug.Log("localRotation: " + localRotation.eulerAngles);
+        //Debug.Log("localRotation: " + localRotation);
 
         //Quaternion jointBasis = Quaternion.LookRotation(joint.secondaryAxis, Vector3.Cross(joint.axis, joint.secondaryAxis));
         //Debug.Log("jointBasis: " + jointBasis.eulerAngles);
         //Quaternion jointBasisInverse = Quaternion.Inverse(jointBasis);
         //var rotation = (jointBasisInverse * Quaternion.Inverse(joint.connectedBody.rotation) * joint.GetComponent<Rigidbody>().transform.rotation * jointBasis).eulerAngles;
-        //Debug.Log("rotation: " + rotation);
+        //Debug.Log("rotation: " + rotation.x);
 
         //return new Vector3(to180(rotation.x), to180(rotation.z), to180(rotation.y));
-        return new Vector3(to180(localRotation.eulerAngles.x), to180(localRotation.eulerAngles.y), to180(localRotation.eulerAngles.z));
-        //return new Vector3(localRotation.eulerAngles.x, localRotation.eulerAngles.y, localRotation.eulerAngles.z);
+        //return new Vector3(to180(localRotation.eulerAngles.x), to180(localRotation.eulerAngles.y), to180(localRotation.eulerAngles.z));
+
+        return localRotation;
     }
 }
