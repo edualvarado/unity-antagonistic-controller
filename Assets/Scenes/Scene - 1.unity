@@ -842,7 +842,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556606207}
-  m_LocalRotation: {x: 0.09056765, y: -0.7643994, z: 0.110101216, w: 0.62878364}
+  m_LocalRotation: {x: 0.09056764, y: -0.7643994, z: 0.11010123, w: 0.6287836}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1114,7 +1114,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 782306568}
-  m_LocalRotation: {x: 0.10195979, y: -0.7622762, z: 0.12395042, w: 0.6270371}
+  m_LocalRotation: {x: 0.10195977, y: -0.76227623, z: 0.12395043, w: 0.6270371}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1648,7 +1648,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.10195979, y: -0.7622762, z: 0.12395042, w: 0.62703717}
+  m_LocalRotation: {x: 0.1019598, y: -0.7622763, z: 0.12395044, w: 0.62703705}
   m_LocalPosition: {x: 5.644907, y: 2.5, z: 3.1714296}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2312,9 +2312,29 @@ PrefabInstance:
     m_TransformParent: {fileID: 61120158}
     m_Modifications:
     - target: {fileID: 1551755772, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: Kd
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1551755772, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: Kpl
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1551755772, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: angleX
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1551755772, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1551755772, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: kinematicArm
       value: 
       objectReference: {fileID: 1885772260}
+    - target: {fileID: 1649235697, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1649235697, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: kinematicArm
       value: 
@@ -2347,10 +2367,38 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 2125949086}
+    - target: {fileID: 3092514555677672679, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3092514555815212885, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3092514556147115353, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 2125949092}
+    - target: {fileID: 3092514556177529414, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_Drag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3092514556177529414, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3092514556177529414, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_AngularDrag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3092514556177529415, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_AngularYMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3092514556177529415, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_AngularZMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3092514556199983842, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2398,6 +2446,14 @@ PrefabInstance:
     - target: {fileID: 3092514556199983843, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: m_Name
       value: ybot_rig_arms_v6_split_ragdoll - v4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3092514557077734550, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_AngularYMotion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3092514557077734550, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_AngularZMotion
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
@@ -2525,7 +2581,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675392069}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.2, y: 1.5, z: 2.32}
+  m_LocalPosition: {x: 1.984, y: 1.5, z: 2.32}
   m_LocalScale: {x: 0.13051, y: 0.13051, z: 0.13051}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3334,6 +3390,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 61120158}
     m_Modifications:
+    - target: {fileID: 3621043054988053816, guid: 6eb2dce9c5e508043ab88f303a13b264, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5852942140695582602, guid: 6eb2dce9c5e508043ab88f303a13b264, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8138973455675663665, guid: 6eb2dce9c5e508043ab88f303a13b264, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -170,7 +170,7 @@ public class AntagonisticJoint : MonoBehaviour
 
         // Distance from root to the RB COM
         distance3D = _rbAnt.worldCenterOfMass - transform.position;
-
+        
         // 1. Gravity force and generated torque
         gravityAcc = Physics.gravity;
         gravityTorqueMagnitudeX = Vector3.Magnitude(_rbAnt.mass * gravityAcc) * Vector3.Distance(transform.parent.position, _rbAnt.worldCenterOfMass) * Mathf.Sin((90 - currentAngle.x) * Mathf.Deg2Rad); // Debug

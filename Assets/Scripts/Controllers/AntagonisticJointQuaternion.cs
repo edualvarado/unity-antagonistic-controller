@@ -7,7 +7,7 @@ public class AntagonisticJointQuaternion : MonoBehaviour
 
     #region Read-only & Static Fields
 
-    private readonly AntagonisticPDControllerQuaternion _antagonisticPDController = new AntagonisticPDControllerQuaternion(0.05f, 0.0f, 0.0f, 0.01f);
+    private readonly AntagonisticPDControllerQuaternion _antagonisticPDControllerQuaternion = new AntagonisticPDControllerQuaternion(0.05f, 0.0f, 0.0f, 0.01f);
 
     #endregion
 
@@ -15,11 +15,14 @@ public class AntagonisticJointQuaternion : MonoBehaviour
 
     private Transform _currentTransform;
     private Rigidbody _objectRigidbody;
+    private Quaternion _initialLocalRotation;
 
     public float Kpl;
     public float Kph;
     public float Ki;
     public float Kd;
+
+    public float angleX, angleY, angleZ;
 
     #endregion
 
@@ -109,9 +112,8 @@ public class AntagonisticJointQuaternion : MonoBehaviour
 
     private void Awake()
     {
-        //initialAngleQuaternion = transform.localRotation;
-
         this._currentTransform = transform;
+        this._initialLocalRotation = transform.localRotation;
         this._objectRigidbody = GetComponent<Rigidbody>();
     }
 
@@ -122,21 +124,58 @@ public class AntagonisticJointQuaternion : MonoBehaviour
             return;
         }
 
-        this._antagonisticPDController.KPL = this.Kpl;
-        this._antagonisticPDController.KPH = this.Kpl;
-        this._antagonisticPDController.KI = this.Ki;
-        this._antagonisticPDController.KD = this.Kd;
+        // Update gains in real-time
+        this._antagonisticPDControllerQuaternion.KPL = this.Kpl;
+        this._antagonisticPDControllerQuaternion.KPH = this.Kph;
+        this._antagonisticPDControllerQuaternion.KI = this.Ki;
+        this._antagonisticPDControllerQuaternion.KD = this.Kd;
 
         // TODO - START HERE - We need to take to the AntagonisticPDControllerQuaternion class, all the stuff that is here calculated.
 
+        // Get rotation that we need to copy (kinematic)
+        kinematicAngleQuaternion = kinematicArm.transform.localRotation;
+        DesiredLocalOrientation = ConfigurableJointExtensions.GetTargetRotationLocal(_jointAnt, kinematicAngleQuaternion, _initialLocalRotation);
+
+        // Calculate forces relative to the Rigid Body
+        // Distance from root to the RB COM
+        distance3D = _objectRigidbody.worldCenterOfMass - transform.position;
+
+        // 1. Gravity force and generated torque
+        gravityAcc = Physics.gravity;
+        gravityTorqueVector = Vector3.Cross(distance3D, _objectRigidbody.mass * gravityAcc); // Remember: wrt. global coord. system
+        gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // Remember: wrt. local coord. system
+
         // The PID controller takes the current orientation of an object, its desired orientation and the current angular velocity
         // and returns the required angular acceleration to rotate towards the desired orientation.
-        Vector3 requiredAngularAcceleration = this._antagonisticPDController.ComputeRequiredAngularAcceleration(this._currentTransform.rotation,
+        Vector3 requiredAngularAccelerationX = this._antagonisticPDControllerQuaternion.ComputeRequiredAngularAccelerationX(angleX, 0f, 0f,
+                                                                                                     this._currentTransform.localRotation,
                                                                                                      DesiredLocalOrientation,
                                                                                                      this._objectRigidbody.angularVelocity,
+                                                                                                     gravityTorqueVectorLocal,
                                                                                                      Time.fixedDeltaTime);
 
-        this._objectRigidbody.AddTorque(requiredAngularAcceleration, ForceMode.Acceleration);
+        /*
+        Vector3 requiredAngularAccelerationY = this._antagonisticPDControllerQuaternion.ComputeRequiredAngularAccelerationY(0f, angleY, 0f,
+                                                                                                     this._currentTransform.localRotation,
+                                                                                                     DesiredLocalOrientation,
+                                                                                                     this._objectRigidbody.angularVelocity,
+                                                                                                     gravityTorqueVectorLocal,
+                                                                                                     Time.fixedDeltaTime);
+
+        Vector3 requiredAngularAccelerationZ = this._antagonisticPDControllerQuaternion.ComputeRequiredAngularAccelerationZ(0f, 0f, angleZ,
+                                                                                                     this._currentTransform.localRotation,
+                                                                                                     DesiredLocalOrientation,
+                                                                                                     this._objectRigidbody.angularVelocity,
+                                                                                                     gravityTorqueVectorLocal,
+                                                                                                     Time.fixedDeltaTime);
+        */
+
+        // ! Changed Acceleation by Force
+        this._objectRigidbody.AddTorque(requiredAngularAccelerationX, ForceMode.Force);
+        
+        
+        //this._objectRigidbody.AddTorque(requiredAngularAccelerationY, ForceMode.Force);
+        //this._objectRigidbody.AddTorque(requiredAngularAccelerationZ, ForceMode.Force);
     }
 
     /*

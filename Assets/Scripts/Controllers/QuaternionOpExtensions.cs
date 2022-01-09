@@ -59,5 +59,19 @@ public static class QuaternionOpExtensions
                               (float)((double)lhs.w - (double)rhs.w));
     }
 
+    /// <summary>
+    ///     Subtracts one Quaternion from another.
+    /// </summary>
+    /// <param name="lhs">The left hand side operand.</param>
+    /// <param name="rhs">The right hand side operand</param>
+    /// <returns>The difference between both quaternions.</returns>
+    public static Quaternion SubtractTwo(Quaternion lhs, Quaternion rhs)
+    {
+        return new Quaternion((float)((double)lhs.x - (double)rhs.x),
+                              (float)((double)lhs.y - (double)rhs.y),
+                              (float)((double)lhs.z - (double)rhs.z),
+                              (float)((double)lhs.w - (double)rhs.w));
+    }
+
     #endregion
 }
