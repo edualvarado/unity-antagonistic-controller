@@ -25,7 +25,7 @@ public class SafetyRegionRight : SafetyRegion
     void Update()
     {
         sphereColliderRight.radius = radiusRegion;
-        sphereColliderRight.center = transform.InverseTransformPoint(originRegion.position + originOffset);
+        sphereColliderRight.center = transform.InverseTransformPoint(originRegion.position) + originOffset;
     }
 
     private void OnTriggerEnter(Collider other)

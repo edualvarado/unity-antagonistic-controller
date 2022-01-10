@@ -17,12 +17,27 @@ public class AntagonisticJointQuaternion : MonoBehaviour
     private Rigidbody _objectRigidbody;
     private Quaternion _initialLocalRotation;
 
+    [Header("Antagonistic PD Controller - Settings")]
     public float Kpl;
     public float Kph;
     public float Ki;
     public float Kd;
+    public Transform kinematicArm;
 
-    public float angleX, angleY, angleZ;
+    [Header("Euler's Targets - Debug")]
+    public float angleX;
+    public float angleY;
+    public float angleZ;
+
+    [Header("PD Controller mode")]
+    public bool useJointPD = false;
+
+    private Quaternion kinematicAngleQuaternion;
+    private ConfigurableJoint _jointAnt;
+    private Vector3 distance3D;
+    private Vector3 gravityAcc;
+    private Vector3 gravityTorqueVector;
+    private Vector3 gravityTorqueVectorLocal;
 
     #endregion
 
@@ -36,6 +51,7 @@ public class AntagonisticJointQuaternion : MonoBehaviour
 
     #region Old Variables
 
+    /*
     [Header("Joint")]
     public Vector3 currentAngle;
     public Quaternion initialAngleQuaternion;
@@ -107,6 +123,7 @@ public class AntagonisticJointQuaternion : MonoBehaviour
     public float gravityTorqueMagnitudeX;
     public Vector3 gravityTorqueVector;
     public Vector3 gravityTorqueVectorLocal;
+    */
 
     #endregion
 
@@ -115,6 +132,7 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         this._currentTransform = transform;
         this._initialLocalRotation = transform.localRotation;
         this._objectRigidbody = GetComponent<Rigidbody>();
+        this._jointAnt = GetComponent<ConfigurableJoint>();
     }
 
     private void FixedUpdate()
@@ -130,11 +148,41 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         this._antagonisticPDControllerQuaternion.KI = this.Ki;
         this._antagonisticPDControllerQuaternion.KD = this.Kd;
 
-        // TODO - START HERE - We need to take to the AntagonisticPDControllerQuaternion class, all the stuff that is here calculated.
-
         // Get rotation that we need to copy (kinematic)
         kinematicAngleQuaternion = kinematicArm.transform.localRotation;
-        DesiredLocalOrientation = ConfigurableJointExtensions.GetTargetRotationLocal(_jointAnt, kinematicAngleQuaternion, _initialLocalRotation);
+
+        // The first method already sets the target at the configurable joint.
+        if (useJointPD)
+        {
+            ConfigurableJointExtensions.SetTargetRotationLocal(_jointAnt, kinematicAngleQuaternion, _initialLocalRotation);
+            _jointAnt.rotationDriveMode = RotationDriveMode.XYAndZ;
+            var angularXDrive = _jointAnt.angularXDrive;
+            angularXDrive.positionSpring = 1600f;
+            angularXDrive.positionDamper = 11f;
+            angularXDrive.maximumForce = Mathf.Infinity;
+            _jointAnt.angularXDrive = angularXDrive;
+            var angularYZDrive = _jointAnt.angularYZDrive;
+            angularYZDrive.positionSpring = 1600f;
+            angularYZDrive.positionDamper = 11f;
+            angularYZDrive.maximumForce = Mathf.Infinity;
+            _jointAnt.angularYZDrive = angularYZDrive;
+        }
+        else
+        {
+            DesiredLocalOrientation = ConfigurableJointExtensions.GetTargetRotationLocal(_jointAnt, kinematicAngleQuaternion, _initialLocalRotation);
+
+            _jointAnt.rotationDriveMode = RotationDriveMode.XYAndZ;
+            var angularXDrive = _jointAnt.angularXDrive;
+            angularXDrive.positionSpring = 0f;
+            angularXDrive.positionDamper = 0f;
+            angularXDrive.maximumForce = Mathf.Infinity;
+            _jointAnt.angularXDrive = angularXDrive;
+            var angularYZDrive = _jointAnt.angularYZDrive;
+            angularYZDrive.positionSpring = 0f;
+            angularYZDrive.positionDamper = 0f;
+            angularYZDrive.maximumForce = Mathf.Infinity;
+            _jointAnt.angularYZDrive = angularYZDrive;
+        }
 
         // Calculate forces relative to the Rigid Body
         // Distance from root to the RB COM
@@ -147,12 +195,14 @@ public class AntagonisticJointQuaternion : MonoBehaviour
 
         // The PID controller takes the current orientation of an object, its desired orientation and the current angular velocity
         // and returns the required angular acceleration to rotate towards the desired orientation.
+        /*
         Vector3 requiredAngularAccelerationX = this._antagonisticPDControllerQuaternion.ComputeRequiredAngularAccelerationX(angleX, 0f, 0f,
                                                                                                      this._currentTransform.localRotation,
                                                                                                      DesiredLocalOrientation,
                                                                                                      this._objectRigidbody.angularVelocity,
                                                                                                      gravityTorqueVectorLocal,
                                                                                                      Time.fixedDeltaTime);
+        */
 
         /*
         Vector3 requiredAngularAccelerationY = this._antagonisticPDControllerQuaternion.ComputeRequiredAngularAccelerationY(0f, angleY, 0f,
@@ -171,11 +221,13 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         */
 
         // ! Changed Acceleation by Force
-        this._objectRigidbody.AddTorque(requiredAngularAccelerationX, ForceMode.Force);
-        
-        
-        //this._objectRigidbody.AddTorque(requiredAngularAccelerationY, ForceMode.Force);
-        //this._objectRigidbody.AddTorque(requiredAngularAccelerationZ, ForceMode.Force);
+
+        if(!useJointPD)
+        {
+            //this._objectRigidbody.AddTorque(requiredAngularAccelerationX, ForceMode.Force);
+            //this._objectRigidbody.AddTorque(requiredAngularAccelerationY, ForceMode.Force);
+            //this._objectRigidbody.AddTorque(requiredAngularAccelerationZ, ForceMode.Force);
+        }
     }
 
     /*

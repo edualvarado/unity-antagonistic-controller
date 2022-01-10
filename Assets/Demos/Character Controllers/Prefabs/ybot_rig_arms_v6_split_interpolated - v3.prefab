@@ -2377,7 +2377,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfccf91ddb2f80a469740d3b208f6197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anchor: 3
+  anchor: 4
+  setMirror: 1
   syncRootsPositions: 1
   syncRootsRotations: 1
   throwAnchorUpperBody: 0
@@ -2410,15 +2411,19 @@ MonoBehaviour:
   spine1Connector: {fileID: 0}
   spine2Connector: {fileID: 0}
   headConnector: {fileID: 0}
+  leftShoulderConnector: {fileID: 0}
   leftArmConnector: {fileID: 0}
   leftForeArmConnector: {fileID: 0}
+  rightShoulderConnector: {fileID: 0}
   rightArmConnector: {fileID: 0}
   rightForeArmConnector: {fileID: 0}
   spine1Joint: {fileID: 0}
   spine2Joint: {fileID: 0}
   headJoint: {fileID: 0}
+  leftShoulderJoint: {fileID: 0}
   leftArmJoint: {fileID: 0}
   leftForeArmJoint: {fileID: 0}
+  rightShoulderJoint: {fileID: 0}
   rightArmJoint: {fileID: 0}
   rightForeArmJoint: {fileID: 0}
 --- !u!114 &7244432966600211287

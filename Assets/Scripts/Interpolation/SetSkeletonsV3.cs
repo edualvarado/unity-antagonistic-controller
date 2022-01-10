@@ -16,6 +16,7 @@ public class SetSkeletonsV3 : MonoBehaviour
 
     [Header("General - Settings")]
     public AnchorPoint anchor;
+    public bool setMirror = false;
     public bool syncRootsPositions = false;
     public bool syncRootsRotations = false;
 
@@ -24,6 +25,7 @@ public class SetSkeletonsV3 : MonoBehaviour
     public bool throwAnchorLeftArm;
     public bool throwAnchorRightArm;
 
+    private bool previousSetMirror;
     #endregion
 
     #region Skeleton
@@ -64,11 +66,11 @@ public class SetSkeletonsV3 : MonoBehaviour
         //Neck,
         Head,
 
-        //LeftShoulder,
+        LeftShoulder,
         LeftUpperArm,
         LeftLowerArm,
 
-        //RightShoulder,
+        RightShoulder,
         RightUpperArm,
         RightLowerArm,
     }
@@ -148,15 +150,19 @@ public class SetSkeletonsV3 : MonoBehaviour
     public GameObject spine1Connector;
     public GameObject spine2Connector;
     public GameObject headConnector;
+    public GameObject leftShoulderConnector;
     public GameObject leftArmConnector;
     public GameObject leftForeArmConnector;
+    public GameObject rightShoulderConnector;
     public GameObject rightArmConnector;
     public GameObject rightForeArmConnector;
     public FixedJoint spine1Joint;
     public FixedJoint spine2Joint;
     public FixedJoint headJoint;
+    public FixedJoint leftShoulderJoint;
     public FixedJoint leftArmJoint;
     public FixedJoint leftForeArmJoint;
+    public FixedJoint rightShoulderJoint;
     public FixedJoint rightArmJoint;
     public FixedJoint rightForeArmJoint;
 
@@ -195,6 +201,8 @@ public class SetSkeletonsV3 : MonoBehaviour
     // Start when is called the first frame update
     void Start()
     {
+        ResetSystem();
+
         // Choose at the beginning which physical anchor we have
         InitPhysicalAnchor();
     }
@@ -216,32 +224,38 @@ public class SetSkeletonsV3 : MonoBehaviour
     void FixedUpdate()
     {
         // Check when anchor changes
-        if (anchor != previousAnchor)
+        if ((anchor != previousAnchor) || (setMirror != previousSetMirror))
         {
             Debug.Log("[INFO] Anchor changed");
             previousAnchor = anchor;
+            previousSetMirror = setMirror;
 
-            // Reset both skeletons to the kinematic model
-            ResetInterpolatedSkeleton();
-            ResetPhysicalSkeleton();
-            ChoosePhysicalAnchor();
-
-            kinematicAboveAnchorBones.Clear();
-            kinematicBelowAnchorBones.Clear();
-            physicalAboveAnchorBones.Clear();
-            physicalBelowAnchorBones.Clear();
-            interpolatedAboveAnchorBones.Clear();
-            interpolatedBelowAnchorBones.Clear();
-
-            kinematicLeftArmsBones.Clear();
-            kinematicRightArmsBones.Clear();
-            physicalLeftArmsBones.Clear();
-            physicalRightArmsBones.Clear();
-            interpolatedLeftArmsBones.Clear();
-            interpolatedRightArmsBones.Clear();
-
-            InitSkeletons();
+            ResetSystem();
         }
+    }
+
+    private void ResetSystem()
+    {
+        // Reset both skeletons to the kinematic model
+        ResetInterpolatedSkeleton();
+        ResetPhysicalSkeleton();
+        ChoosePhysicalAnchor();
+
+        kinematicAboveAnchorBones.Clear();
+        kinematicBelowAnchorBones.Clear();
+        physicalAboveAnchorBones.Clear();
+        physicalBelowAnchorBones.Clear();
+        interpolatedAboveAnchorBones.Clear();
+        interpolatedBelowAnchorBones.Clear();
+
+        kinematicLeftArmsBones.Clear();
+        kinematicRightArmsBones.Clear();
+        physicalLeftArmsBones.Clear();
+        physicalRightArmsBones.Clear();
+        interpolatedLeftArmsBones.Clear();
+        interpolatedRightArmsBones.Clear();
+
+        InitSkeletons();
     }
 
     // ----------------------------------//
@@ -270,11 +284,17 @@ public class SetSkeletonsV3 : MonoBehaviour
 
         // ==
 
+        leftShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
+        leftShoulderConnector.SetActive(false);
+
         leftArmConnector.GetComponent<Rigidbody>().isKinematic = false;
         leftArmConnector.SetActive(false);
 
         leftForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
         leftForeArmConnector.SetActive(false);
+
+        rightShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
+        rightShoulderConnector.SetActive(false);
 
         rightArmConnector.GetComponent<Rigidbody>().isKinematic = false;
         rightArmConnector.SetActive(false);
@@ -289,7 +309,7 @@ public class SetSkeletonsV3 : MonoBehaviour
         switch (Anchor2Index(anchor))
         {
             case 0:
-                Debug.Log("CASE 0");
+                Debug.Log("CASE 0: Hips");
                 isHipsConnected = true;
                 isSpine1Connected = false;
                 isSpine2Connected = false;
@@ -310,11 +330,17 @@ public class SetSkeletonsV3 : MonoBehaviour
 
                 // ==
 
+                leftShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
+                leftShoulderConnector.SetActive(false);
+
                 leftArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 leftArmConnector.SetActive(false);
 
                 leftForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 leftForeArmConnector.SetActive(false);
+
+                rightShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
+                rightShoulderConnector.SetActive(false);
 
                 rightArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 rightArmConnector.SetActive(false);
@@ -325,6 +351,7 @@ public class SetSkeletonsV3 : MonoBehaviour
                 break;
 
             case 2:
+                Debug.Log("CASE 2: Chest");
                 isHipsConnected = false;
                 isSpine1Connected = true;
                 isSpine2Connected = false;
@@ -347,11 +374,17 @@ public class SetSkeletonsV3 : MonoBehaviour
 
                 // ==
 
+                leftShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
+                leftShoulderConnector.SetActive(false);
+
                 leftArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 leftArmConnector.SetActive(false);
 
                 leftForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 leftForeArmConnector.SetActive(false);
+
+                rightShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
+                rightShoulderConnector.SetActive(false);
 
                 rightArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 rightArmConnector.SetActive(false);
@@ -362,6 +395,7 @@ public class SetSkeletonsV3 : MonoBehaviour
                 break;
 
             case 3:
+                Debug.Log("CASE 3: Upper Chest");
                 isHipsConnected = false;
                 isSpine1Connected = false;
                 isSpine2Connected = true;
@@ -386,11 +420,17 @@ public class SetSkeletonsV3 : MonoBehaviour
 
                 // ==
 
+                leftShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
+                leftShoulderConnector.SetActive(false);
+
                 leftArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 leftArmConnector.SetActive(false);
 
                 leftForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 leftForeArmConnector.SetActive(false);
+
+                rightShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
+                rightShoulderConnector.SetActive(false);
 
                 rightArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 rightArmConnector.SetActive(false);
@@ -401,6 +441,7 @@ public class SetSkeletonsV3 : MonoBehaviour
                 break;
 
             case 5:
+                Debug.Log("CASE 5: Head");
                 isHipsConnected = false;
                 isSpine1Connected = false;
                 isSpine2Connected = false;
@@ -429,6 +470,9 @@ public class SetSkeletonsV3 : MonoBehaviour
 
                 // PROVISIONAL: For head, also attach both arms?
 
+                leftShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
+                leftShoulderConnector.SetActive(false);
+
                 leftArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 leftArmConnector.SetActive(false);
 
@@ -439,6 +483,9 @@ public class SetSkeletonsV3 : MonoBehaviour
 
                 leftForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 leftForeArmConnector.SetActive(false);
+
+                rightShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
+                rightShoulderConnector.SetActive(false);
 
                 rightArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 rightArmConnector.SetActive(false);
@@ -453,7 +500,74 @@ public class SetSkeletonsV3 : MonoBehaviour
 
                 break;
 
+            case 6:
+                Debug.Log("CASE 6: Left Shoulder");
+                isHipsConnected = false;
+                isSpine1Connected = false;
+                isSpine2Connected = false;
+                isHeadConnected = true;
+
+                hipsConnector.GetComponent<Rigidbody>().isKinematic = true;
+
+                // ==== Rest of physical anchors
+
+                spine1Connector.GetComponent<Rigidbody>().isKinematic = true;
+                spine1Joint.connectedBody = null;
+                spine1Connector.SetActive(true);
+                spine1Joint.connectedBody = spine1Connector.GetComponent<Rigidbody>();
+
+                spine2Connector.GetComponent<Rigidbody>().isKinematic = true;
+                spine2Joint.connectedBody = null;
+                spine2Connector.SetActive(true);
+                spine2Joint.connectedBody = spine2Connector.GetComponent<Rigidbody>();
+
+                headConnector.GetComponent<Rigidbody>().isKinematic = true;
+                headJoint.connectedBody = null;
+                headConnector.SetActive(true);
+                headJoint.connectedBody = headConnector.GetComponent<Rigidbody>();
+
+                // ==
+
+                // LEFT SHOULDER - TRUE
+                leftShoulderConnector.GetComponent<Rigidbody>().isKinematic = true;
+                leftShoulderJoint.connectedBody = null;
+                leftShoulderConnector.SetActive(true);
+                leftShoulderJoint.connectedBody = leftShoulderConnector.GetComponent<Rigidbody>();
+
+                // LEFT UPPER ARM - FALSE
+                leftArmConnector.GetComponent<Rigidbody>().isKinematic = false;
+                leftArmConnector.SetActive(false);
+
+                // LEFT FORE ARM - FALSE
+                leftForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
+                leftForeArmConnector.SetActive(false);
+
+                if (!setMirror)
+                {
+                    // RIGHT SHOULDER - FALSE
+                    rightShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
+                    rightShoulderConnector.SetActive(false);
+                }
+                else
+                {
+                    // RIGHT SHOULDER - TRUE
+                    rightShoulderConnector.GetComponent<Rigidbody>().isKinematic = true;
+                    rightShoulderJoint.connectedBody = null;
+                    rightShoulderConnector.SetActive(true);
+                    rightShoulderJoint.connectedBody = rightShoulderConnector.GetComponent<Rigidbody>();
+                }
+
+                // RIGHT UPPER ARM - FALSE
+                rightArmConnector.GetComponent<Rigidbody>().isKinematic = false;
+                rightArmConnector.SetActive(false);
+
+                // RIGHT FORE ARM - FALSE
+                rightForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
+                rightForeArmConnector.SetActive(false);
+                break;
+
             case 7:
+                Debug.Log("CASE 7: Left Upper Arm");
                 isHipsConnected = false;
                 isSpine1Connected = false;
                 isSpine2Connected = false;
@@ -480,22 +594,55 @@ public class SetSkeletonsV3 : MonoBehaviour
 
                 // ==
 
+                // LEFT SHOULDER - TRUE
+                leftShoulderConnector.GetComponent<Rigidbody>().isKinematic = true;
+                leftShoulderJoint.connectedBody = null;
+                leftShoulderConnector.SetActive(true);
+                leftShoulderJoint.connectedBody = leftShoulderConnector.GetComponent<Rigidbody>();
+
+                // LEFT UPPER ARM - TRUE
                 leftArmConnector.GetComponent<Rigidbody>().isKinematic = true;
                 leftArmJoint.connectedBody = null;
                 leftArmConnector.SetActive(true);
                 leftArmJoint.connectedBody = leftArmConnector.GetComponent<Rigidbody>();
 
+                // LEFT FORE ARM - FALSE
                 leftForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 leftForeArmConnector.SetActive(false);
+                
+                if (!setMirror)
+                {
+                    // RIGHT SHOULDER - FALSE
+                    rightShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
+                    rightShoulderConnector.SetActive(false);
 
-                rightArmConnector.GetComponent<Rigidbody>().isKinematic = false;
-                rightArmConnector.SetActive(false);
+                    // RIGHT UPPER ARM - FALSE
+                    rightArmConnector.GetComponent<Rigidbody>().isKinematic = false;
+                    rightArmConnector.SetActive(false);
+                }
+                else
+                {
+                    // RIGHT SHOULDER - TRUE
+                    rightShoulderConnector.GetComponent<Rigidbody>().isKinematic = true;
+                    rightShoulderJoint.connectedBody = null;
+                    rightShoulderConnector.SetActive(true);
+                    rightShoulderJoint.connectedBody = rightShoulderConnector.GetComponent<Rigidbody>();
 
+                    // RIGHT UPPER ARM - TRUE
+                    rightArmConnector.GetComponent<Rigidbody>().isKinematic = true;
+                    rightArmJoint.connectedBody = null;
+                    rightArmConnector.SetActive(true);
+                    rightArmJoint.connectedBody = rightArmConnector.GetComponent<Rigidbody>();
+                }
+
+                // RIGHT FORE ARM - FALSE
                 rightForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 rightForeArmConnector.SetActive(false);
+
                 break;
 
             case 8:
+                Debug.Log("CASE 8: Left Fore Arm");
                 isHipsConnected = false;
                 isSpine1Connected = false;
                 isSpine2Connected = false;
@@ -522,24 +669,63 @@ public class SetSkeletonsV3 : MonoBehaviour
 
                 // ==
 
+                // LEFT SHOULDER - TRUE
+                leftShoulderConnector.GetComponent<Rigidbody>().isKinematic = true;
+                leftShoulderJoint.connectedBody = null;
+                leftShoulderConnector.SetActive(true);
+                leftShoulderJoint.connectedBody = leftShoulderConnector.GetComponent<Rigidbody>();
+
+                // LEFT UPPER ARM - TRUE
                 leftArmConnector.GetComponent<Rigidbody>().isKinematic = true;
                 leftArmJoint.connectedBody = null;
                 leftArmConnector.SetActive(true);
                 leftArmJoint.connectedBody = leftArmConnector.GetComponent<Rigidbody>();
 
+                // LEFT FORE ARM - TRUE
                 leftForeArmConnector.GetComponent<Rigidbody>().isKinematic = true;
                 leftForeArmJoint.connectedBody = null;
                 leftForeArmConnector.SetActive(true);
                 leftForeArmJoint.connectedBody = leftForeArmConnector.GetComponent<Rigidbody>();
 
-                rightArmConnector.GetComponent<Rigidbody>().isKinematic = false;
-                rightArmConnector.SetActive(false);
+                if (!setMirror)
+                {
+                    // RIGHT SHOULDER - FALSE
+                    rightShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
+                    rightShoulderConnector.SetActive(false);
 
-                rightForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
-                rightForeArmConnector.SetActive(false);
+                    // RIGHT UPPER ARM - FALSE
+                    rightArmConnector.GetComponent<Rigidbody>().isKinematic = false;
+                    rightArmConnector.SetActive(false);
+
+                    // RIGHT FORE ARM - FALSE
+                    rightForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
+                    rightForeArmConnector.SetActive(false);
+                }
+                else
+                {
+                    // RIGHT SHOULDER - FALSE
+                    rightShoulderConnector.GetComponent<Rigidbody>().isKinematic = true;
+                    rightShoulderJoint.connectedBody = null;
+                    rightShoulderConnector.SetActive(true);
+                    rightShoulderJoint.connectedBody = rightShoulderConnector.GetComponent<Rigidbody>();
+
+                    // RIGHT UPPER ARM - FALSE
+                    rightArmConnector.GetComponent<Rigidbody>().isKinematic = true;
+                    rightArmJoint.connectedBody = null;
+                    rightArmConnector.SetActive(true);
+                    rightArmJoint.connectedBody = rightArmConnector.GetComponent<Rigidbody>();
+
+                    // RIGHT FORE ARM - FALSE
+                    rightForeArmConnector.GetComponent<Rigidbody>().isKinematic = true;
+                    rightForeArmJoint.connectedBody = null;
+                    rightForeArmConnector.SetActive(true);
+                    rightForeArmJoint.connectedBody = rightForeArmConnector.GetComponent<Rigidbody>();
+                }
+
                 break;
 
-            case 10:
+            case 9:
+                Debug.Log("CASE 9: Right Shoulder");
                 isHipsConnected = false;
                 isSpine1Connected = false;
                 isSpine2Connected = false;
@@ -566,8 +752,84 @@ public class SetSkeletonsV3 : MonoBehaviour
 
                 // ==
 
+                // RIGHT SHOULDER - TRUE
+                rightShoulderConnector.GetComponent<Rigidbody>().isKinematic = true;
+                rightShoulderJoint.connectedBody = null;
+                rightShoulderConnector.SetActive(true);
+                rightShoulderJoint.connectedBody = rightShoulderConnector.GetComponent<Rigidbody>();
+
+                // RIGHT UPPER ARM - FALSE
+                rightArmConnector.GetComponent<Rigidbody>().isKinematic = false;
+                rightArmConnector.SetActive(false);
+
+                // RIGHT FORE ARM - FALSE
+                rightForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
+                rightForeArmConnector.SetActive(false);
+
+                if (!setMirror)
+                {
+                    // LEFT SHOULDER - FALSE
+                    leftShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
+                    leftShoulderConnector.SetActive(false);
+                }
+                else
+                {
+                    // LEFT SHOULDER - TRUE
+                    leftShoulderConnector.GetComponent<Rigidbody>().isKinematic = true;
+                    leftShoulderJoint.connectedBody = null;
+                    leftShoulderConnector.SetActive(true);
+                    leftShoulderJoint.connectedBody = leftShoulderConnector.GetComponent<Rigidbody>();
+                }
+
+                // LEFT UPPER ARM - FALSE
                 leftArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 leftArmConnector.SetActive(false);
+
+                // LEFT FORE ARM - FALSE
+                leftForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
+                leftForeArmConnector.SetActive(false);
+                break;
+
+            case 10:
+                Debug.Log("CASE 10: Right Upper Arm");
+                isHipsConnected = false;
+                isSpine1Connected = false;
+                isSpine2Connected = false;
+                isHeadConnected = true;
+
+                hipsConnector.GetComponent<Rigidbody>().isKinematic = true;
+
+                // ==== Rest of physical anchors
+
+                spine1Connector.GetComponent<Rigidbody>().isKinematic = true;
+                spine1Joint.connectedBody = null;
+                spine1Connector.SetActive(true);
+                spine1Joint.connectedBody = spine1Connector.GetComponent<Rigidbody>();
+
+                spine2Connector.GetComponent<Rigidbody>().isKinematic = true;
+                spine2Joint.connectedBody = null;
+                spine2Connector.SetActive(true);
+                spine2Joint.connectedBody = spine2Connector.GetComponent<Rigidbody>();
+
+                headConnector.GetComponent<Rigidbody>().isKinematic = true;
+                headJoint.connectedBody = null;
+                headConnector.SetActive(true);
+                headJoint.connectedBody = headConnector.GetComponent<Rigidbody>();
+
+                // ==
+
+                if(!setMirror)
+                {
+                    leftArmConnector.GetComponent<Rigidbody>().isKinematic = false;
+                    leftArmConnector.SetActive(false);
+                }
+                else
+                {
+                    leftArmConnector.GetComponent<Rigidbody>().isKinematic = true;
+                    leftArmJoint.connectedBody = null;
+                    leftArmConnector.SetActive(true);
+                    leftArmJoint.connectedBody = leftArmConnector.GetComponent<Rigidbody>();
+                }
 
                 leftForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 leftForeArmConnector.SetActive(false);
@@ -582,6 +844,7 @@ public class SetSkeletonsV3 : MonoBehaviour
                 break;
 
             case 11:
+                Debug.Log("CASE 11: Right Fore Arm");
                 isHipsConnected = false;
                 isSpine1Connected = false;
                 isSpine2Connected = false;
@@ -608,11 +871,27 @@ public class SetSkeletonsV3 : MonoBehaviour
 
                 // ==
 
-                leftArmConnector.GetComponent<Rigidbody>().isKinematic = false;
-                leftArmConnector.SetActive(false);
 
-                leftForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
-                leftForeArmConnector.SetActive(false);
+                if(!setMirror)
+                {
+                    leftArmConnector.GetComponent<Rigidbody>().isKinematic = false;
+                    leftArmConnector.SetActive(false);
+
+                    leftForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
+                    leftForeArmConnector.SetActive(false);
+                }
+                else
+                {
+                    leftArmConnector.GetComponent<Rigidbody>().isKinematic = true;
+                    leftArmJoint.connectedBody = null;
+                    leftArmConnector.SetActive(true);
+                    leftArmJoint.connectedBody = leftArmConnector.GetComponent<Rigidbody>();
+
+                    leftForeArmConnector.GetComponent<Rigidbody>().isKinematic = true;
+                    leftForeArmJoint.connectedBody = null;
+                    leftForeArmConnector.SetActive(true);
+                    leftForeArmJoint.connectedBody = leftForeArmConnector.GetComponent<Rigidbody>();
+                }
 
                 rightArmConnector.GetComponent<Rigidbody>().isKinematic = true;
                 rightArmJoint.connectedBody = null;
@@ -625,7 +904,7 @@ public class SetSkeletonsV3 : MonoBehaviour
                 rightForeArmJoint.connectedBody = rightForeArmConnector.GetComponent<Rigidbody>();
                 break;
 
-            case 12:
+            case 12: // TODO: FIX
                 isHipsConnected = false;
                 isSpine1Connected = false;
                 isSpine2Connected = false;
@@ -911,8 +1190,8 @@ public class SetSkeletonsV3 : MonoBehaviour
             physicalAboveAnchorBones[i].rotation = kinematicAboveAnchorBones[i].rotation;
         }
 
-        physicalLeftArmsBones[1].position = kinematicLeftArmsBones[1].position;
-        physicalRightArmsBones[1].position = kinematicRightArmsBones[1].position;
+        //physicalLeftArmsBones[1].position = kinematicLeftArmsBones[1].position;
+        //physicalRightArmsBones[1].position = kinematicRightArmsBones[1].position;
     }
 
     // ----------------------------------//
@@ -993,11 +1272,11 @@ public class SetSkeletonsV3 : MonoBehaviour
             //case AnchorPoint.Neck: return HumanBodyBones.Neck;
             case AnchorPoint.Head: return HumanBodyBones.Head;
 
-            //case AnchorPoint.LeftShoulder: return HumanBodyBones.LeftShoulder;
+            case AnchorPoint.LeftShoulder: return HumanBodyBones.LeftShoulder;
             case AnchorPoint.LeftUpperArm: return HumanBodyBones.LeftUpperArm;
             case AnchorPoint.LeftLowerArm: return HumanBodyBones.LeftLowerArm;
 
-            //case AnchorPoint.RightShoulder: return HumanBodyBones.RightShoulder;
+            case AnchorPoint.RightShoulder: return HumanBodyBones.RightShoulder;
             case AnchorPoint.RightUpperArm: return HumanBodyBones.RightUpperArm;
             case AnchorPoint.RightLowerArm: return HumanBodyBones.RightLowerArm;
         }
@@ -1020,11 +1299,11 @@ public class SetSkeletonsV3 : MonoBehaviour
             //case AnchorPoint.Neck: return 4;
             case AnchorPoint.Head: return 5;
 
-            //case AnchorPoint.LeftShoulder: return 6;
+            case AnchorPoint.LeftShoulder: return 6;
             case AnchorPoint.LeftUpperArm: return 7;
             case AnchorPoint.LeftLowerArm: return 8;
 
-            //case AnchorPoint.RightShoulder: return 9;
+            case AnchorPoint.RightShoulder: return 9;
             case AnchorPoint.RightUpperArm: return 10;
             case AnchorPoint.RightLowerArm: return 11;
         }
