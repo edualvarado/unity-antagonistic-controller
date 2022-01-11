@@ -195,16 +195,16 @@ public class AntagonisticJointQuaternion : MonoBehaviour
 
         // The PID controller takes the current orientation of an object, its desired orientation and the current angular velocity
         // and returns the required angular acceleration to rotate towards the desired orientation.
-        /*
+        
         Vector3 requiredAngularAccelerationX = this._antagonisticPDControllerQuaternion.ComputeRequiredAngularAccelerationX(angleX, 0f, 0f,
                                                                                                      this._currentTransform.localRotation,
                                                                                                      DesiredLocalOrientation,
                                                                                                      this._objectRigidbody.angularVelocity,
                                                                                                      gravityTorqueVectorLocal,
                                                                                                      Time.fixedDeltaTime);
-        */
+        
 
-        /*
+        
         Vector3 requiredAngularAccelerationY = this._antagonisticPDControllerQuaternion.ComputeRequiredAngularAccelerationY(0f, angleY, 0f,
                                                                                                      this._currentTransform.localRotation,
                                                                                                      DesiredLocalOrientation,
@@ -218,7 +218,7 @@ public class AntagonisticJointQuaternion : MonoBehaviour
                                                                                                      this._objectRigidbody.angularVelocity,
                                                                                                      gravityTorqueVectorLocal,
                                                                                                      Time.fixedDeltaTime);
-        */
+        
 
         // ! Changed Acceleation by Force
 

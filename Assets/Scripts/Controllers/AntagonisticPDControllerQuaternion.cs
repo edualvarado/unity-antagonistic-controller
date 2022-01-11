@@ -162,8 +162,8 @@ public class AntagonisticPDControllerQuaternion
 
         // requiredRotation is already calculated
         //Quaternion requiredRotation = desiredOrientation;
-        //Quaternion requiredRotation = new Quaternion(desiredOrientation.x, 0f, 0f, desiredOrientation.w);
-        Quaternion requiredRotationX = Quaternion.Euler(new Vector3(angleX, 0f, 0f));
+        Quaternion requiredRotationX = new Quaternion(desiredOrientation.x, 0f, 0f, desiredOrientation.w);
+        //Quaternion requiredRotationX = Quaternion.Euler(new Vector3(angleX, 0f, 0f));
         
         Debug.Log("requiredRotationX: " + requiredRotationX);
 
@@ -348,8 +348,8 @@ public class AntagonisticPDControllerQuaternion
 
         // requiredRotation is already calculated
         //Quaternion requiredRotation = desiredOrientation;
-        //Quaternion requiredRotation = new Quaternion(0f, desiredOrientation.y, 0f, desiredOrientation.w);
-        Quaternion requiredRotation = Quaternion.Euler(new Vector3(0f, angleY, 0f));
+        Quaternion requiredRotation = new Quaternion(0f, desiredOrientation.y, 0f, desiredOrientation.w);
+        //Quaternion requiredRotation = Quaternion.Euler(new Vector3(0f, angleY, 0f));
         //Debug.Log("requiredRotationY: " + requiredRotation);
 
         // Isoline
@@ -460,8 +460,8 @@ public class AntagonisticPDControllerQuaternion
 
         // requiredRotation is already calculated
         //Quaternion requiredRotation = desiredOrientation;
-        //Quaternion requiredRotation = new Quaternion(0f, 0f, desiredOrientation.z, desiredOrientation.w);
-        Quaternion requiredRotation = Quaternion.Euler(new Vector3(0f, 0f, angleZ));
+        Quaternion requiredRotation = new Quaternion(0f, 0f, desiredOrientation.z, desiredOrientation.w);
+        //Quaternion requiredRotation = Quaternion.Euler(new Vector3(0f, 0f, angleZ));
         //Debug.Log("requiredRotationZ: " + requiredRotation);
 
         // Isoline
@@ -546,6 +546,7 @@ public class AntagonisticPDControllerQuaternion
         return new Vector3(result.x, result.y, result.z);
     }
 
+    
     private Quaternion GetOutput(Quaternion lowError, Quaternion highError, float deltaTime)
     {
         var output = new Quaternion
