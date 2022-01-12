@@ -147,7 +147,7 @@ public class AntagonisticPDControllerQuaternion
     /// <returns>
     ///     The angular acceleration required to rotate from the current orientation to the desired orientation.
     /// </returns>
-    public Vector3 ComputeRequiredAngularAccelerationX(float angleX, float angleY, float angleZ, Quaternion currentOrientation, Quaternion desiredOrientation, Vector3 currentAngularVelocity, Vector3 extForces, float deltaTime)
+    public Vector3 ComputeRequiredAngularAccelerationX(float angleX, float angleY, float angleZ, Quaternion currentOrientation, Quaternion desiredOrientation, Vector3 currentAngularVelocity, Vector3 extForces, float deltaTime, bool printX)
     {
         // Here, we need the min and max angles! For the moment, hardtype!
         // If I put here other Euler angle, it does not work!
@@ -157,15 +157,21 @@ public class AntagonisticPDControllerQuaternion
         Quaternion minAngleQuaternionX = Quaternion.Euler(minAngleEulerX);
         Quaternion maxAngleQuaternionX = Quaternion.Euler(maxAngleEulerX);
 
-        Debug.Log("minAngleQuaternionX: " + minAngleQuaternionX);
-        Debug.Log("maxAngleQuaternionX: " + maxAngleQuaternionX);
+        if(printX)
+        {
+            Debug.Log("minAngleQuaternionX: " + minAngleQuaternionX);
+            Debug.Log("maxAngleQuaternionX: " + maxAngleQuaternionX);
+        }
 
         // requiredRotation is already calculated
-        //Quaternion requiredRotation = desiredOrientation;
-        Quaternion requiredRotationX = new Quaternion(desiredOrientation.x, 0f, 0f, desiredOrientation.w);
-        //Quaternion requiredRotationX = Quaternion.Euler(new Vector3(angleX, 0f, 0f));
+        //Quaternion requiredRotationX = desiredOrientation;
+        //Quaternion requiredRotationX = new Quaternion(desiredOrientation.x, 0f, 0f, desiredOrientation.w);
+        Quaternion requiredRotationX = Quaternion.Euler(new Vector3(angleX, 0f, 0f));
         
-        Debug.Log("requiredRotationX: " + requiredRotationX);
+        if(printX)
+        {
+            Debug.Log("requiredRotationX: " + requiredRotationX);
+        }
 
         // Isoline
         float interceptX = (0f) / (minAngleQuaternionX.x - requiredRotationX.x);
@@ -175,13 +181,27 @@ public class AntagonisticPDControllerQuaternion
         //float slopeX = (minAngleEuler.x - angleX) / (angleX - maxAngleEuler.x);
         //KPH = KPL * slopeX + interceptX;
 
+        if (printX)
+        {
+            Debug.Log("interceptX: " + interceptX);
+            Debug.Log("slopeX: " + slopeX);
+            Debug.Log("KPL: " + KPL + " - KPH: " + KPH);
+        }
+
         //Quaternion lowError = QuaternionOpExtensions.SubtractTwo(minAngleQuaternion, currentOrientation);
         //Quaternion highError = QuaternionOpExtensions.SubtractTwo(maxAngleQuaternion, currentOrientation);
 
         Quaternion lowError = QuaternionOpExtensions.SubtractTwo(minAngleQuaternionX, new Quaternion(currentOrientation.x, 0f, 0f, currentOrientation.w));
         Quaternion highError = QuaternionOpExtensions.SubtractTwo(maxAngleQuaternionX, new Quaternion(currentOrientation.x, 0f, 0f, currentOrientation.w));
 
-        //Quaternion angularVelocity = ToEulerAngleQuaternion(currentAngularVelocity);
+        if (printX)
+        {
+            Debug.Log("lowError: " + minAngleQuaternionX + " - " + new Quaternion(currentOrientation.x, 0f, 0f, currentOrientation.w) + " = " + lowError);
+            Debug.Log("highError: " + maxAngleQuaternionX + " - " + new Quaternion(currentOrientation.x, 0f, 0f, currentOrientation.w) + " = " + highError);
+        }
+
+        Quaternion angularVelocity = ToEulerAngleQuaternion(currentAngularVelocity);
+        Quaternion delta = angularVelocity * requiredRotationX;
 
         var orthogonalizeMatrix = new Matrix4x4()
         {
@@ -235,17 +255,20 @@ public class AntagonisticPDControllerQuaternion
                                           requiredRotationX.w * requiredRotationX.w,
         };
 
-        Quaternion neededAngularVelocity = GetOutput(lowError, highError, deltaTime);
-
         // From here, review
+
+        Quaternion neededAngularVelocity = GetOutput(lowError, highError, delta, deltaTime);
 
         neededAngularVelocity = MultiplyAsVector(orthogonalizeMatrix, neededAngularVelocity);
 
         Quaternion doubleNegative = neededAngularVelocity.Multiply(-2.0f);
         Quaternion resultX = doubleNegative * Quaternion.Inverse(requiredRotationX);
 
-        Debug.Log("resultX: " + resultX);
-        Debug.Log("---------------------------------");
+        if(printX)
+        {
+            Debug.Log("resultX: " + resultX);
+            Debug.Log("---------------------------------");
+        }
 
         return new Vector3(resultX.x, resultX.y, resultX.z);
 
@@ -333,28 +356,35 @@ public class AntagonisticPDControllerQuaternion
     /// <returns>
     ///     The angular acceleration required to rotate from the current orientation to the desired orientation.
     /// </returns>
-    public Vector3 ComputeRequiredAngularAccelerationY(float angleX, float angleY, float angleZ, Quaternion currentOrientation, Quaternion desiredOrientation, Vector3 currentAngularVelocity, Vector3 extForces, float deltaTime)
+    public Vector3 ComputeRequiredAngularAccelerationY(float angleX, float angleY, float angleZ, Quaternion currentOrientation, Quaternion desiredOrientation, Vector3 currentAngularVelocity, Vector3 extForces, float deltaTime, bool printY)
     {
         // Here, we need the min and max angles! For the moment, hardtype!
         // If I put here other Euler angle, it does not work!
-        Vector3 minAngleEuler = new Vector3(0f, -20f, 0f);
-        Vector3 maxAngleEuler = new Vector3(0f, 20f, 0f);
+        Vector3 minAngleEulerY = new Vector3(0f, -20f, 0f);
+        Vector3 maxAngleEulerY = new Vector3(0f, 20f, 0f);
 
-        Quaternion minAngleQuaternion = Quaternion.Euler(minAngleEuler);
-        Quaternion maxAngleQuaternion = Quaternion.Euler(maxAngleEuler);
+        Quaternion minAngleQuaternionY = Quaternion.Euler(minAngleEulerY);
+        Quaternion maxAngleQuaternionY = Quaternion.Euler(maxAngleEulerY);
 
-        //Debug.Log("minAngleQuaternionY: " + minAngleQuaternion);
-        //Debug.Log("maxAngleQuaternionY: " + maxAngleQuaternion);
+        if (printY)
+        {
+            Debug.Log("minAngleQuaternionY: " + minAngleQuaternionY);
+            Debug.Log("maxAngleQuaternionY: " + maxAngleQuaternionY);
+        }
 
         // requiredRotation is already calculated
-        //Quaternion requiredRotation = desiredOrientation;
-        Quaternion requiredRotation = new Quaternion(0f, desiredOrientation.y, 0f, desiredOrientation.w);
-        //Quaternion requiredRotation = Quaternion.Euler(new Vector3(0f, angleY, 0f));
-        //Debug.Log("requiredRotationY: " + requiredRotation);
+        //Quaternion requiredRotationY = desiredOrientation;
+        //Quaternion requiredRotationY = new Quaternion(0f, desiredOrientation.y, 0f, desiredOrientation.w);
+        Quaternion requiredRotationY = Quaternion.Euler(new Vector3(0f, angleY, 0f));
+
+        if (printY)
+        {
+            Debug.Log("requiredRotationY: " + requiredRotationY);
+        }
 
         // Isoline
-        float interceptY = (0f) / (minAngleQuaternion.y - requiredRotation.y);
-        float slopeY = (minAngleQuaternion.y - requiredRotation.y) / (requiredRotation.y - maxAngleQuaternion.y);
+        float interceptY = (0f) / (minAngleQuaternionY.y - requiredRotationY.y);
+        float slopeY = (minAngleQuaternionY.y - requiredRotationY.y) / (requiredRotationY.y - requiredRotationY.y);
         KPH = KPL * slopeY + interceptY;
         //float interceptY = (0f) / (minAngleEuler.y - angleY);
         //float slopeY = (minAngleEuler.y - angleY) / (angleY - maxAngleEuler.y);
@@ -363,75 +393,86 @@ public class AntagonisticPDControllerQuaternion
         //Quaternion lowError = QuaternionOpExtensions.SubtractTwo(minAngleQuaternion, currentOrientation);
         //Quaternion highError = QuaternionOpExtensions.SubtractTwo(maxAngleQuaternion, currentOrientation);
 
-        Quaternion lowError = QuaternionOpExtensions.SubtractTwo(minAngleQuaternion, new Quaternion(0f, currentOrientation.y, 0f, currentOrientation.w));
-        Quaternion highError = QuaternionOpExtensions.SubtractTwo(maxAngleQuaternion, new Quaternion(0f, currentOrientation.y, 0f, currentOrientation.w));
+        Quaternion lowError = QuaternionOpExtensions.SubtractTwo(minAngleQuaternionY, new Quaternion(0f, currentOrientation.y, 0f, currentOrientation.w));
+        Quaternion highError = QuaternionOpExtensions.SubtractTwo(maxAngleQuaternionY, new Quaternion(0f, currentOrientation.y, 0f, currentOrientation.w));
 
-        //Quaternion angularVelocity = ToEulerAngleQuaternion(currentAngularVelocity);
+        if (printY)
+        {
+            Debug.Log("lowError: " + minAngleQuaternionY + " - " + new Quaternion(0f, currentOrientation.y, 0f, currentOrientation.w) + " = " + lowError);
+            Debug.Log("highError: " + maxAngleQuaternionY + " - " + new Quaternion(0f, currentOrientation.y, 0f, currentOrientation.w) + " = " + highError);
+        }
+
+        Quaternion angularVelocity = ToEulerAngleQuaternion(currentAngularVelocity);
+        Quaternion delta = angularVelocity * requiredRotationY;
 
         var orthogonalizeMatrix = new Matrix4x4()
         {
             m00 =
-                                          -requiredRotation.x * -requiredRotation.x + -requiredRotation.y * -requiredRotation.y +
-                                          -requiredRotation.z * -requiredRotation.z,
+                                          -requiredRotationY.x * -requiredRotationY.x + -requiredRotationY.y * -requiredRotationY.y +
+                                          -requiredRotationY.z * -requiredRotationY.z,
             m01 =
-                                          -requiredRotation.x * requiredRotation.w + -requiredRotation.y * -requiredRotation.z +
-                                          -requiredRotation.z * requiredRotation.y,
+                                          -requiredRotationY.x * requiredRotationY.w + -requiredRotationY.y * -requiredRotationY.z +
+                                          -requiredRotationY.z * requiredRotationY.y,
             m02 =
-                                          -requiredRotation.x * requiredRotation.z + -requiredRotation.y * requiredRotation.w +
-                                          -requiredRotation.z * -requiredRotation.x,
+                                          -requiredRotationY.x * requiredRotationY.z + -requiredRotationY.y * requiredRotationY.w +
+                                          -requiredRotationY.z * -requiredRotationY.x,
             m03 =
-                                          -requiredRotation.x * -requiredRotation.y + -requiredRotation.y * requiredRotation.x +
-                                          -requiredRotation.z * requiredRotation.w,
+                                          -requiredRotationY.x * -requiredRotationY.y + -requiredRotationY.y * requiredRotationY.x +
+                                          -requiredRotationY.z * requiredRotationY.w,
             m10 =
-                                          requiredRotation.w * -requiredRotation.x + -requiredRotation.z * -requiredRotation.y +
-                                          requiredRotation.y * -requiredRotation.z,
+                                          requiredRotationY.w * -requiredRotationY.x + -requiredRotationY.z * -requiredRotationY.y +
+                                          requiredRotationY.y * -requiredRotationY.z,
             m11 =
-                                          requiredRotation.w * requiredRotation.w + -requiredRotation.z * -requiredRotation.z +
-                                          requiredRotation.y * requiredRotation.y,
+                                          requiredRotationY.w * requiredRotationY.w + -requiredRotationY.z * -requiredRotationY.z +
+                                          requiredRotationY.y * requiredRotationY.y,
             m12 =
-                                          requiredRotation.w * requiredRotation.z + -requiredRotation.z * requiredRotation.w +
-                                          requiredRotation.y * -requiredRotation.x,
+                                          requiredRotationY.w * requiredRotationY.z + -requiredRotationY.z * requiredRotationY.w +
+                                          requiredRotationY.y * -requiredRotationY.x,
             m13 =
-                                          requiredRotation.w * -requiredRotation.y + -requiredRotation.z * requiredRotation.x +
-                                          requiredRotation.y * requiredRotation.w,
+                                          requiredRotationY.w * -requiredRotationY.y + -requiredRotationY.z * requiredRotationY.x +
+                                          requiredRotationY.y * requiredRotationY.w,
             m20 =
-                                          requiredRotation.z * -requiredRotation.x + requiredRotation.w * -requiredRotation.y +
-                                          -requiredRotation.x * -requiredRotation.z,
+                                          requiredRotationY.z * -requiredRotationY.x + requiredRotationY.w * -requiredRotationY.y +
+                                          -requiredRotationY.x * -requiredRotationY.z,
             m21 =
-                                          requiredRotation.z * requiredRotation.w + requiredRotation.w * -requiredRotation.z +
-                                          -requiredRotation.x * requiredRotation.y,
+                                          requiredRotationY.z * requiredRotationY.w + requiredRotationY.w * -requiredRotationY.z +
+                                          -requiredRotationY.x * requiredRotationY.y,
             m22 =
-                                          requiredRotation.z * requiredRotation.z + requiredRotation.w * requiredRotation.w +
-                                          -requiredRotation.x * -requiredRotation.x,
+                                          requiredRotationY.z * requiredRotationY.z + requiredRotationY.w * requiredRotationY.w +
+                                          -requiredRotationY.x * -requiredRotationY.x,
             m23 =
-                                          requiredRotation.z * -requiredRotation.y + requiredRotation.w * requiredRotation.x +
-                                          -requiredRotation.x * requiredRotation.w,
+                                          requiredRotationY.z * -requiredRotationY.y + requiredRotationY.w * requiredRotationY.x +
+                                          -requiredRotationY.x * requiredRotationY.w,
             m30 =
-                                          -requiredRotation.y * -requiredRotation.x + requiredRotation.x * -requiredRotation.y +
-                                          requiredRotation.w * -requiredRotation.z,
+                                          -requiredRotationY.y * -requiredRotationY.x + requiredRotationY.x * -requiredRotationY.y +
+                                          requiredRotationY.w * -requiredRotationY.z,
             m31 =
-                                          -requiredRotation.y * requiredRotation.w + requiredRotation.x * -requiredRotation.z +
-                                          requiredRotation.w * requiredRotation.y,
+                                          -requiredRotationY.y * requiredRotationY.w + requiredRotationY.x * -requiredRotationY.z +
+                                          requiredRotationY.w * requiredRotationY.y,
             m32 =
-                                          -requiredRotation.y * requiredRotation.z + requiredRotation.x * requiredRotation.w +
-                                          requiredRotation.w * -requiredRotation.x,
+                                          -requiredRotationY.y * requiredRotationY.z + requiredRotationY.x * requiredRotationY.w +
+                                          requiredRotationY.w * -requiredRotationY.x,
             m33 =
-                                          -requiredRotation.y * -requiredRotation.y + requiredRotation.x * requiredRotation.x +
-                                          requiredRotation.w * requiredRotation.w,
+                                          -requiredRotationY.y * -requiredRotationY.y + requiredRotationY.x * requiredRotationY.x +
+                                          requiredRotationY.w * requiredRotationY.w,
         };
 
-        Quaternion neededAngularVelocity = GetOutput(lowError, highError, deltaTime);
-
         // From here, review
+
+        Quaternion neededAngularVelocity = GetOutput(lowError, highError, delta, deltaTime);
 
         neededAngularVelocity = MultiplyAsVector(orthogonalizeMatrix, neededAngularVelocity);
 
         Quaternion doubleNegative = neededAngularVelocity.Multiply(-2.0f);
-        Quaternion result = doubleNegative * Quaternion.Inverse(requiredRotation);
+        Quaternion resultY = doubleNegative * Quaternion.Inverse(requiredRotationY);
 
-        Debug.Log("resultY: " + result);
+        if (printY)
+        {
+            Debug.Log("resultY: " + resultY);
+            Debug.Log("---------------------------------");
+        }
 
-        return new Vector3(result.x, result.y, result.z);
+        return new Vector3(resultY.x, resultY.y, resultY.z);
     }
 
     /// <summary>
@@ -445,28 +486,35 @@ public class AntagonisticPDControllerQuaternion
     /// <returns>
     ///     The angular acceleration required to rotate from the current orientation to the desired orientation.
     /// </returns>
-    public Vector3 ComputeRequiredAngularAccelerationZ(float angleX, float angleY, float angleZ, Quaternion currentOrientation, Quaternion desiredOrientation, Vector3 currentAngularVelocity, Vector3 extForces, float deltaTime)
+    public Vector3 ComputeRequiredAngularAccelerationZ(float angleX, float angleY, float angleZ, Quaternion currentOrientation, Quaternion desiredOrientation, Vector3 currentAngularVelocity, Vector3 extForces, float deltaTime, bool printZ)
     {
         // Here, we need the min and max angles! For the moment, hardtype!
         // If I put here other Euler angle, it does not work!
-        Vector3 minAngleEuler = new Vector3(0f, 0f, -25f);
-        Vector3 maxAngleEuler = new Vector3(0f, 0f, 25f);
+        Vector3 minAngleEulerZ = new Vector3(0f, 0f, -25f);
+        Vector3 maxAngleEulerZ = new Vector3(0f, 0f, 25f);
 
-        Quaternion minAngleQuaternion = Quaternion.Euler(minAngleEuler);
-        Quaternion maxAngleQuaternion = Quaternion.Euler(maxAngleEuler);
-
-        //Debug.Log("minAngleQuaternionZ: " + minAngleQuaternion);
-        //Debug.Log("maxAngleQuaternionZ: " + maxAngleQuaternion);
+        Quaternion minAngleQuaternionZ = Quaternion.Euler(minAngleEulerZ);
+        Quaternion maxAngleQuaternionZ = Quaternion.Euler(maxAngleEulerZ);
+        
+        if (printZ)
+        {
+            Debug.Log("minAngleQuaternionZ: " + minAngleQuaternionZ);
+            Debug.Log("maxAngleQuaternionZ: " + maxAngleQuaternionZ);
+        }
 
         // requiredRotation is already calculated
-        //Quaternion requiredRotation = desiredOrientation;
-        Quaternion requiredRotation = new Quaternion(0f, 0f, desiredOrientation.z, desiredOrientation.w);
-        //Quaternion requiredRotation = Quaternion.Euler(new Vector3(0f, 0f, angleZ));
-        //Debug.Log("requiredRotationZ: " + requiredRotation);
+        //Quaternion requiredRotationZ = desiredOrientation;
+        //Quaternion requiredRotationZ = new Quaternion(0f, 0f, desiredOrientation.z, desiredOrientation.w);
+        Quaternion requiredRotationZ = Quaternion.Euler(new Vector3(0f, 0f, angleZ));
+
+        if (printZ)
+        {
+            Debug.Log("requiredRotationZ: " + requiredRotationZ);
+        }
 
         // Isoline
-        float interceptZ = (0f) / (minAngleQuaternion.z - requiredRotation.z);
-        float slopeZ = (minAngleQuaternion.z - requiredRotation.z) / (requiredRotation.z - maxAngleQuaternion.z);
+        float interceptZ = (0f) / (minAngleQuaternionZ.z - requiredRotationZ.z);
+        float slopeZ = (minAngleQuaternionZ.z - requiredRotationZ.z) / (requiredRotationZ.z - maxAngleQuaternionZ.z);
         KPH = KPL * slopeZ + interceptZ;
         //float interceptZ = (0f) / (minAngleEuler.z - angleZ);
         //float slopeZ = (minAngleEuler.z - angleZ) / (angleZ - maxAngleEuler.z);
@@ -475,86 +523,98 @@ public class AntagonisticPDControllerQuaternion
         //Quaternion lowError = QuaternionOpExtensions.SubtractTwo(minAngleQuaternion, currentOrientation);
         //Quaternion highError = QuaternionOpExtensions.SubtractTwo(maxAngleQuaternion, currentOrientation);
 
-        Quaternion lowError = QuaternionOpExtensions.SubtractTwo(minAngleQuaternion, new Quaternion(0f, 0f, currentOrientation.z, currentOrientation.w));
-        Quaternion highError = QuaternionOpExtensions.SubtractTwo(maxAngleQuaternion, new Quaternion(0f, 0f, currentOrientation.z, currentOrientation.w));
+        Quaternion lowError = QuaternionOpExtensions.SubtractTwo(minAngleQuaternionZ, new Quaternion(0f, 0f, currentOrientation.z, currentOrientation.w));
+        Quaternion highError = QuaternionOpExtensions.SubtractTwo(maxAngleQuaternionZ, new Quaternion(0f, 0f, currentOrientation.z, currentOrientation.w));
 
-        //Quaternion angularVelocity = ToEulerAngleQuaternion(currentAngularVelocity);
+        if (printZ)
+        {
+            Debug.Log("lowError: " + minAngleQuaternionZ + " - " + new Quaternion(0f, 0f, currentOrientation.z, currentOrientation.w) + " = " + lowError);
+            Debug.Log("highError: " + maxAngleQuaternionZ + " - " + new Quaternion(0f, 0f, currentOrientation.z, currentOrientation.w) + " = " + highError);
+        }
+
+
+        Quaternion angularVelocity = ToEulerAngleQuaternion(currentAngularVelocity);
+        Quaternion delta = angularVelocity * requiredRotationZ;
 
         var orthogonalizeMatrix = new Matrix4x4()
         {
             m00 =
-                                          -requiredRotation.x * -requiredRotation.x + -requiredRotation.y * -requiredRotation.y +
-                                          -requiredRotation.z * -requiredRotation.z,
+                                          -requiredRotationZ.x * -requiredRotationZ.x + -requiredRotationZ.y * -requiredRotationZ.y +
+                                          -requiredRotationZ.z * -requiredRotationZ.z,
             m01 =
-                                          -requiredRotation.x * requiredRotation.w + -requiredRotation.y * -requiredRotation.z +
-                                          -requiredRotation.z * requiredRotation.y,
+                                          -requiredRotationZ.x * requiredRotationZ.w + -requiredRotationZ.y * -requiredRotationZ.z +
+                                          -requiredRotationZ.z * requiredRotationZ.y,
             m02 =
-                                          -requiredRotation.x * requiredRotation.z + -requiredRotation.y * requiredRotation.w +
-                                          -requiredRotation.z * -requiredRotation.x,
+                                          -requiredRotationZ.x * requiredRotationZ.z + -requiredRotationZ.y * requiredRotationZ.w +
+                                          -requiredRotationZ.z * -requiredRotationZ.x,
             m03 =
-                                          -requiredRotation.x * -requiredRotation.y + -requiredRotation.y * requiredRotation.x +
-                                          -requiredRotation.z * requiredRotation.w,
+                                          -requiredRotationZ.x * -requiredRotationZ.y + -requiredRotationZ.y * requiredRotationZ.x +
+                                          -requiredRotationZ.z * requiredRotationZ.w,
             m10 =
-                                          requiredRotation.w * -requiredRotation.x + -requiredRotation.z * -requiredRotation.y +
-                                          requiredRotation.y * -requiredRotation.z,
+                                          requiredRotationZ.w * -requiredRotationZ.x + -requiredRotationZ.z * -requiredRotationZ.y +
+                                          requiredRotationZ.y * -requiredRotationZ.z,
             m11 =
-                                          requiredRotation.w * requiredRotation.w + -requiredRotation.z * -requiredRotation.z +
-                                          requiredRotation.y * requiredRotation.y,
+                                          requiredRotationZ.w * requiredRotationZ.w + -requiredRotationZ.z * -requiredRotationZ.z +
+                                          requiredRotationZ.y * requiredRotationZ.y,
             m12 =
-                                          requiredRotation.w * requiredRotation.z + -requiredRotation.z * requiredRotation.w +
-                                          requiredRotation.y * -requiredRotation.x,
+                                          requiredRotationZ.w * requiredRotationZ.z + -requiredRotationZ.z * requiredRotationZ.w +
+                                          requiredRotationZ.y * -requiredRotationZ.x,
             m13 =
-                                          requiredRotation.w * -requiredRotation.y + -requiredRotation.z * requiredRotation.x +
-                                          requiredRotation.y * requiredRotation.w,
+                                          requiredRotationZ.w * -requiredRotationZ.y + -requiredRotationZ.z * requiredRotationZ.x +
+                                          requiredRotationZ.y * requiredRotationZ.w,
             m20 =
-                                          requiredRotation.z * -requiredRotation.x + requiredRotation.w * -requiredRotation.y +
-                                          -requiredRotation.x * -requiredRotation.z,
+                                          requiredRotationZ.z * -requiredRotationZ.x + requiredRotationZ.w * -requiredRotationZ.y +
+                                          -requiredRotationZ.x * -requiredRotationZ.z,
             m21 =
-                                          requiredRotation.z * requiredRotation.w + requiredRotation.w * -requiredRotation.z +
-                                          -requiredRotation.x * requiredRotation.y,
+                                          requiredRotationZ.z * requiredRotationZ.w + requiredRotationZ.w * -requiredRotationZ.z +
+                                          -requiredRotationZ.x * requiredRotationZ.y,
             m22 =
-                                          requiredRotation.z * requiredRotation.z + requiredRotation.w * requiredRotation.w +
-                                          -requiredRotation.x * -requiredRotation.x,
+                                          requiredRotationZ.z * requiredRotationZ.z + requiredRotationZ.w * requiredRotationZ.w +
+                                          -requiredRotationZ.x * -requiredRotationZ.x,
             m23 =
-                                          requiredRotation.z * -requiredRotation.y + requiredRotation.w * requiredRotation.x +
-                                          -requiredRotation.x * requiredRotation.w,
+                                          requiredRotationZ.z * -requiredRotationZ.y + requiredRotationZ.w * requiredRotationZ.x +
+                                          -requiredRotationZ.x * requiredRotationZ.w,
             m30 =
-                                          -requiredRotation.y * -requiredRotation.x + requiredRotation.x * -requiredRotation.y +
-                                          requiredRotation.w * -requiredRotation.z,
+                                          -requiredRotationZ.y * -requiredRotationZ.x + requiredRotationZ.x * -requiredRotationZ.y +
+                                          requiredRotationZ.w * -requiredRotationZ.z,
             m31 =
-                                          -requiredRotation.y * requiredRotation.w + requiredRotation.x * -requiredRotation.z +
-                                          requiredRotation.w * requiredRotation.y,
+                                          -requiredRotationZ.y * requiredRotationZ.w + requiredRotationZ.x * -requiredRotationZ.z +
+                                          requiredRotationZ.w * requiredRotationZ.y,
             m32 =
-                                          -requiredRotation.y * requiredRotation.z + requiredRotation.x * requiredRotation.w +
-                                          requiredRotation.w * -requiredRotation.x,
+                                          -requiredRotationZ.y * requiredRotationZ.z + requiredRotationZ.x * requiredRotationZ.w +
+                                          requiredRotationZ.w * -requiredRotationZ.x,
             m33 =
-                                          -requiredRotation.y * -requiredRotation.y + requiredRotation.x * requiredRotation.x +
-                                          requiredRotation.w * requiredRotation.w,
+                                          -requiredRotationZ.y * -requiredRotationZ.y + requiredRotationZ.x * requiredRotationZ.x +
+                                          requiredRotationZ.w * requiredRotationZ.w,
         };
 
-        Quaternion neededAngularVelocity = GetOutput(lowError, highError, deltaTime);
+        Quaternion neededAngularVelocity = GetOutput(lowError, highError, delta, deltaTime);
 
         // From here, review
 
         neededAngularVelocity = MultiplyAsVector(orthogonalizeMatrix, neededAngularVelocity);
 
         Quaternion doubleNegative = neededAngularVelocity.Multiply(-2.0f);
-        Quaternion result = doubleNegative * Quaternion.Inverse(requiredRotation);
+        Quaternion resultZ = doubleNegative * Quaternion.Inverse(requiredRotationZ);
 
-        Debug.Log("resultZ: " + result);
+        if (printZ)
+        {
+            Debug.Log("resultZ: " + resultZ);
+            Debug.Log("---------------------------------");
+        }
 
-        return new Vector3(result.x, result.y, result.z);
+        return new Vector3(resultZ.x, resultZ.y, resultZ.z);
     }
 
     
-    private Quaternion GetOutput(Quaternion lowError, Quaternion highError, float deltaTime)
+    private Quaternion GetOutput(Quaternion lowError, Quaternion highError, Quaternion delta, float deltaTime)
     {
         var output = new Quaternion
         {
-            x = this._internalAntagonisticController[0].GetOutput(lowError.x, highError.x, deltaTime),
-            y = this._internalAntagonisticController[1].GetOutput(lowError.y, highError.y, deltaTime),
-            z = this._internalAntagonisticController[2].GetOutput(lowError.z, highError.z, deltaTime),
-            w = this._internalAntagonisticController[3].GetOutput(lowError.w, highError.w, deltaTime)
+            x = this._internalAntagonisticController[0].GetOutput(lowError.x, highError.x, delta.x, deltaTime),
+            y = this._internalAntagonisticController[1].GetOutput(lowError.y, highError.y, delta.y, deltaTime),
+            z = this._internalAntagonisticController[2].GetOutput(lowError.z, highError.z, delta.z, deltaTime),
+            w = this._internalAntagonisticController[3].GetOutput(lowError.w, highError.w, delta.w, deltaTime)
         };
 
         return output;

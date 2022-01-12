@@ -6,7 +6,8 @@ public class throwBall : MonoBehaviour
 {
 
     public GameObject prefab;
-    public float f = 1f;
+    public float frequency = 1f;
+    public Vector3 force;
     public float accT;
     public float accTDestroy;
 
@@ -22,10 +23,12 @@ public class throwBall : MonoBehaviour
         accT += Time.deltaTime;
         accTDestroy += Time.deltaTime;
 
-        if (accT > f)
+        if (accT > frequency)
         {
             GameObject ball = Instantiate(prefab, this.transform);
+            ball.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(force.x, force.y, force.z), ForceMode.Impulse);
             accT = 0f;
         }
+
     }
 }

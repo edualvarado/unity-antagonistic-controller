@@ -29,6 +29,11 @@ public class AntagonisticJointQuaternion : MonoBehaviour
     public float angleY;
     public float angleZ;
 
+    [Header("Debug")]
+    public bool printX;
+    public bool printY;
+    public bool printZ;
+
     [Header("PD Controller mode")]
     public bool useJointPD = false;
 
@@ -201,30 +206,33 @@ public class AntagonisticJointQuaternion : MonoBehaviour
                                                                                                      DesiredLocalOrientation,
                                                                                                      this._objectRigidbody.angularVelocity,
                                                                                                      gravityTorqueVectorLocal,
-                                                                                                     Time.fixedDeltaTime);
-        
+                                                                                                     Time.fixedDeltaTime, 
+                                                                                                     printX);
 
-        
+
+
         Vector3 requiredAngularAccelerationY = this._antagonisticPDControllerQuaternion.ComputeRequiredAngularAccelerationY(0f, angleY, 0f,
                                                                                                      this._currentTransform.localRotation,
                                                                                                      DesiredLocalOrientation,
                                                                                                      this._objectRigidbody.angularVelocity,
                                                                                                      gravityTorqueVectorLocal,
-                                                                                                     Time.fixedDeltaTime);
+                                                                                                     Time.fixedDeltaTime,
+                                                                                                     printY);
 
         Vector3 requiredAngularAccelerationZ = this._antagonisticPDControllerQuaternion.ComputeRequiredAngularAccelerationZ(0f, 0f, angleZ,
                                                                                                      this._currentTransform.localRotation,
                                                                                                      DesiredLocalOrientation,
                                                                                                      this._objectRigidbody.angularVelocity,
                                                                                                      gravityTorqueVectorLocal,
-                                                                                                     Time.fixedDeltaTime);
+                                                                                                     Time.fixedDeltaTime,
+                                                                                                     printZ);
         
 
         // ! Changed Acceleation by Force
 
         if(!useJointPD)
         {
-            //this._objectRigidbody.AddTorque(requiredAngularAccelerationX, ForceMode.Force);
+            this._objectRigidbody.AddTorque(requiredAngularAccelerationX, ForceMode.Acceleration);
             //this._objectRigidbody.AddTorque(requiredAngularAccelerationY, ForceMode.Force);
             //this._objectRigidbody.AddTorque(requiredAngularAccelerationZ, ForceMode.Force);
         }

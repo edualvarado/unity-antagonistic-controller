@@ -44,14 +44,15 @@ public class AntagonisticPDController
     /// <param name="currentHighError"></param>
     /// <param name="dt"></param>
     /// <returns></returns>
-    public float GetOutput(float currentLowError, float currentHighError, float dt)
+    public float GetOutput(float currentLowError, float currentHighError, float delta, float dt)
     {
         _PL = currentLowError;
         _PH = currentHighError;
         
         _P = currentLowError;
         _I += _P * dt;
-        _D = (_P - _previousError) / dt;
+        //_D = (_P - _previousError) / dt;
+        _D = (delta) / dt;
 
         _previousError = currentLowError;
 

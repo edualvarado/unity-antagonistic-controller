@@ -32,7 +32,7 @@ public class SafetyRegionRight : SafetyRegion
     {
         if (other.CompareTag("Obstacle"))
         {
-            Debug.Log("[INFO] Entering obstacle RIGHT");
+            //Debug.Log("[INFO] Entering obstacle RIGHT");
 
             // We protect our shoulder in this version.
             Vector3 raycastOriginRight = originRegion.position;
@@ -52,7 +52,7 @@ public class SafetyRegionRight : SafetyRegion
     {
         if(other.CompareTag("Obstacle"))
         {
-            Debug.Log("[INFO] Staying obstacle RIGHT");
+            //Debug.Log("[INFO] Staying obstacle RIGHT");
 
             // We protect our shoulder in this version.
             Vector3 raycastOriginRight = originRegion.position;
@@ -91,7 +91,7 @@ public class SafetyRegionRight : SafetyRegion
     {
         if (other.CompareTag("Obstacle"))
         {
-            Debug.Log("[INFO] Exiting obstacle RIGHT");
+            //Debug.Log("[INFO] Exiting obstacle RIGHT");
 
             // For the moment is not used
             isRightHandReturningInitially = true;

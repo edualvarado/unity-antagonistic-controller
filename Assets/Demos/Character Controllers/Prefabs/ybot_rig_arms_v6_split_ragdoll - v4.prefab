@@ -197,6 +197,9 @@ MonoBehaviour:
   angleX: 0
   angleY: 0
   angleZ: 0
+  printX: 0
+  printY: 0
+  printZ: 0
   useJointPD: 1
 --- !u!1 &4765623532586227487
 GameObject:
@@ -815,6 +818,9 @@ MonoBehaviour:
   angleX: 0
   angleY: 0
   angleZ: 0
+  printX: 0
+  printY: 0
+  printZ: 0
   useJointPD: 1
 --- !u!1 &4765623532904624680
 GameObject:
@@ -2518,6 +2524,9 @@ MonoBehaviour:
   angleX: 0
   angleY: 0
   angleZ: 0
+  printX: 0
+  printY: 0
+  printZ: 0
   useJointPD: 1
 --- !u!1 &4765623533429162650
 GameObject:
@@ -3041,6 +3050,9 @@ MonoBehaviour:
   angleX: 0
   angleY: 0
   angleZ: 0
+  printX: 0
+  printY: 0
+  printZ: 0
   useJointPD: 1
 --- !u!1 &4765623533631331841
 GameObject:
@@ -4962,6 +4974,9 @@ MonoBehaviour:
   angleX: 0
   angleY: 0
   angleZ: 0
+  printX: 0
+  printY: 0
+  printZ: 0
   useJointPD: 1
 --- !u!1 &4765623534659419155
 GameObject:
@@ -5205,7 +5220,10 @@ MonoBehaviour:
   Ki: 0
   Kd: 0
   kinematicArm: {fileID: 0}
-  angleX: 0
-  angleY: 0
-  angleZ: 0
+  angleX: 1
+  angleY: 1
+  angleZ: 1
+  printX: 0
+  printY: 0
+  printZ: 0
   useJointPD: 1
