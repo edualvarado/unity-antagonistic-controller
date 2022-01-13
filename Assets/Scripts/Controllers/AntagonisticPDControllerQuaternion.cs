@@ -149,11 +149,10 @@ public class AntagonisticPDControllerQuaternion
     /// </returns>
     public Vector3 ComputeRequiredAngularAccelerationX(float angleX, float angleY, float angleZ, Quaternion currentOrientation, Quaternion desiredOrientation, Vector3 currentAngularVelocity, Vector3 extForces, float deltaTime, bool printX)
     {
-        // Here, we need the min and max angles! For the moment, hardtype!
+        // 1. Limit angles for the antagonistic controller.
         // If I put here other Euler angle, it does not work!
         Vector3 minAngleEulerX = new Vector3(0f, 0f, 0f);
         Vector3 maxAngleEulerX = new Vector3(180f, 0f, 0f);
-
         Quaternion minAngleQuaternionX = Quaternion.Euler(minAngleEulerX);
         Quaternion maxAngleQuaternionX = Quaternion.Euler(maxAngleEulerX);
 
@@ -163,7 +162,7 @@ public class AntagonisticPDControllerQuaternion
             Debug.Log("maxAngleQuaternionX: " + maxAngleQuaternionX);
         }
 
-        // requiredRotation is already calculated
+        // 2. Retrieve Target Quaternion, which is already calculated by the upper class.
         //Quaternion requiredRotationX = desiredOrientation;
         //Quaternion requiredRotationX = new Quaternion(desiredOrientation.x, 0f, 0f, desiredOrientation.w);
         Quaternion requiredRotationX = Quaternion.Euler(new Vector3(angleX, 0f, 0f));
@@ -173,7 +172,7 @@ public class AntagonisticPDControllerQuaternion
             Debug.Log("requiredRotationX: " + requiredRotationX);
         }
 
-        // Isoline
+        // 3. Isoline and gains.
         float interceptX = (0f) / (minAngleQuaternionX.x - requiredRotationX.x);
         float slopeX = (minAngleQuaternionX.x - requiredRotationX.x) / (requiredRotationX.x - maxAngleQuaternionX.x);
         KPH = KPL * slopeX + interceptX;
@@ -188,9 +187,9 @@ public class AntagonisticPDControllerQuaternion
             Debug.Log("KPL: " + KPL + " - KPH: " + KPH);
         }
 
+        // 4. Calculate low and upper errors.
         //Quaternion lowError = QuaternionOpExtensions.SubtractTwo(minAngleQuaternion, currentOrientation);
         //Quaternion highError = QuaternionOpExtensions.SubtractTwo(maxAngleQuaternion, currentOrientation);
-
         Quaternion lowError = QuaternionOpExtensions.SubtractTwo(minAngleQuaternionX, new Quaternion(currentOrientation.x, 0f, 0f, currentOrientation.w));
         Quaternion highError = QuaternionOpExtensions.SubtractTwo(maxAngleQuaternionX, new Quaternion(currentOrientation.x, 0f, 0f, currentOrientation.w));
 
@@ -200,6 +199,7 @@ public class AntagonisticPDControllerQuaternion
             Debug.Log("highError: " + maxAngleQuaternionX + " - " + new Quaternion(currentOrientation.x, 0f, 0f, currentOrientation.w) + " = " + highError);
         }
 
+        // 5. Angular Velocity.
         Quaternion angularVelocity = ToEulerAngleQuaternion(currentAngularVelocity);
         Quaternion delta = angularVelocity * requiredRotationX;
 
@@ -258,9 +258,7 @@ public class AntagonisticPDControllerQuaternion
         // From here, review
 
         Quaternion neededAngularVelocity = GetOutput(lowError, highError, delta, deltaTime);
-
         neededAngularVelocity = MultiplyAsVector(orthogonalizeMatrix, neededAngularVelocity);
-
         Quaternion doubleNegative = neededAngularVelocity.Multiply(-2.0f);
         Quaternion resultX = doubleNegative * Quaternion.Inverse(requiredRotationX);
 
@@ -358,11 +356,10 @@ public class AntagonisticPDControllerQuaternion
     /// </returns>
     public Vector3 ComputeRequiredAngularAccelerationY(float angleX, float angleY, float angleZ, Quaternion currentOrientation, Quaternion desiredOrientation, Vector3 currentAngularVelocity, Vector3 extForces, float deltaTime, bool printY)
     {
-        // Here, we need the min and max angles! For the moment, hardtype!
+        // 1. Limit angles for the antagonistic controller.
         // If I put here other Euler angle, it does not work!
         Vector3 minAngleEulerY = new Vector3(0f, -20f, 0f);
         Vector3 maxAngleEulerY = new Vector3(0f, 20f, 0f);
-
         Quaternion minAngleQuaternionY = Quaternion.Euler(minAngleEulerY);
         Quaternion maxAngleQuaternionY = Quaternion.Euler(maxAngleEulerY);
 
@@ -372,7 +369,7 @@ public class AntagonisticPDControllerQuaternion
             Debug.Log("maxAngleQuaternionY: " + maxAngleQuaternionY);
         }
 
-        // requiredRotation is already calculated
+        // 2. Retrieve Target Quaternion, which is already calculated by the upper class.
         //Quaternion requiredRotationY = desiredOrientation;
         //Quaternion requiredRotationY = new Quaternion(0f, desiredOrientation.y, 0f, desiredOrientation.w);
         Quaternion requiredRotationY = Quaternion.Euler(new Vector3(0f, angleY, 0f));
@@ -382,7 +379,7 @@ public class AntagonisticPDControllerQuaternion
             Debug.Log("requiredRotationY: " + requiredRotationY);
         }
 
-        // Isoline
+        // 3. Isoline and gains.
         float interceptY = (0f) / (minAngleQuaternionY.y - requiredRotationY.y);
         float slopeY = (minAngleQuaternionY.y - requiredRotationY.y) / (requiredRotationY.y - requiredRotationY.y);
         KPH = KPL * slopeY + interceptY;
@@ -390,9 +387,9 @@ public class AntagonisticPDControllerQuaternion
         //float slopeY = (minAngleEuler.y - angleY) / (angleY - maxAngleEuler.y);
         //KPH = KPL * slopeY + interceptY;
 
+        // 4. Calculate low and upper errors.
         //Quaternion lowError = QuaternionOpExtensions.SubtractTwo(minAngleQuaternion, currentOrientation);
         //Quaternion highError = QuaternionOpExtensions.SubtractTwo(maxAngleQuaternion, currentOrientation);
-
         Quaternion lowError = QuaternionOpExtensions.SubtractTwo(minAngleQuaternionY, new Quaternion(0f, currentOrientation.y, 0f, currentOrientation.w));
         Quaternion highError = QuaternionOpExtensions.SubtractTwo(maxAngleQuaternionY, new Quaternion(0f, currentOrientation.y, 0f, currentOrientation.w));
 
@@ -402,6 +399,7 @@ public class AntagonisticPDControllerQuaternion
             Debug.Log("highError: " + maxAngleQuaternionY + " - " + new Quaternion(0f, currentOrientation.y, 0f, currentOrientation.w) + " = " + highError);
         }
 
+        // 5. Angular Velocity.
         Quaternion angularVelocity = ToEulerAngleQuaternion(currentAngularVelocity);
         Quaternion delta = angularVelocity * requiredRotationY;
 
@@ -460,9 +458,7 @@ public class AntagonisticPDControllerQuaternion
         // From here, review
 
         Quaternion neededAngularVelocity = GetOutput(lowError, highError, delta, deltaTime);
-
         neededAngularVelocity = MultiplyAsVector(orthogonalizeMatrix, neededAngularVelocity);
-
         Quaternion doubleNegative = neededAngularVelocity.Multiply(-2.0f);
         Quaternion resultY = doubleNegative * Quaternion.Inverse(requiredRotationY);
 
@@ -488,11 +484,10 @@ public class AntagonisticPDControllerQuaternion
     /// </returns>
     public Vector3 ComputeRequiredAngularAccelerationZ(float angleX, float angleY, float angleZ, Quaternion currentOrientation, Quaternion desiredOrientation, Vector3 currentAngularVelocity, Vector3 extForces, float deltaTime, bool printZ)
     {
-        // Here, we need the min and max angles! For the moment, hardtype!
+        // 1. Limit angles for the antagonistic controller.
         // If I put here other Euler angle, it does not work!
         Vector3 minAngleEulerZ = new Vector3(0f, 0f, -25f);
         Vector3 maxAngleEulerZ = new Vector3(0f, 0f, 25f);
-
         Quaternion minAngleQuaternionZ = Quaternion.Euler(minAngleEulerZ);
         Quaternion maxAngleQuaternionZ = Quaternion.Euler(maxAngleEulerZ);
         
@@ -502,7 +497,7 @@ public class AntagonisticPDControllerQuaternion
             Debug.Log("maxAngleQuaternionZ: " + maxAngleQuaternionZ);
         }
 
-        // requiredRotation is already calculated
+        // 2. Retrieve Target Quaternion, which is already calculated by the upper class.
         //Quaternion requiredRotationZ = desiredOrientation;
         //Quaternion requiredRotationZ = new Quaternion(0f, 0f, desiredOrientation.z, desiredOrientation.w);
         Quaternion requiredRotationZ = Quaternion.Euler(new Vector3(0f, 0f, angleZ));
@@ -512,7 +507,7 @@ public class AntagonisticPDControllerQuaternion
             Debug.Log("requiredRotationZ: " + requiredRotationZ);
         }
 
-        // Isoline
+        // 3. Isoline and gains.
         float interceptZ = (0f) / (minAngleQuaternionZ.z - requiredRotationZ.z);
         float slopeZ = (minAngleQuaternionZ.z - requiredRotationZ.z) / (requiredRotationZ.z - maxAngleQuaternionZ.z);
         KPH = KPL * slopeZ + interceptZ;
@@ -520,9 +515,9 @@ public class AntagonisticPDControllerQuaternion
         //float slopeZ = (minAngleEuler.z - angleZ) / (angleZ - maxAngleEuler.z);
         //KPH = KPL * slopeZ + interceptZ;
 
+        // 4. Calculate low and upper errors.
         //Quaternion lowError = QuaternionOpExtensions.SubtractTwo(minAngleQuaternion, currentOrientation);
         //Quaternion highError = QuaternionOpExtensions.SubtractTwo(maxAngleQuaternion, currentOrientation);
-
         Quaternion lowError = QuaternionOpExtensions.SubtractTwo(minAngleQuaternionZ, new Quaternion(0f, 0f, currentOrientation.z, currentOrientation.w));
         Quaternion highError = QuaternionOpExtensions.SubtractTwo(maxAngleQuaternionZ, new Quaternion(0f, 0f, currentOrientation.z, currentOrientation.w));
 
@@ -532,7 +527,7 @@ public class AntagonisticPDControllerQuaternion
             Debug.Log("highError: " + maxAngleQuaternionZ + " - " + new Quaternion(0f, 0f, currentOrientation.z, currentOrientation.w) + " = " + highError);
         }
 
-
+        // 5. Angular Velocity.
         Quaternion angularVelocity = ToEulerAngleQuaternion(currentAngularVelocity);
         Quaternion delta = angularVelocity * requiredRotationZ;
 
@@ -588,12 +583,10 @@ public class AntagonisticPDControllerQuaternion
                                           requiredRotationZ.w * requiredRotationZ.w,
         };
 
-        Quaternion neededAngularVelocity = GetOutput(lowError, highError, delta, deltaTime);
-
         // From here, review
 
+        Quaternion neededAngularVelocity = GetOutput(lowError, highError, delta, deltaTime);
         neededAngularVelocity = MultiplyAsVector(orthogonalizeMatrix, neededAngularVelocity);
-
         Quaternion doubleNegative = neededAngularVelocity.Multiply(-2.0f);
         Quaternion resultZ = doubleNegative * Quaternion.Inverse(requiredRotationZ);
 
@@ -606,7 +599,6 @@ public class AntagonisticPDControllerQuaternion
         return new Vector3(resultZ.x, resultZ.y, resultZ.z);
     }
 
-    
     private Quaternion GetOutput(Quaternion lowError, Quaternion highError, Quaternion delta, float deltaTime)
     {
         var output = new Quaternion

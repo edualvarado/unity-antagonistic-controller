@@ -153,10 +153,10 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         this._antagonisticPDControllerQuaternion.KI = this.Ki;
         this._antagonisticPDControllerQuaternion.KD = this.Kd;
 
-        // Get rotation that we need to copy (kinematic)
+        // Get rotation that we need to mimic (kinematic)
         kinematicAngleQuaternion = kinematicArm.transform.localRotation;
 
-        // The first method already sets the target at the configurable joint.
+        // The first method (normal PD) already sets the target at the configurable joint. Otherwise, just retrieve target quaternion and turn off normal PD.
         if (useJointPD)
         {
             ConfigurableJointExtensions.SetTargetRotationLocal(_jointAnt, kinematicAngleQuaternion, _initialLocalRotation);
@@ -198,9 +198,8 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         gravityTorqueVector = Vector3.Cross(distance3D, _objectRigidbody.mass * gravityAcc); // Remember: wrt. global coord. system
         gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // Remember: wrt. local coord. system
 
-        // The PID controller takes the current orientation of an object, its desired orientation and the current angular velocity
-        // and returns the required angular acceleration to rotate towards the desired orientation.
-        
+        // The PD controller takes the current orientation of an object, its desired orientation and the current angular velocity
+        // and returns the required angular acceleration to rotate towards the desired orientation.        
         Vector3 requiredAngularAccelerationX = this._antagonisticPDControllerQuaternion.ComputeRequiredAngularAccelerationX(angleX, 0f, 0f,
                                                                                                      this._currentTransform.localRotation,
                                                                                                      DesiredLocalOrientation,
@@ -210,7 +209,7 @@ public class AntagonisticJointQuaternion : MonoBehaviour
                                                                                                      printX);
 
 
-
+        /*
         Vector3 requiredAngularAccelerationY = this._antagonisticPDControllerQuaternion.ComputeRequiredAngularAccelerationY(0f, angleY, 0f,
                                                                                                      this._currentTransform.localRotation,
                                                                                                      DesiredLocalOrientation,
@@ -226,15 +225,17 @@ public class AntagonisticJointQuaternion : MonoBehaviour
                                                                                                      gravityTorqueVectorLocal,
                                                                                                      Time.fixedDeltaTime,
                                                                                                      printZ);
-        
+        */
 
-        // ! Changed Acceleation by Force
-
+        // TODO: Changed Acceleation by Force. Use AddTorque() or AddRelativeTorque()?
         if(!useJointPD)
         {
             this._objectRigidbody.AddTorque(requiredAngularAccelerationX, ForceMode.Acceleration);
-            //this._objectRigidbody.AddTorque(requiredAngularAccelerationY, ForceMode.Force);
-            //this._objectRigidbody.AddTorque(requiredAngularAccelerationZ, ForceMode.Force);
+
+            /*
+            this._objectRigidbody.AddTorque(requiredAngularAccelerationY, ForceMode.Force);
+            this._objectRigidbody.AddTorque(requiredAngularAccelerationZ, ForceMode.Force);
+            */
         }
     }
 
