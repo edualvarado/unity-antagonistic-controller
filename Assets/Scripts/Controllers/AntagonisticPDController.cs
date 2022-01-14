@@ -61,5 +61,29 @@ public class AntagonisticPDController
         return output;
     }
 
+    /// <summary>
+    /// TEST - Computes the corrective output using PD formulation. 
+    /// We have two errors, lower and upper ones. The rest is the same than the usual formulation.
+    /// </summary>
+    /// <param name="currentLowError"></param>
+    /// <param name="currentHighError"></param>
+    /// <param name="dt"></param>
+    /// <returns></returns>
+    public float GetOutputPD(float error, float delta, float dt)
+    {
+        _P = error;
+        _I += _P * dt;
+        _D = (delta) / dt;
+
+        //Debug.Log("_P (error): " + _P);
+        //Debug.Log("_D: " + _D);
+        //Debug.Log("_kPL " + _kPL);
+        //Debug.Log("_kD " + _kD);
+
+        float output = _P * _kPL + _I * _kI + _D * _kD;
+
+        return output;
+    }
+
     #endregion
 }

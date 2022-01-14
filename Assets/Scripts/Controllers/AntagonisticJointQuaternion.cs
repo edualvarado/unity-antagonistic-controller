@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,15 +10,23 @@ public class AntagonisticJointQuaternion : MonoBehaviour
 
     private readonly AntagonisticPDControllerQuaternion _antagonisticPDControllerQuaternion = new AntagonisticPDControllerQuaternion(0.05f, 0.0f, 0.0f, 0.01f);
 
+    // TEST - Create one controller directly
+    private readonly AntagonisticPDController _pdTestController = new AntagonisticPDController(1f, 0f, 0f, 0.1f);
+
     #endregion
 
     #region Fields
 
     private Transform _currentTransform;
     private Rigidbody _objectRigidbody;
-    private Quaternion _initialLocalRotation;
+    private Quaternion _initialLocalOrientation;
+    private Quaternion _initialGlobalOrientation;
+
+    [Header("Debug")]
+    public Transform mimic;
 
     [Header("Antagonistic PD Controller - Settings")]
+    public bool applyTorque;
     public float Kpl;
     public float Kph;
     public float Ki;
@@ -34,10 +43,11 @@ public class AntagonisticJointQuaternion : MonoBehaviour
     public bool printY;
     public bool printZ;
 
-    [Header("PD Controller mode")]
+    [Header("Configurable joint PD Controller mode")]
     public bool useJointPD = false;
 
-    private Quaternion kinematicAngleQuaternion;
+    private Quaternion kinematicLocalOrientation;
+    private Quaternion kinematicGlobalOrientation;
     private ConfigurableJoint _jointAnt;
     private Vector3 distance3D;
     private Vector3 gravityAcc;
@@ -48,7 +58,7 @@ public class AntagonisticJointQuaternion : MonoBehaviour
 
     #region Instance Properties
 
-    public Quaternion DesiredLocalOrientation { get; set; }
+    public Quaternion DesiredLocalRotation { get; set; }
 
     #endregion
 
@@ -135,14 +145,15 @@ public class AntagonisticJointQuaternion : MonoBehaviour
     private void Awake()
     {
         this._currentTransform = transform;
-        this._initialLocalRotation = transform.localRotation;
+        this._initialLocalOrientation = transform.localRotation;
+        this._initialGlobalOrientation = transform.rotation;
         this._objectRigidbody = GetComponent<Rigidbody>();
         this._jointAnt = GetComponent<ConfigurableJoint>();
     }
 
     private void FixedUpdate()
     {
-        if (DesiredLocalOrientation == null || this._currentTransform == null || this._objectRigidbody == null)
+        if (DesiredLocalRotation == null || this._currentTransform == null || this._objectRigidbody == null)
         {
             return;
         }
@@ -153,13 +164,27 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         this._antagonisticPDControllerQuaternion.KI = this.Ki;
         this._antagonisticPDControllerQuaternion.KD = this.Kd;
 
+        // TEST
+        this._pdTestController.KPL = this.Kpl;
+        this._pdTestController.KPH = this.Kph;
+        this._pdTestController.KI = this.Ki;
+        this._pdTestController.KD = this.Kd;
+
         // Get rotation that we need to mimic (kinematic)
-        kinematicAngleQuaternion = kinematicArm.transform.localRotation;
+        kinematicLocalOrientation = kinematicArm.transform.localRotation;
+        kinematicGlobalOrientation = kinematicArm.transform.rotation;
 
         // The first method (normal PD) already sets the target at the configurable joint. Otherwise, just retrieve target quaternion and turn off normal PD.
         if (useJointPD)
         {
-            ConfigurableJointExtensions.SetTargetRotationLocal(_jointAnt, kinematicAngleQuaternion, _initialLocalRotation);
+            // Local
+            DesiredLocalRotation = ConfigurableJointExtensions.GetTargetRotationLocal(_jointAnt, kinematicLocalOrientation, _initialLocalOrientation, mimic);
+            ConfigurableJointExtensions.SetTargetRotationLocal(_jointAnt, kinematicLocalOrientation, _initialLocalOrientation, mimic);
+            
+            // Global
+            //DesiredLocalRotation = ConfigurableJointExtensions.GetTargetRotation(_jointAnt, kinematicGlobalOrientation, _initialGlobalOrientation, mimic);
+            //ConfigurableJointExtensions.SetTargetRotation(_jointAnt, kinematicGlobalOrientation, _initialGlobalOrientation, mimic);
+
             _jointAnt.rotationDriveMode = RotationDriveMode.XYAndZ;
             var angularXDrive = _jointAnt.angularXDrive;
             angularXDrive.positionSpring = 1600f;
@@ -174,7 +199,11 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         }
         else
         {
-            DesiredLocalOrientation = ConfigurableJointExtensions.GetTargetRotationLocal(_jointAnt, kinematicAngleQuaternion, _initialLocalRotation);
+            // Local
+            DesiredLocalRotation = ConfigurableJointExtensions.GetTargetRotationLocal(_jointAnt, kinematicLocalOrientation, _initialLocalOrientation, mimic);
+            
+            // Global
+            //DesiredLocalRotation = ConfigurableJointExtensions.GetTargetRotation(_jointAnt, kinematicGlobalOrientation, _initialGlobalOrientation, mimic);
 
             _jointAnt.rotationDriveMode = RotationDriveMode.XYAndZ;
             var angularXDrive = _jointAnt.angularXDrive;
@@ -198,6 +227,44 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         gravityTorqueVector = Vector3.Cross(distance3D, _objectRigidbody.mass * gravityAcc); // Remember: wrt. global coord. system
         gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // Remember: wrt. local coord. system
 
+        // TEST: Axis-angle GLOBAL
+        /*
+        Vector3 requiredAngularAcceleration = ComputeRequiredAngularAcceleration(this._currentTransform.rotation,
+                                                                         DesiredLocalRotation,
+                                                                         this._objectRigidbody.angularVelocity,
+                                                                         gravityTorqueVectorLocal,
+                                                                         Time.fixedDeltaTime);
+
+        if (!useJointPD)
+        {
+            Debug.Log("[" + this.gameObject.name + "] requiredAngularAcceleration: " + requiredAngularAcceleration);
+
+            if (applyTorque)
+                this._objectRigidbody.AddTorque(requiredAngularAcceleration, ForceMode.Acceleration);
+        }
+        */
+
+        // TEST: Axis-angle LOCAL
+        Vector3 requiredAngularAcceleration = ComputeRequiredAngularAcceleration(this._currentTransform.localRotation,
+                                                                                 DesiredLocalRotation,
+                                                                                 this._objectRigidbody.angularVelocity,
+                                                                                 gravityTorqueVectorLocal,
+                                                                                 Time.fixedDeltaTime);
+        
+        if (!useJointPD)
+        {
+            Debug.Log("[" + this.gameObject.name + "] requiredAngularAcceleration: " + requiredAngularAcceleration);
+            
+            if(applyTorque)
+            {
+                //this._objectRigidbody.AddRelativeTorque(requiredAngularAcceleration, ForceMode.Acceleration);
+                this._objectRigidbody.AddTorque(requiredAngularAcceleration, ForceMode.Acceleration);
+            }
+
+        }
+       
+        // TEST: Previous version
+        /*
         // The PD controller takes the current orientation of an object, its desired orientation and the current angular velocity
         // and returns the required angular acceleration to rotate towards the desired orientation.        
         Vector3 requiredAngularAccelerationX = this._antagonisticPDControllerQuaternion.ComputeRequiredAngularAccelerationX(angleX, 0f, 0f,
@@ -209,7 +276,7 @@ public class AntagonisticJointQuaternion : MonoBehaviour
                                                                                                      printX);
 
 
-        /*
+       
         Vector3 requiredAngularAccelerationY = this._antagonisticPDControllerQuaternion.ComputeRequiredAngularAccelerationY(0f, angleY, 0f,
                                                                                                      this._currentTransform.localRotation,
                                                                                                      DesiredLocalOrientation,
@@ -225,19 +292,60 @@ public class AntagonisticJointQuaternion : MonoBehaviour
                                                                                                      gravityTorqueVectorLocal,
                                                                                                      Time.fixedDeltaTime,
                                                                                                      printZ);
-        */
-
+        
         // TODO: Changed Acceleation by Force. Use AddTorque() or AddRelativeTorque()?
-        if(!useJointPD)
+        if (!useJointPD)
         {
             this._objectRigidbody.AddTorque(requiredAngularAccelerationX, ForceMode.Acceleration);
-
-            /*
             this._objectRigidbody.AddTorque(requiredAngularAccelerationY, ForceMode.Force);
             this._objectRigidbody.AddTorque(requiredAngularAccelerationZ, ForceMode.Force);
-            */
         }
+        */
     }
+
+    /// <summary>
+    /// New method to work with angle-axis
+    /// </summary>
+    /// <param name="localOrientation"></param>
+    /// <param name="desiredLocalRotation"></param>
+    /// <param name="angularVelocity"></param>
+    /// <param name="gravityTorqueVectorLocal"></param>
+    /// <param name="fixedDeltaTime"></param>
+    /// <returns></returns>
+    private Vector3 ComputeRequiredAngularAcceleration(Quaternion localOrientation, Quaternion desiredLocalRotation, Vector3 angularVelocity, Vector3 gravityTorqueVectorLocal, float fixedDeltaTime)
+    {
+        //Debug.Log("desiredLocalOrientation: " + desiredLocalOrientation);
+
+        float angleCurrent = 0.0f;
+        Vector3 axisCurrent = Vector3.zero;
+        localOrientation.ToAngleAxis(out angleCurrent, out axisCurrent);
+
+        //--- The problems are here, with the error and the angle I am substracting : check error when PD is being used.
+
+        float angleRotate = 0.0f;
+        Vector3 axisRotate = Vector3.zero;
+        desiredLocalRotation.ToAngleAxis(out angleRotate, out axisRotate);
+
+        Quaternion newAngleRotate = Quaternion.Inverse(localOrientation) * kinematicLocalOrientation;
+        float angleNewRotate = 0.0f;
+        Vector3 axisNewRotate = Vector3.zero;
+        newAngleRotate.ToAngleAxis(out angleNewRotate, out axisNewRotate);
+
+        float error = angleRotate - angleCurrent;
+        //float error = angleRotate - 0f;
+        //float error = angleNewRotate - 0f;
+
+        float torque = _pdTestController.GetOutputPD(error, angularVelocity.magnitude, Time.fixedDeltaTime);
+
+        Debug.Log("[" + this.gameObject.name + "] error: " + error);
+        Debug.Log("[" + this.gameObject.name + "] axisRotate: " + transform.InverseTransformDirection(axisRotate));
+        
+        Debug.DrawRay(this.transform.position,  torque * transform.InverseTransformDirection(axisRotate), Color.black);
+
+        return torque * transform.InverseTransformDirection(axisRotate);
+        //return torque * axisRotate;
+    }
+
 
     /*
     // Start is called before the first frame update
