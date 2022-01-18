@@ -11,6 +11,8 @@ public class AntagonisticPDController
     public float _PL, _PH, _P, _I, _D;
     public float _previousError;
 
+    public Vector3 _PVector, _IVector, _DVector;
+
     #endregion
 
     #region Instance Properties
@@ -73,7 +75,8 @@ public class AntagonisticPDController
     {
         _P = error;
         _I += _P * dt;
-        _D = (delta) / dt;
+        //_D = (delta) / dt;
+        _D = delta; // Directly the angular velocity
 
         //Debug.Log("_P (error): " + _P);
         //Debug.Log("_D: " + _D);
@@ -83,6 +86,48 @@ public class AntagonisticPDController
         float output = _P * _kPL + _I * _kI + _D * _kD;
 
         return output;
+    }
+
+    public Vector3 GetOutputImprovedPD(float error, Vector3 axis, Vector3 delta, Rigidbody _rb, Transform _t, float dt)
+    {
+
+        // 1. Vector space from the beginning
+
+        _PVector = (error * Mathf.Deg2Rad) * axis;
+        _IVector += _PVector * dt;
+        _DVector = delta;
+
+        Vector3 output = _kPL * _PVector - _kD * _rb.angularVelocity;
+
+        // Convert rotation of inertia tensor to global
+        Quaternion rotInertia2World = _rb.inertiaTensorRotation * _t.rotation;
+
+        output = Quaternion.Inverse(rotInertia2World) * output;
+        output.Scale(_rb.inertiaTensor);
+        output = rotInertia2World * output;
+
+        // 2. All scalar, return output * axis
+
+        _P = (error * Mathf.Deg2Rad);
+        _I += _P * dt;
+        _D = delta.magnitude;
+
+        float outputScalar = _kPL * _P - _kD * _D;
+        Vector3 output2 = outputScalar * axis;
+
+        // Convert rotation of inertia tensor to global
+        Quaternion rotInertia2World2 = _rb.inertiaTensorRotation * _t.rotation;
+
+        // ****
+        output2 = Quaternion.Inverse(rotInertia2World2) * output2;
+        output2.Scale(_rb.inertiaTensor);
+        output2 = rotInertia2World2 * output2;
+        // ****
+
+        Debug.Log("output: " + output + " - output2: " + output2); // Both are the same
+
+        //return output;
+        return output2;
     }
 
     #endregion

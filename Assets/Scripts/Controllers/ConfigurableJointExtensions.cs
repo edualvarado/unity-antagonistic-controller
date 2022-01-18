@@ -32,37 +32,37 @@ public static class ConfigurableJointExtensions
 	/// Gets a joint's targetRotation to match a given local rotation.
 	/// The joint transform's local rotation must be cached on Start and passed into this method.
 	/// </summary>
-	public static Quaternion GetTargetRotationLocal(this ConfigurableJoint joint, Quaternion targetLocalRotation, Quaternion startLocalRotation, Transform mimic)
+	public static Quaternion GetTargetRotationLocal(this ConfigurableJoint joint, Quaternion targetLocalRotation, Quaternion startLocalRotation, Quaternion currentLocalRotation, Transform transform, Transform mimic)
 	{
 		if (joint.configuredInWorldSpace)
 		{
 			Debug.LogError("SetTargetRotationLocal should not be used with joints that are configured in world space. For world space joints, use SetTargetRotation.", joint);
 		}
-		return GetTargetRotationInternal(joint, targetLocalRotation, startLocalRotation, Space.Self, mimic);
+		return GetTargetRotationInternal(joint, targetLocalRotation, startLocalRotation, currentLocalRotation, Space.Self, transform, mimic);
 	}
 
 	/// <summary>
 	/// Gets a joint's targetRotation to match a given world rotation.
 	/// The joint transform's world rotation must be cached on Start and passed into this method.
 	/// </summary>
-	public static Quaternion GetTargetRotation(this ConfigurableJoint joint, Quaternion targetWorldRotation, Quaternion startWorldRotation, Transform mimic)
+	public static Quaternion GetTargetRotation(this ConfigurableJoint joint, Quaternion targetWorldRotation, Quaternion startWorldRotation, Quaternion currentWorldRotation, Transform transform, Transform mimic)
 	{
 		if (!joint.configuredInWorldSpace)
 		{
 			Debug.LogError("SetTargetRotation must be used with joints that are configured in world space. For local space joints, use SetTargetRotationLocal.", joint);
 		}
-		return GetTargetRotationInternal(joint, targetWorldRotation, startWorldRotation, Space.World, mimic);
+		return GetTargetRotationInternal(joint, targetWorldRotation, startWorldRotation, currentWorldRotation, Space.World, transform, mimic);
 	}
 
 	//----
 
 	static void SetTargetRotationInternal(ConfigurableJoint joint, Quaternion targetRotation, Quaternion startRotation, Space space, Transform mimic)
 	{
-		// Calculate the rotation expressed by the joint's axis and secondary axis
-		var right = joint.axis;
-		var forward = Vector3.Cross(joint.axis, joint.secondaryAxis).normalized;
-		var up = Vector3.Cross(forward, right).normalized;
-		Quaternion worldToJointSpace = Quaternion.LookRotation(forward, up);
+        // Calculate the rotation expressed by the joint's axis and secondary axis
+        var right = joint.axis;
+        var forward = Vector3.Cross(joint.axis, joint.secondaryAxis).normalized;
+        var up = Vector3.Cross(forward, right).normalized;
+        Quaternion worldToJointSpace = Quaternion.LookRotation(forward, up);
 
 		// Transform into world space
 		Quaternion resultRotation = Quaternion.Inverse(worldToJointSpace);
@@ -85,22 +85,26 @@ public static class ConfigurableJointExtensions
 		joint.targetRotation = resultRotation;
 	}
 
-	static Quaternion GetTargetRotationInternal(ConfigurableJoint joint, Quaternion targetRotation, Quaternion startRotation, Space space, Transform mimic)
+	static Quaternion GetTargetRotationInternal(ConfigurableJoint joint, Quaternion targetRotation, Quaternion startRotation, Quaternion currentRotation, Space space, Transform transform, Transform mimic)
 	{
-		// Calculate the rotation expressed by the joint's axis and secondary axis
-		var right = joint.axis;
-		var forward = Vector3.Cross(joint.axis, joint.secondaryAxis).normalized;
-		var up = Vector3.Cross(forward, right).normalized;
-		Quaternion worldToJointSpace = Quaternion.LookRotation(forward, up);
+        // Calculate the rotation expressed by the joint's axis and secondary axis <- I think I should not change this.
+        var right = joint.axis;
+        var forward = Vector3.Cross(joint.axis, joint.secondaryAxis).normalized;
+        var up = Vector3.Cross(forward, right).normalized;
+        Quaternion worldToJointSpace = Quaternion.LookRotation(forward, up);
 
-		// TEST
-		//mimic.rotation = worldToJointSpace;
+		//Debug.DrawRay(transform.position, right, Color.red);
+		//Debug.DrawRay(transform.position, forward, Color.blue);
+		//Debug.DrawRay(transform.position, up, Color.green);
+
+		// This is the joint space for the right upper arm
+		//var right = joint.secondaryAxis;
+		//var up = Vector3.Cross(joint.secondaryAxis, joint.axis).normalized;
+		//var forward = Vector3.Cross(right, up).normalized;
+		//Quaternion worldToJointSpace = Quaternion.LookRotation(forward, up);
 
 		// Transform into world space
 		Quaternion resultRotation = Quaternion.Inverse(worldToJointSpace);
-
-		// TEST
-		//mimic.rotation = resultRotation;
 
 		// Counter-rotate and apply the new local rotation.
 		// Joint space is the inverse of world space, so we need to invert our value
@@ -113,15 +117,8 @@ public static class ConfigurableJointExtensions
 			resultRotation *= Quaternion.Inverse(targetRotation) * startRotation;
 		}
 
-		// TEST
-		//mimic.rotation = resultRotation;
-
 		// Transform back into joint space
 		resultRotation *= worldToJointSpace;
-
-		// TEST
-		//mimic.localRotation = resultRotation;
-		//Debug.Log("resultRotation: " + resultRotation);
 
 		// Return the rotation that needs to be in the physical arm to follow the kinematic model
 		return resultRotation;

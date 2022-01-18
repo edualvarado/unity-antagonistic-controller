@@ -47,7 +47,7 @@ Rigidbody:
   m_Mass: 1.59
   m_Drag: 10
   m_AngularDrag: 10
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -85,8 +85,8 @@ ConfigurableJoint:
   m_YMotion: 1
   m_ZMotion: 1
   m_AngularXMotion: 1
-  m_AngularYMotion: 1
-  m_AngularZMotion: 1
+  m_AngularYMotion: 0
+  m_AngularZMotion: 0
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -184,15 +184,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623532570005711}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Kpl: 0
+  mimic: {fileID: 0}
+  applyTorque: 0
+  Kpl: 50
   Kph: 0
   Ki: 0
-  Kd: 0
+  Kd: 0.1
   kinematicArm: {fileID: 0}
   angleX: 0
   angleY: 0
@@ -684,7 +686,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 10
   m_AngularDrag: 10
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -805,19 +807,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623532839076803}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Kpl: 0
+  mimic: {fileID: 0}
+  applyTorque: 0
+  Kpl: 50
   Kph: 0
   Ki: 0
-  Kd: 0
+  Kd: 0.1
   kinematicArm: {fileID: 0}
-  angleX: 0
-  angleY: 0
-  angleZ: 0
+  angleX: 1
+  angleY: 1
+  angleZ: 1
   printX: 0
   printY: 0
   printZ: 0
@@ -1021,7 +1025,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 10
   m_AngularDrag: 10
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -2305,7 +2309,7 @@ Rigidbody:
   m_Mass: 1.59
   m_Drag: 10
   m_AngularDrag: 10
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -2511,15 +2515,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623533403131666}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Kpl: 1
+  mimic: {fileID: 0}
+  applyTorque: 0
+  Kpl: 50
   Kph: 0
   Ki: 0
-  Kd: 0.01
+  Kd: 0.1
   kinematicArm: {fileID: 0}
   angleX: 0
   angleY: 0
@@ -2527,7 +2533,7 @@ MonoBehaviour:
   printX: 0
   printY: 0
   printZ: 0
-  useJointPD: 1
+  useJointPD: 0
 --- !u!1 &4765623533429162650
 GameObject:
   m_ObjectHideFlags: 0
@@ -2900,7 +2906,7 @@ Rigidbody:
   m_Mass: 2.95
   m_Drag: 10
   m_AngularDrag: 10
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -2951,7 +2957,7 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -70
+    limit: -60
     bounciness: 0
     contactDistance: 45
   m_HighAngularXLimit:
@@ -3037,15 +3043,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623533588814599}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Kpl: 0
+  mimic: {fileID: 0}
+  applyTorque: 0
+  Kpl: 50
   Kph: 0
   Ki: 0
-  Kd: 0
+  Kd: 0.1
   kinematicArm: {fileID: 0}
   angleX: 0
   angleY: 0
@@ -3250,7 +3258,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 10
   m_AngularDrag: 10
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -4824,7 +4832,7 @@ Rigidbody:
   m_Mass: 2.95
   m_Drag: 10
   m_AngularDrag: 10
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -4961,15 +4969,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623534636773826}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Kpl: 0
+  mimic: {fileID: 0}
+  applyTorque: 0
+  Kpl: 50
   Kph: 0
   Ki: 0
-  Kd: 0
+  Kd: 0.1
   kinematicArm: {fileID: 0}
   angleX: 0
   angleY: 0
@@ -4977,7 +4987,7 @@ MonoBehaviour:
   printX: 0
   printY: 0
   printZ: 0
-  useJointPD: 1
+  useJointPD: 0
 --- !u!1 &4765623534659419155
 GameObject:
   m_ObjectHideFlags: 0
@@ -5089,7 +5099,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 10
   m_AngularDrag: 10
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -5210,15 +5220,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623534695646599}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Kpl: 0
+  mimic: {fileID: 0}
+  applyTorque: 0
+  Kpl: 50
   Kph: 0
   Ki: 0
-  Kd: 0
+  Kd: 0.1
   kinematicArm: {fileID: 0}
   angleX: 1
   angleY: 1
