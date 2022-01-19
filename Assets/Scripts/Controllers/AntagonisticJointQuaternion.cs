@@ -34,10 +34,10 @@ public class AntagonisticJointQuaternion : MonoBehaviour
     public float Kd;
     public Transform kinematicArm;
 
-    [Header("Euler's Targets - Debug")]
-    public float angleX;
-    public float angleY;
-    public float angleZ;
+    [Header("Euler's Targets - Limits")]
+    public float angleXMin, angleXMax;
+    public float angleYMin, angleYMax;
+    public float angleZMin, angleZMax;
 
     [Header("Debug")]
     public bool printX;
@@ -243,14 +243,14 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // Remember: wrt. local coord. system
 
          // Axis-angle Torque
-        Vector3 requiredTorque = ComputeRequiredAngularAcceleration(_currentLocalOrientation,
-                                                                                 _currentGlobalOrientation,
-                                                                                 _kinematicLocalOrientation,
-                                                                                 _kinematicGlobalOrientation,
-                                                                                 DesiredLocalRotation,
-                                                                                 this._objectRigidbody.angularVelocity,
-                                                                                 gravityTorqueVectorLocal,
-                                                                                 Time.fixedDeltaTime);
+        Vector3 requiredTorque = ComputeRequiredTorque(_currentLocalOrientation,
+                                                       _currentGlobalOrientation,
+                                                       _kinematicLocalOrientation,
+                                                       _kinematicGlobalOrientation,
+                                                       DesiredLocalRotation,
+                                                       this._objectRigidbody.angularVelocity,
+                                                       gravityTorqueVectorLocal,
+                                                       Time.fixedDeltaTime);
 
 
         Debug.Log("[" + this.gameObject.name + "] requiredTorque: " + requiredTorque);
@@ -342,10 +342,10 @@ public class AntagonisticJointQuaternion : MonoBehaviour
     /// <param name="gravityTorqueVectorLocal"></param>
     /// <param name="fixedDeltaTime"></param>
     /// <returns></returns>
-    private Vector3 ComputeRequiredAngularAcceleration(Quaternion currentLocalOrientation, Quaternion currentGlobalOrientation, 
-                                                       Quaternion kinematicLocalOrientation, Quaternion kinematicGlobalOrientation,
-                                                       Quaternion desiredLocalRotation, Vector3 angularVelocity, Vector3 gravityTorqueVectorLocal, 
-                                                       float fixedDeltaTime)
+    private Vector3 ComputeRequiredTorque(Quaternion currentLocalOrientation, Quaternion currentGlobalOrientation, 
+                                          Quaternion kinematicLocalOrientation, Quaternion kinematicGlobalOrientation,
+                                          Quaternion desiredLocalRotation, Vector3 angularVelocity, Vector3 gravityTorqueVectorLocal, 
+                                          float fixedDeltaTime)
     {
 
         /* Estimation of orientations and rotations */
@@ -408,6 +408,21 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         newRotationGlobal.ToAngleAxis(out rotationNewAngleGlobal, out rotationNewAxisGlobal);
         rotationNewAxisGlobal.Normalize();
 
+        // --- TEST
+
+        float qMinRotAngle = 0.0f;
+        Vector3 qMinRotAxis = Vector3.zero;
+        Quaternion qMinRot = Quaternion.Euler(angleXMin, angleYMin, angleZMin) * Quaternion.Inverse(currentLocalOrientation);
+        qMinRot.ToAngleAxis(out qMinRotAngle, out qMinRotAxis);
+
+        float qMaxRotAngle = 0.0f;
+        Vector3 qMaxRotAxis = Vector3.zero;
+        Quaternion qMaxRot = Quaternion.Euler(angleXMax, angleYMax, angleZMax) * Quaternion.Inverse(currentLocalOrientation);
+        qMaxRot.ToAngleAxis(out qMaxRotAngle, out qMaxRotAxis);
+
+        float angleLowErrorX = qMinRotAngle - rotationNewAngleLocal;
+        float angleHighErrorX = qMaxRotAngle - rotationNewAngleLocal;
+
         /*             Test Rotations               */
         /* ======================================== */
 
@@ -452,10 +467,21 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         Debug.DrawRay(this.transform.position, rotationNewAxisGlobal, Color.blue); // wrt. Global
 
         // Torque with 2.version PD
-        Vector3 improvedTorque = _normalPDController.GetOutputImprovedPD(newRotationErrorImproved, rotationNewAxisGlobal, angularVelocity, _objectRigidbody, transform, Time.fixedDeltaTime);
-        Debug.Log("[INFO] Torque Estimation (GLOBAL) -> improvedTorque: " + (improvedTorque));
+        Vector3 improvedTorque = _normalPDController.GetOutputImprovedPD(newRotationErrorImproved, rotationNewAxisGlobal, angularVelocity, Time.fixedDeltaTime);
 
-        // ---
+        /*                  Inertia                 */
+        /* ======================================== */
+
+        // Convert rotation of inertia tensor to global
+        Quaternion rotInertia2World = _objectRigidbody.inertiaTensorRotation * transform.rotation;
+
+        // ****
+        improvedTorque = Quaternion.Inverse(rotInertia2World) * improvedTorque;
+        improvedTorque.Scale(_objectRigidbody.inertiaTensor);
+        improvedTorque = rotInertia2World * improvedTorque;
+        // ****
+
+        Debug.Log("[INFO] Torque Estimation (GLOBAL) -> improvedTorque: " + (improvedTorque));
 
         /*                  Returns                 */
         /* ======================================== */
@@ -467,6 +493,7 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         // 2. Torque Estimation (GLOBAL)
         return improvedTorque; // -> B.
 
+        
     }
 
     #region AntagonisticJoint.cs

@@ -1166,7 +1166,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 782306568}
-  m_LocalRotation: {x: 0.10195979, y: -0.7622762, z: 0.12395042, w: 0.6270371}
+  m_LocalRotation: {x: 0.10195977, y: -0.76227623, z: 0.12395043, w: 0.6270371}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1914,7 +1914,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.10195979, y: -0.7622762, z: 0.12395042, w: 0.62703717}
+  m_LocalRotation: {x: 0.1019598, y: -0.7622763, z: 0.12395044, w: 0.62703705}
   m_LocalPosition: {x: 5.644907, y: 2.5, z: 3.1714296}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4481,10 +4481,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7170379307483878354, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
-      propertyPath: activateIK
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
 --- !u!95 &2870343101416650615 stripped
@@ -5291,14 +5287,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ybot_rig_arms_v6_split_ragdoll - v4
       objectReference: {fileID: 0}
-    - target: {fileID: 4765623533403131678, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_Drag
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623533403131678, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_AngularDrag
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4765623533437734913, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: m_ConnectedBody
       value: 
@@ -5311,54 +5299,6 @@ PrefabInstance:
       propertyPath: kinematicArm
       value: 
       objectReference: {fileID: 1478144921623616560}
-    - target: {fileID: 4765623534636773836, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_Drag
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623534636773836, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_AngularDrag
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623534636773838, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_LowAngularXLimit.limit
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623534695646596, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_AngularXMotion
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623534695646596, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_AngularYMotion
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623534695646596, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_AngularZMotion
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623534695646596, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_AngularYLimit.limit
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623534695646596, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_AngularZLimit.limit
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623534695646596, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_LowAngularXLimit.limit
-      value: -45
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623534695646596, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_HighAngularXLimit.limit
-      value: 110
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623534695646597, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_Drag
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623534695646597, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_AngularDrag
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7550342775806272425, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: kinematicArm
       value: 

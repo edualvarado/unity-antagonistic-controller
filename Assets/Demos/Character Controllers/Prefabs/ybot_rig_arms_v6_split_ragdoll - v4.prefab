@@ -45,8 +45,8 @@ Rigidbody:
   m_GameObject: {fileID: 4765623532570005711}
   serializedVersion: 2
   m_Mass: 1.59
-  m_Drag: 10
-  m_AngularDrag: 10
+  m_Drag: 1
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -85,8 +85,8 @@ ConfigurableJoint:
   m_YMotion: 1
   m_ZMotion: 1
   m_AngularXMotion: 1
-  m_AngularYMotion: 0
-  m_AngularZMotion: 0
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -191,17 +191,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mimic: {fileID: 0}
   applyTorque: 0
-  Kpl: 50
+  torqueTest: {x: 0, y: 0, z: 0}
+  Kpl: 15000
   Kph: 0
   Ki: 0
-  Kd: 0.1
+  Kd: 1.2
   kinematicArm: {fileID: 0}
-  angleX: 0
-  angleY: 0
-  angleZ: 0
+  angleXMin: 0
+  angleXMax: 0
+  angleYMin: 0
+  angleYMax: 0
+  angleZMin: 0
+  angleZMax: 0
   printX: 0
   printY: 0
   printZ: 0
+  deployDesiredRotation: 0
   useJointPD: 1
 --- !u!1 &4765623532586227487
 GameObject:
@@ -684,8 +689,8 @@ Rigidbody:
   m_GameObject: {fileID: 4765623532839076803}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 10
-  m_AngularDrag: 10
+  m_Drag: 1
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -722,9 +727,9 @@ ConfigurableJoint:
   m_XMotion: 0
   m_YMotion: 0
   m_ZMotion: 0
-  m_AngularXMotion: 2
-  m_AngularYMotion: 2
-  m_AngularZMotion: 2
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -736,22 +741,22 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: 0
+    limit: -45
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 0
+    limit: 75
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 0
+    limit: 50
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 0
+    limit: 50
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -814,17 +819,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mimic: {fileID: 0}
   applyTorque: 0
-  Kpl: 50
+  torqueTest: {x: 0, y: 0, z: 0}
+  Kpl: 15000
   Kph: 0
   Ki: 0
-  Kd: 0.1
+  Kd: 1.2
   kinematicArm: {fileID: 0}
-  angleX: 1
-  angleY: 1
-  angleZ: 1
+  angleXMin: 0
+  angleXMax: 0
+  angleYMin: 0
+  angleYMax: 0
+  angleZMin: 0
+  angleZMax: 0
   printX: 0
   printY: 0
   printZ: 0
+  deployDesiredRotation: 0
   useJointPD: 1
 --- !u!1 &4765623532904624680
 GameObject:
@@ -2307,8 +2317,8 @@ Rigidbody:
   m_GameObject: {fileID: 4765623533403131666}
   serializedVersion: 2
   m_Mass: 1.59
-  m_Drag: 10
-  m_AngularDrag: 10
+  m_Drag: 1
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -2347,8 +2357,8 @@ ConfigurableJoint:
   m_YMotion: 1
   m_ZMotion: 1
   m_AngularXMotion: 1
-  m_AngularYMotion: 0
-  m_AngularZMotion: 0
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -2522,17 +2532,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mimic: {fileID: 0}
   applyTorque: 0
-  Kpl: 50
+  torqueTest: {x: 0, y: 0, z: 0}
+  Kpl: 15000
   Kph: 0
   Ki: 0
-  Kd: 0.1
+  Kd: 1.2
   kinematicArm: {fileID: 0}
-  angleX: 0
-  angleY: 0
-  angleZ: 0
+  angleXMin: -30
+  angleXMax: 30
+  angleYMin: -30
+  angleYMax: 30
+  angleZMin: -30
+  angleZMax: 30
   printX: 0
   printY: 0
   printZ: 0
+  deployDesiredRotation: 0
   useJointPD: 0
 --- !u!1 &4765623533429162650
 GameObject:
@@ -2904,8 +2919,8 @@ Rigidbody:
   m_GameObject: {fileID: 4765623533588814599}
   serializedVersion: 2
   m_Mass: 2.95
-  m_Drag: 10
-  m_AngularDrag: 10
+  m_Drag: 1
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -2957,11 +2972,11 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -60
+    limit: -65
     bounciness: 0
     contactDistance: 45
   m_HighAngularXLimit:
-    limit: 45
+    limit: 90
     bounciness: 0
     contactDistance: 45
   m_AngularYZLimitSpring:
@@ -3050,17 +3065,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mimic: {fileID: 0}
   applyTorque: 0
-  Kpl: 50
+  torqueTest: {x: 0, y: 0, z: 0}
+  Kpl: 15000
   Kph: 0
   Ki: 0
-  Kd: 0.1
+  Kd: 1.2
   kinematicArm: {fileID: 0}
-  angleX: 0
-  angleY: 0
-  angleZ: 0
+  angleXMin: 0
+  angleXMax: 0
+  angleYMin: 0
+  angleYMax: 0
+  angleZMin: 0
+  angleZMax: 0
   printX: 0
   printY: 0
   printZ: 0
+  deployDesiredRotation: 0
   useJointPD: 1
 --- !u!1 &4765623533631331841
 GameObject:
@@ -4830,8 +4850,8 @@ Rigidbody:
   m_GameObject: {fileID: 4765623534636773826}
   serializedVersion: 2
   m_Mass: 2.95
-  m_Drag: 10
-  m_AngularDrag: 10
+  m_Drag: 1
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -4883,7 +4903,7 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -45
+    limit: -90
     bounciness: 0
     contactDistance: 45
   m_HighAngularXLimit:
@@ -4976,17 +4996,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mimic: {fileID: 0}
   applyTorque: 0
-  Kpl: 50
+  torqueTest: {x: 0, y: 0, z: 0}
+  Kpl: 15000
   Kph: 0
   Ki: 0
-  Kd: 0.1
+  Kd: 1.2
   kinematicArm: {fileID: 0}
-  angleX: 0
-  angleY: 0
-  angleZ: 0
+  angleXMin: -30
+  angleXMax: 30
+  angleYMin: -30
+  angleYMax: 30
+  angleZMin: -30
+  angleZMax: 30
   printX: 0
   printY: 0
   printZ: 0
+  deployDesiredRotation: 0
   useJointPD: 0
 --- !u!1 &4765623534659419155
 GameObject:
@@ -5097,8 +5122,8 @@ Rigidbody:
   m_GameObject: {fileID: 4765623534695646599}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 10
-  m_AngularDrag: 10
+  m_Drag: 1
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -5135,9 +5160,9 @@ ConfigurableJoint:
   m_XMotion: 1
   m_YMotion: 1
   m_ZMotion: 1
-  m_AngularXMotion: 2
-  m_AngularYMotion: 2
-  m_AngularZMotion: 2
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -5149,22 +5174,22 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: 17.338718
+    limit: -45
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 169.77594
+    limit: 75
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 99.31036
+    limit: 50
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 99.147964
+    limit: 50
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -5227,15 +5252,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mimic: {fileID: 0}
   applyTorque: 0
-  Kpl: 50
+  torqueTest: {x: 0, y: 0, z: 0}
+  Kpl: 15000
   Kph: 0
   Ki: 0
-  Kd: 0.1
+  Kd: 1.2
   kinematicArm: {fileID: 0}
-  angleX: 1
-  angleY: 1
-  angleZ: 1
+  angleXMin: -30
+  angleXMax: 30
+  angleYMin: -30
+  angleYMax: 30
+  angleZMin: -30
+  angleZMax: 30
   printX: 0
   printY: 0
   printZ: 0
+  deployDesiredRotation: 0
   useJointPD: 1

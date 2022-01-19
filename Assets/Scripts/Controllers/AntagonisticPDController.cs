@@ -75,59 +75,69 @@ public class AntagonisticPDController
     {
         _P = error;
         _I += _P * dt;
-        //_D = (delta) / dt;
-        _D = delta; // Directly the angular velocity
-
-        //Debug.Log("_P (error): " + _P);
-        //Debug.Log("_D: " + _D);
-        //Debug.Log("_kPL " + _kPL);
-        //Debug.Log("_kD " + _kD);
+        _D = delta;
 
         float output = _P * _kPL + _I * _kI + _D * _kD;
 
         return output;
     }
 
-    public Vector3 GetOutputImprovedPD(float error, Vector3 axis, Vector3 delta, Rigidbody _rb, Transform _t, float dt)
+    public Vector3 GetOutputImprovedPD(float error, Vector3 axis, Vector3 delta, float dt)
     {
 
+        // Euler Integration for Backward PD
+        float g = 1 / (1 + _kD * dt + _kPL * dt * dt);
+        float ksg = _kPL * g;
+        float kdg = (_kD + _kPL * dt) * g;
+
         // 1. Vector space from the beginning
+        // -----------------------------------
 
         _PVector = (error * Mathf.Deg2Rad) * axis;
         _IVector += _PVector * dt;
         _DVector = delta;
 
-        Vector3 output = _kPL * _PVector - _kD * _rb.angularVelocity;
-
-        // Convert rotation of inertia tensor to global
-        Quaternion rotInertia2World = _rb.inertiaTensorRotation * _t.rotation;
-
-        output = Quaternion.Inverse(rotInertia2World) * output;
-        output.Scale(_rb.inertiaTensor);
-        output = rotInertia2World * output;
+        Vector3 result = _kPL * _PVector + _kD * _DVector;
 
         // 2. All scalar, return output * axis
+        // -----------------------------------
 
         _P = (error * Mathf.Deg2Rad);
         _I += _P * dt;
         _D = delta.magnitude;
 
-        float outputScalar = _kPL * _P - _kD * _D;
-        Vector3 output2 = outputScalar * axis;
+        //float outputScalar = _kPL * _P + _kD * _D;
+        float outputScalar = ksg * _P + kdg * _D;
 
-        // Convert rotation of inertia tensor to global
-        Quaternion rotInertia2World2 = _rb.inertiaTensorRotation * _t.rotation;
+        Vector3 output = outputScalar * axis;
 
-        // ****
-        output2 = Quaternion.Inverse(rotInertia2World2) * output2;
-        output2.Scale(_rb.inertiaTensor);
-        output2 = rotInertia2World2 * output2;
-        // ****
+        // -----------------------------------
 
-        Debug.Log("output: " + output + " - output2: " + output2); // Both are the same
+        Debug.Log("result: " + result + " - output: " + output); // Both are the same
 
-        //return output;
-        return output2;
+        //return result;
+        return output;
+    }
+
+    public Vector3 GetOutputAntagonisticPD(float currentLowError, float currentHighError, Vector3 axis, Vector3 delta, float dt)
+    {
+
+        // 1. All scalar, return output * axis
+        // -----------------------------------
+
+        _PL = currentLowError;
+        _PH = currentHighError;
+        
+        _I += _P * dt;
+        _D = delta.magnitude;
+
+        float outputScalar = _PL * _kPL + _PH * _kPH + _I * _kI + _D * _kD;
+
+        Vector3 output = outputScalar * axis;
+
+        // -----------------------------------
+
+        return output;
     }
 
     #endregion
