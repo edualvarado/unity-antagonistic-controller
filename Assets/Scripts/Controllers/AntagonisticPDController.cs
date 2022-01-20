@@ -48,13 +48,14 @@ public class AntagonisticPDController
     /// <returns></returns>
     public float GetOutput(float currentLowError, float currentHighError, float delta, float dt)
     {
+        // Working version of Antagonistic Controller
+
         _PL = currentLowError;
         _PH = currentHighError;
         
         _P = currentLowError;
         _I += _P * dt;
-        //_D = (_P - _previousError) / dt;
-        _D = (delta) / dt;
+        _D = (_P - _previousError) / dt; // or _D = delta
 
         _previousError = currentLowError;
 
@@ -73,6 +74,8 @@ public class AntagonisticPDController
     /// <returns></returns>
     public float GetOutputPD(float error, float delta, float dt)
     {
+        // Normal PD Controlling (float) - Must multiply after by axis
+
         _P = error;
         _I += _P * dt;
         _D = delta;
@@ -85,10 +88,12 @@ public class AntagonisticPDController
     public Vector3 GetOutputImprovedPD(float error, Vector3 axis, Vector3 delta, float dt)
     {
 
+        // Normal PD Controlling (Vector3) + Euler Integration
+
         // Euler Integration for Backward PD
-        float g = 1 / (1 + _kD * dt + _kPL * dt * dt);
-        float ksg = _kPL * g;
-        float kdg = (_kD + _kPL * dt) * g;
+        //float g = 1 / (1 + _kD * dt + _kPL * dt * dt);
+        //float ksg = _kPL * g;
+        //float kdg = (_kD + _kPL * dt) * g;
 
         // 1. Vector space from the beginning
         // -----------------------------------
@@ -104,10 +109,13 @@ public class AntagonisticPDController
 
         _P = (error * Mathf.Deg2Rad);
         _I += _P * dt;
-        _D = delta.magnitude;
+        //_D = delta.magnitude;
+        _D = (_P - _previousError) / dt; // or _D = delta
 
-        //float outputScalar = _kPL * _P + _kD * _D;
-        float outputScalar = ksg * _P + kdg * _D;
+        _previousError = error * Mathf.Deg2Rad;
+
+        float outputScalar = _kPL * _P + _kD * _D;
+        //float outputScalar = ksg * _P + kdg * _D;
 
         Vector3 output = outputScalar * axis;
 

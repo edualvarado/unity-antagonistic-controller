@@ -159,7 +159,7 @@ public class AntagonisticJoint : MonoBehaviour
 
         // Target Quaternion
         kinematicAngleQuaternion = kinematicArm.transform.localRotation;
-        resultAngleQuaternion = ConfigurableJointExtensions.GetTargetRotationLocal(_jointAnt, kinematicAngleQuaternion, initialAngleQuaternion, transform.localRotation, this.transform, this.transform); // This last two are not used, just testing
+        resultAngleQuaternion = ConfigurableJointExtensions.GetTargetRotationLocal(_jointAnt, kinematicAngleQuaternion, initialAngleQuaternion, transform.localRotation, this.transform);
 
         // This last Q is the rotation to be achieved with the antagonistic controller.
         // Instead of setting the Q directly as a target rotation in the configurable joint, we use our Antagonitic controller.

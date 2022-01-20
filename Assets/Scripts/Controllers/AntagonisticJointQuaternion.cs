@@ -8,10 +8,14 @@ public class AntagonisticJointQuaternion : MonoBehaviour
 
     #region Read-only & Static Fields
 
+    // Test - Quaternion Substraction
     private readonly AntagonisticPDControllerQuaternion _antagonisticPDControllerQuaternion = new AntagonisticPDControllerQuaternion(0.05f, 0.0f, 0.0f, 0.01f);
 
-    // TEST - Create one controller directly
+    // Test - Normal PD Controller
     private readonly AntagonisticPDController _normalPDController = new AntagonisticPDController(1f, 0f, 0f, 0.1f);
+    
+    // Test - Antagonistic PD Controller
+    private readonly AntagonisticPDController _antPDController = new AntagonisticPDController(1f, 0f, 0f, 0.1f);
 
     #endregion
 
@@ -22,28 +26,35 @@ public class AntagonisticJointQuaternion : MonoBehaviour
     private Quaternion _initialLocalOrientation;
     private Quaternion _initialGlobalOrientation;
 
-    [Header("Debug")]
-    public Transform mimic;
-
-    [Header("Antagonistic PD Controller - Settings")]
-    public bool applyTorque;
-    public Vector3 torqueTest;
-    public float Kpl; // Used as Kp for normal PD
-    public float Kph;
-    public float Ki;
-    public float Kd;
+    [Header("General Settings")]
     public Transform kinematicArm;
 
-    [Header("Euler's Targets - Limits")]
-    public float angleXMin, angleXMax;
-    public float angleYMin, angleYMax;
-    public float angleZMin, angleZMax;
+    [Header("Normal PD Controller - Settings")]
+    public bool globalMode = false;
+    public bool applyTorque;
+    public Vector3 torqueTest;
+    public float Kp;
+    public float Ki;
+    public float Kd;
+
+    [Header("Antagonistic Controller - Settings - X")]
+    public bool applyAntTorqueX;
+    public float torqueAppliedX;
+    public float pLX;
+    public float pHX;
+    public float iX;
+    public float dX;
+    public float minAngleX;
+    public float maxAngleX;
+    public float slopeX;
+    public float interceptX;
 
     [Header("Debug")]
     public bool printX;
     public bool printY;
     public bool printZ;
     public bool deployDesiredRotation;
+    public Vector3 eulerRot;
 
     [Header("Configurable joint PD Controller mode")]
     public bool useJointPD = false;
@@ -58,6 +69,8 @@ public class AntagonisticJointQuaternion : MonoBehaviour
     private Vector3 gravityAcc;
     private Vector3 gravityTorqueVector;
     private Vector3 gravityTorqueVectorLocal;
+    private Quaternion newRotationLocal;
+    private Quaternion newRotationGlobal;
 
     #endregion
 
@@ -172,17 +185,27 @@ public class AntagonisticJointQuaternion : MonoBehaviour
             return;
         }
 
-        // Update gains in real-time
-        this._antagonisticPDControllerQuaternion.KPL = this.Kpl;
-        this._antagonisticPDControllerQuaternion.KPH = this.Kph;
-        this._antagonisticPDControllerQuaternion.KI = this.Ki;
-        this._antagonisticPDControllerQuaternion.KD = this.Kd;
+        #region Gains
 
-        // TEST - PD Controller Version
-        this._normalPDController.KPL = this.Kpl;
-        this._normalPDController.KPH = this.Kph;
+        // Test - Quaternion Substraction
+        //this._antagonisticPDControllerQuaternion.KPL = this.Kpl;
+        //this._antagonisticPDControllerQuaternion.KPH = this.Kph;
+        //this._antagonisticPDControllerQuaternion.KI = this.Ki;
+        //this._antagonisticPDControllerQuaternion.KD = this.Kd;
+
+        // Test - Normal PD Controller
+        this._normalPDController.KPL = this.Kp;
+        this._normalPDController.KPH = 0f; // this.Kph
         this._normalPDController.KI = this.Ki;
         this._normalPDController.KD = this.Kd;
+
+        // Test - Antagonistic PD Controller
+        this._antPDController.KPL = this.pLX;
+        this._antPDController.KPH = this.pHX;
+        this._antPDController.KI = this.iX;
+        this._antPDController.KD = this.dX;
+
+        #endregion
 
         // Get target orientation that we need to mimic (kinematic)
         _kinematicLocalOrientation = kinematicArm.transform.localRotation;
@@ -197,8 +220,8 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         {
             // Local
             // In case we need it later, save it as well
-            DesiredLocalRotation = ConfigurableJointExtensions.GetTargetRotationLocal(_jointAnt, _kinematicLocalOrientation, _initialLocalOrientation, _currentLocalOrientation, transform, mimic);
-            ConfigurableJointExtensions.SetTargetRotationLocal(_jointAnt, _kinematicLocalOrientation, _initialLocalOrientation, mimic);
+            DesiredLocalRotation = ConfigurableJointExtensions.GetTargetRotationLocal(_jointAnt, _kinematicLocalOrientation, _initialLocalOrientation, _currentLocalOrientation, transform);
+            ConfigurableJointExtensions.SetTargetRotationLocal(_jointAnt, _kinematicLocalOrientation, _initialLocalOrientation);
 
             // Bug, which I do not find: When activating useJointPD, and coming back to torque, it doesn't work. It looks like it changes something in the joint.
             _jointAnt.rotationDriveMode = RotationDriveMode.XYAndZ;
@@ -216,7 +239,7 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         else
         {
             // Local
-            DesiredLocalRotation = ConfigurableJointExtensions.GetTargetRotationLocal(_jointAnt, _kinematicLocalOrientation, _initialLocalOrientation, _currentLocalOrientation, transform, mimic);
+            DesiredLocalRotation = ConfigurableJointExtensions.GetTargetRotationLocal(_jointAnt, _kinematicLocalOrientation, _initialLocalOrientation, _currentLocalOrientation, transform);
 
             _jointAnt.targetRotation = Quaternion.identity;
             _jointAnt.rotationDriveMode = RotationDriveMode.XYAndZ;
@@ -230,7 +253,6 @@ public class AntagonisticJointQuaternion : MonoBehaviour
             angularYZDrive.positionDamper = 0f;
             angularYZDrive.maximumForce = Mathf.Infinity;
             _jointAnt.angularYZDrive = angularYZDrive;
-            
         }
 
         // Calculate forces relative to the Rigid Body
@@ -242,7 +264,9 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         gravityTorqueVector = Vector3.Cross(distance3D, _objectRigidbody.mass * gravityAcc); // Remember: wrt. global coord. system
         gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // Remember: wrt. local coord. system
 
-         // Axis-angle Torque
+        // ---
+
+        // Test - Normal PD Controller (Angle-axis)
         Vector3 requiredTorque = ComputeRequiredTorque(_currentLocalOrientation,
                                                        _currentGlobalOrientation,
                                                        _kinematicLocalOrientation,
@@ -255,36 +279,56 @@ public class AntagonisticJointQuaternion : MonoBehaviour
 
         Debug.Log("[" + this.gameObject.name + "] requiredTorque: " + requiredTorque);
 
-        if (!useJointPD)
-        {           
-            if(applyTorque)
-            {
-                // TODO: ForceMode.Acceleration or Force? Taking into account Inertia Matrix?
+        if ((!useJointPD) && (applyTorque))
+        {
+            // TODO: ForceMode.Acceleration or Force? Taking into account Inertia Matrix?
 
-                // WRT GLOBAL -> Used for improved torque, that calculated in Global system
-                this._objectRigidbody.AddTorque(requiredTorque, ForceMode.Force); // -> B.
+            // WRT GLOBAL -> Used for improved torque, that calculated in Global system
+            if(globalMode)
+                this._objectRigidbody.AddTorque(requiredTorque, ForceMode.Force); // -> B (Global)
+            else
+                this._objectRigidbody.AddRelativeTorque(requiredTorque, ForceMode.Force); // -> B (Local)
 
-                // WRT LOCAL -> Used for first torque version
-                //this._objectRigidbody.AddRelativeTorque(requiredAngularAcceleration, ForceMode.Acceleration); // -> A.
+            // WRT LOCAL -> Used for first torque version
+            //this._objectRigidbody.AddRelativeTorque(requiredAngularAcceleration, ForceMode.Acceleration); // -> A.
 
-                // WRT TEST
-                //this._objectRigidbody.AddRelativeTorque(torqueTest, ForceMode.Force);
+            // WRT TEST
+            //this._objectRigidbody.AddRelativeTorque(torqueTest, ForceMode.Force);
 
-                /*
-                 * ForceMode.Force: Interprets the input as torque (measured in Newton-metres), and changes the angular velocity by the value of torque * DT / mass. 
-                 * The effect depends on the simulation step length and the mass of the body.
-                 * ForceMode.Acceleration: Interprets the parameter as angular acceleration (measured in degrees per second squared), and changes the angular velocity by the value of torque * DT. 
-                 * The effect depends on the simulation step length but does not depend on the mass of the body.
-                 * ForceMode.Impulse: Interprets the parameter as an angular momentum (measured in kilogram-meters-squared per second), and changes the angular velocity by the value of torque / mass. 
-                 * The effect depends on the mass of the body but doesn't depend on the simulation step length.
-                 * ForceMode.VelocityChange: Interprets the parameter as a direct angular velocity change (measured in degrees per second), and changes the angular velocity by the value of torque. 
-                 * The effect doesn't depend on the mass of the body and the simulation step length.
-                 * */
-            }
-
+            /*
+             * ForceMode.Force: Interprets the input as torque (measured in Newton-metres), and changes the angular velocity by the value of torque * DT / mass. 
+             * The effect depends on the simulation step length and the mass of the body.
+             * ForceMode.Acceleration: Interprets the parameter as angular acceleration (measured in degrees per second squared), and changes the angular velocity by the value of torque * DT. 
+             * The effect depends on the simulation step length but does not depend on the mass of the body.
+             * ForceMode.Impulse: Interprets the parameter as an angular momentum (measured in kilogram-meters-squared per second), and changes the angular velocity by the value of torque / mass. 
+             * The effect depends on the mass of the body but doesn't depend on the simulation step length.
+             * ForceMode.VelocityChange: Interprets the parameter as a direct angular velocity change (measured in degrees per second), and changes the angular velocity by the value of torque. 
+             * The effect doesn't depend on the mass of the body and the simulation step length.
+             * */
         }
 
-        #region Quaternion substraction Test
+        // ---
+
+        // Test - Antagonistic PD Controller
+        Vector3 requiredAntTorqueX = ComputeRequiredAntTorqueX(_currentLocalOrientation,
+                                                               _currentGlobalOrientation,
+                                                               _kinematicLocalOrientation,
+                                                               _kinematicGlobalOrientation,
+                                                               DesiredLocalRotation,
+                                                               this._objectRigidbody.angularVelocity,
+                                                               gravityTorqueVectorLocal,
+                                                               Time.fixedDeltaTime);
+
+        Debug.Log("[" + this.gameObject.name + "] requiredAntTorqueX: " + requiredAntTorqueX);
+
+        // ---
+
+        if ((!useJointPD) && (applyAntTorqueX))
+        {
+            this._objectRigidbody.AddRelativeTorque(requiredAntTorqueX, ForceMode.Force);
+        }
+
+        #region Test - Quaternion Substraction
 
         // TEST: Previous version with Quaternion substraction
 
@@ -327,7 +371,65 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         */
 
         #endregion
+    }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="currentLocalOrientation"></param>
+    /// <param name="currentGlobalOrientation"></param>
+    /// <param name="kinematicLocalOrientation"></param>
+    /// <param name="kinematicGlobalOrientation"></param>
+    /// <param name="desiredLocalRotation"></param>
+    /// <param name="angularVelocity"></param>
+    /// <param name="gravityTorqueVectorLocal"></param>
+    /// <param name="fixedDeltaTime"></param>
+    /// <returns></returns>
+    private Vector3 ComputeRequiredAntTorqueX(Quaternion currentLocalOrientation, Quaternion currentGlobalOrientation,
+                                          Quaternion kinematicLocalOrientation, Quaternion kinematicGlobalOrientation,
+                                          Quaternion desiredLocalRotation, Vector3 angularVelocity, Vector3 gravityTorqueVectorLocal,
+                                          float fixedDeltaTime)
+    {
+
+        //Debug.Log("[INFO] kinematicLocalOrientation.eulerAngles: " + kinematicLocalOrientation.eulerAngles);
+        //Debug.Log("[INFO] currentLocalOrientation.eulerAngles: " + currentLocalOrientation.eulerAngles);
+
+        Vector3 kinematicLocalOrientationClamp = new Vector3(Mathf.Clamp(to180(kinematicLocalOrientation.eulerAngles.x), 0f, 180f),
+                                                             Mathf.Clamp(to180(kinematicLocalOrientation.eulerAngles.y), 0f, 180f),
+                                                             Mathf.Clamp(to180(kinematicLocalOrientation.eulerAngles.z), 0f, 180f));
+
+        Vector3 currentLocalOrientationClamp = new Vector3(Mathf.Clamp(to180(currentLocalOrientation.eulerAngles.x), 0f, 180f),
+                                                           Mathf.Clamp(to180(currentLocalOrientation.eulerAngles.y), 0f, 180f),
+                                                           Mathf.Clamp(to180(currentLocalOrientation.eulerAngles.z), 0f, 180f));
+
+        Debug.Log("[NEW] kinematicLocalOrientation.eulerAngles: " + kinematicLocalOrientationClamp);
+        Debug.Log("[NEW] currentLocalOrientation.eulerAngles: " + currentLocalOrientationClamp);
+
+
+        // With "-" because Unity uses left-hand rule. I leave the debugs lines with left-hand.
+        interceptX = (0f) / (maxAngleX - kinematicLocalOrientationClamp.x);
+        slopeX = (minAngleX - kinematicLocalOrientationClamp.x) / (kinematicLocalOrientationClamp.x - maxAngleX);
+
+        Debug.Log("[INFO] interceptX: " + interceptX);
+        Debug.Log("[INFO] slopeX: " + slopeX);
+
+        // Isoline
+        pHX = pLX * slopeX + interceptX;
+        this._antPDController.KPL = pLX;
+        this._antPDController.KPH = pHX;
+
+        Debug.Log("[INFO] pHX: " + pHX);
+        Debug.Log("[INFO] pLX: " + pLX);
+
+        float angleLowErrorX = minAngleX - currentLocalOrientationClamp.x;
+        float angleHighErrorX = maxAngleX - currentLocalOrientationClamp.x;
+
+        Debug.Log("[INFO] angleLowErrorX: " + angleLowErrorX);
+        Debug.Log("[INFO] angleHighErrorX: " + angleHighErrorX);
+
+        torqueAppliedX = _antPDController.GetOutput(angleLowErrorX, angleHighErrorX, angularVelocity.magnitude, Time.fixedDeltaTime);
+
+        return new Vector3(torqueAppliedX, 0f, 0f);
     }
 
     /// <summary>
@@ -371,7 +473,7 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         // ---
 
         // Target Local Rotation in Angle-axis
-        Quaternion newRotationLocal = kinematicLocalOrientation * Quaternion.Inverse(currentLocalOrientation); // Works
+        newRotationLocal = kinematicLocalOrientation * Quaternion.Inverse(currentLocalOrientation); // Works
         // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
         // We want the equivalant short rotation eg. -10 degrees
         // Check if rotation is greater than 190 degees == q.w is negative
@@ -391,7 +493,7 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         // ---
 
         // Target Global Rotation in Angle-axis
-        Quaternion newRotationGlobal = _kinematicGlobalOrientation * Quaternion.Inverse(_currentGlobalOrientation); // Works
+        newRotationGlobal = kinematicGlobalOrientation * Quaternion.Inverse(currentGlobalOrientation); // Works
         // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
         // We want the equivalant short rotation eg. -10 degrees
         // Check if rotation is greater than 190 degees == q.w is negative
@@ -408,21 +510,6 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         newRotationGlobal.ToAngleAxis(out rotationNewAngleGlobal, out rotationNewAxisGlobal);
         rotationNewAxisGlobal.Normalize();
 
-        // --- TEST
-
-        float qMinRotAngle = 0.0f;
-        Vector3 qMinRotAxis = Vector3.zero;
-        Quaternion qMinRot = Quaternion.Euler(angleXMin, angleYMin, angleZMin) * Quaternion.Inverse(currentLocalOrientation);
-        qMinRot.ToAngleAxis(out qMinRotAngle, out qMinRotAxis);
-
-        float qMaxRotAngle = 0.0f;
-        Vector3 qMaxRotAxis = Vector3.zero;
-        Quaternion qMaxRot = Quaternion.Euler(angleXMax, angleYMax, angleZMax) * Quaternion.Inverse(currentLocalOrientation);
-        qMaxRot.ToAngleAxis(out qMaxRotAngle, out qMaxRotAxis);
-
-        float angleLowErrorX = qMinRotAngle - rotationNewAngleLocal;
-        float angleHighErrorX = qMaxRotAngle - rotationNewAngleLocal;
-
         /*             Test Rotations               */
         /* ======================================== */
 
@@ -431,69 +518,75 @@ public class AntagonisticJointQuaternion : MonoBehaviour
             // 1. DesiredLocalRotation
             //transform.localRotation = desiredLocalRotation; // Wrong! -> The rotation is in the joint space, while local rotation in local space.
 
-            // 2. Apply rotation quaternion locally
-            transform.localRotation = newRotationLocal * transform.localRotation; // Works perfectly
+            // 2. Apply rotation quaternion (LOCAL)
+            //transform.localRotation = newRotationLocal * transform.localRotation; // Works perfectly - Still some jittering which I don't know where it comes from
 
-            // 3. Apply rotation quaternion globally
-            //transform.rotation = newRotationGlobal * transform.rotation; // Works perfectly
+            // 3. Apply rotation quaternion (GLOBAL)
+            //transform.rotation = newRotationGlobal * transform.rotation; // Does not work entirely, are global rotations - Still some jittering which I don't know where it comes from
 
         }
 
         /*                Controllers               */
         /* ======================================== */
 
-        // 1. Torque Estimation (LOCAL)
-
         // Estimate Angle Error Local
-        float newRotationError = rotationNewAngleLocal;
-        //Debug.Log("[" + this.gameObject.name + "] newRotationError: " + newRotationError);
+        float newRotationErrorLocal = rotationNewAngleLocal;
+        Debug.Log("[" + this.gameObject.name + "] newRotationErrorLocal: " + newRotationErrorLocal);
 
         // Rotation Axis Local
-        //Debug.Log("[" + this.gameObject.name + "] rotationNewAxisLocal: " + rotationNewAxisLocal);
-        //Debug.DrawRay(this.transform.position, rotationNewAxisLocal, Color.blue); // wrt. Global
-
-        // Torque with 1.version PD
-        float torque = _normalPDController.GetOutputPD(newRotationError, angularVelocity.magnitude, Time.fixedDeltaTime);
-        //Debug.Log("[INFO] Torque Estimation (LOCAL) -> torque * rotationNewAxis: " + (torque * rotationNewAxisLocal));
-
-        // 2. Torque Estimation (GLOBAL)
+        Debug.Log("[" + this.gameObject.name + "] rotationNewAxisLocal: " + rotationNewAxisLocal);
+        Debug.DrawRay(this.transform.position, rotationNewAxisLocal, Color.blue);
 
         // Estimate Angle Error Global
-        float newRotationErrorImproved = rotationNewAngleGlobal;
-        Debug.Log("[" + this.gameObject.name + "] newRotationErrorImproved: " + newRotationErrorImproved);
+        float newRotationErrorGlobal = rotationNewAngleGlobal;
+        Debug.Log("[" + this.gameObject.name + "] newRotationErrorGlobal: " + newRotationErrorGlobal);
 
         // Rotation Axis Global
         Debug.Log("[" + this.gameObject.name + "] rotationNewAxisGlobal: " + rotationNewAxisGlobal);
-        Debug.DrawRay(this.transform.position, rotationNewAxisGlobal, Color.blue); // wrt. Global
+        Debug.DrawRay(this.transform.position, rotationNewAxisGlobal, Color.blue);
 
-        // Torque with 2.version PD
-        Vector3 improvedTorque = _normalPDController.GetOutputImprovedPD(newRotationErrorImproved, rotationNewAxisGlobal, angularVelocity, Time.fixedDeltaTime);
-
-        /*                  Inertia                 */
+        /*       1. Normal Torque Estimation        */
         /* ======================================== */
+
+        // Normal Torque (Local)
+        float torqueLocal = _normalPDController.GetOutputPD(newRotationErrorLocal, angularVelocity.magnitude, Time.fixedDeltaTime);
+        Debug.Log("[INFO] Torque Estimation (LOCAL) -> torqueLocal * rotationNewAxis: " + (torqueLocal * rotationNewAxisLocal));
+
+        /*     2. Improved Torque Estimation        */
+        /* ======================================== */
+
+        // Improved Torque (Global and Local)
+        Vector3 torqueImprovedGlobal = _normalPDController.GetOutputImprovedPD(newRotationErrorGlobal, rotationNewAxisGlobal, angularVelocity, Time.fixedDeltaTime);
+        Vector3 torqueImprovedLocal = _normalPDController.GetOutputImprovedPD(newRotationErrorLocal, rotationNewAxisLocal, angularVelocity, Time.fixedDeltaTime);
 
         // Convert rotation of inertia tensor to global
         Quaternion rotInertia2World = _objectRigidbody.inertiaTensorRotation * transform.rotation;
 
         // ****
-        improvedTorque = Quaternion.Inverse(rotInertia2World) * improvedTorque;
-        improvedTorque.Scale(_objectRigidbody.inertiaTensor);
-        improvedTorque = rotInertia2World * improvedTorque;
+        torqueImprovedGlobal = Quaternion.Inverse(rotInertia2World) * torqueImprovedGlobal;
+        torqueImprovedGlobal.Scale(_objectRigidbody.inertiaTensor);
+        torqueImprovedGlobal = rotInertia2World * torqueImprovedGlobal;
+        Debug.Log("[INFO] Torque Estimation (GLOBAL) -> torqueImprovedGlobal: " + (torqueImprovedGlobal));
         // ****
 
-        Debug.Log("[INFO] Torque Estimation (GLOBAL) -> improvedTorque: " + (improvedTorque));
+        // ****
+        //torqueImprovedLocal = Quaternion.Inverse(rotInertia2World) * torqueImprovedLocal;
+        //torqueImprovedLocal.Scale(_objectRigidbody.inertiaTensor);
+        torqueImprovedLocal = _objectRigidbody.inertiaTensorRotation * torqueImprovedLocal;
+        Debug.Log("[INFO] Torque Estimation (LOCAL) -> torqueImprovedLocal: " + (torqueImprovedLocal));
+        // ****
 
         /*                  Returns                 */
         /* ======================================== */
 
         // 1. Torque Estimation (LOCAL)
-        //return torque * transform.InverseTransformDirection(rotationNewAxis);
-        //return torque * rotationNewAxisLocal; // -> A.
+        //return torqueLocal * rotationNewAxisLocal; // -> A.
 
         // 2. Torque Estimation (GLOBAL)
-        return improvedTorque; // -> B.
-
-        
+        if(globalMode)
+            return torqueImprovedGlobal; // -> B (Global) - Working fine
+        else
+            return torqueImprovedLocal; // -> B (Local) - Not entirely working
     }
 
     #region AntagonisticJoint.cs
@@ -719,16 +812,14 @@ public class AntagonisticJointQuaternion : MonoBehaviour
     }
     */
 
-    /*
     public float to180(float v)
     {
-        if (v > 180)
+        if (v > 270)
         {
             v = v - 360;
         }
         return v;
     }
-    */
 
     /*
     Vector3 jointRotation(ConfigurableJoint joint)

@@ -189,25 +189,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mimic: {fileID: 0}
+  kinematicArm: {fileID: 0}
   applyTorque: 0
   torqueTest: {x: 0, y: 0, z: 0}
-  Kpl: 15000
-  Kph: 0
+  Kp: 0
   Ki: 0
   Kd: 1.2
-  kinematicArm: {fileID: 0}
-  angleXMin: 0
-  angleXMax: 0
-  angleYMin: 0
-  angleYMax: 0
-  angleZMin: 0
-  angleZMax: 0
+  applyAntTorqueX: 0
+  torqueAppliedX: 0
+  pLX: 0
+  pHX: 0
+  iX: 0
+  dX: 0
+  minAngleX: 0
+  maxAngleX: 0
+  slopeX: 0
+  interceptX: 0
   printX: 0
   printY: 0
   printZ: 0
   deployDesiredRotation: 0
-  useJointPD: 1
+  deployDesiredRotationUpdate: 0
+  useJointPD: 0
 --- !u!1 &4765623532586227487
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,25 +820,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mimic: {fileID: 0}
+  kinematicArm: {fileID: 0}
   applyTorque: 0
   torqueTest: {x: 0, y: 0, z: 0}
-  Kpl: 15000
-  Kph: 0
+  Kp: 0
   Ki: 0
   Kd: 1.2
-  kinematicArm: {fileID: 0}
-  angleXMin: 0
-  angleXMax: 0
-  angleYMin: 0
-  angleYMax: 0
-  angleZMin: 0
-  angleZMax: 0
+  applyAntTorqueX: 0
+  torqueAppliedX: 0
+  pLX: 0
+  pHX: 0
+  iX: 0
+  dX: 0
+  minAngleX: 0
+  maxAngleX: 0
+  slopeX: 0
+  interceptX: 0
   printX: 0
   printY: 0
   printZ: 0
   deployDesiredRotation: 0
-  useJointPD: 1
+  deployDesiredRotationUpdate: 0
+  useJointPD: 0
 --- !u!1 &4765623532904624680
 GameObject:
   m_ObjectHideFlags: 0
@@ -2530,24 +2536,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mimic: {fileID: 0}
+  kinematicArm: {fileID: 0}
   applyTorque: 0
   torqueTest: {x: 0, y: 0, z: 0}
-  Kpl: 15000
-  Kph: 0
+  Kp: 0
   Ki: 0
   Kd: 1.2
-  kinematicArm: {fileID: 0}
-  angleXMin: -30
-  angleXMax: 30
-  angleYMin: -30
-  angleYMax: 30
-  angleZMin: -30
-  angleZMax: 30
+  applyAntTorqueX: 0
+  torqueAppliedX: 0
+  pLX: 0
+  pHX: 0
+  iX: 0
+  dX: 0
+  minAngleX: -10
+  maxAngleX: 180
+  slopeX: 0
+  interceptX: 0
   printX: 0
   printY: 0
   printZ: 0
   deployDesiredRotation: 0
+  deployDesiredRotationUpdate: 0
   useJointPD: 0
 --- !u!1 &4765623533429162650
 GameObject:
@@ -3063,25 +3072,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mimic: {fileID: 0}
+  kinematicArm: {fileID: 0}
   applyTorque: 0
   torqueTest: {x: 0, y: 0, z: 0}
-  Kpl: 15000
-  Kph: 0
+  Kp: 0
   Ki: 0
   Kd: 1.2
-  kinematicArm: {fileID: 0}
-  angleXMin: 0
-  angleXMax: 0
-  angleYMin: 0
-  angleYMax: 0
-  angleZMin: 0
-  angleZMax: 0
+  applyAntTorqueX: 0
+  torqueAppliedX: 0
+  pLX: 0
+  pHX: 0
+  iX: 0
+  dX: 0
+  minAngleX: 0
+  maxAngleX: 0
+  slopeX: 0
+  interceptX: 0
   printX: 0
   printY: 0
   printZ: 0
   deployDesiredRotation: 0
-  useJointPD: 1
+  deployDesiredRotationUpdate: 0
+  useJointPD: 0
 --- !u!1 &4765623533631331841
 GameObject:
   m_ObjectHideFlags: 0
@@ -4856,7 +4868,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 3
+  m_CollisionDetection: 2
 --- !u!136 &4765623534636773833
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4940,7 +4952,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 0
+  m_RotationDriveMode: 1
   m_AngularXDrive:
     serializedVersion: 3
     positionSpring: 0
@@ -4994,24 +5006,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mimic: {fileID: 0}
+  kinematicArm: {fileID: 0}
   applyTorque: 0
   torqueTest: {x: 0, y: 0, z: 0}
-  Kpl: 15000
-  Kph: 0
+  Kp: 0
   Ki: 0
   Kd: 1.2
-  kinematicArm: {fileID: 0}
-  angleXMin: -30
-  angleXMax: 30
-  angleYMin: -30
-  angleYMax: 30
-  angleZMin: -30
-  angleZMax: 30
+  applyAntTorqueX: 0
+  torqueAppliedX: 0
+  pLX: 0
+  pHX: 0
+  iX: 0
+  dX: 0
+  minAngleX: 0
+  maxAngleX: 0
+  slopeX: 0
+  interceptX: 0
   printX: 0
   printY: 0
   printZ: 0
   deployDesiredRotation: 0
+  deployDesiredRotationUpdate: 0
   useJointPD: 0
 --- !u!1 &4765623534659419155
 GameObject:
@@ -5250,22 +5265,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mimic: {fileID: 0}
+  kinematicArm: {fileID: 0}
   applyTorque: 0
   torqueTest: {x: 0, y: 0, z: 0}
-  Kpl: 15000
-  Kph: 0
+  Kp: 0
   Ki: 0
   Kd: 1.2
-  kinematicArm: {fileID: 0}
-  angleXMin: -30
-  angleXMax: 30
-  angleYMin: -30
-  angleYMax: 30
-  angleZMin: -30
-  angleZMax: 30
+  applyAntTorqueX: 0
+  torqueAppliedX: 0
+  pLX: 0
+  pHX: 0
+  iX: 0
+  dX: 0
+  minAngleX: 0
+  maxAngleX: 0
+  slopeX: 0
+  interceptX: 0
   printX: 0
   printY: 0
   printZ: 0
   deployDesiredRotation: 0
+  deployDesiredRotationUpdate: 0
   useJointPD: 1
