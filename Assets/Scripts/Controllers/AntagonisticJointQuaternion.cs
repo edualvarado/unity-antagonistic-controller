@@ -74,7 +74,8 @@ public class AntagonisticJointQuaternion : MonoBehaviour
 
     private Quaternion newRotationMinXLocal;
     private Quaternion newRotationMaxXLocal;
-
+    private Quaternion kinRotationMinXLocal;
+    private Quaternion kinRotationMaxXLocal;
     #endregion
 
     #region Instance Properties
@@ -442,8 +443,63 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         newRotationMaxXLocal.ToAngleAxis(out rotationNewAngleMaxXLocal, out rotationNewAxisMaxXLocal);
         rotationNewAxisMaxXLocal.Normalize();
 
-        Debug.Log("rotationNewAngleMinXLocal: " + (rotationNewAngleMinXLocal * rotationNewAxisMinXLocal).x); // Working
-        Debug.Log("rotationNewAngleMaxXLocal: " + (rotationNewAngleMaxXLocal * rotationNewAxisMaxXLocal).x); // Working
+        float errorMinXLocal = (rotationNewAngleMinXLocal * rotationNewAxisMinXLocal).x;
+        float errorMaxXLocal = (rotationNewAngleMaxXLocal * rotationNewAxisMaxXLocal).x;
+        Debug.Log("errorMinXLocal: " + errorMinXLocal); // Working
+        Debug.Log("errorMaxXLocal: " + errorMaxXLocal); // Working
+
+        // Test - It's working
+        //pHX = pLX * slopeX + interceptX;
+        //this._antPDController.KPL = pLX;
+        //this._antPDController.KPH = pHX;
+        //torqueAppliedX = _antPDController.GetOutput(errorMinXLocal, errorMaxXLocal, angularVelocity.magnitude, Time.fixedDeltaTime);
+
+        // Now, make real slope/intercept
+
+        // Target Local Rotation in Angle-axis
+        kinRotationMinXLocal = minAngleQuaternionX * Quaternion.Inverse(kinematicLocalOrientation); // Works
+        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
+        // We want the equivalant short rotation eg. -10 degrees
+        // Check if rotation is greater than 190 degees == q.w is negative
+        if (kinRotationMinXLocal.w < 0)
+        {
+            // Convert the quaterion to eqivalent "short way around" quaterion
+            kinRotationMinXLocal.x = -kinRotationMinXLocal.x;
+            kinRotationMinXLocal.y = -kinRotationMinXLocal.y;
+            kinRotationMinXLocal.z = -kinRotationMinXLocal.z;
+            kinRotationMinXLocal.w = -kinRotationMinXLocal.w;
+        }
+        float rotationKinAngleMinXLocal = 0.0f;
+        Vector3 rotationKinAxisMinXLocal = Vector3.zero;
+        kinRotationMinXLocal.ToAngleAxis(out rotationKinAngleMinXLocal, out rotationKinAxisMinXLocal);
+        rotationKinAxisMinXLocal.Normalize();
+
+        // Target Local Rotation in Angle-axis
+        kinRotationMaxXLocal = maxAngleQuaternionX * Quaternion.Inverse(kinematicLocalOrientation); // Works
+        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
+        // We want the equivalant short rotation eg. -10 degrees
+        // Check if rotation is greater than 190 degees == q.w is negative
+        if (kinRotationMaxXLocal.w < 0)
+        {
+            // Convert the quaterion to eqivalent "short way around" quaterion
+            kinRotationMaxXLocal.x = -kinRotationMaxXLocal.x;
+            kinRotationMaxXLocal.y = -kinRotationMaxXLocal.y;
+            kinRotationMaxXLocal.z = -kinRotationMaxXLocal.z;
+            kinRotationMaxXLocal.w = -kinRotationMaxXLocal.w;
+        }
+        float rotationKinAngleMaxXLocal = 0.0f;
+        Vector3 rotationKinAxisMaxXLocal = Vector3.zero;
+        kinRotationMaxXLocal.ToAngleAxis(out rotationKinAngleMaxXLocal, out rotationKinAxisMaxXLocal);
+        rotationKinAxisMaxXLocal.Normalize();
+
+        interceptX = 0f;
+        slopeX = ((rotationKinAngleMinXLocal * rotationKinAxisMinXLocal).x) / (-(rotationKinAngleMaxXLocal * rotationKinAxisMaxXLocal).x);
+        pHX = pLX * slopeX + interceptX;
+        this._antPDController.KPL = pLX;
+        this._antPDController.KPH = pHX;
+        torqueAppliedX = _antPDController.GetOutput(errorMinXLocal, errorMaxXLocal, angularVelocity.magnitude, Time.fixedDeltaTime);
+
+        // Seems to work! Review code, test for each axis, and use multiple 
 
         #endregion
 
