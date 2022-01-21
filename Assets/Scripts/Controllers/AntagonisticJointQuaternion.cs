@@ -72,6 +72,9 @@ public class AntagonisticJointQuaternion : MonoBehaviour
     private Quaternion newRotationLocal;
     private Quaternion newRotationGlobal;
 
+    private Quaternion newRotationMinXLocal;
+    private Quaternion newRotationMaxXLocal;
+
     #endregion
 
     #region Instance Properties
@@ -264,9 +267,10 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         gravityTorqueVector = Vector3.Cross(distance3D, _objectRigidbody.mass * gravityAcc); // Remember: wrt. global coord. system
         gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // Remember: wrt. local coord. system
 
-        // ---
+        // ------
 
         // Test - Normal PD Controller (Angle-axis)
+        /* COMMENTING NOW TO SEE ANTAGONISTIC
         Vector3 requiredTorque = ComputeRequiredTorque(_currentLocalOrientation,
                                                        _currentGlobalOrientation,
                                                        _kinematicLocalOrientation,
@@ -278,6 +282,9 @@ public class AntagonisticJointQuaternion : MonoBehaviour
 
 
         Debug.Log("[" + this.gameObject.name + "] requiredTorque: " + requiredTorque);
+        */
+
+        Vector3 requiredTorque = Vector3.zero; // TO SEE ANTAGONISTIC
 
         if ((!useJointPD) && (applyTorque))
         {
@@ -307,25 +314,25 @@ public class AntagonisticJointQuaternion : MonoBehaviour
              * */
         }
 
-        // ---
+        // ------
 
         // Test - Antagonistic PD Controller
-        Vector3 requiredAntTorqueX = ComputeRequiredAntTorqueX(_currentLocalOrientation,
-                                                               _currentGlobalOrientation,
-                                                               _kinematicLocalOrientation,
-                                                               _kinematicGlobalOrientation,
-                                                               DesiredLocalRotation,
-                                                               this._objectRigidbody.angularVelocity,
-                                                               gravityTorqueVectorLocal,
-                                                               Time.fixedDeltaTime);
+        Vector3 requiredAntagonisticTorqueX = ComputeRequiredAntagonisticTorqueX(_currentLocalOrientation,
+                                                                                   _currentGlobalOrientation,
+                                                                                   _kinematicLocalOrientation,
+                                                                                   _kinematicGlobalOrientation,
+                                                                                   DesiredLocalRotation,
+                                                                                   this._objectRigidbody.angularVelocity,
+                                                                                   gravityTorqueVectorLocal,
+                                                                                   Time.fixedDeltaTime);
 
-        Debug.Log("[" + this.gameObject.name + "] requiredAntTorqueX: " + requiredAntTorqueX);
+        Debug.Log("[" + this.gameObject.name + "] requiredAntagonisticTorqueX: " + requiredAntagonisticTorqueX);
 
         // ---
 
         if ((!useJointPD) && (applyAntTorqueX))
         {
-            this._objectRigidbody.AddRelativeTorque(requiredAntTorqueX, ForceMode.Force);
+            this._objectRigidbody.AddRelativeTorque(requiredAntagonisticTorqueX, ForceMode.Force);
         }
 
         #region Test - Quaternion Substraction
@@ -385,14 +392,67 @@ public class AntagonisticJointQuaternion : MonoBehaviour
     /// <param name="gravityTorqueVectorLocal"></param>
     /// <param name="fixedDeltaTime"></param>
     /// <returns></returns>
-    private Vector3 ComputeRequiredAntTorqueX(Quaternion currentLocalOrientation, Quaternion currentGlobalOrientation,
-                                          Quaternion kinematicLocalOrientation, Quaternion kinematicGlobalOrientation,
-                                          Quaternion desiredLocalRotation, Vector3 angularVelocity, Vector3 gravityTorqueVectorLocal,
-                                          float fixedDeltaTime)
+    private Vector3 ComputeRequiredAntagonisticTorqueX(Quaternion currentLocalOrientation, Quaternion currentGlobalOrientation,
+                                                       Quaternion kinematicLocalOrientation, Quaternion kinematicGlobalOrientation,
+                                                       Quaternion desiredLocalRotation, Vector3 angularVelocity, Vector3 gravityTorqueVectorLocal,
+                                                       float fixedDeltaTime)
     {
 
-        //Debug.Log("[INFO] kinematicLocalOrientation.eulerAngles: " + kinematicLocalOrientation.eulerAngles);
-        //Debug.Log("[INFO] currentLocalOrientation.eulerAngles: " + currentLocalOrientation.eulerAngles);
+        #region TEST - Axis-angle
+
+        /* Estimation of orientations and rotations */
+        /* ======================================== */
+
+        Quaternion minAngleQuaternionX = Quaternion.Euler(new Vector3(minAngleX, 0f, 0f));
+        Quaternion maxAngleQuaternionX = Quaternion.Euler(new Vector3(maxAngleX, 0f, 0f));
+
+        // Target Local Rotation in Angle-axis
+        newRotationMinXLocal = minAngleQuaternionX * Quaternion.Inverse(currentLocalOrientation); // Works
+        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
+        // We want the equivalant short rotation eg. -10 degrees
+        // Check if rotation is greater than 190 degees == q.w is negative
+        if (newRotationMinXLocal.w < 0)
+        {
+            // Convert the quaterion to eqivalent "short way around" quaterion
+            newRotationMinXLocal.x = -newRotationMinXLocal.x;
+            newRotationMinXLocal.y = -newRotationMinXLocal.y;
+            newRotationMinXLocal.z = -newRotationMinXLocal.z;
+            newRotationMinXLocal.w = -newRotationMinXLocal.w;
+        }
+        float rotationNewAngleMinXLocal = 0.0f;
+        Vector3 rotationNewAxisMinXLocal = Vector3.zero;
+        newRotationMinXLocal.ToAngleAxis(out rotationNewAngleMinXLocal, out rotationNewAxisMinXLocal);
+        rotationNewAxisMinXLocal.Normalize();
+
+        // Target Local Rotation in Angle-axis
+        newRotationMaxXLocal = maxAngleQuaternionX * Quaternion.Inverse(currentLocalOrientation); // Works
+        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
+        // We want the equivalant short rotation eg. -10 degrees
+        // Check if rotation is greater than 190 degees == q.w is negative
+        if (newRotationMaxXLocal.w < 0)
+        {
+            // Convert the quaterion to eqivalent "short way around" quaterion
+            newRotationMaxXLocal.x = -newRotationMaxXLocal.x;
+            newRotationMaxXLocal.y = -newRotationMaxXLocal.y;
+            newRotationMaxXLocal.z = -newRotationMaxXLocal.z;
+            newRotationMaxXLocal.w = -newRotationMaxXLocal.w;
+        }
+        float rotationNewAngleMaxXLocal = 0.0f;
+        Vector3 rotationNewAxisMaxXLocal = Vector3.zero;
+        newRotationMaxXLocal.ToAngleAxis(out rotationNewAngleMaxXLocal, out rotationNewAxisMaxXLocal);
+        rotationNewAxisMaxXLocal.Normalize();
+
+        Debug.Log("rotationNewAngleMinXLocal: " + (rotationNewAngleMinXLocal * rotationNewAxisMinXLocal).x); // Working
+        Debug.Log("rotationNewAngleMaxXLocal: " + (rotationNewAngleMaxXLocal * rotationNewAxisMaxXLocal).x); // Working
+
+        #endregion
+
+        #region TEST - Euler 
+
+        /*
+        Debug.Log("[INFO] kinematicLocalOrientation.eulerAngles: " + (kinematicLocalOrientation.eulerAngles.x));
+        Debug.Log("[INFO] currentLocalOrientation.eulerAngles: " + (currentLocalOrientation.eulerAngles.x));
+        Debug.Log("[INFO] difference.eulerAngles: " + (currentLocalOrientation.eulerAngles.x - kinematicLocalOrientation.eulerAngles.x));
 
         Vector3 kinematicLocalOrientationClamp = new Vector3(Mathf.Clamp(to180(kinematicLocalOrientation.eulerAngles.x), 0f, 180f),
                                                              Mathf.Clamp(to180(kinematicLocalOrientation.eulerAngles.y), 0f, 180f),
@@ -405,6 +465,7 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         Debug.Log("[NEW] kinematicLocalOrientation.eulerAngles: " + kinematicLocalOrientationClamp);
         Debug.Log("[NEW] currentLocalOrientation.eulerAngles: " + currentLocalOrientationClamp);
 
+        // Current angles are wrong
 
         // With "-" because Unity uses left-hand rule. I leave the debugs lines with left-hand.
         interceptX = (0f) / (maxAngleX - kinematicLocalOrientationClamp.x);
@@ -428,6 +489,9 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         Debug.Log("[INFO] angleHighErrorX: " + angleHighErrorX);
 
         torqueAppliedX = _antPDController.GetOutput(angleLowErrorX, angleHighErrorX, angularVelocity.magnitude, Time.fixedDeltaTime);
+        */
+
+        #endregion
 
         return new Vector3(torqueAppliedX, 0f, 0f);
     }
@@ -817,6 +881,15 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         if (v > 270)
         {
             v = v - 360;
+        }
+        return v;
+    }
+
+    public float to90(float v)
+    {
+        if (v > 90)
+        {
+            v = 180 - v;
         }
         return v;
     }
