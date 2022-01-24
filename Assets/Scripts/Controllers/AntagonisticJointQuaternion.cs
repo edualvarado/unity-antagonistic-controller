@@ -307,6 +307,8 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         // ------
 
         // Test - Normal PD Controller (Angle-axis)
+        // ----------------------------------------
+
         /* COMMENTING NOW TO SEE ANTAGONISTIC
         Vector3 requiredTorque = ComputeRequiredTorque(_currentLocalOrientation,
                                                        _currentGlobalOrientation,
@@ -354,32 +356,34 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         // ------
 
         // Test - Antagonistic PD Controller
+        // ---------------------------------
+
         Vector3 requiredAntagonisticTorqueX = ComputeRequiredAntagonisticTorqueX(_currentLocalOrientation,
-                                                                                   _currentGlobalOrientation,
-                                                                                   _kinematicLocalOrientation,
-                                                                                   _kinematicGlobalOrientation,
-                                                                                   DesiredLocalRotation,
-                                                                                   this._objectRigidbody.angularVelocity,
-                                                                                   gravityTorqueVectorLocal,
-                                                                                   Time.fixedDeltaTime);
+                                                                                 _currentGlobalOrientation,
+                                                                                 _kinematicLocalOrientation,
+                                                                                 _kinematicGlobalOrientation,
+                                                                                 DesiredLocalRotation,
+                                                                                 this._objectRigidbody.angularVelocity,
+                                                                                 gravityTorqueVectorLocal,
+                                                                                 Time.fixedDeltaTime);
 
         Vector3 requiredAntagonisticTorqueY = ComputeRequiredAntagonisticTorqueY(_currentLocalOrientation,
-                                                                           _currentGlobalOrientation,
-                                                                           _kinematicLocalOrientation,
-                                                                           _kinematicGlobalOrientation,
-                                                                           DesiredLocalRotation,
-                                                                           this._objectRigidbody.angularVelocity,
-                                                                           gravityTorqueVectorLocal,
-                                                                           Time.fixedDeltaTime);
+                                                                                 _currentGlobalOrientation,
+                                                                                 _kinematicLocalOrientation,
+                                                                                 _kinematicGlobalOrientation,
+                                                                                 DesiredLocalRotation,
+                                                                                 this._objectRigidbody.angularVelocity,
+                                                                                 gravityTorqueVectorLocal,
+                                                                                 Time.fixedDeltaTime);
 
         Vector3 requiredAntagonisticTorqueZ = ComputeRequiredAntagonisticTorqueZ(_currentLocalOrientation,
-                                                                   _currentGlobalOrientation,
-                                                                   _kinematicLocalOrientation,
-                                                                   _kinematicGlobalOrientation,
-                                                                   DesiredLocalRotation,
-                                                                   this._objectRigidbody.angularVelocity,
-                                                                   gravityTorqueVectorLocal,
-                                                                   Time.fixedDeltaTime);
+                                                                                _currentGlobalOrientation,
+                                                                                _kinematicLocalOrientation,
+                                                                                _kinematicGlobalOrientation,
+                                                                                DesiredLocalRotation,
+                                                                                this._objectRigidbody.angularVelocity,
+                                                                                gravityTorqueVectorLocal,
+                                                                                Time.fixedDeltaTime);
 
         Debug.Log("[" + this.gameObject.name + "] requiredAntagonisticTorqueX: " + requiredAntagonisticTorqueX);
         Debug.Log("[" + this.gameObject.name + "] requiredAntagonisticTorqueY: " + requiredAntagonisticTorqueY);

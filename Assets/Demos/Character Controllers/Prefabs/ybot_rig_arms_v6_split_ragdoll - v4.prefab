@@ -45,8 +45,8 @@ Rigidbody:
   m_GameObject: {fileID: 4765623532570005711}
   serializedVersion: 2
   m_Mass: 1.59
-  m_Drag: 1
-  m_AngularDrag: 1
+  m_Drag: 10
+  m_AngularDrag: 10
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kinematicArm: {fileID: 0}
+  globalMode: 0
   applyTorque: 0
   torqueTest: {x: 0, y: 0, z: 0}
   Kp: 0
@@ -205,11 +206,31 @@ MonoBehaviour:
   maxAngleX: 0
   slopeX: 0
   interceptX: 0
+  applyAntTorqueY: 0
+  torqueAppliedY: 0
+  pLY: 0
+  pHY: 0
+  iY: 0
+  dY: 0
+  minAngleY: 0
+  maxAngleY: 0
+  slopeY: 0
+  interceptY: 0
+  applyAntTorqueZ: 0
+  torqueAppliedZ: 0
+  pLZ: 0
+  pHZ: 0
+  iZ: 0
+  dZ: 0
+  minAngleZ: 0
+  maxAngleZ: 0
+  slopeZ: 0
+  interceptZ: 0
   printX: 0
   printY: 0
   printZ: 0
   deployDesiredRotation: 0
-  deployDesiredRotationUpdate: 0
+  eulerRot: {x: 0, y: 0, z: 0}
   useJointPD: 0
 --- !u!1 &4765623532586227487
 GameObject:
@@ -596,6 +617,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4765623532821786554}
   - component: {fileID: 4765623532821786500}
+  - component: {fileID: 1141373237}
   m_Layer: 8
   m_Name: ybot_rig_arms_v6_split_ragdoll - v4
   m_TagString: Untagged
@@ -644,6 +666,103 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1141373237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765623532821786555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4201bfb83a7dd840bfd7eb233edad57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  copyKinematicHands: 0
+  kinematicRightHandBones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ragdollRightHandBones:
+  - {fileID: 4765623533121245267}
+  - {fileID: 4765623533238448886}
+  - {fileID: 4765623533261130225}
+  - {fileID: 4765623533529734244}
+  - {fileID: 4765623534272098369}
+  - {fileID: 4765623533392810178}
+  - {fileID: 4765623534451811497}
+  - {fileID: 4765623533429162853}
+  - {fileID: 4765623532720762039}
+  - {fileID: 4765623533305086501}
+  - {fileID: 4765623533133875898}
+  - {fileID: 4765623532638449805}
+  - {fileID: 4765623533564769649}
+  - {fileID: 4765623534633218456}
+  - {fileID: 4765623533216649922}
+  - {fileID: 4765623534428700944}
+  - {fileID: 4765623534659419154}
+  - {fileID: 4765623533503229497}
+  - {fileID: 4765623533953042879}
+  - {fileID: 4765623533049101657}
+  kinematicLeftHandBones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ragdollLeftHandBones:
+  - {fileID: 4765623533514997399}
+  - {fileID: 4765623534063274803}
+  - {fileID: 4765623533376208180}
+  - {fileID: 4765623533677953764}
+  - {fileID: 4765623532904624683}
+  - {fileID: 4765623533657316522}
+  - {fileID: 4765623534109965996}
+  - {fileID: 4765623532786162724}
+  - {fileID: 4765623533357263016}
+  - {fileID: 4765623534034372958}
+  - {fileID: 4765623533448299084}
+  - {fileID: 4765623533859719083}
+  - {fileID: 4765623532661036894}
+  - {fileID: 4765623532802685680}
+  - {fileID: 4765623534055023672}
+  - {fileID: 4765623534661616332}
+  - {fileID: 4765623532958768533}
+  - {fileID: 4765623532813615986}
+  - {fileID: 4765623533841301579}
+  - {fileID: 4765623533145037701}
 --- !u!1 &4765623532839076803
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,8 +811,8 @@ Rigidbody:
   m_GameObject: {fileID: 4765623532839076803}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 1
-  m_AngularDrag: 1
+  m_Drag: 10
+  m_AngularDrag: 10
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -821,6 +940,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kinematicArm: {fileID: 0}
+  globalMode: 0
   applyTorque: 0
   torqueTest: {x: 0, y: 0, z: 0}
   Kp: 0
@@ -836,11 +956,31 @@ MonoBehaviour:
   maxAngleX: 0
   slopeX: 0
   interceptX: 0
+  applyAntTorqueY: 0
+  torqueAppliedY: 0
+  pLY: 0
+  pHY: 0
+  iY: 0
+  dY: 0
+  minAngleY: 0
+  maxAngleY: 0
+  slopeY: 0
+  interceptY: 0
+  applyAntTorqueZ: 0
+  torqueAppliedZ: 0
+  pLZ: 0
+  pHZ: 0
+  iZ: 0
+  dZ: 0
+  minAngleZ: 0
+  maxAngleZ: 0
+  slopeZ: 0
+  interceptZ: 0
   printX: 0
   printY: 0
   printZ: 0
   deployDesiredRotation: 0
-  deployDesiredRotationUpdate: 0
+  eulerRot: {x: 0, y: 0, z: 0}
   useJointPD: 0
 --- !u!1 &4765623532904624680
 GameObject:
@@ -2323,8 +2463,8 @@ Rigidbody:
   m_GameObject: {fileID: 4765623533403131666}
   serializedVersion: 2
   m_Mass: 1.59
-  m_Drag: 1
-  m_AngularDrag: 1
+  m_Drag: 10
+  m_AngularDrag: 49.9
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -2537,6 +2677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kinematicArm: {fileID: 0}
+  globalMode: 0
   applyTorque: 0
   torqueTest: {x: 0, y: 0, z: 0}
   Kp: 0
@@ -2544,19 +2685,39 @@ MonoBehaviour:
   Kd: 1.2
   applyAntTorqueX: 0
   torqueAppliedX: 0
-  pLX: 0
+  pLX: 10
   pHX: 0
   iX: 0
-  dX: 0
-  minAngleX: -10
+  dX: 0.01
+  minAngleX: 0
   maxAngleX: 180
   slopeX: 0
   interceptX: 0
+  applyAntTorqueY: 0
+  torqueAppliedY: 0
+  pLY: 1
+  pHY: 0
+  iY: 0
+  dY: 0.01
+  minAngleY: -25
+  maxAngleY: 25
+  slopeY: 0
+  interceptY: 0
+  applyAntTorqueZ: 0
+  torqueAppliedZ: 0
+  pLZ: 1
+  pHZ: 0
+  iZ: 0
+  dZ: 0.01
+  minAngleZ: -25
+  maxAngleZ: 25
+  slopeZ: 0
+  interceptZ: 0
   printX: 0
   printY: 0
   printZ: 0
   deployDesiredRotation: 0
-  deployDesiredRotationUpdate: 0
+  eulerRot: {x: 0, y: 0, z: 0}
   useJointPD: 0
 --- !u!1 &4765623533429162650
 GameObject:
@@ -2928,8 +3089,8 @@ Rigidbody:
   m_GameObject: {fileID: 4765623533588814599}
   serializedVersion: 2
   m_Mass: 2.95
-  m_Drag: 1
-  m_AngularDrag: 1
+  m_Drag: 10
+  m_AngularDrag: 10
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -3073,6 +3234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kinematicArm: {fileID: 0}
+  globalMode: 0
   applyTorque: 0
   torqueTest: {x: 0, y: 0, z: 0}
   Kp: 0
@@ -3088,11 +3250,31 @@ MonoBehaviour:
   maxAngleX: 0
   slopeX: 0
   interceptX: 0
+  applyAntTorqueY: 0
+  torqueAppliedY: 0
+  pLY: 0
+  pHY: 0
+  iY: 0
+  dY: 0
+  minAngleY: 0
+  maxAngleY: 0
+  slopeY: 0
+  interceptY: 0
+  applyAntTorqueZ: 0
+  torqueAppliedZ: 0
+  pLZ: 0
+  pHZ: 0
+  iZ: 0
+  dZ: 0
+  minAngleZ: 0
+  maxAngleZ: 0
+  slopeZ: 0
+  interceptZ: 0
   printX: 0
   printY: 0
   printZ: 0
   deployDesiredRotation: 0
-  deployDesiredRotationUpdate: 0
+  eulerRot: {x: 0, y: 0, z: 0}
   useJointPD: 0
 --- !u!1 &4765623533631331841
 GameObject:
@@ -4862,8 +5044,8 @@ Rigidbody:
   m_GameObject: {fileID: 4765623534636773826}
   serializedVersion: 2
   m_Mass: 2.95
-  m_Drag: 1
-  m_AngularDrag: 1
+  m_Drag: 10
+  m_AngularDrag: 49.9
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -4926,7 +5108,7 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 85
+    limit: 80
     bounciness: 0
     contactDistance: 45
   m_AngularZLimit:
@@ -5007,6 +5189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kinematicArm: {fileID: 0}
+  globalMode: 0
   applyTorque: 0
   torqueTest: {x: 0, y: 0, z: 0}
   Kp: 0
@@ -5014,19 +5197,39 @@ MonoBehaviour:
   Kd: 1.2
   applyAntTorqueX: 0
   torqueAppliedX: 0
-  pLX: 0
+  pLX: 1
   pHX: 0
   iX: 0
-  dX: 0
-  minAngleX: 0
-  maxAngleX: 0
+  dX: 0.01
+  minAngleX: -80
+  maxAngleX: 80
   slopeX: 0
   interceptX: 0
+  applyAntTorqueY: 0
+  torqueAppliedY: 0
+  pLY: 1
+  pHY: 0
+  iY: 0
+  dY: 0.01
+  minAngleY: -25
+  maxAngleY: 25
+  slopeY: 0
+  interceptY: 0
+  applyAntTorqueZ: 0
+  torqueAppliedZ: 0
+  pLZ: 1
+  pHZ: 0
+  iZ: 0
+  dZ: 0.01
+  minAngleZ: -90
+  maxAngleZ: 90
+  slopeZ: 0
+  interceptZ: 0
   printX: 0
   printY: 0
   printZ: 0
   deployDesiredRotation: 0
-  deployDesiredRotationUpdate: 0
+  eulerRot: {x: 0, y: 0, z: 0}
   useJointPD: 0
 --- !u!1 &4765623534659419155
 GameObject:
@@ -5137,8 +5340,8 @@ Rigidbody:
   m_GameObject: {fileID: 4765623534695646599}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 1
-  m_AngularDrag: 1
+  m_Drag: 10
+  m_AngularDrag: 49.9
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -5189,11 +5392,11 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -45
+    limit: -25
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 75
+    limit: 25
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
@@ -5204,7 +5407,7 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 50
+    limit: 90
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -5266,6 +5469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kinematicArm: {fileID: 0}
+  globalMode: 0
   applyTorque: 0
   torqueTest: {x: 0, y: 0, z: 0}
   Kp: 0
@@ -5273,17 +5477,37 @@ MonoBehaviour:
   Kd: 1.2
   applyAntTorqueX: 0
   torqueAppliedX: 0
-  pLX: 0
+  pLX: 1
   pHX: 0
   iX: 0
-  dX: 0
-  minAngleX: 0
-  maxAngleX: 0
+  dX: 0.01
+  minAngleX: -25
+  maxAngleX: 25
   slopeX: 0
   interceptX: 0
+  applyAntTorqueY: 0
+  torqueAppliedY: 0
+  pLY: 1
+  pHY: 0
+  iY: 0
+  dY: 0.01
+  minAngleY: -50
+  maxAngleY: 50
+  slopeY: 0
+  interceptY: 0
+  applyAntTorqueZ: 0
+  torqueAppliedZ: 0
+  pLZ: 10
+  pHZ: 0
+  iZ: 0
+  dZ: 0.01
+  minAngleZ: -90
+  maxAngleZ: 90
+  slopeZ: 0
+  interceptZ: 0
   printX: 0
   printY: 0
   printZ: 0
   deployDesiredRotation: 0
-  deployDesiredRotationUpdate: 0
-  useJointPD: 1
+  eulerRot: {x: 0, y: 0, z: 0}
+  useJointPD: 0
