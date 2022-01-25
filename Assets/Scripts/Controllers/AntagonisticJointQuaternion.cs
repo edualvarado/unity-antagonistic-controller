@@ -29,6 +29,7 @@ public class AntagonisticJointQuaternion : MonoBehaviour
     private Quaternion _initialGlobalOrientation;
 
     [Header("General Settings")]
+    public bool AntagonisticPD;
     public Transform kinematicArm;
 
     [Header("Normal PD Controller - Settings")]
@@ -305,106 +306,104 @@ public class AntagonisticJointQuaternion : MonoBehaviour
         gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // Remember: wrt. local coord. system
 
         // ------
-
-        // Test - Normal PD Controller (Angle-axis)
-        // ----------------------------------------
-
-        /* COMMENTING NOW TO SEE ANTAGONISTIC
-        Vector3 requiredTorque = ComputeRequiredTorque(_currentLocalOrientation,
-                                                       _currentGlobalOrientation,
-                                                       _kinematicLocalOrientation,
-                                                       _kinematicGlobalOrientation,
-                                                       DesiredLocalRotation,
-                                                       this._objectRigidbody.angularVelocity,
-                                                       gravityTorqueVectorLocal,
-                                                       Time.fixedDeltaTime);
-
-
-        Debug.Log("[" + this.gameObject.name + "] requiredTorque: " + requiredTorque);
-        */
-
-        Vector3 requiredTorque = Vector3.zero; // TO SEE ANTAGONISTIC
-
-        if ((!useJointPD) && (applyTorque))
+        
+        if(!AntagonisticPD)
         {
-            // TODO: ForceMode.Acceleration or Force? Taking into account Inertia Matrix?
+            // Test - Normal PD Controller (Angle-axis)
+            // ----------------------------------------
 
-            // WRT GLOBAL -> Used for improved torque, that calculated in Global system
-            if(globalMode)
-                this._objectRigidbody.AddTorque(requiredTorque, ForceMode.Force); // -> B (Global)
-            else
-                this._objectRigidbody.AddRelativeTorque(requiredTorque, ForceMode.Force); // -> B (Local)
+            Vector3 requiredTorque = ComputeRequiredTorque(_currentLocalOrientation,
+                                                           _currentGlobalOrientation,
+                                                           _kinematicLocalOrientation,
+                                                           _kinematicGlobalOrientation,
+                                                           DesiredLocalRotation,
+                                                           this._objectRigidbody.angularVelocity,
+                                                           gravityTorqueVectorLocal,
+                                                           Time.fixedDeltaTime);
 
-            // WRT LOCAL -> Used for first torque version
-            //this._objectRigidbody.AddRelativeTorque(requiredAngularAcceleration, ForceMode.Acceleration); // -> A.
+            Debug.Log("[" + this.gameObject.name + "] Normal PD Controller (Angle-axis) requiredTorque: " + requiredTorque);
 
-            // WRT TEST
-            //this._objectRigidbody.AddRelativeTorque(torqueTest, ForceMode.Force);
+            if ((!useJointPD) && (applyTorque))
+            {
+                // TODO: ForceMode.Acceleration or Force? Taking into account Inertia Matrix?
 
-            /*
-             * ForceMode.Force: Interprets the input as torque (measured in Newton-metres), and changes the angular velocity by the value of torque * DT / mass. 
-             * The effect depends on the simulation step length and the mass of the body.
-             * ForceMode.Acceleration: Interprets the parameter as angular acceleration (measured in degrees per second squared), and changes the angular velocity by the value of torque * DT. 
-             * The effect depends on the simulation step length but does not depend on the mass of the body.
-             * ForceMode.Impulse: Interprets the parameter as an angular momentum (measured in kilogram-meters-squared per second), and changes the angular velocity by the value of torque / mass. 
-             * The effect depends on the mass of the body but doesn't depend on the simulation step length.
-             * ForceMode.VelocityChange: Interprets the parameter as a direct angular velocity change (measured in degrees per second), and changes the angular velocity by the value of torque. 
-             * The effect doesn't depend on the mass of the body and the simulation step length.
-             * */
+                // WRT GLOBAL -> Used for improved torque, that calculated in Global system
+                if (globalMode)
+                    this._objectRigidbody.AddTorque(requiredTorque, ForceMode.Force); // -> B (Global)
+                else
+                    this._objectRigidbody.AddRelativeTorque(requiredTorque, ForceMode.Force); // -> B (Local)
+
+                // WRT LOCAL -> Used for first torque version
+                //this._objectRigidbody.AddRelativeTorque(requiredAngularAcceleration, ForceMode.Acceleration); // -> A.
+
+                // WRT TEST
+                //this._objectRigidbody.AddRelativeTorque(torqueTest, ForceMode.Force);
+
+                /*
+                 * ForceMode.Force: Interprets the input as torque (measured in Newton-metres), and changes the angular velocity by the value of torque * DT / mass. 
+                 * The effect depends on the simulation step length and the mass of the body.
+                 * ForceMode.Acceleration: Interprets the parameter as angular acceleration (measured in degrees per second squared), and changes the angular velocity by the value of torque * DT. 
+                 * The effect depends on the simulation step length but does not depend on the mass of the body.
+                 * ForceMode.Impulse: Interprets the parameter as an angular momentum (measured in kilogram-meters-squared per second), and changes the angular velocity by the value of torque / mass. 
+                 * The effect depends on the mass of the body but doesn't depend on the simulation step length.
+                 * ForceMode.VelocityChange: Interprets the parameter as a direct angular velocity change (measured in degrees per second), and changes the angular velocity by the value of torque. 
+                 * The effect doesn't depend on the mass of the body and the simulation step length.
+                 * */
+            }
         }
+        else
+        {
+            // Test - Antagonistic PD Controller
+            // ---------------------------------
 
-        // ------
+            Vector3 requiredAntagonisticTorqueX = ComputeRequiredAntagonisticTorqueX(_currentLocalOrientation,
+                                                                                     _currentGlobalOrientation,
+                                                                                     _kinematicLocalOrientation,
+                                                                                     _kinematicGlobalOrientation,
+                                                                                     DesiredLocalRotation,
+                                                                                     this._objectRigidbody.angularVelocity,
+                                                                                     gravityTorqueVectorLocal,
+                                                                                     Time.fixedDeltaTime);
 
-        // Test - Antagonistic PD Controller
-        // ---------------------------------
+            Vector3 requiredAntagonisticTorqueY = ComputeRequiredAntagonisticTorqueY(_currentLocalOrientation,
+                                                                                     _currentGlobalOrientation,
+                                                                                     _kinematicLocalOrientation,
+                                                                                     _kinematicGlobalOrientation,
+                                                                                     DesiredLocalRotation,
+                                                                                     this._objectRigidbody.angularVelocity,
+                                                                                     gravityTorqueVectorLocal,
+                                                                                     Time.fixedDeltaTime);
 
-        Vector3 requiredAntagonisticTorqueX = ComputeRequiredAntagonisticTorqueX(_currentLocalOrientation,
-                                                                                 _currentGlobalOrientation,
-                                                                                 _kinematicLocalOrientation,
-                                                                                 _kinematicGlobalOrientation,
-                                                                                 DesiredLocalRotation,
-                                                                                 this._objectRigidbody.angularVelocity,
-                                                                                 gravityTorqueVectorLocal,
-                                                                                 Time.fixedDeltaTime);
+            Vector3 requiredAntagonisticTorqueZ = ComputeRequiredAntagonisticTorqueZ(_currentLocalOrientation,
+                                                                                     _currentGlobalOrientation,
+                                                                                     _kinematicLocalOrientation,
+                                                                                     _kinematicGlobalOrientation,
+                                                                                     DesiredLocalRotation,
+                                                                                     this._objectRigidbody.angularVelocity,
+                                                                                     gravityTorqueVectorLocal,
+                                                                                     Time.fixedDeltaTime);
 
-        Vector3 requiredAntagonisticTorqueY = ComputeRequiredAntagonisticTorqueY(_currentLocalOrientation,
-                                                                                 _currentGlobalOrientation,
-                                                                                 _kinematicLocalOrientation,
-                                                                                 _kinematicGlobalOrientation,
-                                                                                 DesiredLocalRotation,
-                                                                                 this._objectRigidbody.angularVelocity,
-                                                                                 gravityTorqueVectorLocal,
-                                                                                 Time.fixedDeltaTime);
+            Debug.Log("[" + this.gameObject.name + "] requiredAntagonisticTorqueX: " + requiredAntagonisticTorqueX);
+            Debug.Log("[" + this.gameObject.name + "] requiredAntagonisticTorqueY: " + requiredAntagonisticTorqueY);
+            Debug.Log("[" + this.gameObject.name + "] requiredAntagonisticTorqueZ: " + requiredAntagonisticTorqueZ);
 
-        Vector3 requiredAntagonisticTorqueZ = ComputeRequiredAntagonisticTorqueZ(_currentLocalOrientation,
-                                                                                _currentGlobalOrientation,
-                                                                                _kinematicLocalOrientation,
-                                                                                _kinematicGlobalOrientation,
-                                                                                DesiredLocalRotation,
-                                                                                this._objectRigidbody.angularVelocity,
-                                                                                gravityTorqueVectorLocal,
-                                                                                Time.fixedDeltaTime);
+            if ((!useJointPD) && (applyAntTorqueX))
+            {
+                this._objectRigidbody.AddRelativeTorque(requiredAntagonisticTorqueX, ForceMode.Force);
+            }
 
-        Debug.Log("[" + this.gameObject.name + "] requiredAntagonisticTorqueX: " + requiredAntagonisticTorqueX);
-        Debug.Log("[" + this.gameObject.name + "] requiredAntagonisticTorqueY: " + requiredAntagonisticTorqueY);
-        Debug.Log("[" + this.gameObject.name + "] requiredAntagonisticTorqueZ: " + requiredAntagonisticTorqueZ);
+            if ((!useJointPD) && (applyAntTorqueY))
+            {
+                this._objectRigidbody.AddRelativeTorque(requiredAntagonisticTorqueY, ForceMode.Force);
+            }
+
+            if ((!useJointPD) && (applyAntTorqueZ))
+            {
+                this._objectRigidbody.AddRelativeTorque(requiredAntagonisticTorqueZ, ForceMode.Force);
+            }
+        }
 
         // ---
-
-        if ((!useJointPD) && (applyAntTorqueX))
-        {
-            this._objectRigidbody.AddRelativeTorque(requiredAntagonisticTorqueX, ForceMode.Force);
-        }
-
-        if ((!useJointPD) && (applyAntTorqueY))
-        {
-            this._objectRigidbody.AddRelativeTorque(requiredAntagonisticTorqueY, ForceMode.Force);
-        }
-
-        if ((!useJointPD) && (applyAntTorqueZ))
-        {
-            this._objectRigidbody.AddRelativeTorque(requiredAntagonisticTorqueZ, ForceMode.Force);
-        }
 
         #region Test - Quaternion Substraction
 

@@ -78,7 +78,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000046408596, y: 0.27404678, z: -0.00000017322598}
+  m_ConnectedAnchor: {x: -0.00000046408593, y: 0.27404666, z: -0.00000017322598}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: -1}
   m_XMotion: 1
@@ -189,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AntagonisticPD: 0
   kinematicArm: {fileID: 0}
   globalMode: 0
   applyTorque: 0
@@ -308,7 +309,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0024468277, y: 0.40595403, z: 0.0051703663}
+  m_ConnectedAnchor: {x: -0.0024463509, y: 0.40595403, z: 0.005169651}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -673,7 +674,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623532821786555}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4201bfb83a7dd840bfd7eb233edad57, type: 3}
   m_Name: 
@@ -843,7 +844,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000039403466, y: 0.27614447, z: -0.000000110154595}
+  m_ConnectedAnchor: {x: -0.0000003940347, y: 0.27614477, z: -0.0000001101546}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -939,6 +940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AntagonisticPD: 0
   kinematicArm: {fileID: 0}
   globalMode: 0
   applyTorque: 0
@@ -1227,7 +1229,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.06105819, y: 0.0911043, z: 0.007055549}
+  m_ConnectedAnchor: {x: -0.061058667, y: 0.0911043, z: 0.007055072}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -1660,7 +1662,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0024468107, y: 0.4059543, z: 0.0051452243}
+  m_ConnectedAnchor: {x: 0.0024472876, y: 0.4059543, z: 0.005144509}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -1915,7 +1917,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000009418688, y: 0.13360202, z: -0.016264554}
+  m_ConnectedAnchor: {x: -0.000000584241, y: 0.13360202, z: -0.016264793}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -2302,7 +2304,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.09124457, y: -0.06656394, z: -0.0005537648}
+  m_ConnectedAnchor: {x: 0.09124469, y: -0.06656394, z: -0.0005537648}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -2496,7 +2498,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000006198741, y: 0.27404663, z: 0.000000026077034}
+  m_ConnectedAnchor: {x: 0.00000006198742, y: 0.27404663, z: -0.00000021234155}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -2676,6 +2678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AntagonisticPD: 0
   kinematicArm: {fileID: 0}
   globalMode: 0
   applyTorque: 0
@@ -2685,7 +2688,7 @@ MonoBehaviour:
   Kd: 1.2
   applyAntTorqueX: 0
   torqueAppliedX: 0
-  pLX: 10
+  pLX: 25
   pHX: 0
   iX: 0
   dX: 0.01
@@ -2695,7 +2698,7 @@ MonoBehaviour:
   interceptX: 0
   applyAntTorqueY: 0
   torqueAppliedY: 0
-  pLY: 1
+  pLY: 2.5
   pHY: 0
   iY: 0
   dY: 0.01
@@ -2705,7 +2708,7 @@ MonoBehaviour:
   interceptY: 0
   applyAntTorqueZ: 0
   torqueAppliedZ: 0
-  pLZ: 1
+  pLZ: 25
   pHZ: 0
   iZ: 0
   dZ: 0.01
@@ -3122,7 +3125,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0026593148, y: 0.12655039, z: 0.026009284}
+  m_ConnectedAnchor: {x: 0.0026593148, y: 0.12655015, z: 0.026009046}
   serializedVersion: 2
   m_SecondaryAxis: {x: -1, y: 0, z: 0}
   m_XMotion: 1
@@ -3233,6 +3236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AntagonisticPD: 0
   kinematicArm: {fileID: 0}
   globalMode: 0
   applyTorque: 0
@@ -3503,7 +3507,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.061056945, y: 0.091105014, z: 0.007055545}
+  m_ConnectedAnchor: {x: 0.061057422, y: 0.091105014, z: 0.0070550684}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -3863,7 +3867,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: -0.105, z: -0.03}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000011802875, y: 0.28214514, z: -0.006911177}
+  m_ConnectedAnchor: {x: -0.0000015379154, y: 0.28214514, z: -0.006911177}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -4284,7 +4288,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000012923073, y: 0.215689, z: -0.026496854}
+  m_ConnectedAnchor: {x: 0.0000016499353, y: 0.215689, z: -0.026497569}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -4551,7 +4555,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.09124447, y: -0.066564046, z: -0.0005537698}
+  m_ConnectedAnchor: {x: -0.091244705, y: -0.066564046, z: -0.0005537698}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -5077,7 +5081,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0026601618, y: 0.12655039, z: -0.026008932}
+  m_ConnectedAnchor: {x: 0.0026601618, y: 0.12655015, z: -0.02600917}
   serializedVersion: 2
   m_SecondaryAxis: {x: -1, y: 0, z: 0}
   m_XMotion: 1
@@ -5188,6 +5192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AntagonisticPD: 0
   kinematicArm: {fileID: 0}
   globalMode: 0
   applyTorque: 0
@@ -5197,7 +5202,7 @@ MonoBehaviour:
   Kd: 1.2
   applyAntTorqueX: 0
   torqueAppliedX: 0
-  pLX: 1
+  pLX: 50
   pHX: 0
   iX: 0
   dX: 0.01
@@ -5207,7 +5212,7 @@ MonoBehaviour:
   interceptX: 0
   applyAntTorqueY: 0
   torqueAppliedY: 0
-  pLY: 1
+  pLY: 5
   pHY: 0
   iY: 0
   dY: 0.01
@@ -5217,7 +5222,7 @@ MonoBehaviour:
   interceptY: 0
   applyAntTorqueZ: 0
   torqueAppliedZ: 0
-  pLZ: 1
+  pLZ: 50
   pHZ: 0
   iZ: 0
   dZ: 0.01
@@ -5372,7 +5377,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000015174192, y: 0.27614465, z: 0.0000002644956}
+  m_ConnectedAnchor: {x: -0.00000015174187, y: 0.2761449, z: -0.00000021234155}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 1
@@ -5392,11 +5397,11 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -25
+    limit: -50
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 25
+    limit: 50
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
@@ -5468,6 +5473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AntagonisticPD: 0
   kinematicArm: {fileID: 0}
   globalMode: 0
   applyTorque: 0
@@ -5477,12 +5483,12 @@ MonoBehaviour:
   Kd: 1.2
   applyAntTorqueX: 0
   torqueAppliedX: 0
-  pLX: 1
+  pLX: 10
   pHX: 0
   iX: 0
   dX: 0.01
-  minAngleX: -25
-  maxAngleX: 25
+  minAngleX: -50
+  maxAngleX: 50
   slopeX: 0
   interceptX: 0
   applyAntTorqueY: 0
