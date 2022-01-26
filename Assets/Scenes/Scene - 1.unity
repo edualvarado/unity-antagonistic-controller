@@ -1361,7 +1361,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 849436080}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d2108c0d7e0e8647b6a5ce59ff38371, type: 3}
   m_Name: 
@@ -5706,6 +5706,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ybot_rig_arms_v6_split_ragdoll - v4
       objectReference: {fileID: 0}
+    - target: {fileID: 4765623533403131678, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 4765623533437734913, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: m_ConnectedBody
       value: 
@@ -5714,6 +5718,10 @@ PrefabInstance:
       propertyPath: kinematicArm
       value: 
       objectReference: {fileID: 1478144921623616560}
+    - target: {fileID: 4765623534636773836, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 7550342775806272425, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: kinematicArm
       value: 

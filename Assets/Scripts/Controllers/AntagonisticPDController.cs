@@ -121,7 +121,7 @@ public class AntagonisticPDController
 
         // -----------------------------------
 
-        Debug.Log("result: " + result + " - output: " + output); // Both are the same
+        //Debug.Log("result: " + result + " - output: " + output); // Both are the same
 
         //return result;
         return output;
