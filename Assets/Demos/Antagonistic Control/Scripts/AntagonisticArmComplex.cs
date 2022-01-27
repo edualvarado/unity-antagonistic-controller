@@ -195,7 +195,7 @@ public class AntagonisticArmComplex : MonoBehaviour
                 Debug.Log("angleHighErrorX: " + angleHighErrorX);
             }
 
-            torqueAppliedX = _AntPIDX.GetOutput(angleLowErrorX, angleHighErrorX, Time.fixedDeltaTime);
+            torqueAppliedX = _AntPIDX.GetOutput(angleLowErrorX, angleHighErrorX, _rbAnt.angularVelocity.magnitude, Time.fixedDeltaTime);
             if (printTorqueX)
             {
                 Debug.Log("torqueAppliedX in Ant: " + torqueAppliedX);
@@ -226,7 +226,7 @@ public class AntagonisticArmComplex : MonoBehaviour
             }
 
             // CAUTION -> Had to switch High and Low errors...
-            torqueAppliedY = _AntPIDY.GetOutput(angleHighErrorY, angleLowErrorY, Time.fixedDeltaTime);
+            torqueAppliedY = _AntPIDY.GetOutput(angleHighErrorY, angleLowErrorY, _rbAnt.angularVelocity.magnitude, Time.fixedDeltaTime);
             if (printTorqueY)
             {
                 Debug.Log("torqueAppliedY in Ant: " + torqueAppliedY);
@@ -256,7 +256,7 @@ public class AntagonisticArmComplex : MonoBehaviour
                 Debug.Log("angleHighErrorZ: " + angleHighErrorZ);
             }
 
-            torqueAppliedZ = _AntPIDZ.GetOutput(angleHighErrorZ, angleLowErrorZ, Time.fixedDeltaTime);
+            torqueAppliedZ = _AntPIDZ.GetOutput(angleHighErrorZ, angleLowErrorZ, _rbAnt.angularVelocity.magnitude, Time.fixedDeltaTime);
             if (printTorqueZ)
             {
                 Debug.Log("torqueAppliedZ in Ant: " + torqueAppliedZ);

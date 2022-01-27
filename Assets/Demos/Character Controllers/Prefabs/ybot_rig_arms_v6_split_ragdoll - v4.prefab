@@ -189,14 +189,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AntagonisticPD: 0
-  kinematicArm: {fileID: 0}
+  controllerType: 0
+  kinematicLimb: {fileID: 0}
+  activateDefaultPD: 0
+  applyDefaultTorque: 0
+  activateNormalPD: 0
+  applyNormalTorque: 0
   globalMode: 0
-  applyTorque: 0
-  torqueTest: {x: 0, y: 0, z: 0}
   Kp: 0
   Ki: 0
   Kd: 1.2
+  deployDesiredRotation: 0
+  activateAntagonisticPD: 0
   applyAntTorqueX: 0
   torqueAppliedX: 0
   pLX: 0
@@ -227,12 +231,6 @@ MonoBehaviour:
   maxAngleZ: 0
   slopeZ: 0
   interceptZ: 0
-  printX: 0
-  printY: 0
-  printZ: 0
-  deployDesiredRotation: 0
-  eulerRot: {x: 0, y: 0, z: 0}
-  useJointPD: 0
 --- !u!1 &4765623532586227487
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,14 +938,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AntagonisticPD: 0
-  kinematicArm: {fileID: 0}
+  controllerType: 0
+  kinematicLimb: {fileID: 0}
+  activateDefaultPD: 0
+  applyDefaultTorque: 0
+  activateNormalPD: 0
+  applyNormalTorque: 0
   globalMode: 0
-  applyTorque: 0
-  torqueTest: {x: 0, y: 0, z: 0}
   Kp: 0
   Ki: 0
   Kd: 1.2
+  deployDesiredRotation: 0
+  activateAntagonisticPD: 0
   applyAntTorqueX: 0
   torqueAppliedX: 0
   pLX: 0
@@ -978,12 +980,6 @@ MonoBehaviour:
   maxAngleZ: 0
   slopeZ: 0
   interceptZ: 0
-  printX: 0
-  printY: 0
-  printZ: 0
-  deployDesiredRotation: 0
-  eulerRot: {x: 0, y: 0, z: 0}
-  useJointPD: 0
 --- !u!1 &4765623532904624680
 GameObject:
   m_ObjectHideFlags: 0
@@ -2432,7 +2428,6 @@ GameObject:
   - component: {fileID: 4765623533403131673}
   - component: {fileID: 4765623533403131679}
   - component: {fileID: 8296705720136495788}
-  - component: {fileID: 7550342775806272425}
   - component: {fileID: 7550342776444820644}
   m_Layer: 8
   m_Name: mixamorig:RightForeArm
@@ -2470,7 +2465,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!136 &4765623533403131673
 CapsuleCollider:
@@ -2597,75 +2592,6 @@ FixedJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!114 &7550342775806272425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4765623533403131666}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8953850993b19644b497655f6d1a774, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentAngle: {x: 0, y: 0, z: 0}
-  initialAngleQuaternion: {x: 0, y: 0, z: 0, w: 0}
-  currentAngleQuaternion: {x: 0, y: 0, z: 0, w: 0}
-  kinematicAngleQuaternion: {x: 0, y: 0, z: 0, w: 0}
-  resultAngleQuaternion: {x: 0, y: 0, z: 0, w: 0}
-  kinematicArm: {fileID: 0}
-  applyTorqueX: 0
-  torqueAppliedX: 0
-  pLX: 0.05
-  pHX: 0
-  iX: 0
-  dX: 0.01
-  minAngleX: 0
-  maxAngleX: 180
-  slopeX: 0
-  interceptX: 0
-  eqAngleX: 0
-  applyTorqueY: 0
-  torqueAppliedY: 0
-  pLY: 0.05
-  pHY: 0
-  iY: 0
-  dY: 0.01
-  minAngleY: -30
-  maxAngleY: 30
-  slopeY: 0
-  interceptY: 0
-  eqAngleY: 0
-  applyTorqueZ: 0
-  torqueAppliedZ: 0
-  pLZ: 0.05
-  pHZ: 0
-  iZ: 0
-  dZ: 0.01
-  minAngleZ: -30
-  maxAngleZ: 30
-  slopeZ: 0
-  interceptZ: 0
-  eqAngleZ: 0
-  toogleRays: 1
-  printTorqueX: 0
-  printTorqueY: 0
-  printTorqueZ: 0
-  _rbAnt: {fileID: 4765623533403131678}
-  _jointAnt: {fileID: 4765623533403131679}
-  sphereAnt: {fileID: 4765623533403131677}
-  distance3D: {x: 0, y: 0, z: 0}
-  applyExternalForce: 0
-  externalForce: {x: 0, y: 0, z: 0}
-  externalTorqueMagnitudeX: 0
-  externalTorqueVector: {x: 0, y: 0, z: 0}
-  externalTorqueVectorLocal: {x: 0, y: 0, z: 0}
-  applyGravity: 1
-  gravityAcc: {x: 0, y: 0, z: 0}
-  gravityTorqueMagnitudeX: 0
-  gravityTorqueVector: {x: 0, y: 0, z: 0}
-  gravityTorqueVectorLocal: {x: 0, y: 0, z: 0}
 --- !u!114 &7550342776444820644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2678,14 +2604,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AntagonisticPD: 0
-  kinematicArm: {fileID: 0}
+  controllerType: 0
+  kinematicLimb: {fileID: 0}
+  activateDefaultPD: 0
+  applyDefaultTorque: 0
+  activateNormalPD: 0
+  applyNormalTorque: 0
   globalMode: 0
-  applyTorque: 0
-  torqueTest: {x: 0, y: 0, z: 0}
   Kp: 0
   Ki: 0
   Kd: 1.2
+  deployDesiredRotation: 0
+  activateAntagonisticPD: 0
   applyAntTorqueX: 0
   torqueAppliedX: 0
   pLX: 25
@@ -2716,12 +2646,6 @@ MonoBehaviour:
   maxAngleZ: 25
   slopeZ: 0
   interceptZ: 0
-  printX: 0
-  printY: 0
-  printZ: 0
-  deployDesiredRotation: 0
-  eulerRot: {x: 0, y: 0, z: 0}
-  useJointPD: 0
 --- !u!1 &4765623533429162650
 GameObject:
   m_ObjectHideFlags: 0
@@ -3236,14 +3160,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AntagonisticPD: 0
-  kinematicArm: {fileID: 0}
+  controllerType: 0
+  kinematicLimb: {fileID: 0}
+  activateDefaultPD: 0
+  applyDefaultTorque: 0
+  activateNormalPD: 0
+  applyNormalTorque: 0
   globalMode: 0
-  applyTorque: 0
-  torqueTest: {x: 0, y: 0, z: 0}
   Kp: 0
   Ki: 0
   Kd: 1.2
+  deployDesiredRotation: 0
+  activateAntagonisticPD: 0
   applyAntTorqueX: 0
   torqueAppliedX: 0
   pLX: 0
@@ -3274,12 +3202,6 @@ MonoBehaviour:
   maxAngleZ: 0
   slopeZ: 0
   interceptZ: 0
-  printX: 0
-  printY: 0
-  printZ: 0
-  deployDesiredRotation: 0
-  eulerRot: {x: 0, y: 0, z: 0}
-  useJointPD: 0
 --- !u!1 &4765623533631331841
 GameObject:
   m_ObjectHideFlags: 0
@@ -5053,7 +4975,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!136 &4765623534636773833
 CapsuleCollider:
@@ -5192,14 +5114,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AntagonisticPD: 0
-  kinematicArm: {fileID: 0}
+  controllerType: 0
+  kinematicLimb: {fileID: 0}
+  activateDefaultPD: 0
+  applyDefaultTorque: 0
+  activateNormalPD: 0
+  applyNormalTorque: 0
   globalMode: 0
-  applyTorque: 0
-  torqueTest: {x: 0, y: 0, z: 0}
   Kp: 0
   Ki: 0
   Kd: 1.2
+  deployDesiredRotation: 0
+  activateAntagonisticPD: 0
   applyAntTorqueX: 0
   torqueAppliedX: 0
   pLX: 50
@@ -5230,12 +5156,6 @@ MonoBehaviour:
   maxAngleZ: 90
   slopeZ: 0
   interceptZ: 0
-  printX: 0
-  printY: 0
-  printZ: 0
-  deployDesiredRotation: 0
-  eulerRot: {x: 0, y: 0, z: 0}
-  useJointPD: 0
 --- !u!1 &4765623534659419155
 GameObject:
   m_ObjectHideFlags: 0
@@ -5473,14 +5393,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AntagonisticPD: 0
-  kinematicArm: {fileID: 0}
+  controllerType: 0
+  kinematicLimb: {fileID: 0}
+  activateDefaultPD: 0
+  applyDefaultTorque: 0
+  activateNormalPD: 0
+  applyNormalTorque: 0
   globalMode: 0
-  applyTorque: 0
-  torqueTest: {x: 0, y: 0, z: 0}
   Kp: 0
   Ki: 0
   Kd: 1.2
+  deployDesiredRotation: 0
+  activateAntagonisticPD: 0
   applyAntTorqueX: 0
   torqueAppliedX: 0
   pLX: 10
@@ -5511,9 +5435,3 @@ MonoBehaviour:
   maxAngleZ: 90
   slopeZ: 0
   interceptZ: 0
-  printX: 0
-  printY: 0
-  printZ: 0
-  deployDesiredRotation: 0
-  eulerRot: {x: 0, y: 0, z: 0}
-  useJointPD: 0

@@ -58,7 +58,7 @@ public class BalanceArmAntagonistic : MonoBehaviour
         //Debug.Log("angleLowError: " + angleLowError);
         //Debug.Log("angleHighError: " + angleHighError);
 
-        float torqueApplied = _AntPID.GetOutput(angleLowError, angleHighError, Time.fixedDeltaTime);
+        float torqueApplied = _AntPID.GetOutput(angleLowError, angleHighError, _rbAnt.angularVelocity.magnitude, Time.fixedDeltaTime);
         //Debug.Log("torqueApplied in Ant: " + torqueApplied);
         //Debug.Log("Angle Gravity Force in Ant: " + (90f + _joint.angle));
         //Debug.Log("Gravity in Ant: " + _rb.mass * Physics.gravity.y * Vector3.Distance(_joint.connectedAnchor, _rb.worldCenterOfMass) * Mathf.Sin((90 + _jointAnt.angle) * Mathf.Deg2Rad));

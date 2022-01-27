@@ -57,8 +57,8 @@ public class BalancePole2D: MonoBehaviour
         //Debug.Log("angleError: " + angleError);
         //Debug.Log("--------------- ");
 
-        float torqueAppliedX = _PID.GetOutput(angleErrorX, Time.fixedDeltaTime);
-        float torqueAppliedZ = _PID.GetOutput(angleErrorZ, Time.fixedDeltaTime);
+        float torqueAppliedX = _PID.GetOutput(angleErrorX, _rb.angularVelocity.magnitude, Time.fixedDeltaTime);
+        float torqueAppliedZ = _PID.GetOutput(angleErrorZ, _rb.angularVelocity.magnitude, Time.fixedDeltaTime);
         //Debug.Log("torqueAppliedX in PD: " + torqueAppliedX);
         //Debug.Log("torqueAppliedZ in PD: " + torqueAppliedZ);
 

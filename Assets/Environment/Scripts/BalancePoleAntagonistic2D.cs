@@ -74,8 +74,8 @@ public class BalancePoleAntagonistic2D : MonoBehaviour
         //Debug.Log("angleLowError: " + angleLowError);
         //Debug.Log("angleHighError: " + angleHighError);
 
-        float torqueAppliedX = _AntPID.GetOutput(angleLowErrorX, angleHighErrorX, Time.fixedDeltaTime);
-        float torqueAppliedZ = _AntPID.GetOutput(angleLowErrorZ, angleHighErrorZ, Time.fixedDeltaTime);
+        float torqueAppliedX = _AntPID.GetOutput(angleLowErrorX, angleHighErrorX, _rb.angularVelocity.magnitude, Time.fixedDeltaTime);
+        float torqueAppliedZ = _AntPID.GetOutput(angleLowErrorZ, angleHighErrorZ, _rb.angularVelocity.magnitude, Time.fixedDeltaTime);
 
         //float torqueApplied = _AntPID.GetOutput(angleLowError, angleHighError, Time.fixedDeltaTime);
         //Debug.Log("torqueApplied in Ant: " + torqueApplied);

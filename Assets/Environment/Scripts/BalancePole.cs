@@ -45,7 +45,7 @@ public class BalancePole : MonoBehaviour
         //Debug.Log("angleError: " + angleError);
         //Debug.Log("--------------- ");
 
-        float torqueApplied = _PID.GetOutput(angleError, Time.fixedDeltaTime);
+        float torqueApplied = _PID.GetOutput(angleError, _rb.angularVelocity.magnitude, Time.fixedDeltaTime);
         //Debug.Log("torqueApplied in PD: " + torqueApplied); 
         //Debug.Log("Angle Gravity Force in PD: " + (90f + _joint.angle));
         //Debug.Log("Gravity in PD: " +  _rb.mass * Physics.gravity.y * Vector3.Distance(_joint.connectedAnchor, _rb.worldCenterOfMass) * Mathf.Sin((90 + _joint.angle) * Mathf.Deg2Rad));
