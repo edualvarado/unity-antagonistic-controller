@@ -33,7 +33,7 @@ public class JointController : MonoBehaviour
 
     #endregion
 
-    #region Fields
+    #region Instance Fields
 
     public enum Controller
     {
@@ -61,42 +61,53 @@ public class JointController : MonoBehaviour
     [Header("Antagonistic Controller - Settings")]
     public bool activateAntagonisticPD;
     public bool applyAntTorque;
+    public bool debugMode;
+    public float multGrav = 1f;
 
     [Header("Antagonistic Controller - Settings - X")]
-    public bool applyAntTorqueX;
-    public float torqueAppliedX;
     public float pLX;
     public float pHX;
     public float iX;
     public float dX;
-    public float minAngleX;
-    public float maxAngleX;
+    public float minSoftLimitX;
+    public float maxSoftLimitX;
+    public float minHardLimitX;
+    public float maxHardLimitX;
     public float slopeX;
     public float interceptX;
+    public bool drawLimitsX;
+    private bool applyAntTorqueX;
+    private float torqueAppliedX;
 
     [Header("Antagonistic Controller - Settings - Y")]
-    public bool applyAntTorqueY;
-    public float torqueAppliedY;
     public float pLY;
     public float pHY;
     public float iY;
     public float dY;
-    public float minAngleY;
-    public float maxAngleY;
+    public float minSoftLimitY;
+    public float maxSoftLimitY;
+    public float minHardLimitY;
+    public float maxHardLimitY;
     public float slopeY;
     public float interceptY;
+    public bool drawLimitsY;
+    private bool applyAntTorqueY;
+    private float torqueAppliedY;
 
     [Header("Antagonistic Controller - Settings - Z")]
-    public bool applyAntTorqueZ;
-    public float torqueAppliedZ;
     public float pLZ;
     public float pHZ;
     public float iZ;
     public float dZ;
-    public float minAngleZ;
-    public float maxAngleZ;
+    public float minSoftLimitZ;
+    public float maxSoftLimitZ;
+    public float minHardLimitZ;
+    public float maxHardLimitZ;
     public float slopeZ;
     public float interceptZ;
+    public bool drawLimitsZ;
+    private bool applyAntTorqueZ;
+    private float torqueAppliedZ;
 
     // Others
     private ConfigurableJoint _jointAnt;
@@ -158,7 +169,52 @@ public class JointController : MonoBehaviour
 
     private void Update()
     {
+        // Set hard limit to the limit in the joints
 
+        var lowAngularXJoint = _jointAnt.lowAngularXLimit;
+        lowAngularXJoint.limit = minHardLimitX;
+        _jointAnt.lowAngularXLimit = lowAngularXJoint;
+
+        var highAngularXJoint = _jointAnt.highAngularXLimit;
+        highAngularXJoint.limit = maxHardLimitX;
+        _jointAnt.highAngularXLimit = highAngularXJoint;
+
+        var angularYJoint = _jointAnt.angularYLimit;
+        angularYJoint.limit = maxHardLimitY;
+        _jointAnt.angularYLimit = angularYJoint;
+
+        var angularZJoint = _jointAnt.angularZLimit;
+        angularZJoint.limit = maxHardLimitZ;
+        _jointAnt.angularZLimit = angularZJoint;
+
+        // TODO: We should make then not depend on AngleAxis
+
+        if(drawLimitsX)
+        {
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minSoftLimitX, transform.right) * transform.localRotation * transform.parent.up * 0.8f, Color.red);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxSoftLimitX, transform.right) * transform.localRotation * transform.parent.up * 0.8f, Color.red);
+
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minHardLimitX, transform.right) * transform.localRotation * transform.parent.up * 0.4f, Color.green);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxHardLimitX, transform.right) * transform.localRotation * transform.parent.up * 0.4f, Color.green);
+        }
+
+        //if (drawLimitsY)
+        //{
+        //    Debug.DrawRay(transform.position, Quaternion.AngleAxis(minSoftLimitY, transform.up) * transform.localRotation * transform.parent.up * 0.8f, Color.red);
+        //    Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxSoftLimitY, transform.up) * transform.localRotation * transform.parent.up * 0.8f, Color.red);
+
+        //    Debug.DrawRay(transform.position, Quaternion.AngleAxis(minHardLimitY, transform.up) * transform.localRotation * transform.parent.up * 0.4f, Color.green);
+        //    Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxHardLimitY, transform.up) * transform.localRotation * transform.parent.up * 0.4f, Color.green);
+        //}
+
+        if (drawLimitsZ) // ERROR
+        {
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minSoftLimitZ, transform.forward) * transform.parent.up * 0.8f, Color.red);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxSoftLimitZ, transform.forward) * transform.parent.up * 0.8f, Color.red);
+
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minHardLimitZ, transform.forward) * transform.parent.up * 0.4f, Color.green);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxHardLimitZ, transform.forward) * transform.parent.up * 0.4f, Color.green);
+        }
     }
 
     private void FixedUpdate()
@@ -228,6 +284,9 @@ public class JointController : MonoBehaviour
         gravityAcc = Physics.gravity;
         gravityTorqueVector = Vector3.Cross(distance3D, _objectRigidbody.mass * gravityAcc); // Remember: wrt. global coord. system
         gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // Remember: wrt. local coord. system
+        //Debug.DrawRay(transform.position, distance3D, Color.blue);
+        //Debug.DrawRay(transform.position, gravityTorqueVectorLocal, Color.red);
+        //Debug.DrawRay(_objectRigidbody.worldCenterOfMass, gravityAcc, Color.green);
 
         /* TODO - This should be improved, also maybe adding other external forces? */
 
@@ -326,18 +385,20 @@ public class JointController : MonoBehaviour
             // Hotfix related to the Inertia issue
             _objectRigidbody.angularDrag = 49.9f;
 
-            Vector3 requiredAntagonisticTorque = _antagonisticControllerXYZ.ComputeRequiredAntagonisticTorque(minAngleX, maxAngleX,
-                                                                                                              minAngleY, maxAngleY,
-                                                                                                              minAngleZ, maxAngleZ,
+            Vector3 requiredAntagonisticTorque = _antagonisticControllerXYZ.ComputeRequiredAntagonisticTorque(minSoftLimitX, maxSoftLimitX,
+                                                                                                              minSoftLimitY, maxSoftLimitY,
+                                                                                                              minSoftLimitZ, maxSoftLimitZ,
                                                                                                               _currentLocalOrientation,
                                                                                                               _currentGlobalOrientation,
                                                                                                               _kinematicLocalOrientation,
                                                                                                               _kinematicGlobalOrientation,
                                                                                                               DesiredLocalRotation,
                                                                                                               this._objectRigidbody.angularVelocity,
-                                                                                                              gravityTorqueVectorLocal,
-                                                                                                              Time.fixedDeltaTime);
-
+                                                                                                              gravityTorqueVectorLocal * multGrav,
+                                                                                                              Time.fixedDeltaTime,
+                                                                                                              debugMode,
+                                                                                                              _currentTransform);
+            /*
             Vector3 requiredAntagonisticTorqueX = ComputeRequiredAntagonisticTorqueX(_currentLocalOrientation,
                                                                                      _currentGlobalOrientation,
                                                                                      _kinematicLocalOrientation,
@@ -364,18 +425,26 @@ public class JointController : MonoBehaviour
                                                                                      this._objectRigidbody.angularVelocity,
                                                                                      gravityTorqueVectorLocal,
                                                                                      Time.fixedDeltaTime);
+            */
 
-            Debug.Log("[INFO: " + this.gameObject.name + "] NEW Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorque: " + requiredAntagonisticTorque);
 
-            Debug.Log("[INFO: " + this.gameObject.name + "] Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorqueX: " + requiredAntagonisticTorqueX);
-            Debug.Log("[INFO: " + this.gameObject.name + "] Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorqueY: " + requiredAntagonisticTorqueY);
-            Debug.Log("[INFO: " + this.gameObject.name + "] Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorqueZ: " + requiredAntagonisticTorqueZ);
+            if (debugMode)
+            {
+                Debug.Log("[INFO: " + this.gameObject.name + "] NEW Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorque: " + requiredAntagonisticTorque);
+
+                /*
+                Debug.Log("[INFO: " + this.gameObject.name + "] Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorqueX: " + requiredAntagonisticTorqueX);
+                Debug.Log("[INFO: " + this.gameObject.name + "] Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorqueY: " + requiredAntagonisticTorqueY);
+                Debug.Log("[INFO: " + this.gameObject.name + "] Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorqueZ: " + requiredAntagonisticTorqueZ);
+                */
+            }
 
             if(applyAntTorque)
             {
                 this._objectRigidbody.AddRelativeTorque(requiredAntagonisticTorque, ForceMode.Force);
             }
-
+            
+            /*
             if (applyAntTorqueX)
             {
                 this._objectRigidbody.AddRelativeTorque(requiredAntagonisticTorqueX, ForceMode.Force);
@@ -390,6 +459,7 @@ public class JointController : MonoBehaviour
             {
                 this._objectRigidbody.AddRelativeTorque(requiredAntagonisticTorqueZ, ForceMode.Force);
             }
+            */
         }
 
         #endregion
@@ -416,8 +486,8 @@ public class JointController : MonoBehaviour
         #region Orientations
 
         // Component-wise projection of Min/Max Euler Axis - It should not be needed
-        Quaternion minAngleQuaternionX = Quaternion.Euler(new Vector3(minAngleX, 0f, 0f));
-        Quaternion maxAngleQuaternionX = Quaternion.Euler(new Vector3(maxAngleX, 0f, 0f));
+        Quaternion minAngleQuaternionX = Quaternion.Euler(new Vector3(minSoftLimitX, 0f, 0f));
+        Quaternion maxAngleQuaternionX = Quaternion.Euler(new Vector3(maxSoftLimitX, 0f, 0f));
 
         // Swing-Twist Decomposition of current/kinematic orientation on main axis
         Quaternion currentLocalOrientationQuaternionX = getRotationComponentAboutAxis(currentLocalOrientation, Vector3.right);
@@ -545,12 +615,12 @@ public class JointController : MonoBehaviour
 
         #region Estimate Errors directly from Axis-Angle
 
-        float currentLocalErrorMinX = minAngleX - currentLocalOrientationQuaternionXAngleCorrected;
-        float currentLocalErrorMaxX = maxAngleX - currentLocalOrientationQuaternionXAngleCorrected;
+        float currentLocalErrorMinX = minSoftLimitX - currentLocalOrientationQuaternionXAngleCorrected;
+        float currentLocalErrorMaxX = maxSoftLimitX - currentLocalOrientationQuaternionXAngleCorrected;
         Debug.Log("[INFO: " + this.gameObject.name + "] currentLocalErrorMinX: " + currentLocalErrorMinX + " | currentLocalErrorMaxX: " + currentLocalErrorMaxX);
 
-        float kinematicLocalErrorMinX = minAngleX - kinematicLocalOrientationQuaternionXAngleCorrected;
-        float kinematicLocalErrorMaxX = maxAngleX - kinematicLocalOrientationQuaternionXAngleCorrected;
+        float kinematicLocalErrorMinX = minSoftLimitX - kinematicLocalOrientationQuaternionXAngleCorrected;
+        float kinematicLocalErrorMaxX = maxSoftLimitX - kinematicLocalOrientationQuaternionXAngleCorrected;
         Debug.Log("[INFO: " + this.gameObject.name + "] kinematicLocalErrorMinX: " + kinematicLocalErrorMinX + " | kinematicLocalErrorMaxX: " + kinematicLocalErrorMaxX);
 
         #endregion
@@ -601,8 +671,8 @@ public class JointController : MonoBehaviour
         #region Orientations
 
         // Component-wise projection of Min/Max Euler Axis - It should not be needed
-        Quaternion minAngleQuaternionY = Quaternion.Euler(new Vector3(0f, minAngleY, 0f));
-        Quaternion maxAngleQuaternionY = Quaternion.Euler(new Vector3(0f, maxAngleY, 0f));
+        Quaternion minAngleQuaternionY = Quaternion.Euler(new Vector3(0f, minSoftLimitY, 0f));
+        Quaternion maxAngleQuaternionY = Quaternion.Euler(new Vector3(0f, maxSoftLimitY, 0f));
 
         // Swing-Twist Decomposition of current/kinematic orientation on main axis
         Quaternion currentLocalOrientationQuaternionY = getRotationComponentAboutAxis(currentLocalOrientation, Vector3.up);
@@ -730,12 +800,12 @@ public class JointController : MonoBehaviour
 
         #region Estimate Errors directly from Axis-Angle
 
-        float currentLocalErrorMinY = minAngleY - currentLocalOrientationQuaternionYAngleCorrected;
-        float currentLocalErrorMaxY = maxAngleY - currentLocalOrientationQuaternionYAngleCorrected;
+        float currentLocalErrorMinY = minSoftLimitY - currentLocalOrientationQuaternionYAngleCorrected;
+        float currentLocalErrorMaxY = maxSoftLimitY - currentLocalOrientationQuaternionYAngleCorrected;
         Debug.Log("[INFO: " + this.gameObject.name + "] currentLocalErrorMinY: " + currentLocalErrorMinY + " | currentLocalErrorMaxY: " + currentLocalErrorMaxY);
 
-        float kinematicLocalErrorMinY = minAngleY - kinematicLocalOrientationQuaternionYAngleCorrected;
-        float kinematicLocalErrorMaxY = maxAngleY - kinematicLocalOrientationQuaternionYAngleCorrected;
+        float kinematicLocalErrorMinY = minSoftLimitY - kinematicLocalOrientationQuaternionYAngleCorrected;
+        float kinematicLocalErrorMaxY = maxSoftLimitY - kinematicLocalOrientationQuaternionYAngleCorrected;
         Debug.Log("[INFO: " + this.gameObject.name + "] kinematicLocalErrorMinY: " + kinematicLocalErrorMinY + " | kinematicLocalErrorMaxY: " + kinematicLocalErrorMaxY);
 
         #endregion
@@ -786,8 +856,8 @@ public class JointController : MonoBehaviour
         #region Orientations
 
         // Component-wise projection of Min/Max Euler Axis - It should not be needed
-        Quaternion minAngleQuaternionZ = Quaternion.Euler(new Vector3(0f, 0f, minAngleZ));
-        Quaternion maxAngleQuaternionZ = Quaternion.Euler(new Vector3(0f, 0f, maxAngleZ));
+        Quaternion minAngleQuaternionZ = Quaternion.Euler(new Vector3(0f, 0f, minSoftLimitZ));
+        Quaternion maxAngleQuaternionZ = Quaternion.Euler(new Vector3(0f, 0f, maxSoftLimitZ));
 
         // Swing-Twist Decomposition of current/kinematic orientation on main axis
         Quaternion currentLocalOrientationQuaternionZ = getRotationComponentAboutAxis(currentLocalOrientation, Vector3.forward);
@@ -915,12 +985,12 @@ public class JointController : MonoBehaviour
 
         #region Estimate Errors directly from Axis-Angle
 
-        float currentLocalErrorMinZ = minAngleZ - currentLocalOrientationQuaternionZAngleCorrected;
-        float currentLocalErrorMaxZ = maxAngleZ - currentLocalOrientationQuaternionZAngleCorrected;
+        float currentLocalErrorMinZ = minSoftLimitZ - currentLocalOrientationQuaternionZAngleCorrected;
+        float currentLocalErrorMaxZ = maxSoftLimitZ - currentLocalOrientationQuaternionZAngleCorrected;
         Debug.Log("[INFO: " + this.gameObject.name + "] currentLocalErrorMinZ: " + currentLocalErrorMinZ + " | currentLocalErrorMaxZ: " + currentLocalErrorMaxZ);
 
-        float kinematicLocalErrorMinZ = minAngleZ - kinematicLocalOrientationQuaternionZAngleCorrected;
-        float kinematicLocalErrorMaxZ = maxAngleZ - kinematicLocalOrientationQuaternionZAngleCorrected;
+        float kinematicLocalErrorMinZ = minSoftLimitZ - kinematicLocalOrientationQuaternionZAngleCorrected;
+        float kinematicLocalErrorMaxZ = maxSoftLimitZ - kinematicLocalOrientationQuaternionZAngleCorrected;
         Debug.Log("[INFO: " + this.gameObject.name + "] kinematicLocalErrorMinZ: " + kinematicLocalErrorMinZ + " | kinematicLocalErrorMaxZ: " + kinematicLocalErrorMaxZ);
 
         #endregion
