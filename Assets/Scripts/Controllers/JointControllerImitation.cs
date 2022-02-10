@@ -22,6 +22,19 @@ public class JointControllerImitation
 
     #endregion
 
+    #region Instance Fields
+
+    public float slopeX;
+    public float interceptX;
+
+    public float slopeY;
+    public float interceptY;
+
+    public float slopeZ;
+    public float interceptZ;
+
+    #endregion
+
     #region Constructors
 
     public JointControllerImitation(float plx, float phx, float kix, float kdx,
@@ -191,6 +204,30 @@ public class JointControllerImitation
         }
     }
 
+    public float SlopeX
+    {
+        get
+        {
+            return slopeX;
+        }
+    }
+
+    public float SlopeY
+    {
+        get
+        {
+            return slopeY;
+        }
+    }
+
+    public float SlopeZ
+    {
+        get
+        {
+            return slopeZ;
+        }
+    }
+
     #endregion
 
     #region Instance Methods
@@ -201,7 +238,6 @@ public class JointControllerImitation
                                                      Quaternion desiredLocalRotation, Vector3 angularVelocity, Vector3 gravityTorqueVectorLocal, float fixedDeltaTime, 
                                                      bool debugMode, Transform currentTransform)
     {
-
         #region Orientations - X
 
         // Swing-Twist Decomposition of current/kinematic orientation on main axis
@@ -238,34 +274,46 @@ public class JointControllerImitation
         float currentLocalErrorMinX = minAngleX - currentLocalOrientationQuaternionXAngleCorrected;
         float currentLocalErrorMaxX = maxAngleX - currentLocalOrientationQuaternionXAngleCorrected;
 
+        // TEST
+        //Debug.Log("minAngleX - currentLocalOrientationQuaternionXAngleCorrected: " + (minAngleX) + " - (" + (currentLocalOrientationQuaternionXAngleCorrected) + ") = " + currentLocalErrorMinX);
+        //Debug.Log("maxAngleX - currentLocalOrientationQuaternionXAngleCorrected: " + (maxAngleX) + " - (" + (currentLocalOrientationQuaternionXAngleCorrected) + ") = " + currentLocalErrorMaxX);
+
         if (debugMode)
             Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMinX: " + currentLocalErrorMinX + " | currentLocalErrorMaxX: " + currentLocalErrorMaxX);
 
         // TEST - Clamping Current Errors
-        //float currentLocalErrorMinXClamp = Mathf.Clamp(currentLocalErrorMinX, -99f, -1f);
+        //float currentLocalErrorMinXClamp = Mathf.Clamp(currentLocalErrorMinX, -100f, 0f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMinXClamp: " + currentLocalErrorMinXClamp);
-        //float currentLocalErrorMaxXClamp = Mathf.Clamp(currentLocalErrorMaxX, 1f, 99f);
+        //float currentLocalErrorMaxXClamp = Mathf.Clamp(currentLocalErrorMaxX, 0f, 100f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMaxXClamp: " + currentLocalErrorMaxXClamp);
 
         float kinematicLocalErrorMinX = minAngleX - kinematicLocalOrientationQuaternionXAngleCorrected;
         float kinematicLocalErrorMaxX = maxAngleX - kinematicLocalOrientationQuaternionXAngleCorrected;
-        
-        if(debugMode)
+
+        // TEST
+        //Debug.Log("minAngleX - kinematicLocalOrientationQuaternionXAngleCorrected: " + (minAngleX) + " - (" + (kinematicLocalOrientationQuaternionXAngleCorrected) + ") = " + kinematicLocalErrorMinX);
+        //Debug.Log("maxAngleX - kinematicLocalOrientationQuaternionXAngleCorrected: " + (maxAngleX) + " - (" + (kinematicLocalOrientationQuaternionXAngleCorrected) + ") = " + kinematicLocalErrorMaxX);
+
+        if (debugMode)
             Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinX: " + kinematicLocalErrorMinX + " | kinematicLocalErrorMaxX: " + kinematicLocalErrorMaxX);
 
         // TEST - Clamping Kinematic Errors
-        //float kinematicLocalErrorMinXClamp = Mathf.Clamp(kinematicLocalErrorMinX, -99f, -1f);
+        //float kinematicLocalErrorMinXClamp = Mathf.Clamp(kinematicLocalErrorMinX, -100f, -0f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinXClamp: " + kinematicLocalErrorMinXClamp);
-        //float kinematicLocalErrorMaxXClamp = Mathf.Clamp(kinematicLocalErrorMaxX, 1f, 99f);
+        //float kinematicLocalErrorMaxXClamp = Mathf.Clamp(kinematicLocalErrorMaxX, 0f, 100f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMaxXClamp: " + kinematicLocalErrorMaxXClamp);
 
         #endregion
 
         #region Isoline with Angle errors - X
 
-        float interceptX = (0f) / kinematicLocalErrorMaxX;
-        float slopeX = (kinematicLocalErrorMinX) / (-(kinematicLocalErrorMaxX));
-        KPHX = KPLX * slopeX + interceptX;
+        interceptX = (0f) / kinematicLocalErrorMaxX;
+        slopeX = (kinematicLocalErrorMinX) / (-(kinematicLocalErrorMaxX));
+        KPHX = KPLX * slopeX + interceptX; // ABS(slope) will cause the hand to move once the kinematic goes beyond the limit
+
+        // TEST
+        //Debug.Log("KPHX: " + KPHX + " KPLX: " + KPLX);
+        //Debug.Log("slopeX: (kinematicLocalErrorMinX) / (-(kinematicLocalErrorMaxX)): " + ((kinematicLocalErrorMinX) + " / " + ("-(" + kinematicLocalErrorMaxX) + ") = " + (slopeX)));
 
         // TEST - Isoline with Clamped Errors
         //float interceptX = (0f) / kinematicLocalErrorMaxXClamp;
@@ -335,8 +383,8 @@ public class JointControllerImitation
 
         #region Isoline with Angle errors - Y
 
-        float interceptY = (0f) / kinematicLocalErrorMaxY;
-        float slopeY = (kinematicLocalErrorMinY) / (-(kinematicLocalErrorMaxY));
+        interceptY = (0f) / kinematicLocalErrorMaxY;
+        slopeY = (kinematicLocalErrorMinY) / (-(kinematicLocalErrorMaxY));
         KPHY = KPLY * slopeY + interceptY;
 
         // TEST - Isoline with Clamped Errors
@@ -407,8 +455,8 @@ public class JointControllerImitation
 
         #region Isoline with Angle errors - Z
 
-        float interceptZ = (-gravityTorqueVectorLocal.z) / kinematicLocalErrorMaxZ;
-        float slopeZ = (kinematicLocalErrorMinZ) / (-(kinematicLocalErrorMaxZ));
+        interceptZ = (-gravityTorqueVectorLocal.z) / kinematicLocalErrorMaxZ;
+        slopeZ = (kinematicLocalErrorMinZ) / (-(kinematicLocalErrorMaxZ));
         KPHZ = KPLZ * slopeZ + interceptZ;
 
         // TEST - Isoline with Clamped Errors

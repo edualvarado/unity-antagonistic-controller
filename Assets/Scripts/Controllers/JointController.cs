@@ -31,6 +31,10 @@ public class JointController : MonoBehaviour
                                                                                                         1f, 0.0f, 0.0f, 0.01f,
                                                                                                         1f, 0.0f, 0.0f, 0.01f);
 
+    private WindowGraph _handX;
+    private GameObject pointX;
+    private GameObject lineX;
+
     #endregion
 
     #region Instance Fields
@@ -69,12 +73,12 @@ public class JointController : MonoBehaviour
     public float pHX;
     public float iX;
     public float dX;
+    public float slopeX; // Before, variable used for each controller separatelly - now just to retrieve from lower class
+    public float interceptX;
     public float minSoftLimitX;
     public float maxSoftLimitX;
     public float minHardLimitX;
     public float maxHardLimitX;
-    public float slopeX;
-    public float interceptX;
     public bool drawLimitsX;
     private bool applyAntTorqueX;
     private float torqueAppliedX;
@@ -84,12 +88,12 @@ public class JointController : MonoBehaviour
     public float pHY;
     public float iY;
     public float dY;
+    public float slopeY; // Before, variable used for each controller separatelly - now just to retrieve from lower class
+    public float interceptY;
     public float minSoftLimitY;
     public float maxSoftLimitY;
     public float minHardLimitY;
     public float maxHardLimitY;
-    public float slopeY;
-    public float interceptY;
     public bool drawLimitsY;
     private bool applyAntTorqueY;
     private float torqueAppliedY;
@@ -99,12 +103,12 @@ public class JointController : MonoBehaviour
     public float pHZ;
     public float iZ;
     public float dZ;
+    public float slopeZ; // Before, variable used for each controller separatelly - now just to retrieve from lower class
+    public float interceptZ;
     public float minSoftLimitZ;
     public float maxSoftLimitZ;
     public float minHardLimitZ;
     public float maxHardLimitZ;
-    public float slopeZ;
-    public float interceptZ;
     public bool drawLimitsZ;
     private bool applyAntTorqueZ;
     private float torqueAppliedZ;
@@ -156,21 +160,30 @@ public class JointController : MonoBehaviour
 
     #endregion
 
+    #region Unity Methods
+
     private void Awake()
     {
         this._currentTransform = transform;
         this._objectRigidbody = GetComponent<Rigidbody>();
         this._jointAnt = GetComponent<ConfigurableJoint>();
+        this._handX = GameObject.Find("WindowGraph").GetComponent<WindowGraph>();
 
         // Initial Orientations - They do not update!
         this._initialLocalOrientation = transform.localRotation;
         this._initialGlobalOrientation = transform.rotation;
     }
 
+    private void Start()
+    {
+        // TEST
+        pointX = _handX.CreateCircle(new Vector2(0, 0), Color.red);
+        lineX = _handX.CreateLine(new Vector2(0, 0), new Vector2(0, 0), Color.red);
+    }
+
     private void Update()
     {
         // Set hard limit to the limit in the joints
-
         var lowAngularXJoint = _jointAnt.lowAngularXLimit;
         lowAngularXJoint.limit = minHardLimitX;
         _jointAnt.lowAngularXLimit = lowAngularXJoint;
@@ -187,27 +200,27 @@ public class JointController : MonoBehaviour
         angularZJoint.limit = maxHardLimitZ;
         _jointAnt.angularZLimit = angularZJoint;
 
-        // TODO: We should make then not depend on AngleAxis
-
         if(drawLimitsX)
         {
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minSoftLimitX, transform.right) * transform.localRotation * transform.parent.up * 0.8f, Color.red);
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxSoftLimitX, transform.right) * transform.localRotation * transform.parent.up * 0.8f, Color.red);
+            // TODO - Should we multiply for transform.localRotation after the AngleAxis? Does the range varies actually if we move the hand?
 
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minHardLimitX, transform.right) * transform.localRotation * transform.parent.up * 0.4f, Color.green);
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxHardLimitX, transform.right) * transform.localRotation * transform.parent.up * 0.4f, Color.green);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minSoftLimitX, transform.right) * transform.parent.up * 0.8f, Color.red);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxSoftLimitX, transform.right) * transform.parent.up * 0.8f, Color.red);
+
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minHardLimitX, transform.right) * transform.parent.up * 0.4f, Color.green);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxHardLimitX, transform.right) * transform.parent.up * 0.4f, Color.green);
         }
 
-        //if (drawLimitsY)
-        //{
-        //    Debug.DrawRay(transform.position, Quaternion.AngleAxis(minSoftLimitY, transform.up) * transform.localRotation * transform.parent.up * 0.8f, Color.red);
-        //    Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxSoftLimitY, transform.up) * transform.localRotation * transform.parent.up * 0.8f, Color.red);
+        if (drawLimitsY)
+        {
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minSoftLimitY, transform.up) * transform.parent.up * 0.8f, Color.red);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxSoftLimitY, transform.up) * transform.parent.up * 0.8f, Color.red);
 
-        //    Debug.DrawRay(transform.position, Quaternion.AngleAxis(minHardLimitY, transform.up) * transform.localRotation * transform.parent.up * 0.4f, Color.green);
-        //    Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxHardLimitY, transform.up) * transform.localRotation * transform.parent.up * 0.4f, Color.green);
-        //}
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minHardLimitY, transform.up) * transform.parent.up * 0.4f, Color.green);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxHardLimitY, transform.up) * transform.parent.up * 0.4f, Color.green);
+        }
 
-        if (drawLimitsZ) // ERROR
+        if (drawLimitsZ)
         {
             Debug.DrawRay(transform.position, Quaternion.AngleAxis(minSoftLimitZ, transform.forward) * transform.parent.up * 0.8f, Color.red);
             Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxSoftLimitZ, transform.forward) * transform.parent.up * 0.8f, Color.red);
@@ -224,14 +237,15 @@ public class JointController : MonoBehaviour
             return;
         }
 
-        #region Update Gains
+        #region Update Gains and Isoline
 
         // Normal PD Controller
         this._normalPDController.KP = this.Kp;
         this._normalPDController.KI = this.Ki;
         this._normalPDController.KD = this.Kd;
 
-        // Antagonistic PD Controller
+        // Antagonistic PD Controller (Old)
+        /*
         this._antagonisticControllerX.KPL = this.pLX;
         this._antagonisticControllerX.KPH = this.pHX;
         this._antagonisticControllerX.KI = this.iX;
@@ -244,24 +258,45 @@ public class JointController : MonoBehaviour
         this._antagonisticControllerZ.KPH = this.pHZ;
         this._antagonisticControllerZ.KI = this.iZ;
         this._antagonisticControllerZ.KD = this.dZ;
+        */
 
         // Antagonistic PD Controller with Middle Array
         this._antagonisticControllerXYZ.KPLX = this.pLX;
-        this._antagonisticControllerXYZ.KPHX = this.pHX;
         this._antagonisticControllerXYZ.KIX = this.iX;
         this._antagonisticControllerXYZ.KDX = this.dX;
 
         this._antagonisticControllerXYZ.KPLY = this.pLY;
-        this._antagonisticControllerXYZ.KPHY = this.pHY;
         this._antagonisticControllerXYZ.KIY = this.iY;
         this._antagonisticControllerXYZ.KDY = this.dY;
 
         this._antagonisticControllerXYZ.KPLZ = this.pLZ;
-        this._antagonisticControllerXYZ.KPHZ = this.pHZ;
         this._antagonisticControllerXYZ.KIZ = this.iZ;
         this._antagonisticControllerXYZ.KDZ = this.dZ;
 
+        // To get them back once they are calculated in the lower class and display them in the inspector
+        this.pHX = this._antagonisticControllerXYZ.KPHX;
+        this.pHY = this._antagonisticControllerXYZ.KPHY;
+        this.pHZ = this._antagonisticControllerXYZ.KPHZ;
+
+        // Getting slopes
+        this.slopeX = this._antagonisticControllerXYZ.SlopeX;
+        this.slopeY = this._antagonisticControllerXYZ.SlopeY;
+        this.slopeZ = this._antagonisticControllerXYZ.SlopeZ;
+
         #endregion
+
+        #region Plot
+
+        // TEST
+        _handX.MoveCircle(pointX, new Vector2(pLX, pHX));
+        //_handX.MoveLine(lineX, Vector2.zero, new Vector2(pHX, pLX));
+
+        if (slopeX > 1f)
+            _handX.MoveLine(lineX, Vector2.zero, new Vector2((150f / slopeX), 150f));
+        else if (slopeX < 1f)
+            _handX.MoveLine(lineX, Vector2.zero, new Vector2(150f, 150f * slopeX));
+
+        #endregion  
 
         #region Getting Orientations
 
@@ -465,6 +500,11 @@ public class JointController : MonoBehaviour
         #endregion
     }
 
+    #endregion
+
+    #region Old Instance Methods
+
+    /*
     /// <summary>
     /// Compute torque for X-axis using Antagonistic Controller.
     /// </summary>
@@ -1020,6 +1060,8 @@ public class JointController : MonoBehaviour
         return new Vector3(0f, 0f, torqueAppliedZ);
     }
 
+    */
+
     /// <summary>
     /// Compute torque using Normal PD Controller.
     /// </summary>
@@ -1187,6 +1229,10 @@ public class JointController : MonoBehaviour
             return torqueImprovedLocal; // Not entirely working
     }
 
+    #endregion
+
+    #region Instance Methods
+
     // Swing-Twist Decomposition - TODO 
     private Quaternion getRotationComponentAboutAxis(Quaternion rotation, Vector3 direction)
     {
@@ -1211,4 +1257,5 @@ public class JointController : MonoBehaviour
         return twist;
     }
 
+    #endregion
 }

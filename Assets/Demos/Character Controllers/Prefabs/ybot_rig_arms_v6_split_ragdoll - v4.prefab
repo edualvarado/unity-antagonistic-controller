@@ -192,7 +192,8 @@ MonoBehaviour:
   controllerType: 0
   kinematicLimb: {fileID: 0}
   activateDefaultPD: 0
-  applyDefaultTorque: 0
+  spring: 0
+  damper: 0
   activateNormalPD: 0
   applyNormalTorque: 0
   globalMode: 0
@@ -201,36 +202,42 @@ MonoBehaviour:
   Kd: 1.2
   deployDesiredRotation: 0
   activateAntagonisticPD: 0
-  applyAntTorqueX: 0
-  torqueAppliedX: 0
-  pLX: 0
+  applyAntTorque: 0
+  debugMode: 0
+  multGrav: 1
+  pLX: 25
   pHX: 0
   iX: 0
-  dX: 0
-  minAngleX: 0
-  maxAngleX: 0
+  dX: 0.01
   slopeX: 0
   interceptX: 0
-  applyAntTorqueY: 0
-  torqueAppliedY: 0
-  pLY: 0
+  minSoftLimitX: 0
+  maxSoftLimitX: 0
+  minHardLimitX: 0
+  maxHardLimitX: 0
+  drawLimitsX: 0
+  pLY: 2.5
   pHY: 0
   iY: 0
-  dY: 0
-  minAngleY: 0
-  maxAngleY: 0
+  dY: 0.01
   slopeY: 0
   interceptY: 0
-  applyAntTorqueZ: 0
-  torqueAppliedZ: 0
-  pLZ: 0
+  minSoftLimitY: 0
+  maxSoftLimitY: 0
+  minHardLimitY: 0
+  maxHardLimitY: 0
+  drawLimitsY: 0
+  pLZ: 25
   pHZ: 0
   iZ: 0
-  dZ: 0
-  minAngleZ: 0
-  maxAngleZ: 0
+  dZ: 0.01
   slopeZ: 0
   interceptZ: 0
+  minSoftLimitZ: 0
+  maxSoftLimitZ: 0
+  minHardLimitZ: 0
+  maxHardLimitZ: 0
+  drawLimitsZ: 0
 --- !u!1 &4765623532586227487
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,45 +948,52 @@ MonoBehaviour:
   controllerType: 0
   kinematicLimb: {fileID: 0}
   activateDefaultPD: 0
-  applyDefaultTorque: 0
+  spring: 1600
+  damper: 0.3
   activateNormalPD: 0
   applyNormalTorque: 0
-  globalMode: 0
-  Kp: 0
+  globalMode: 1
+  Kp: 1600
   Ki: 0
-  Kd: 1.2
+  Kd: 0.3
   deployDesiredRotation: 0
   activateAntagonisticPD: 0
-  applyAntTorqueX: 0
-  torqueAppliedX: 0
-  pLX: 0
+  applyAntTorque: 0
+  debugMode: 0
+  multGrav: 1
+  pLX: 10
   pHX: 0
   iX: 0
-  dX: 0
-  minAngleX: 0
-  maxAngleX: 0
+  dX: 0.01
   slopeX: 0
   interceptX: 0
-  applyAntTorqueY: 0
-  torqueAppliedY: 0
-  pLY: 0
+  minSoftLimitX: 0
+  maxSoftLimitX: 0
+  minHardLimitX: 0
+  maxHardLimitX: 0
+  drawLimitsX: 0
+  pLY: 1
   pHY: 0
   iY: 0
-  dY: 0
-  minAngleY: 0
-  maxAngleY: 0
+  dY: 0.01
   slopeY: 0
   interceptY: 0
-  applyAntTorqueZ: 0
-  torqueAppliedZ: 0
-  pLZ: 0
+  minSoftLimitY: 0
+  maxSoftLimitY: 0
+  minHardLimitY: 0
+  maxHardLimitY: 0
+  drawLimitsY: 0
+  pLZ: 10
   pHZ: 0
   iZ: 0
-  dZ: 0
-  minAngleZ: 0
-  maxAngleZ: 0
+  dZ: 0.01
   slopeZ: 0
   interceptZ: 0
+  minSoftLimitZ: 0
+  maxSoftLimitZ: 0
+  minHardLimitZ: 0
+  maxHardLimitZ: 0
+  drawLimitsZ: 0
 --- !u!1 &4765623532904624680
 GameObject:
   m_ObjectHideFlags: 0
@@ -2607,45 +2621,52 @@ MonoBehaviour:
   controllerType: 0
   kinematicLimb: {fileID: 0}
   activateDefaultPD: 0
-  applyDefaultTorque: 0
+  spring: 1600
+  damper: 0.3
   activateNormalPD: 0
   applyNormalTorque: 0
-  globalMode: 0
-  Kp: 0
+  globalMode: 1
+  Kp: 1600
   Ki: 0
-  Kd: 1.2
+  Kd: 0.3
   deployDesiredRotation: 0
   activateAntagonisticPD: 0
-  applyAntTorqueX: 0
-  torqueAppliedX: 0
+  applyAntTorque: 0
+  debugMode: 0
+  multGrav: 1
   pLX: 25
   pHX: 0
   iX: 0
   dX: 0.01
-  minAngleX: 0
-  maxAngleX: 180
   slopeX: 0
   interceptX: 0
-  applyAntTorqueY: 0
-  torqueAppliedY: 0
+  minSoftLimitX: 0
+  maxSoftLimitX: 0
+  minHardLimitX: 0
+  maxHardLimitX: 0
+  drawLimitsX: 0
   pLY: 2.5
   pHY: 0
   iY: 0
   dY: 0.01
-  minAngleY: -25
-  maxAngleY: 25
   slopeY: 0
   interceptY: 0
-  applyAntTorqueZ: 0
-  torqueAppliedZ: 0
+  minSoftLimitY: 0
+  maxSoftLimitY: 0
+  minHardLimitY: 0
+  maxHardLimitY: 0
+  drawLimitsY: 0
   pLZ: 25
   pHZ: 0
   iZ: 0
   dZ: 0.01
-  minAngleZ: -25
-  maxAngleZ: 25
   slopeZ: 0
   interceptZ: 0
+  minSoftLimitZ: 0
+  maxSoftLimitZ: 0
+  minHardLimitZ: 0
+  maxHardLimitZ: 0
+  drawLimitsZ: 0
 --- !u!1 &4765623533429162650
 GameObject:
   m_ObjectHideFlags: 0
@@ -3163,7 +3184,8 @@ MonoBehaviour:
   controllerType: 0
   kinematicLimb: {fileID: 0}
   activateDefaultPD: 0
-  applyDefaultTorque: 0
+  spring: 0
+  damper: 0
   activateNormalPD: 0
   applyNormalTorque: 0
   globalMode: 0
@@ -3172,36 +3194,42 @@ MonoBehaviour:
   Kd: 1.2
   deployDesiredRotation: 0
   activateAntagonisticPD: 0
-  applyAntTorqueX: 0
-  torqueAppliedX: 0
-  pLX: 0
+  applyAntTorque: 0
+  debugMode: 0
+  multGrav: 1
+  pLX: 50
   pHX: 0
   iX: 0
-  dX: 0
-  minAngleX: 0
-  maxAngleX: 0
+  dX: 0.01
   slopeX: 0
   interceptX: 0
-  applyAntTorqueY: 0
-  torqueAppliedY: 0
-  pLY: 0
+  minSoftLimitX: 0
+  maxSoftLimitX: 0
+  minHardLimitX: 0
+  maxHardLimitX: 0
+  drawLimitsX: 0
+  pLY: 5
   pHY: 0
   iY: 0
-  dY: 0
-  minAngleY: 0
-  maxAngleY: 0
+  dY: 0.01
   slopeY: 0
   interceptY: 0
-  applyAntTorqueZ: 0
-  torqueAppliedZ: 0
-  pLZ: 0
+  minSoftLimitY: 0
+  maxSoftLimitY: 0
+  minHardLimitY: 0
+  maxHardLimitY: 0
+  drawLimitsY: 0
+  pLZ: 50
   pHZ: 0
   iZ: 0
-  dZ: 0
-  minAngleZ: 0
-  maxAngleZ: 0
+  dZ: 0.01
   slopeZ: 0
   interceptZ: 0
+  minSoftLimitZ: 0
+  maxSoftLimitZ: 0
+  minHardLimitZ: 0
+  maxHardLimitZ: 0
+  drawLimitsZ: 0
 --- !u!1 &4765623533631331841
 GameObject:
   m_ObjectHideFlags: 0
@@ -5117,45 +5145,52 @@ MonoBehaviour:
   controllerType: 0
   kinematicLimb: {fileID: 0}
   activateDefaultPD: 0
-  applyDefaultTorque: 0
+  spring: 1600
+  damper: 0.3
   activateNormalPD: 0
   applyNormalTorque: 0
-  globalMode: 0
-  Kp: 0
+  globalMode: 1
+  Kp: 1600
   Ki: 0
-  Kd: 1.2
+  Kd: 0.3
   deployDesiredRotation: 0
   activateAntagonisticPD: 0
-  applyAntTorqueX: 0
-  torqueAppliedX: 0
+  applyAntTorque: 0
+  debugMode: 0
+  multGrav: 1
   pLX: 50
   pHX: 0
   iX: 0
   dX: 0.01
-  minAngleX: -80
-  maxAngleX: 80
   slopeX: 0
   interceptX: 0
-  applyAntTorqueY: 0
-  torqueAppliedY: 0
+  minSoftLimitX: 0
+  maxSoftLimitX: 0
+  minHardLimitX: 0
+  maxHardLimitX: 0
+  drawLimitsX: 0
   pLY: 5
   pHY: 0
   iY: 0
   dY: 0.01
-  minAngleY: -25
-  maxAngleY: 25
   slopeY: 0
   interceptY: 0
-  applyAntTorqueZ: 0
-  torqueAppliedZ: 0
+  minSoftLimitY: 0
+  maxSoftLimitY: 0
+  minHardLimitY: 0
+  maxHardLimitY: 0
+  drawLimitsY: 0
   pLZ: 50
   pHZ: 0
   iZ: 0
   dZ: 0.01
-  minAngleZ: -90
-  maxAngleZ: 90
   slopeZ: 0
   interceptZ: 0
+  minSoftLimitZ: 0
+  maxSoftLimitZ: 0
+  minHardLimitZ: 0
+  maxHardLimitZ: 0
+  drawLimitsZ: 0
 --- !u!1 &4765623534659419155
 GameObject:
   m_ObjectHideFlags: 0
@@ -5388,50 +5423,57 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623534695646599}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controllerType: 0
+  controllerType: 2
   kinematicLimb: {fileID: 0}
   activateDefaultPD: 0
-  applyDefaultTorque: 0
+  spring: 1600
+  damper: 0.3
   activateNormalPD: 0
   applyNormalTorque: 0
-  globalMode: 0
-  Kp: 0
+  globalMode: 1
+  Kp: 1600
   Ki: 0
-  Kd: 1.2
+  Kd: 0.3
   deployDesiredRotation: 0
-  activateAntagonisticPD: 0
-  applyAntTorqueX: 0
-  torqueAppliedX: 0
+  activateAntagonisticPD: 1
+  applyAntTorque: 1
+  debugMode: 0
+  multGrav: 1
   pLX: 10
   pHX: 0
   iX: 0
   dX: 0.01
-  minAngleX: -50
-  maxAngleX: 50
   slopeX: 0
   interceptX: 0
-  applyAntTorqueY: 0
-  torqueAppliedY: 0
+  minSoftLimitX: -50
+  maxSoftLimitX: 50
+  minHardLimitX: -50
+  maxHardLimitX: 50
+  drawLimitsX: 1
   pLY: 1
   pHY: 0
   iY: 0
   dY: 0.01
-  minAngleY: -50
-  maxAngleY: 50
   slopeY: 0
   interceptY: 0
-  applyAntTorqueZ: 0
-  torqueAppliedZ: 0
+  minSoftLimitY: -50
+  maxSoftLimitY: 50
+  minHardLimitY: -50
+  maxHardLimitY: 50
+  drawLimitsY: 0
   pLZ: 10
   pHZ: 0
   iZ: 0
   dZ: 0.01
-  minAngleZ: -90
-  maxAngleZ: 90
   slopeZ: 0
   interceptZ: 0
+  minSoftLimitZ: -90
+  maxSoftLimitZ: 90
+  minHardLimitZ: -90
+  maxHardLimitZ: 90
+  drawLimitsZ: 0
