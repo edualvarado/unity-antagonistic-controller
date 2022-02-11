@@ -6,28 +6,36 @@ using UnityEngine.UI;
 public class WindowGraph : MonoBehaviour
 {
     [SerializeField] private Sprite circleSprite;
-    private RectTransform graphContainer;
+    private RectTransform _graphContainer;
+
+    public RectTransform Rect
+    {
+        get
+        {
+            return _graphContainer;
+        }
+    }
 
     private void Awake()
     {
-        graphContainer = transform.Find("GraphContainer").GetComponent<RectTransform>();
+        _graphContainer = transform.Find("GraphContainer").GetComponent<RectTransform>();
         List<int> valueList = new List<int> {0, 25};
         //ShowGraph(valueList);
     }
 
-    public GameObject CreateCircle(Vector2 anchoredPosition, Color color)
+    public GameObject CreateCircle(Vector2 anchoredPosition, Color color, string name)
     {
-        GameObject gameObject = new GameObject("circle", typeof(Image));
-        gameObject.transform.SetParent(graphContainer, false);
+        GameObject gameObject = new GameObject(name, typeof(Image));
+        gameObject.transform.SetParent(_graphContainer, false);
         gameObject.GetComponent<Image>().sprite = circleSprite;
         gameObject.GetComponent<Image>().color = color;
         return gameObject;
     }
 
-    public GameObject CreateLine(Vector2 dotPositionA, Vector2 dotPositionB, Color color)
+    public GameObject CreateLine(Vector2 dotPositionA, Vector2 dotPositionB, Color color, string name)
     {
-        GameObject gameObject = new GameObject("dotConnection", typeof(Image));
-        gameObject.transform.SetParent(graphContainer, false);
+        GameObject gameObject = new GameObject(name, typeof(Image));
+        gameObject.transform.SetParent(_graphContainer, false);
         gameObject.GetComponent<Image>().color = new Color(color.r, color.g, color.b, 0.5f);
         return gameObject;
     }
@@ -53,9 +61,15 @@ public class WindowGraph : MonoBehaviour
         rectTransform.localEulerAngles = new Vector3(0, 0, (Mathf.Atan2(dir.y, dir.x) * 180 / Mathf.PI));
     }
 
+    public void SetTransparency(GameObject point, GameObject line, Color color, float t1, float t2)
+    {
+        point.GetComponent<Image>().color = new Color(color.r, color.g, color.b, t1);
+        line.GetComponent<Image>().color = new Color(color.r, color.g, color.b, t2);
+    }
+
     public void ShowGraph(List<int> valueList)
     {
-        float graphHeight = graphContainer.sizeDelta.y;
+        float graphHeight = _graphContainer.sizeDelta.y;
         float yMaximum = 100f;
         float xSize = 10f;
 
@@ -64,7 +78,7 @@ public class WindowGraph : MonoBehaviour
         {
             float xPosition = i * xSize;
             float yPosition = (valueList[i] / yMaximum) * graphHeight;
-            GameObject circleGameObject = CreateCircle(new Vector2(xPosition, yPosition), Color.white);
+            GameObject circleGameObject = CreateCircle(new Vector2(xPosition, yPosition), Color.white, "point");
             if(lastCircleGameObject != null)
             {
                 CreateDotConnection(lastCircleGameObject.GetComponent<RectTransform>().anchoredPosition, circleGameObject.GetComponent<RectTransform>().anchoredPosition);
@@ -76,7 +90,7 @@ public class WindowGraph : MonoBehaviour
     public void CreateDotConnection(Vector2 dotPositionA, Vector2 dotPositionB)
     {
         GameObject gameObject = new GameObject("dotConnection", typeof(Image));
-        gameObject.transform.SetParent(graphContainer, false);
+        gameObject.transform.SetParent(_graphContainer, false);
         gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
         Vector2 dir = (dotPositionB - dotPositionA).normalized;

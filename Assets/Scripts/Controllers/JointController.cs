@@ -12,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class JointController : MonoBehaviour
 {
@@ -22,18 +23,26 @@ public class JointController : MonoBehaviour
     private readonly PDController _normalPDController = new PDController(1f, 0f, 0.1f);
 
     // Antagonistic PD Controller
-    private readonly AntagonisticController _antagonisticControllerX = new AntagonisticController(1f, 0f, 0f, 0.1f);
-    private readonly AntagonisticController _antagonisticControllerY = new AntagonisticController(1f, 0f, 0f, 0.1f);
-    private readonly AntagonisticController _antagonisticControllerZ = new AntagonisticController(1f, 0f, 0f, 0.1f);
+    //private readonly AntagonisticController _antagonisticControllerX = new AntagonisticController(1f, 0f, 0f, 0.1f);
+    //private readonly AntagonisticController _antagonisticControllerY = new AntagonisticController(1f, 0f, 0f, 0.1f);
+    //private readonly AntagonisticController _antagonisticControllerZ = new AntagonisticController(1f, 0f, 0f, 0.1f);
 
-    // Test - Antagonistic PD Controller middle class array
+    // Antagonistic PD Controller middle class array
     private readonly JointControllerImitation _antagonisticControllerXYZ = new JointControllerImitation(1f, 0.0f, 0.0f, 0.01f,
                                                                                                         1f, 0.0f, 0.0f, 0.01f,
                                                                                                         1f, 0.0f, 0.0f, 0.01f);
+    // Window Graph - Hand
+    private WindowGraph _handGraph;
+    private GameObject _handPointX;
+    private GameObject _handLineX;
+    private GameObject _handPointY;
+    private GameObject _handLineY; 
+    private GameObject _handPointZ;
+    private GameObject _handLineZ;
 
-    private WindowGraph _handX;
-    private GameObject pointX;
-    private GameObject lineX;
+    private Toggle toggleX;
+    private Toggle toggleY;
+    private Toggle toggleZ;
 
     #endregion
 
@@ -167,7 +176,7 @@ public class JointController : MonoBehaviour
         this._currentTransform = transform;
         this._objectRigidbody = GetComponent<Rigidbody>();
         this._jointAnt = GetComponent<ConfigurableJoint>();
-        this._handX = GameObject.Find("WindowGraph").GetComponent<WindowGraph>();
+        this._handGraph = GameObject.Find("WindowGraphHand").GetComponent<WindowGraph>();
 
         // Initial Orientations - They do not update!
         this._initialLocalOrientation = transform.localRotation;
@@ -176,9 +185,33 @@ public class JointController : MonoBehaviour
 
     private void Start()
     {
-        // TEST
-        pointX = _handX.CreateCircle(new Vector2(0, 0), Color.red);
-        lineX = _handX.CreateLine(new Vector2(0, 0), new Vector2(0, 0), Color.red);
+        // Get Toggle UI
+        toggleX = GameObject.Find("ToggleX").GetComponent<Toggle>();
+        toggleY = GameObject.Find("ToggleY").GetComponent<Toggle>();
+        toggleZ = GameObject.Find("ToggleZ").GetComponent<Toggle>();
+
+        toggleX.onValueChanged.AddListener(delegate
+        {
+            ToggleXValueChanged(toggleX);
+        });
+
+        toggleY.onValueChanged.AddListener(delegate
+        {
+            ToggleYValueChanged(toggleY);
+        });
+
+        toggleZ.onValueChanged.AddListener(delegate
+        {
+            ToggleZValueChanged(toggleZ);
+        });
+
+        // Window Graph - Hand
+        _handPointX = _handGraph.CreateCircle(new Vector2(0, 0), Color.red, "handPointX");
+        _handLineX = _handGraph.CreateLine(new Vector2(0, 0), new Vector2(0, 0), Color.red, "handLineX");
+        _handPointY = _handGraph.CreateCircle(new Vector2(0, 0), Color.green, "handPointY");
+        _handLineY = _handGraph.CreateLine(new Vector2(0, 0), new Vector2(0, 0), Color.green, "handLineY");
+        _handPointZ = _handGraph.CreateCircle(new Vector2(0, 0), Color.blue, "handPointZ");
+        _handLineZ = _handGraph.CreateLine(new Vector2(0, 0), new Vector2(0, 0), Color.blue, "handLineZ");
     }
 
     private void Update()
@@ -203,30 +236,29 @@ public class JointController : MonoBehaviour
         if(drawLimitsX)
         {
             // TODO - Should we multiply for transform.localRotation after the AngleAxis? Does the range varies actually if we move the hand?
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minHardLimitX, transform.right) * transform.parent.up * 0.8f, Color.black);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxHardLimitX, transform.right) * transform.parent.up * 0.8f, Color.black);
 
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minSoftLimitX, transform.right) * transform.parent.up * 0.8f, Color.red);
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxSoftLimitX, transform.right) * transform.parent.up * 0.8f, Color.red);
-
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minHardLimitX, transform.right) * transform.parent.up * 0.4f, Color.green);
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxHardLimitX, transform.right) * transform.parent.up * 0.4f, Color.green);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minSoftLimitX, transform.right) * transform.parent.up * 0.4f, Color.red);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxSoftLimitX, transform.right) * transform.parent.up * 0.4f, Color.green);
         }
 
         if (drawLimitsY)
         {
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minSoftLimitY, transform.up) * transform.parent.up * 0.8f, Color.red);
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxSoftLimitY, transform.up) * transform.parent.up * 0.8f, Color.red);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minHardLimitY, transform.up) * transform.parent.up * 0.8f, Color.black);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxHardLimitY, transform.up) * transform.parent.up * 0.8f, Color.black);
 
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minHardLimitY, transform.up) * transform.parent.up * 0.4f, Color.green);
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxHardLimitY, transform.up) * transform.parent.up * 0.4f, Color.green);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minSoftLimitY, transform.up) * transform.parent.up * 0.4f, Color.red);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxSoftLimitY, transform.up) * transform.parent.up * 0.4f, Color.green);
         }
 
         if (drawLimitsZ)
         {
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minSoftLimitZ, transform.forward) * transform.parent.up * 0.8f, Color.red);
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxSoftLimitZ, transform.forward) * transform.parent.up * 0.8f, Color.red);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minHardLimitZ, transform.forward) * transform.parent.up * 0.8f, Color.black);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxHardLimitZ, transform.forward) * transform.parent.up * 0.8f, Color.black);
 
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minHardLimitZ, transform.forward) * transform.parent.up * 0.4f, Color.green);
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxHardLimitZ, transform.forward) * transform.parent.up * 0.4f, Color.green);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(minSoftLimitZ, transform.forward) * transform.parent.up * 0.4f, Color.red);
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxSoftLimitZ, transform.forward) * transform.parent.up * 0.4f, Color.green);
         }
     }
 
@@ -278,23 +310,36 @@ public class JointController : MonoBehaviour
         this.pHY = this._antagonisticControllerXYZ.KPHY;
         this.pHZ = this._antagonisticControllerXYZ.KPHZ;
 
-        // Getting slopes
+        // Getting slopes and intercepts
         this.slopeX = this._antagonisticControllerXYZ.SlopeX;
         this.slopeY = this._antagonisticControllerXYZ.SlopeY;
         this.slopeZ = this._antagonisticControllerXYZ.SlopeZ;
+        this.interceptX = this._antagonisticControllerXYZ.interceptX;
+        this.interceptY = this._antagonisticControllerXYZ.interceptY;
+        this.interceptZ = this._antagonisticControllerXYZ.interceptZ;
 
         #endregion
 
         #region Plot
 
-        // TEST
-        _handX.MoveCircle(pointX, new Vector2(pLX, pHX));
-        //_handX.MoveLine(lineX, Vector2.zero, new Vector2(pHX, pLX));
-
+        // Window Graph Update - Hand
+        _handGraph.MoveCircle(_handPointX, new Vector2(pLX, pHX));
         if (slopeX > 1f)
-            _handX.MoveLine(lineX, Vector2.zero, new Vector2((150f / slopeX), 150f));
+            _handGraph.MoveLine(_handLineX, Vector2.zero, new Vector2((_handGraph.Rect.sizeDelta.x / slopeX), _handGraph.Rect.sizeDelta.y));
         else if (slopeX < 1f)
-            _handX.MoveLine(lineX, Vector2.zero, new Vector2(150f, 150f * slopeX));
+            _handGraph.MoveLine(_handLineX, Vector2.zero, new Vector2(_handGraph.Rect.sizeDelta.x, _handGraph.Rect.sizeDelta.y * slopeX));
+
+        _handGraph.MoveCircle(_handPointY, new Vector2(pLY, pHY));
+        if (slopeY > 1f)
+            _handGraph.MoveLine(_handLineY, Vector2.zero, new Vector2((_handGraph.Rect.sizeDelta.x / slopeY), _handGraph.Rect.sizeDelta.y));
+        else if (slopeY < 1f)
+            _handGraph.MoveLine(_handLineY, Vector2.zero, new Vector2(_handGraph.Rect.sizeDelta.x, _handGraph.Rect.sizeDelta.y * slopeY));
+
+        _handGraph.MoveCircle(_handPointZ, new Vector2(pLZ, pHZ));
+        if (slopeZ > 1f)
+            _handGraph.MoveLine(_handLineZ, Vector2.zero, new Vector2((_handGraph.Rect.sizeDelta.x / slopeZ), _handGraph.Rect.sizeDelta.y));
+        else if (slopeZ < 1f)
+            _handGraph.MoveLine(_handLineZ, Vector2.zero, new Vector2(_handGraph.Rect.sizeDelta.x, _handGraph.Rect.sizeDelta.y * slopeZ));
 
         #endregion  
 
@@ -1255,6 +1300,34 @@ public class JointController : MonoBehaviour
             // Rotation angle `twist.angle()` is now reliable
         }
         return twist;
+    }
+
+    #endregion
+
+    #region Listeners
+
+    void ToggleXValueChanged(Toggle toggle)
+    {
+        if(toggle.isOn)
+            _handGraph.SetTransparency(_handPointX, _handLineX, Color.red, 1f, 0.5f);
+        else
+            _handGraph.SetTransparency(_handPointX, _handLineX, Color.red, 0f, 0f);
+    }
+
+    void ToggleYValueChanged(Toggle toggle)
+    {
+        if (toggle.isOn)
+            _handGraph.SetTransparency(_handPointY, _handLineY, Color.green, 1f, 0.5f);
+        else
+            _handGraph.SetTransparency(_handPointY, _handLineY, Color.green, 0f, 0f);
+    }
+
+    void ToggleZValueChanged(Toggle toggle)
+    {
+        if (toggle.isOn)
+            _handGraph.SetTransparency(_handPointZ, _handLineZ, Color.blue, 1f, 0.5f);
+        else
+            _handGraph.SetTransparency(_handPointZ, _handLineZ, Color.blue, 0f, 0f);
     }
 
     #endregion

@@ -274,10 +274,6 @@ public class JointControllerImitation
         float currentLocalErrorMinX = minAngleX - currentLocalOrientationQuaternionXAngleCorrected;
         float currentLocalErrorMaxX = maxAngleX - currentLocalOrientationQuaternionXAngleCorrected;
 
-        // TEST
-        //Debug.Log("minAngleX - currentLocalOrientationQuaternionXAngleCorrected: " + (minAngleX) + " - (" + (currentLocalOrientationQuaternionXAngleCorrected) + ") = " + currentLocalErrorMinX);
-        //Debug.Log("maxAngleX - currentLocalOrientationQuaternionXAngleCorrected: " + (maxAngleX) + " - (" + (currentLocalOrientationQuaternionXAngleCorrected) + ") = " + currentLocalErrorMaxX);
-
         if (debugMode)
             Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMinX: " + currentLocalErrorMinX + " | currentLocalErrorMaxX: " + currentLocalErrorMaxX);
 
@@ -289,10 +285,6 @@ public class JointControllerImitation
 
         float kinematicLocalErrorMinX = minAngleX - kinematicLocalOrientationQuaternionXAngleCorrected;
         float kinematicLocalErrorMaxX = maxAngleX - kinematicLocalOrientationQuaternionXAngleCorrected;
-
-        // TEST
-        //Debug.Log("minAngleX - kinematicLocalOrientationQuaternionXAngleCorrected: " + (minAngleX) + " - (" + (kinematicLocalOrientationQuaternionXAngleCorrected) + ") = " + kinematicLocalErrorMinX);
-        //Debug.Log("maxAngleX - kinematicLocalOrientationQuaternionXAngleCorrected: " + (maxAngleX) + " - (" + (kinematicLocalOrientationQuaternionXAngleCorrected) + ") = " + kinematicLocalErrorMaxX);
 
         if (debugMode)
             Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinX: " + kinematicLocalErrorMinX + " | kinematicLocalErrorMaxX: " + kinematicLocalErrorMaxX);
@@ -311,13 +303,9 @@ public class JointControllerImitation
         slopeX = (kinematicLocalErrorMinX) / (-(kinematicLocalErrorMaxX));
         KPHX = KPLX * slopeX + interceptX; // ABS(slope) will cause the hand to move once the kinematic goes beyond the limit
 
-        // TEST
-        //Debug.Log("KPHX: " + KPHX + " KPLX: " + KPLX);
-        //Debug.Log("slopeX: (kinematicLocalErrorMinX) / (-(kinematicLocalErrorMaxX)): " + ((kinematicLocalErrorMinX) + " / " + ("-(" + kinematicLocalErrorMaxX) + ") = " + (slopeX)));
-
         // TEST - Isoline with Clamped Errors
-        //float interceptX = (0f) / kinematicLocalErrorMaxXClamp;
-        //float slopeX = (kinematicLocalErrorMinXClamp) / (-(kinematicLocalErrorMaxXClamp));
+        //interceptX = (0f) / kinematicLocalErrorMaxXClamp;
+        //slopeX = (kinematicLocalErrorMinXClamp) / (-(kinematicLocalErrorMaxXClamp));
         //KPHX = KPLX * slopeX + interceptX; // ERROR: KPH is NaN
 
         #endregion
@@ -362,9 +350,9 @@ public class JointControllerImitation
             Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMinY: " + currentLocalErrorMinY + " | currentLocalErrorMaxY: " + currentLocalErrorMaxY);
 
         // TEST - Clamping Current Errors
-        //float currentLocalErrorMinYClamp = Mathf.Clamp(currentLocalErrorMinY, -100f, -1f);
+        //float currentLocalErrorMinYClamp = Mathf.Clamp(currentLocalErrorMinY, -100f, 0f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMinYClamp: " + currentLocalErrorMinYClamp);
-        //float currentLocalErrorMaxYClamp = Mathf.Clamp(currentLocalErrorMaxY, 1f, 100f);
+        //float currentLocalErrorMaxYClamp = Mathf.Clamp(currentLocalErrorMaxY, 0f, 100f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMaxYClamp: " + currentLocalErrorMaxYClamp);
 
         float kinematicLocalErrorMinY = minAngleY - kinematicLocalOrientationQuaternionYAngleCorrected;
@@ -374,9 +362,9 @@ public class JointControllerImitation
             Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinY: " + kinematicLocalErrorMinY + " | kinematicLocalErrorMaxY: " + kinematicLocalErrorMaxY);
 
         // TEST - Clamping Kinematic Errors
-        //float kinematicLocalErrorMinYClamp = Mathf.Clamp(kinematicLocalErrorMinY, -100f, -1f);
+        //float kinematicLocalErrorMinYClamp = Mathf.Clamp(kinematicLocalErrorMinY, -100f, 0f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinYClamp: " + kinematicLocalErrorMinYClamp);
-        //float kinematicLocalErrorMaxYClamp = Mathf.Clamp(kinematicLocalErrorMaxY, 1f, 100f);
+        //float kinematicLocalErrorMaxYClamp = Mathf.Clamp(kinematicLocalErrorMaxY, 0f, 100f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMaxYClamp: " + kinematicLocalErrorMaxYClamp);
 
         #endregion
@@ -388,8 +376,8 @@ public class JointControllerImitation
         KPHY = KPLY * slopeY + interceptY;
 
         // TEST - Isoline with Clamped Errors
-        //float interceptY = (0f) / kinematicLocalErrorMaxYClamp;
-        //float slopeY = (kinematicLocalErrorMinYClamp) / (-(kinematicLocalErrorMaxYClamp));
+        //interceptY = (0f) / kinematicLocalErrorMaxYClamp;
+        //slopeY = (kinematicLocalErrorMinYClamp) / (-(kinematicLocalErrorMaxYClamp));
         //KPHY = KPLY * slopeY + interceptY; // ERROR: KPH is NaN
 
         #endregion
@@ -434,9 +422,9 @@ public class JointControllerImitation
             Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMinZ: " + currentLocalErrorMinZ + " | currentLocalErrorMaxZ: " + currentLocalErrorMaxZ);
 
         // TEST - Clamping Current Errors
-        //float currentLocalErrorMinZClamp = Mathf.Clamp(currentLocalErrorMinZ, -180f, -3f);
+        //float currentLocalErrorMinZClamp = Mathf.Clamp(currentLocalErrorMinZ, -180f, 0f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMinZClamp: " + currentLocalErrorMinZClamp);
-        //float currentLocalErrorMaxZClamp = Mathf.Clamp(currentLocalErrorMaxZ, 3f, 180f);
+        //float currentLocalErrorMaxZClamp = Mathf.Clamp(currentLocalErrorMaxZ, 0f, 180f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMaxZClamp: " + currentLocalErrorMaxZClamp);
 
         float kinematicLocalErrorMinZ = minAngleZ - kinematicLocalOrientationQuaternionZAngleCorrected;
@@ -446,23 +434,23 @@ public class JointControllerImitation
             Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinZ: " + kinematicLocalErrorMinZ + " | kinematicLocalErrorMaxZ: " + kinematicLocalErrorMaxZ);
 
         // TEST - Clamping Kinematic Errors
-        //float kinematicLocalErrorMinZClamp = Mathf.Clamp(kinematicLocalErrorMinZ, -180f, -3f);
+        float kinematicLocalErrorMinZClamp = Mathf.Clamp(kinematicLocalErrorMinZ, -180f, 0f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinZClamp: " + kinematicLocalErrorMinZClamp);
-        //float kinematicLocalErrorMaxZClamp = Mathf.Clamp(kinematicLocalErrorMaxZ, 3f, 180f);
+        float kinematicLocalErrorMaxZClamp = Mathf.Clamp(kinematicLocalErrorMaxZ, 0f, 180f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMaxZClamp: " + kinematicLocalErrorMaxZClamp);
 
         #endregion
 
         #region Isoline with Angle errors - Z
 
-        interceptZ = (-gravityTorqueVectorLocal.z) / kinematicLocalErrorMaxZ;
-        slopeZ = (kinematicLocalErrorMinZ) / (-(kinematicLocalErrorMaxZ));
-        KPHZ = KPLZ * slopeZ + interceptZ;
+        //interceptZ = (0f) / kinematicLocalErrorMaxZ;
+        //slopeZ = (kinematicLocalErrorMinZ) / (-(kinematicLocalErrorMaxZ));
+        //KPHZ = KPLZ * slopeZ + interceptZ;
 
         // TEST - Isoline with Clamped Errors
-        //float interceptZ = (-gravityTorqueVectorLocal.z) / kinematicLocalErrorMaxZClamp;
-        //float slopeZ = (kinematicLocalErrorMinZClamp) / (-(kinematicLocalErrorMaxZClamp));
-        //KPHZ = KPLZ * slopeZ + interceptZ;
+        interceptZ = (0f) / kinematicLocalErrorMaxZClamp;
+        slopeZ = (kinematicLocalErrorMinZClamp) / (-(kinematicLocalErrorMaxZClamp));
+        KPHZ = KPLZ * slopeZ + interceptZ;
 
         #endregion
 
