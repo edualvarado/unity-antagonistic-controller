@@ -33,6 +33,15 @@ public class JointControllerImitation
     public float slopeZ;
     public float interceptZ;
 
+    public float slopeXCurrent;
+    public float interceptXCurrent;
+
+    public float slopeYCurrent;
+    public float interceptYCurrent;
+
+    public float slopeZCurrent;
+    public float interceptZCurrent;
+
     #endregion
 
     #region Constructors
@@ -212,11 +221,27 @@ public class JointControllerImitation
         }
     }
 
+    public float SlopeXCurrent
+    {
+        get
+        {
+            return slopeXCurrent;
+        }
+    }
+
     public float SlopeY
     {
         get
         {
             return slopeY;
+        }
+    }
+
+    public float SlopeYCurrent
+    {
+        get
+        {
+            return slopeYCurrent;
         }
     }
 
@@ -228,33 +253,92 @@ public class JointControllerImitation
         }
     }
 
+    public float SlopeZCurrent
+    {
+        get
+        {
+            return slopeZCurrent;
+        }
+    }
+
+    public float InterceptX
+    {
+        get
+        {
+            return interceptX;
+        }
+    }
+
+    public float InterceptXCurrent
+    {
+        get
+        {
+            return interceptXCurrent;
+        }
+    }
+
+    public float InterceptY
+    {
+        get
+        {
+            return interceptY;
+        }
+    }
+
+    public float InterceptYCurrent
+    {
+        get
+        {
+            return interceptYCurrent;
+        }
+    }
+
+    public float InterceptZ
+    {
+        get
+        {
+            return interceptZ;
+        }
+    }
+
+    public float InterceptZCurrent
+    {
+        get
+        {
+            return interceptZCurrent;
+        }
+    }
+
     #endregion
 
     #region Instance Methods
 
-    public Vector3 ComputeRequiredAntagonisticTorque(float minAngleX, float maxAngleX, float minAngleY, float maxAngleY, float minAngleZ, float maxAngleZ,
+    public Vector3 ComputeRequiredAntagonisticTorque(float minSoftLimitX, float maxSoftLimitX, float minSoftLimitY, float maxSoftLimitY, float minSoftLimitZ, float maxSoftLimitZ,
+                                                     float minHardLimitX, float maxHardLimitX, float minHardLimitY, float maxHardLimitY, float minHardLimitZ, float maxHardLimitZ,
                                                      Quaternion currentLocalOrientation, Quaternion currentGlobalOrientation, 
                                                      Quaternion kinematicLocalOrientation, Quaternion kinematicGlobalOrientation, 
                                                      Quaternion desiredLocalRotation, Vector3 angularVelocity, Vector3 gravityTorqueVectorLocal, float fixedDeltaTime, 
-                                                     bool debugMode, Transform currentTransform)
+                                                     bool debugMode, Transform currentTransform, Transform kinematicTransform)
     {
         #region Orientations - X
 
         // Swing-Twist Decomposition of current/kinematic orientation on main axis
-        Quaternion currentLocalOrientationQuaternionX = getRotationComponentAboutAxis(currentLocalOrientation, Vector3.right);
-        Quaternion kinematicLocalOrientationQuaternionX = getRotationComponentAboutAxis(kinematicLocalOrientation, Vector3.right);
+        Quaternion currentLocalOrientationQuaternionX = GetRotationComponentAboutAxis(currentLocalOrientation, Vector3.right);
+        Quaternion kinematicLocalOrientationQuaternionX = GetRotationComponentAboutAxis(kinematicLocalOrientation, Vector3.right);
+        //Quaternion currentLocalOrientationQuaternionX = GetRotationComponentAboutAxis(currentLocalOrientation, currentTransform.right);
+        //Quaternion kinematicLocalOrientationQuaternionX = GetRotationComponentAboutAxis(kinematicLocalOrientation, kinematicTransform.right);
 
         // Axis-Angle Conversion of current orientation
         float currentLocalOrientationQuaternionXAngle = 0.0f;
         Vector3 currentLocalOrientationQuaternionXAxis = Vector3.zero;
         currentLocalOrientationQuaternionX.ToAngleAxis(out currentLocalOrientationQuaternionXAngle, out currentLocalOrientationQuaternionXAxis);
-        currentLocalOrientationQuaternionX.Normalize();
+        currentLocalOrientationQuaternionXAxis.Normalize();
 
         // Axis-Angle Conversion of kinematic orientation
         float kinematicLocalOrientationQuaternionXAngle = 0.0f;
         Vector3 kinematicLocalOrientationQuaternionXAxis = Vector3.zero;
         kinematicLocalOrientationQuaternionX.ToAngleAxis(out kinematicLocalOrientationQuaternionXAngle, out kinematicLocalOrientationQuaternionXAxis);
-        kinematicLocalOrientationQuaternionX.Normalize();
+        kinematicLocalOrientationQuaternionXAxis.Normalize();
 
         // Angles to be negative when < 0f
         float currentLocalOrientationQuaternionXAngleCorrected = (currentLocalOrientationQuaternionXAngle > 180) ? currentLocalOrientationQuaternionXAngle - 360 : currentLocalOrientationQuaternionXAngle;
@@ -271,62 +355,76 @@ public class JointControllerImitation
 
         #region Estimate Errors directly from Axis-Angle - X
 
-        float currentLocalErrorMinX = minAngleX - currentLocalOrientationQuaternionXAngleCorrected;
-        float currentLocalErrorMaxX = maxAngleX - currentLocalOrientationQuaternionXAngleCorrected;
+        float currentLocalErrorMinX = minSoftLimitX - currentLocalOrientationQuaternionXAngleCorrected;
+        float currentLocalErrorMaxX = maxSoftLimitX - currentLocalOrientationQuaternionXAngleCorrected;
 
         if (debugMode)
             Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMinX: " + currentLocalErrorMinX + " | currentLocalErrorMaxX: " + currentLocalErrorMaxX);
 
         // TEST - Clamping Current Errors
+        // 3) DEBUG: Limiting also current errors to keep coherence. However, you won't need it since the current hand (ragdoll) will never surpass the hard-limit, and the error is estimated wtr. the soft-limits
         //float currentLocalErrorMinXClamp = Mathf.Clamp(currentLocalErrorMinX, -100f, 0f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMinXClamp: " + currentLocalErrorMinXClamp);
         //float currentLocalErrorMaxXClamp = Mathf.Clamp(currentLocalErrorMaxX, 0f, 100f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMaxXClamp: " + currentLocalErrorMaxXClamp);
 
-        float kinematicLocalErrorMinX = minAngleX - kinematicLocalOrientationQuaternionXAngleCorrected;
-        float kinematicLocalErrorMaxX = maxAngleX - kinematicLocalOrientationQuaternionXAngleCorrected;
+        float kinematicLocalErrorMinX = minSoftLimitX - kinematicLocalOrientationQuaternionXAngleCorrected;
+        float kinematicLocalErrorMaxX = maxSoftLimitX - kinematicLocalOrientationQuaternionXAngleCorrected;
 
-        if (debugMode)
-            Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinX: " + kinematicLocalErrorMinX + " | kinematicLocalErrorMaxX: " + kinematicLocalErrorMaxX);
+        //if (debugMode)
+        //    Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinX: " + kinematicLocalErrorMinX + " | kinematicLocalErrorMaxX: " + kinematicLocalErrorMaxX);
 
         // TEST - Clamping Kinematic Errors
-        //float kinematicLocalErrorMinXClamp = Mathf.Clamp(kinematicLocalErrorMinX, -100f, -0f);
-        //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinXClamp: " + kinematicLocalErrorMinXClamp);
-        //float kinematicLocalErrorMaxXClamp = Mathf.Clamp(kinematicLocalErrorMaxX, 0f, 100f);
-        //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMaxXClamp: " + kinematicLocalErrorMaxXClamp);
+        float kinematicLocalErrorMinXClamp = Mathf.Clamp(kinematicLocalErrorMinX, (minSoftLimitX - maxHardLimitX), (minSoftLimitX - minHardLimitX));
+        float kinematicLocalErrorMaxXClamp = Mathf.Clamp(kinematicLocalErrorMaxX, (maxSoftLimitX - maxHardLimitX), (maxSoftLimitX - minHardLimitX));
+
+        if (debugMode)
+            Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinXClamp: " + kinematicLocalErrorMinXClamp + " | kinematicLocalErrorMaxXClamp: " + kinematicLocalErrorMaxXClamp);
+
+        if (debugMode)
+            Debug.Log("[INFO: " + currentTransform.gameObject.name + "] Total Current Error X: " + (currentLocalErrorMinX - currentLocalErrorMaxX));
 
         #endregion
 
         #region Isoline with Angle errors - X
 
-        interceptX = (0f) / kinematicLocalErrorMaxX;
-        slopeX = (kinematicLocalErrorMinX) / (-(kinematicLocalErrorMaxX));
-        KPHX = KPLX * slopeX + interceptX; // ABS(slope) will cause the hand to move once the kinematic goes beyond the limit
+        // 1) DEBUG: Not used clamped values, makes the hand to stop first in the hard limit, but the negative slope is still calculated
+        //interceptX = (0f) / kinematicLocalErrorMaxX;
+        //slopeX = (kinematicLocalErrorMinX) / (-(kinematicLocalErrorMaxX));
+        //KPHX = KPLX * slopeX + interceptX;
 
         // TEST - Isoline with Clamped Errors
-        //interceptX = (0f) / kinematicLocalErrorMaxXClamp;
-        //slopeX = (kinematicLocalErrorMinXClamp) / (-(kinematicLocalErrorMaxXClamp));
-        //KPHX = KPLX * slopeX + interceptX; // ERROR: KPH is NaN
+        // 2) DEBUG: This makes the slope to be limited within the range of the hard limits
+        interceptX = (0f) / (kinematicLocalErrorMaxXClamp);
+        slopeX = (kinematicLocalErrorMinXClamp) / (-(kinematicLocalErrorMaxXClamp));
+        KPHX = KPLX * slopeX + interceptX; // ERROR: KPH is NaN is the denominator is 0
+
+        #endregion
+
+        #region Isoline with CURRENT Angle errors - X (Debug)
+
+        interceptXCurrent = (0f) / currentLocalErrorMaxX;
+        slopeXCurrent = (currentLocalErrorMinX) / (-(currentLocalErrorMaxX));
 
         #endregion
 
         #region Orientations - Y
 
         // Swing-Twist Decomposition of current/kinematic orientation on main axis
-        Quaternion currentLocalOrientationQuaternionY = getRotationComponentAboutAxis(currentLocalOrientation, Vector3.up);
-        Quaternion kinematicLocalOrientationQuaternionY = getRotationComponentAboutAxis(kinematicLocalOrientation, Vector3.up);
+        Quaternion currentLocalOrientationQuaternionY = GetRotationComponentAboutAxis(currentLocalOrientation, Vector3.up);
+        Quaternion kinematicLocalOrientationQuaternionY = GetRotationComponentAboutAxis(kinematicLocalOrientation, Vector3.up);
 
         // Axis-Angle Conversion of current orientation
         float currentLocalOrientationQuaternionYAngle = 0.0f;
         Vector3 currentLocalOrientationQuaternionYAxis = Vector3.zero;
         currentLocalOrientationQuaternionY.ToAngleAxis(out currentLocalOrientationQuaternionYAngle, out currentLocalOrientationQuaternionYAxis);
-        currentLocalOrientationQuaternionY.Normalize();
+        currentLocalOrientationQuaternionYAxis.Normalize();
 
         // Axis-Angle Conversion of kinematic orientation
         float kinematicLocalOrientationQuaternionYAngle = 0.0f;
         Vector3 kinematicLocalOrientationQuaternionYAxis = Vector3.zero;
         kinematicLocalOrientationQuaternionY.ToAngleAxis(out kinematicLocalOrientationQuaternionYAngle, out kinematicLocalOrientationQuaternionYAxis);
-        kinematicLocalOrientationQuaternionY.Normalize();
+        kinematicLocalOrientationQuaternionYAxis.Normalize();
 
         // Angles to be negative when < 0f
         float currentLocalOrientationQuaternionYAngleCorrected = (currentLocalOrientationQuaternionYAngle > 180) ? currentLocalOrientationQuaternionYAngle - 360 : currentLocalOrientationQuaternionYAngle;
@@ -343,8 +441,8 @@ public class JointControllerImitation
 
         #region Estimate Errors directly from Axis-Angle - Y
 
-        float currentLocalErrorMinY = minAngleY - currentLocalOrientationQuaternionYAngleCorrected;
-        float currentLocalErrorMaxY = maxAngleY - currentLocalOrientationQuaternionYAngleCorrected;
+        float currentLocalErrorMinY = minSoftLimitY - currentLocalOrientationQuaternionYAngleCorrected;
+        float currentLocalErrorMaxY = maxSoftLimitY - currentLocalOrientationQuaternionYAngleCorrected;
         
         if(debugMode)
             Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMinY: " + currentLocalErrorMinY + " | currentLocalErrorMaxY: " + currentLocalErrorMaxY);
@@ -355,50 +453,61 @@ public class JointControllerImitation
         //float currentLocalErrorMaxYClamp = Mathf.Clamp(currentLocalErrorMaxY, 0f, 100f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMaxYClamp: " + currentLocalErrorMaxYClamp);
 
-        float kinematicLocalErrorMinY = minAngleY - kinematicLocalOrientationQuaternionYAngleCorrected;
-        float kinematicLocalErrorMaxY = maxAngleY - kinematicLocalOrientationQuaternionYAngleCorrected;
-        
-        if(debugMode)
-            Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinY: " + kinematicLocalErrorMinY + " | kinematicLocalErrorMaxY: " + kinematicLocalErrorMaxY);
+        float kinematicLocalErrorMinY = minSoftLimitY - kinematicLocalOrientationQuaternionYAngleCorrected;
+        float kinematicLocalErrorMaxY = maxSoftLimitY - kinematicLocalOrientationQuaternionYAngleCorrected;
+
+        //if(debugMode)
+        //    Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinY: " + kinematicLocalErrorMinY + " | kinematicLocalErrorMaxY: " + kinematicLocalErrorMaxY);
 
         // TEST - Clamping Kinematic Errors
-        //float kinematicLocalErrorMinYClamp = Mathf.Clamp(kinematicLocalErrorMinY, -100f, 0f);
-        //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinYClamp: " + kinematicLocalErrorMinYClamp);
-        //float kinematicLocalErrorMaxYClamp = Mathf.Clamp(kinematicLocalErrorMaxY, 0f, 100f);
-        //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMaxYClamp: " + kinematicLocalErrorMaxYClamp);
+        float kinematicLocalErrorMinYClamp = Mathf.Clamp(kinematicLocalErrorMinY, (minSoftLimitY - maxHardLimitY), (minSoftLimitY - minHardLimitY));
+        float kinematicLocalErrorMaxYClamp = Mathf.Clamp(kinematicLocalErrorMaxY, (maxSoftLimitY - maxHardLimitY), (maxSoftLimitY - minHardLimitY));
+
+        if (debugMode)
+            Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinYClamp: " + kinematicLocalErrorMinYClamp + " | kinematicLocalErrorMaxYClamp: " + kinematicLocalErrorMaxYClamp);
+
+        if (debugMode)
+            Debug.Log("[INFO: " + currentTransform.gameObject.name + "] Total Current Error Y: " + (currentLocalErrorMinY - currentLocalErrorMaxY));
 
         #endregion
 
         #region Isoline with Angle errors - Y
 
-        interceptY = (0f) / kinematicLocalErrorMaxY;
-        slopeY = (kinematicLocalErrorMinY) / (-(kinematicLocalErrorMaxY));
-        KPHY = KPLY * slopeY + interceptY;
+        //interceptY = (0f) / kinematicLocalErrorMaxY;
+        //slopeY = (kinematicLocalErrorMinY) / (-(kinematicLocalErrorMaxY));
+        //KPHY = KPLY * slopeY + interceptY;
 
         // TEST - Isoline with Clamped Errors
-        //interceptY = (0f) / kinematicLocalErrorMaxYClamp;
-        //slopeY = (kinematicLocalErrorMinYClamp) / (-(kinematicLocalErrorMaxYClamp));
-        //KPHY = KPLY * slopeY + interceptY; // ERROR: KPH is NaN
+        interceptY = (0f) / kinematicLocalErrorMaxYClamp;
+        slopeY = (kinematicLocalErrorMinYClamp) / (-(kinematicLocalErrorMaxYClamp));
+        KPHY = KPLY * slopeY + interceptY; // ERROR: KPH is NaN is the denominator is 0
+
+        #endregion
+
+        #region Isoline with CURRENT Angle errors - Y (Debug)
+
+        interceptYCurrent = (0f) / currentLocalErrorMaxY;
+        slopeYCurrent = (currentLocalErrorMinY) / (-(currentLocalErrorMaxY));
 
         #endregion
 
         #region Orientations - Z
 
         // Swing-Twist Decomposition of current/kinematic orientation on main axis
-        Quaternion currentLocalOrientationQuaternionZ = getRotationComponentAboutAxis(currentLocalOrientation, Vector3.forward);
-        Quaternion kinematicLocalOrientationQuaternionZ = getRotationComponentAboutAxis(kinematicLocalOrientation, Vector3.forward);
+        Quaternion currentLocalOrientationQuaternionZ = GetRotationComponentAboutAxis(currentLocalOrientation, Vector3.forward);
+        Quaternion kinematicLocalOrientationQuaternionZ = GetRotationComponentAboutAxis(kinematicLocalOrientation, Vector3.forward);
 
         // Axis-Angle Conversion of current orientation
         float currentLocalOrientationQuaternionZAngle = 0.0f;
         Vector3 currentLocalOrientationQuaternionZAxis = Vector3.zero;
         currentLocalOrientationQuaternionZ.ToAngleAxis(out currentLocalOrientationQuaternionZAngle, out currentLocalOrientationQuaternionZAxis);
-        currentLocalOrientationQuaternionZ.Normalize();
+        currentLocalOrientationQuaternionZAxis.Normalize();
 
         // Axis-Angle Conversion of kinematic orientation
         float kinematicLocalOrientationQuaternionZAngle = 0.0f;
         Vector3 kinematicLocalOrientationQuaternionZAxis = Vector3.zero;
         kinematicLocalOrientationQuaternionZ.ToAngleAxis(out kinematicLocalOrientationQuaternionZAngle, out kinematicLocalOrientationQuaternionZAxis);
-        kinematicLocalOrientationQuaternionZ.Normalize();
+        kinematicLocalOrientationQuaternionZAxis.Normalize();
 
         // Angles to be negative when < 0f
         float currentLocalOrientationQuaternionZAngleCorrected = (currentLocalOrientationQuaternionZAngle > 180) ? currentLocalOrientationQuaternionZAngle - 360 : currentLocalOrientationQuaternionZAngle;
@@ -415,8 +524,8 @@ public class JointControllerImitation
 
         #region Estimate Errors directly from Axis-Angle - Z
 
-        float currentLocalErrorMinZ = minAngleZ - currentLocalOrientationQuaternionZAngleCorrected;
-        float currentLocalErrorMaxZ = maxAngleZ - currentLocalOrientationQuaternionZAngleCorrected;
+        float currentLocalErrorMinZ = minSoftLimitZ - currentLocalOrientationQuaternionZAngleCorrected;
+        float currentLocalErrorMaxZ = maxSoftLimitZ - currentLocalOrientationQuaternionZAngleCorrected;
 
         if(debugMode)
             Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMinZ: " + currentLocalErrorMinZ + " | currentLocalErrorMaxZ: " + currentLocalErrorMaxZ);
@@ -427,17 +536,21 @@ public class JointControllerImitation
         //float currentLocalErrorMaxZClamp = Mathf.Clamp(currentLocalErrorMaxZ, 0f, 180f);
         //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMaxZClamp: " + currentLocalErrorMaxZClamp);
 
-        float kinematicLocalErrorMinZ = minAngleZ - kinematicLocalOrientationQuaternionZAngleCorrected;
-        float kinematicLocalErrorMaxZ = maxAngleZ - kinematicLocalOrientationQuaternionZAngleCorrected;
+        float kinematicLocalErrorMinZ = minSoftLimitZ - kinematicLocalOrientationQuaternionZAngleCorrected;
+        float kinematicLocalErrorMaxZ = maxSoftLimitZ - kinematicLocalOrientationQuaternionZAngleCorrected;
         
-        if(debugMode)
-            Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinZ: " + kinematicLocalErrorMinZ + " | kinematicLocalErrorMaxZ: " + kinematicLocalErrorMaxZ);
+        //if(debugMode)
+        //    Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinZ: " + kinematicLocalErrorMinZ + " | kinematicLocalErrorMaxZ: " + kinematicLocalErrorMaxZ);
 
         // TEST - Clamping Kinematic Errors
-        float kinematicLocalErrorMinZClamp = Mathf.Clamp(kinematicLocalErrorMinZ, -180f, 0f);
-        //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinZClamp: " + kinematicLocalErrorMinZClamp);
-        float kinematicLocalErrorMaxZClamp = Mathf.Clamp(kinematicLocalErrorMaxZ, 0f, 180f);
-        //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMaxZClamp: " + kinematicLocalErrorMaxZClamp);
+        float kinematicLocalErrorMinZClamp = Mathf.Clamp(kinematicLocalErrorMinZ, (minSoftLimitZ - maxHardLimitZ), (minSoftLimitZ - minHardLimitZ));
+        float kinematicLocalErrorMaxZClamp = Mathf.Clamp(kinematicLocalErrorMaxZ, (maxSoftLimitZ - maxHardLimitZ), (maxSoftLimitZ - minHardLimitZ));
+
+        if (debugMode)
+            Debug.Log("[INFO: " + currentTransform.gameObject.name + "] kinematicLocalErrorMinZClamp: " + kinematicLocalErrorMinZClamp + " | kinematicLocalErrorMaxZClamp: " + kinematicLocalErrorMaxZClamp);
+
+        if (debugMode)
+            Debug.Log("[INFO: " + currentTransform.gameObject.name + "] Total Current Error Z: " + (currentLocalErrorMinZ - currentLocalErrorMaxZ));
 
         #endregion
 
@@ -450,7 +563,14 @@ public class JointControllerImitation
         // TEST - Isoline with Clamped Errors
         interceptZ = (0f) / kinematicLocalErrorMaxZClamp;
         slopeZ = (kinematicLocalErrorMinZClamp) / (-(kinematicLocalErrorMaxZClamp));
-        KPHZ = KPLZ * slopeZ + interceptZ;
+        KPHZ = KPLZ * slopeZ + interceptZ; // ERROR: KPH is NaN is the denominator is 0
+
+        #endregion
+
+        #region Isoline with CURRENT Angle errors - Z (Debug)
+
+        interceptZCurrent = (0f) / currentLocalErrorMaxZ;
+        slopeZCurrent = (currentLocalErrorMinZ) / (-(currentLocalErrorMaxZ));
 
         #endregion
 
@@ -475,8 +595,9 @@ public class JointControllerImitation
     }
 
     // Swing-Twist Decomposition - TODO 
-    private Quaternion getRotationComponentAboutAxis(Quaternion rotation, Vector3 direction)
+    private Quaternion GetRotationComponentAboutAxis(Quaternion rotation, Vector3 direction)
     {
+        // Extract complex part of the quaternion and represent it as a direction
         Vector3 rotationAxis = new Vector3(rotation.x, rotation.y, rotation.z);
 
         float dotProd = Vector3.Dot(rotationAxis, direction);
@@ -495,7 +616,33 @@ public class JointControllerImitation
             twist.w = -twist.w;
             // Rotation angle `twist.angle()` is now reliable
         }
+
+        // If I want also the swing, remember that the quaternion is decomposed into two concatenated quaternions, Q = (S)wing * (T)wist
+        // Therefore, S = RT^1
+
         return twist;
+    }
+
+    // TODO: Full Swing-Twist Decomp. - Still TODO
+    private Quaternion SwingTwistDecomposition(Quaternion q, Vector3 twistAxis)
+    {
+        // Extract complex part of the quaternion and represent it as a direction
+        Vector3 r = new Vector3(q.x, q.y, q.z);
+
+        Vector3 rotatedTwistAxis = q * twistAxis;
+        Vector3 swingAxis = Vector3.Cross(twistAxis, rotatedTwistAxis);
+
+        float swingAngle = Vector3.Angle(twistAxis, rotatedTwistAxis);
+        Quaternion swing = Quaternion.AngleAxis(swingAngle, swingAxis);
+
+        Vector3 p = Vector3.Project(r, twistAxis);
+
+        Quaternion twist = new Quaternion(p.x, p.y, p.z, q.w).normalized;
+
+        swing = q * Quaternion.Inverse(twist);
+
+        return twist;
+
     }
 
     #endregion

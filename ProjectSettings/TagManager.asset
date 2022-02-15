@@ -8,6 +8,8 @@ TagManager:
   - LeftHand
   - RightHand
   - Ground
+  - RightForeArm
+  - RightArm
   layers:
   - Default
   - TransparentFX

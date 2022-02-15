@@ -31,18 +31,56 @@ public class JointController : MonoBehaviour
     private readonly JointControllerImitation _antagonisticControllerXYZ = new JointControllerImitation(1f, 0.0f, 0.0f, 0.01f,
                                                                                                         1f, 0.0f, 0.0f, 0.01f,
                                                                                                         1f, 0.0f, 0.0f, 0.01f);
-    // Window Graph - Hand
-    private WindowGraph _handGraph;
-    private GameObject _handPointX;
-    private GameObject _handLineX;
-    private GameObject _handPointY;
-    private GameObject _handLineY; 
-    private GameObject _handPointZ;
-    private GameObject _handLineZ;
+    // Window Graph - Right Hand
+    private WindowGraph _rightHandGraph;
+    private RectTransform _rightHandGraphContainer;
+    private GameObject _rightHandPointX;
+    private GameObject _rightHandLineX;
+    private GameObject _rightHandLineXCurrent;
+    private GameObject _rightHandPointY;
+    private GameObject _rightHandLineY;
+    private GameObject _rightHandLineYCurrent;
+    private GameObject _rightHandPointZ;
+    private GameObject _rightHandLineZ;
+    private GameObject _rightHandLineZCurrent;
 
-    private Toggle toggleX;
-    private Toggle toggleY;
-    private Toggle toggleZ;
+    private Toggle rightHandToggleX;
+    private Toggle rightHandToggleY;
+    private Toggle rightHandToggleZ;
+
+    // Window Graph - Right Fore Arm
+    private WindowGraph _rightForeArmGraph;
+    private RectTransform _rightForeArmGraphContainer;
+    private GameObject _rightForeArmPointX;
+    private GameObject _rightForeArmLineX;
+    private GameObject _rightForeArmLineXCurrent;
+    private GameObject _rightForeArmPointY;
+    private GameObject _rightForeArmLineY;
+    private GameObject _rightForeArmLineYCurrent;
+    private GameObject _rightForeArmPointZ;
+    private GameObject _rightForeArmLineZ;
+    private GameObject _rightForeArmLineZCurrent;
+
+    private Toggle rightForeArmToggleX;
+    private Toggle rightForeArmToggleY;
+    private Toggle rightForeArmToggleZ;
+
+    // Window Graph - Right Arm
+    private WindowGraph _rightArmGraph;
+    private RectTransform _rightArmGraphContainer;
+    private GameObject _rightArmPointX;
+    private GameObject _rightArmLineX;
+    private GameObject _rightArmLineXCurrent;
+    private GameObject _rightArmPointY;
+    private GameObject _rightArmLineY;
+    private GameObject _rightArmLineYCurrent;
+    private GameObject _rightArmPointZ;
+    private GameObject _rightArmLineZ;
+    private GameObject _rightArmLineZCurrent;
+
+    private Toggle rightArmToggleX;
+    private Toggle rightArmToggleY;
+    private Toggle rightArmToggleZ;
 
     #endregion
 
@@ -91,6 +129,8 @@ public class JointController : MonoBehaviour
     public bool drawLimitsX;
     private bool applyAntTorqueX;
     private float torqueAppliedX;
+    private float slopeXCurrent;
+    private float interceptXCurrent;
 
     [Header("Antagonistic Controller - Settings - Y")]
     public float pLY;
@@ -106,6 +146,8 @@ public class JointController : MonoBehaviour
     public bool drawLimitsY;
     private bool applyAntTorqueY;
     private float torqueAppliedY;
+    private float slopeYCurrent;
+    private float interceptYCurrent;
 
     [Header("Antagonistic Controller - Settings - Z")]
     public float pLZ;
@@ -121,10 +163,13 @@ public class JointController : MonoBehaviour
     public bool drawLimitsZ;
     private bool applyAntTorqueZ;
     private float torqueAppliedZ;
+    private float slopeZCurrent;
+    private float interceptZCurrent;
 
     // Others
     private ConfigurableJoint _jointAnt;
     private Transform _currentTransform;
+    private Transform _kinematicTransform;
     private Rigidbody _objectRigidbody;
 
     // Orientations
@@ -174,9 +219,18 @@ public class JointController : MonoBehaviour
     private void Awake()
     {
         this._currentTransform = transform;
+        this._kinematicTransform = kinematicLimb.transform;
         this._objectRigidbody = GetComponent<Rigidbody>();
         this._jointAnt = GetComponent<ConfigurableJoint>();
-        this._handGraph = GameObject.Find("WindowGraphHand").GetComponent<WindowGraph>();
+
+        this._rightHandGraph = GameObject.Find("WindowGraphRightHand").GetComponent<WindowGraph>();
+        this._rightHandGraphContainer = GameObject.Find("GraphContainerRightHand").GetComponent<RectTransform>();
+
+        this._rightForeArmGraph = GameObject.Find("WindowGraphRightForeArm").GetComponent<WindowGraph>();
+        this._rightForeArmGraphContainer = GameObject.Find("GraphContainerRightForeArm").GetComponent<RectTransform>();
+
+        this._rightArmGraph = GameObject.Find("WindowGraphRightArm").GetComponent<WindowGraph>();
+        this._rightArmGraphContainer = GameObject.Find("GraphContainerRightArm").GetComponent<RectTransform>();
 
         // Initial Orientations - They do not update!
         this._initialLocalOrientation = transform.localRotation;
@@ -186,32 +240,102 @@ public class JointController : MonoBehaviour
     private void Start()
     {
         // Get Toggle UI
-        toggleX = GameObject.Find("ToggleX").GetComponent<Toggle>();
-        toggleY = GameObject.Find("ToggleY").GetComponent<Toggle>();
-        toggleZ = GameObject.Find("ToggleZ").GetComponent<Toggle>();
+        rightHandToggleX = GameObject.Find("RightHandToggleX").GetComponent<Toggle>();
+        rightHandToggleY = GameObject.Find("RightHandToggleY").GetComponent<Toggle>();
+        rightHandToggleZ = GameObject.Find("RightHandToggleZ").GetComponent<Toggle>();
+        rightForeArmToggleX = GameObject.Find("RightForeArmToggleX").GetComponent<Toggle>();
+        rightForeArmToggleY = GameObject.Find("RightForeArmToggleY").GetComponent<Toggle>();
+        rightForeArmToggleZ = GameObject.Find("RightForeArmToggleZ").GetComponent<Toggle>();
+        rightArmToggleX = GameObject.Find("RightArmToggleX").GetComponent<Toggle>();
+        rightArmToggleY = GameObject.Find("RightArmToggleY").GetComponent<Toggle>();
+        rightArmToggleZ = GameObject.Find("RightArmToggleZ").GetComponent<Toggle>();
 
-        toggleX.onValueChanged.AddListener(delegate
+        rightHandToggleX.onValueChanged.AddListener(delegate
         {
-            ToggleXValueChanged(toggleX);
+            RightHandToggleXValueChanged(rightHandToggleX);
         });
 
-        toggleY.onValueChanged.AddListener(delegate
+        rightHandToggleY.onValueChanged.AddListener(delegate
         {
-            ToggleYValueChanged(toggleY);
+            RightHandToggleYValueChanged(rightHandToggleY);
         });
 
-        toggleZ.onValueChanged.AddListener(delegate
+        rightHandToggleZ.onValueChanged.AddListener(delegate
         {
-            ToggleZValueChanged(toggleZ);
+            RightHandToggleZValueChanged(rightHandToggleZ);
         });
 
-        // Window Graph - Hand
-        _handPointX = _handGraph.CreateCircle(new Vector2(0, 0), Color.red, "handPointX");
-        _handLineX = _handGraph.CreateLine(new Vector2(0, 0), new Vector2(0, 0), Color.red, "handLineX");
-        _handPointY = _handGraph.CreateCircle(new Vector2(0, 0), Color.green, "handPointY");
-        _handLineY = _handGraph.CreateLine(new Vector2(0, 0), new Vector2(0, 0), Color.green, "handLineY");
-        _handPointZ = _handGraph.CreateCircle(new Vector2(0, 0), Color.blue, "handPointZ");
-        _handLineZ = _handGraph.CreateLine(new Vector2(0, 0), new Vector2(0, 0), Color.blue, "handLineZ");
+        rightForeArmToggleX.onValueChanged.AddListener(delegate
+        {
+            RightForeArmToggleXValueChanged(rightForeArmToggleX);
+        });
+
+        rightForeArmToggleY.onValueChanged.AddListener(delegate
+        {
+            RightForeArmToggleYValueChanged(rightForeArmToggleY);
+        });
+
+        rightForeArmToggleZ.onValueChanged.AddListener(delegate
+        {
+            RightForeArmToggleZValueChanged(rightForeArmToggleZ);
+        });
+
+        rightArmToggleX.onValueChanged.AddListener(delegate
+        {
+            RightArmToggleXValueChanged(rightArmToggleX);
+        });
+
+        rightArmToggleY.onValueChanged.AddListener(delegate
+        {
+            RightArmToggleYValueChanged(rightArmToggleY);
+        });
+
+        rightArmToggleZ.onValueChanged.AddListener(delegate
+        {
+            RightArmToggleZValueChanged(rightArmToggleZ);
+        });
+
+        // Window Graph - Right Hand
+        if (this.gameObject.CompareTag("RightHand"))
+        {
+            _rightHandPointX = _rightHandGraph.CreateCircle(_rightHandGraphContainer, new Vector2(0, 0), Color.red, "rightHandPointX");
+            _rightHandLineX = _rightHandGraph.CreateLine(_rightHandGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.red, "rightHandLineX");
+            _rightHandLineXCurrent = _rightHandGraph.CreateLine(_rightHandGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.black, "rightHandLineXCurrent");
+            _rightHandPointY = _rightHandGraph.CreateCircle(_rightHandGraphContainer, new Vector2(0, 0), Color.green, "rightHandPointY");
+            _rightHandLineY = _rightHandGraph.CreateLine(_rightHandGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.green, "rightHandLineY");
+            _rightHandLineYCurrent = _rightHandGraph.CreateLine(_rightHandGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.black, "rightHandLineYCurrent");
+            _rightHandPointZ = _rightHandGraph.CreateCircle(_rightHandGraphContainer, new Vector2(0, 0), Color.blue, "rightHandPointZ");
+            _rightHandLineZ = _rightHandGraph.CreateLine(_rightHandGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.blue, "rightHandLineZ");
+            _rightHandLineZCurrent = _rightHandGraph.CreateLine(_rightHandGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.black, "rightHandLineZCurrent");
+        }
+
+        // Window Graph - Right Fore Arm
+        if (this.gameObject.CompareTag("RightForeArm"))
+        {
+            _rightForeArmPointX = _rightForeArmGraph.CreateCircle(_rightForeArmGraphContainer, new Vector2(0, 0), Color.red, "rightForeArmPointX");
+            _rightForeArmLineX = _rightForeArmGraph.CreateLine(_rightForeArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.red, "rightForeArmLineX");
+            _rightForeArmLineXCurrent = _rightForeArmGraph.CreateLine(_rightForeArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.black, "rightForeArmLineXCurrent");
+            _rightForeArmPointY = _rightForeArmGraph.CreateCircle(_rightForeArmGraphContainer, new Vector2(0, 0), Color.green, "rightForeArmPointY");
+            _rightForeArmLineY = _rightForeArmGraph.CreateLine(_rightForeArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.green, "rightForeArmLineY");
+            _rightForeArmLineYCurrent = _rightForeArmGraph.CreateLine(_rightForeArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.black, "rightForeArmLineYCurrent");
+            _rightForeArmPointZ = _rightForeArmGraph.CreateCircle(_rightForeArmGraphContainer, new Vector2(0, 0), Color.blue, "rightForeArmPointZ");
+            _rightForeArmLineZ = _rightForeArmGraph.CreateLine(_rightForeArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.blue, "rightForeArmLineZ");
+            _rightForeArmLineZCurrent = _rightForeArmGraph.CreateLine(_rightForeArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.black, "rightForeArmLineZCurrent");
+        }
+
+        // Window Graph - Right Arm
+        if (this.gameObject.CompareTag("RightArm"))
+        {
+            _rightArmPointX = _rightArmGraph.CreateCircle(_rightArmGraphContainer, new Vector2(0, 0), Color.red, "rightArmPointX");
+            _rightArmLineX = _rightArmGraph.CreateLine(_rightArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.red, "rightArmLineX");
+            _rightArmLineXCurrent = _rightArmGraph.CreateLine(_rightArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.black, "rightArmLineXCurrent");
+            _rightArmPointY = _rightArmGraph.CreateCircle(_rightArmGraphContainer, new Vector2(0, 0), Color.green, "rightArmPointY");
+            _rightArmLineY = _rightArmGraph.CreateLine(_rightArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.green, "rightArmLineY");
+            _rightArmLineYCurrent = _rightArmGraph.CreateLine(_rightArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.black, "rightArmLineYCurrent");
+            _rightArmPointZ = _rightArmGraph.CreateCircle(_rightArmGraphContainer, new Vector2(0, 0), Color.blue, "rightArmPointZ");
+            _rightArmLineZ = _rightArmGraph.CreateLine(_rightArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.blue, "rightArmLineZ");
+            _rightArmLineZCurrent = _rightArmGraph.CreateLine(_rightArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.black, "rightArmLineZCurrent");
+        }
     }
 
     private void Update()
@@ -314,32 +438,194 @@ public class JointController : MonoBehaviour
         this.slopeX = this._antagonisticControllerXYZ.SlopeX;
         this.slopeY = this._antagonisticControllerXYZ.SlopeY;
         this.slopeZ = this._antagonisticControllerXYZ.SlopeZ;
-        this.interceptX = this._antagonisticControllerXYZ.interceptX;
-        this.interceptY = this._antagonisticControllerXYZ.interceptY;
-        this.interceptZ = this._antagonisticControllerXYZ.interceptZ;
+        this.interceptX = this._antagonisticControllerXYZ.InterceptX;
+        this.interceptY = this._antagonisticControllerXYZ.InterceptY;
+        this.interceptZ = this._antagonisticControllerXYZ.InterceptZ;
+
+        // Getting slopes and intercepts from current orientation
+        this.slopeXCurrent = this._antagonisticControllerXYZ.SlopeXCurrent;
+        this.slopeYCurrent = this._antagonisticControllerXYZ.SlopeYCurrent;
+        this.slopeZCurrent = this._antagonisticControllerXYZ.SlopeZCurrent;
+        this.interceptXCurrent = this._antagonisticControllerXYZ.InterceptXCurrent;
+        this.interceptYCurrent = this._antagonisticControllerXYZ.InterceptYCurrent;
+        this.interceptZCurrent = this._antagonisticControllerXYZ.InterceptZCurrent;
 
         #endregion
 
         #region Plot
 
-        // Window Graph Update - Hand
-        _handGraph.MoveCircle(_handPointX, new Vector2(pLX, pHX));
-        if (slopeX > 1f)
-            _handGraph.MoveLine(_handLineX, Vector2.zero, new Vector2((_handGraph.Rect.sizeDelta.x / slopeX), _handGraph.Rect.sizeDelta.y));
-        else if (slopeX < 1f)
-            _handGraph.MoveLine(_handLineX, Vector2.zero, new Vector2(_handGraph.Rect.sizeDelta.x, _handGraph.Rect.sizeDelta.y * slopeX));
+        // Window Graph Update - Right Hand
 
-        _handGraph.MoveCircle(_handPointY, new Vector2(pLY, pHY));
-        if (slopeY > 1f)
-            _handGraph.MoveLine(_handLineY, Vector2.zero, new Vector2((_handGraph.Rect.sizeDelta.x / slopeY), _handGraph.Rect.sizeDelta.y));
-        else if (slopeY < 1f)
-            _handGraph.MoveLine(_handLineY, Vector2.zero, new Vector2(_handGraph.Rect.sizeDelta.x, _handGraph.Rect.sizeDelta.y * slopeY));
+        if (this.gameObject.CompareTag("RightHand"))
+        {
+            _rightHandGraph.MoveCircle(_rightHandPointX, new Vector2(pLX, pHX));
+            if (slopeX > 1f)
+            {
+                _rightHandGraph.MoveLine(_rightHandLineX, Vector2.zero, new Vector2((_rightHandGraphContainer.sizeDelta.x / slopeX), _rightHandGraphContainer.sizeDelta.y));
+            }
+            else if (slopeX < 1f)
+            {
+                _rightHandGraph.MoveLine(_rightHandLineX, Vector2.zero, new Vector2(_rightHandGraphContainer.sizeDelta.x, _rightHandGraphContainer.sizeDelta.y * slopeX));
+            }
+            if (slopeXCurrent > 1f)
+            {
+                _rightHandGraph.MoveLine(_rightHandLineXCurrent, Vector2.zero, new Vector2((_rightHandGraphContainer.sizeDelta.x / slopeXCurrent), _rightHandGraphContainer.sizeDelta.y));
+            }
+            else if (slopeXCurrent < 1f)
+            {
+                _rightHandGraph.MoveLine(_rightHandLineXCurrent, Vector2.zero, new Vector2(_rightHandGraphContainer.sizeDelta.x, _rightHandGraphContainer.sizeDelta.y * slopeXCurrent));
+            }
 
-        _handGraph.MoveCircle(_handPointZ, new Vector2(pLZ, pHZ));
-        if (slopeZ > 1f)
-            _handGraph.MoveLine(_handLineZ, Vector2.zero, new Vector2((_handGraph.Rect.sizeDelta.x / slopeZ), _handGraph.Rect.sizeDelta.y));
-        else if (slopeZ < 1f)
-            _handGraph.MoveLine(_handLineZ, Vector2.zero, new Vector2(_handGraph.Rect.sizeDelta.x, _handGraph.Rect.sizeDelta.y * slopeZ));
+            _rightHandGraph.MoveCircle(_rightHandPointY, new Vector2(pLY, pHY));
+            if (slopeY > 1f)
+            {
+                _rightHandGraph.MoveLine(_rightHandLineY, Vector2.zero, new Vector2((_rightHandGraphContainer.sizeDelta.x / slopeY), _rightHandGraphContainer.sizeDelta.y));
+            }
+            else if (slopeY < 1f)
+            {
+                _rightHandGraph.MoveLine(_rightHandLineY, Vector2.zero, new Vector2(_rightHandGraphContainer.sizeDelta.x, _rightHandGraphContainer.sizeDelta.y * slopeY));
+            }
+            if (slopeYCurrent > 1f)
+            {
+                _rightHandGraph.MoveLine(_rightHandLineYCurrent, Vector2.zero, new Vector2((_rightHandGraphContainer.sizeDelta.x / slopeYCurrent), _rightHandGraphContainer.sizeDelta.y));
+            }
+            else if (slopeYCurrent < 1f)
+            {
+                _rightHandGraph.MoveLine(_rightHandLineYCurrent, Vector2.zero, new Vector2(_rightHandGraphContainer.sizeDelta.x, _rightHandGraphContainer.sizeDelta.y * slopeYCurrent));
+            }
+
+            _rightHandGraph.MoveCircle(_rightHandPointZ, new Vector2(pLZ, pHZ));
+            if (slopeZ > 1f)
+            {
+                _rightHandGraph.MoveLine(_rightHandLineZ, Vector2.zero, new Vector2((_rightHandGraphContainer.sizeDelta.x / slopeZ), _rightHandGraphContainer.sizeDelta.y));
+            }
+            else if (slopeZ < 1f)
+            {
+                _rightHandGraph.MoveLine(_rightHandLineZ, Vector2.zero, new Vector2(_rightHandGraphContainer.sizeDelta.x, _rightHandGraphContainer.sizeDelta.y * slopeZ));
+            }
+            if (slopeZCurrent > 1f)
+            {
+                _rightHandGraph.MoveLine(_rightHandLineZCurrent, Vector2.zero, new Vector2((_rightHandGraphContainer.sizeDelta.x / slopeZCurrent), _rightHandGraphContainer.sizeDelta.y));
+            }
+            else if (slopeZCurrent < 1f)
+            {
+                _rightHandGraph.MoveLine(_rightHandLineZCurrent, Vector2.zero, new Vector2(_rightHandGraphContainer.sizeDelta.x, _rightHandGraphContainer.sizeDelta.y * slopeZCurrent));
+            }
+        }
+
+        if (this.gameObject.CompareTag("RightForeArm"))
+        {
+            _rightForeArmGraph.MoveCircle(_rightForeArmPointX, new Vector2(pLX, pHX));
+            if (slopeX > 1f)
+            {
+                _rightForeArmGraph.MoveLine(_rightForeArmLineX, Vector2.zero, new Vector2((_rightForeArmGraphContainer.sizeDelta.x / slopeX), _rightForeArmGraphContainer.sizeDelta.y));
+            }
+            else if (slopeX < 1f)
+            {
+                _rightForeArmGraph.MoveLine(_rightForeArmLineX, Vector2.zero, new Vector2(_rightForeArmGraphContainer.sizeDelta.x, _rightForeArmGraphContainer.sizeDelta.y * slopeX));
+            }
+            if (slopeXCurrent > 1f)
+            {
+                _rightForeArmGraph.MoveLine(_rightForeArmLineXCurrent, Vector2.zero, new Vector2((_rightForeArmGraphContainer.sizeDelta.x / slopeXCurrent), _rightForeArmGraphContainer.sizeDelta.y));
+            }
+            else if (slopeXCurrent < 1f)
+            {
+                _rightForeArmGraph.MoveLine(_rightForeArmLineXCurrent, Vector2.zero, new Vector2(_rightForeArmGraphContainer.sizeDelta.x, _rightForeArmGraphContainer.sizeDelta.y * slopeXCurrent));
+            }
+
+            _rightForeArmGraph.MoveCircle(_rightForeArmPointY, new Vector2(pLY, pHY));
+            if (slopeY > 1f)
+            {
+                _rightForeArmGraph.MoveLine(_rightForeArmLineY, Vector2.zero, new Vector2((_rightForeArmGraphContainer.sizeDelta.x / slopeY), _rightForeArmGraphContainer.sizeDelta.y));
+            }
+            else if (slopeY < 1f)
+            {
+                _rightForeArmGraph.MoveLine(_rightForeArmLineY, Vector2.zero, new Vector2(_rightForeArmGraphContainer.sizeDelta.x, _rightForeArmGraphContainer.sizeDelta.y * slopeY));
+            }
+            if (slopeYCurrent > 1f)
+            {
+                _rightForeArmGraph.MoveLine(_rightForeArmLineYCurrent, Vector2.zero, new Vector2((_rightForeArmGraphContainer.sizeDelta.x / slopeYCurrent), _rightForeArmGraphContainer.sizeDelta.y));
+            }
+            else if (slopeYCurrent < 1f)
+            {
+                _rightForeArmGraph.MoveLine(_rightForeArmLineYCurrent, Vector2.zero, new Vector2(_rightForeArmGraphContainer.sizeDelta.x, _rightForeArmGraphContainer.sizeDelta.y * slopeYCurrent));
+            }
+
+            _rightForeArmGraph.MoveCircle(_rightForeArmPointZ, new Vector2(pLZ, pHZ));
+            if (slopeZ > 1f)
+            {
+                _rightForeArmGraph.MoveLine(_rightForeArmLineZ, Vector2.zero, new Vector2((_rightForeArmGraphContainer.sizeDelta.x / slopeZ), _rightForeArmGraphContainer.sizeDelta.y));
+            }
+            else if (slopeZ < 1f)
+            {
+                _rightForeArmGraph.MoveLine(_rightForeArmLineZ, Vector2.zero, new Vector2(_rightForeArmGraphContainer.sizeDelta.x, _rightForeArmGraphContainer.sizeDelta.y * slopeZ));
+            }
+            if (slopeZCurrent > 1f)
+            {
+                _rightForeArmGraph.MoveLine(_rightForeArmLineZCurrent, Vector2.zero, new Vector2((_rightForeArmGraphContainer.sizeDelta.x / slopeZCurrent), _rightForeArmGraphContainer.sizeDelta.y));
+            }
+            else if (slopeZCurrent < 1f)
+            {
+                _rightForeArmGraph.MoveLine(_rightForeArmLineZCurrent, Vector2.zero, new Vector2(_rightForeArmGraphContainer.sizeDelta.x, _rightForeArmGraphContainer.sizeDelta.y * slopeZCurrent));
+            }
+        }
+
+        if (this.gameObject.CompareTag("RightArm"))
+        {
+            _rightArmGraph.MoveCircle(_rightArmPointX, new Vector2(pLX, pHX));
+            if (slopeX > 1f)
+            {
+                _rightArmGraph.MoveLine(_rightArmLineX, Vector2.zero, new Vector2((_rightArmGraphContainer.sizeDelta.x / slopeX), _rightArmGraphContainer.sizeDelta.y));
+            }
+            else if (slopeX < 1f)
+            {
+                _rightArmGraph.MoveLine(_rightArmLineX, Vector2.zero, new Vector2(_rightArmGraphContainer.sizeDelta.x, _rightArmGraphContainer.sizeDelta.y * slopeX));
+            }
+            if (slopeXCurrent > 1f)
+            {
+                _rightArmGraph.MoveLine(_rightArmLineXCurrent, Vector2.zero, new Vector2((_rightArmGraphContainer.sizeDelta.x / slopeXCurrent), _rightArmGraphContainer.sizeDelta.y));
+            }
+            else if (slopeXCurrent < 1f)
+            {
+                _rightArmGraph.MoveLine(_rightArmLineXCurrent, Vector2.zero, new Vector2(_rightArmGraphContainer.sizeDelta.x, _rightArmGraphContainer.sizeDelta.y * slopeXCurrent));
+            }
+
+            _rightArmGraph.MoveCircle(_rightArmPointY, new Vector2(pLY, pHY));
+            if (slopeY > 1f)
+            {
+                _rightArmGraph.MoveLine(_rightArmLineY, Vector2.zero, new Vector2((_rightArmGraphContainer.sizeDelta.x / slopeY), _rightArmGraphContainer.sizeDelta.y));
+            }
+            else if (slopeY < 1f)
+            {
+                _rightArmGraph.MoveLine(_rightArmLineY, Vector2.zero, new Vector2(_rightArmGraphContainer.sizeDelta.x, _rightArmGraphContainer.sizeDelta.y * slopeY));
+            }
+            if (slopeYCurrent > 1f)
+            {
+                _rightArmGraph.MoveLine(_rightArmLineYCurrent, Vector2.zero, new Vector2((_rightArmGraphContainer.sizeDelta.x / slopeYCurrent), _rightArmGraphContainer.sizeDelta.y));
+            }
+            else if (slopeYCurrent < 1f)
+            {
+                _rightArmGraph.MoveLine(_rightArmLineYCurrent, Vector2.zero, new Vector2(_rightArmGraphContainer.sizeDelta.x, _rightArmGraphContainer.sizeDelta.y * slopeYCurrent));
+            }
+
+            _rightArmGraph.MoveCircle(_rightArmPointZ, new Vector2(pLZ, pHZ));
+            if (slopeZ > 1f)
+            {
+                _rightArmGraph.MoveLine(_rightArmLineZ, Vector2.zero, new Vector2((_rightArmGraphContainer.sizeDelta.x / slopeZ), _rightArmGraphContainer.sizeDelta.y));
+            }
+            else if (slopeZ < 1f)
+            {
+                _rightArmGraph.MoveLine(_rightArmLineZ, Vector2.zero, new Vector2(_rightArmGraphContainer.sizeDelta.x, _rightArmGraphContainer.sizeDelta.y * slopeZ));
+            }
+            if (slopeZCurrent > 1f)
+            {
+                _rightArmGraph.MoveLine(_rightArmLineZCurrent, Vector2.zero, new Vector2((_rightArmGraphContainer.sizeDelta.x / slopeZCurrent), _rightArmGraphContainer.sizeDelta.y));
+            }
+            else if (slopeZCurrent < 1f)
+            {
+                _rightArmGraph.MoveLine(_rightArmLineZCurrent, Vector2.zero, new Vector2(_rightArmGraphContainer.sizeDelta.x, _rightArmGraphContainer.sizeDelta.y * slopeZCurrent));
+            }
+        }
 
         #endregion  
 
@@ -468,6 +754,9 @@ public class JointController : MonoBehaviour
             Vector3 requiredAntagonisticTorque = _antagonisticControllerXYZ.ComputeRequiredAntagonisticTorque(minSoftLimitX, maxSoftLimitX,
                                                                                                               minSoftLimitY, maxSoftLimitY,
                                                                                                               minSoftLimitZ, maxSoftLimitZ,
+                                                                                                              minHardLimitX, maxHardLimitX,
+                                                                                                              minHardLimitY, maxHardLimitY,
+                                                                                                              minHardLimitZ, maxHardLimitZ,
                                                                                                               _currentLocalOrientation,
                                                                                                               _currentGlobalOrientation,
                                                                                                               _kinematicLocalOrientation,
@@ -477,7 +766,7 @@ public class JointController : MonoBehaviour
                                                                                                               gravityTorqueVectorLocal * multGrav,
                                                                                                               Time.fixedDeltaTime,
                                                                                                               debugMode,
-                                                                                                              _currentTransform);
+                                                                                                              _currentTransform, _kinematicTransform);
             /*
             Vector3 requiredAntagonisticTorqueX = ComputeRequiredAntagonisticTorqueX(_currentLocalOrientation,
                                                                                      _currentGlobalOrientation,
@@ -1306,28 +1595,193 @@ public class JointController : MonoBehaviour
 
     #region Listeners
 
-    void ToggleXValueChanged(Toggle toggle)
+    void RightHandToggleXValueChanged(Toggle toggle)
     {
-        if(toggle.isOn)
-            _handGraph.SetTransparency(_handPointX, _handLineX, Color.red, 1f, 0.5f);
-        else
-            _handGraph.SetTransparency(_handPointX, _handLineX, Color.red, 0f, 0f);
+        if(this.gameObject.CompareTag("RightHand"))
+        {
+            if (toggle.isOn)
+            {
+                _rightHandGraph.SetTransparencyLine(_rightHandLineX, Color.red, 0.5f);
+                _rightHandGraph.SetTransparencyPoint(_rightHandPointX, Color.red, 1f);
+
+                _rightHandGraph.SetTransparencyLine(_rightHandLineXCurrent, Color.black, 0.5f);
+            }
+            else
+            {
+                _rightHandGraph.SetTransparencyLine(_rightHandLineX, Color.red, 0f);
+                _rightHandGraph.SetTransparencyPoint(_rightHandPointX, Color.red, 0f);
+
+                _rightHandGraph.SetTransparencyLine(_rightHandLineXCurrent, Color.black, 0f);
+            }
+        }
     }
 
-    void ToggleYValueChanged(Toggle toggle)
+    void RightHandToggleYValueChanged(Toggle toggle)
     {
-        if (toggle.isOn)
-            _handGraph.SetTransparency(_handPointY, _handLineY, Color.green, 1f, 0.5f);
-        else
-            _handGraph.SetTransparency(_handPointY, _handLineY, Color.green, 0f, 0f);
+        if (this.gameObject.CompareTag("RightHand"))
+        {
+            if (toggle.isOn)
+            {
+                _rightHandGraph.SetTransparencyLine(_rightHandLineY, Color.green, 0.5f);
+                _rightHandGraph.SetTransparencyPoint(_rightHandPointY, Color.green, 1f);
+
+                _rightHandGraph.SetTransparencyLine(_rightHandLineYCurrent, Color.black, 0.5f);
+            }
+            else
+            {
+                _rightHandGraph.SetTransparencyLine(_rightHandLineY, Color.green, 0f);
+                _rightHandGraph.SetTransparencyPoint(_rightHandPointY, Color.green, 0f);
+
+                _rightHandGraph.SetTransparencyLine(_rightHandLineYCurrent, Color.black, 0f);
+            } 
+        }
     }
 
-    void ToggleZValueChanged(Toggle toggle)
+    void RightHandToggleZValueChanged(Toggle toggle)
     {
-        if (toggle.isOn)
-            _handGraph.SetTransparency(_handPointZ, _handLineZ, Color.blue, 1f, 0.5f);
-        else
-            _handGraph.SetTransparency(_handPointZ, _handLineZ, Color.blue, 0f, 0f);
+        if (this.gameObject.CompareTag("RightHand"))
+        {
+            if (toggle.isOn)
+            {
+                _rightHandGraph.SetTransparencyLine(_rightHandLineZ, Color.blue, 0.5f);
+                _rightHandGraph.SetTransparencyPoint(_rightHandPointZ, Color.blue, 1f);
+
+                _rightHandGraph.SetTransparencyLine(_rightHandLineZCurrent, Color.black, 0.5f);
+            }
+            else
+            {
+                _rightHandGraph.SetTransparencyLine(_rightHandLineZ, Color.blue, 0f);
+                _rightHandGraph.SetTransparencyPoint(_rightHandPointZ, Color.blue, 0f);
+
+                _rightHandGraph.SetTransparencyLine(_rightHandLineZCurrent, Color.black, 0f);
+            } 
+        }
+    }
+
+    void RightForeArmToggleXValueChanged(Toggle toggle)
+    {
+        if (this.gameObject.CompareTag("RightForeArm"))
+        {
+            if (toggle.isOn)
+            {
+                _rightForeArmGraph.SetTransparencyLine(_rightForeArmLineX, Color.red, 0.5f);
+                _rightForeArmGraph.SetTransparencyPoint(_rightForeArmPointX, Color.red, 1f);
+
+                _rightForeArmGraph.SetTransparencyLine(_rightForeArmLineXCurrent, Color.black, 0.5f);
+            }
+            else
+            {
+                _rightForeArmGraph.SetTransparencyLine(_rightForeArmLineX, Color.red, 0f);
+                _rightForeArmGraph.SetTransparencyPoint(_rightForeArmPointX, Color.red, 0f);
+
+                _rightForeArmGraph.SetTransparencyLine(_rightForeArmLineXCurrent, Color.black, 0f);
+            } 
+        }
+    }
+
+    void RightForeArmToggleYValueChanged(Toggle toggle)
+    {
+        if (this.gameObject.CompareTag("RightForeArm"))
+        {
+            if (toggle.isOn)
+            {
+                _rightForeArmGraph.SetTransparencyLine(_rightForeArmLineY, Color.green, 0.5f);
+                _rightForeArmGraph.SetTransparencyPoint(_rightForeArmPointY, Color.green, 1f);
+
+                _rightForeArmGraph.SetTransparencyLine(_rightForeArmLineYCurrent, Color.black, 0.5f);
+            }
+            else
+            {
+                _rightForeArmGraph.SetTransparencyLine(_rightForeArmLineY, Color.green, 0f);
+                _rightForeArmGraph.SetTransparencyPoint(_rightForeArmPointY, Color.green, 0f);
+
+                _rightForeArmGraph.SetTransparencyLine(_rightForeArmLineYCurrent, Color.black, 0f);
+            } 
+        }
+    }
+
+    void RightForeArmToggleZValueChanged(Toggle toggle)
+    {
+        if (this.gameObject.CompareTag("RightForeArm"))
+        {
+            if (toggle.isOn)
+            {
+                _rightForeArmGraph.SetTransparencyLine(_rightForeArmLineZ, Color.blue, 0.5f);
+                _rightForeArmGraph.SetTransparencyPoint(_rightForeArmPointZ, Color.blue, 1f);
+
+                _rightForeArmGraph.SetTransparencyLine(_rightForeArmLineZCurrent, Color.black, 0.5f);
+            }
+            else
+            {
+                _rightForeArmGraph.SetTransparencyLine(_rightForeArmLineZ, Color.blue, 0f);
+                _rightForeArmGraph.SetTransparencyPoint(_rightForeArmPointZ, Color.blue, 0f);
+
+                _rightForeArmGraph.SetTransparencyLine(_rightForeArmLineZCurrent, Color.black, 0f);
+            } 
+        }
+    }
+
+    void RightArmToggleXValueChanged(Toggle toggle)
+    {
+        if (this.gameObject.CompareTag("RightArm"))
+        {
+            if (toggle.isOn)
+            {
+                _rightArmGraph.SetTransparencyLine(_rightArmLineX, Color.red, 0.5f);
+                _rightArmGraph.SetTransparencyPoint(_rightArmPointX, Color.red, 1f);
+
+                _rightArmGraph.SetTransparencyLine(_rightArmLineXCurrent, Color.black, 0.5f);
+            }
+            else
+            {
+                _rightArmGraph.SetTransparencyLine(_rightArmLineX, Color.red, 0f);
+                _rightArmGraph.SetTransparencyPoint(_rightArmPointX, Color.red, 0f);
+
+                _rightArmGraph.SetTransparencyLine(_rightArmLineXCurrent, Color.black, 0f);
+            }
+        }
+    }
+
+    void RightArmToggleYValueChanged(Toggle toggle)
+    {
+        if (this.gameObject.CompareTag("RightArm"))
+        {
+            if (toggle.isOn)
+            {
+                _rightArmGraph.SetTransparencyLine(_rightArmLineY, Color.green, 0.5f);
+                _rightArmGraph.SetTransparencyPoint(_rightArmPointY, Color.green, 1f);
+
+                _rightArmGraph.SetTransparencyLine(_rightArmLineYCurrent, Color.black, 0.5f);
+            }
+            else
+            {
+                _rightArmGraph.SetTransparencyLine(_rightArmLineY, Color.green, 0f);
+                _rightArmGraph.SetTransparencyPoint(_rightArmPointY, Color.green, 0f);
+
+                _rightArmGraph.SetTransparencyLine(_rightArmLineYCurrent, Color.black, 0f);
+            }
+        }
+    }
+
+    void RightArmToggleZValueChanged(Toggle toggle)
+    {
+        if (this.gameObject.CompareTag("RightArm"))
+        {
+            if (toggle.isOn)
+            {
+                _rightArmGraph.SetTransparencyLine(_rightArmLineZ, Color.blue, 0.5f);
+                _rightArmGraph.SetTransparencyPoint(_rightArmPointZ, Color.blue, 1f);
+
+                _rightArmGraph.SetTransparencyLine(_rightArmLineZCurrent, Color.black, 0.5f);
+            }
+            else
+            {
+                _rightArmGraph.SetTransparencyLine(_rightArmLineZ, Color.blue, 0f);
+                _rightArmGraph.SetTransparencyPoint(_rightArmPointZ, Color.blue, 0f);
+
+                _rightArmGraph.SetTransparencyLine(_rightArmLineZCurrent, Color.black, 0f);
+            }
+        }
     }
 
     #endregion
