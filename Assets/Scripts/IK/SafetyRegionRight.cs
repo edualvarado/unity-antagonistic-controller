@@ -10,8 +10,8 @@ public class SafetyRegionRight : SafetyRegion
     public Vector3 hitRight;
     public Vector3 hitNormalRight;
     public Vector3 hitOffsetRight;
-    public bool isRightHandMovingInitially;
-    public bool isRightHandReturningInitially;
+    public bool hasRightStartedMovingIn;
+    public bool hasRightStartedMovingOut;
 
     private SphereCollider sphereColliderRight;
 
@@ -44,7 +44,7 @@ public class SafetyRegionRight : SafetyRegion
             distanceToObstacleFromRight = Vector3.Distance(hitRight, originRegion.position);
                       
             // Start moving
-            isRightHandMovingInitially = true;
+            hasRightStartedMovingIn = true;
         }
     }
 
@@ -76,14 +76,14 @@ public class SafetyRegionRight : SafetyRegion
                 Debug.DrawRay(hitRight, hitNormalRight * 0.2f, Color.cyan);
 
                 // Set target where it his, based on if reacting or just placing the hand.
-                rightHand.SetTargetStay(reactionTime, isRightHandMovingInitially);
+                rightHand.SetTargetStay(reactionTime, hasRightStartedMovingIn);
             }
 
             // Activate -> TODO: Have weights would be great to decide the amount of IK
             rightHand.activateIK = true;
 
             // Stop reacting
-            isRightHandMovingInitially = false;
+            hasRightStartedMovingIn = false;
         }
     }
 
@@ -94,10 +94,10 @@ public class SafetyRegionRight : SafetyRegion
             //Debug.Log("[INFO] Exiting obstacle RIGHT");
 
             // For the moment is not used
-            isRightHandReturningInitially = true;
+            hasRightStartedMovingOut = true;
 
             // Set target back
-            rightHand.SetTargetBack(reactionTime, isRightHandReturningInitially);
+            rightHand.SetTargetBack(reactionTime, hasRightStartedMovingOut);
         }
     }
 }

@@ -173,12 +173,12 @@ public class ArmsFastIK : MonoBehaviour
     /// <param name="pos"></param>
     /// <param name="normal"></param>
     /// <param name="reactionTime"></param>
-    /// <param name="isMovingInitially"></param>
+    /// <param name="hasStartedMovingIn"></param>
     /// <param name="hand"></param>
-    public void SetTargetStay(float reactionTime, bool isMovingInitially)
+    public void SetTargetStay(float reactionTime, bool hasStartedMovingIn)
     {
-        if (isMovingInitially)
-            StartCoroutine(MoveHand(reactionTime, isMovingInitially));
+        if (hasStartedMovingIn) // For the first time, run the coroutine
+            StartCoroutine(MoveHand(reactionTime));
         else
         {
             if (Target.CompareTag("LeftHand"))
@@ -213,10 +213,10 @@ public class ArmsFastIK : MonoBehaviour
     /// <param name="body"></param>
     /// <param name="rot"></param>
     /// <param name="reactionTime"></param>
-    /// <param name="isReturningInitially"></param>
-    public void SetTargetBack(float reactionTime, bool isReturningInitially)
+    /// <param name="hasStartedMovingOut"></param>
+    public void SetTargetBack(float reactionTime, bool hasStartedMovingOut)
     {
-        if (isReturningInitially)
+        if (hasStartedMovingOut)
         {
             StartCoroutine(MoveHandBack(reactionTime));
         }
@@ -232,7 +232,7 @@ public class ArmsFastIK : MonoBehaviour
     /// <param name="endRot"></param>
     /// <param name="moveTime"></param>
     /// <returns></returns>
-    IEnumerator MoveHand(float moveTime, bool isMovingInitially)
+    IEnumerator MoveHand(float moveTime)
     {
         // Store the initial, current position and rotation for the interpolation.
         Vector3 startPos = Target.transform.position;
@@ -279,7 +279,13 @@ public class ArmsFastIK : MonoBehaviour
 
             yield return null;
         }
-        while (timeElapsed < moveTime);
+        while ((timeElapsed < moveTime) && !(safetyRegionLeft.hasLeftStartedMovingOut));
+
+        // Hand has arrived
+        if (Target.CompareTag("LeftHand"))
+        {
+            safetyRegionLeft.hasLeftContact = true;
+        }
     }
 
     IEnumerator MoveHandBack(float moveTime)
@@ -323,10 +329,13 @@ public class ArmsFastIK : MonoBehaviour
 
             yield return null;
         }
-        while (timeElapsed < moveTime);
+        while ((timeElapsed < moveTime) && !(safetyRegionLeft.hasLeftStartedMovingIn));
 
         // Once the coroutine finishes, deactivate IK for this hand and follow kinematic animation.
-        activateIK = false;
+        if(!safetyRegionLeft.hasLeftStartedMovingIn)
+        {
+            activateIK = false;
+        }
     }
 
     private void ResolveIK()

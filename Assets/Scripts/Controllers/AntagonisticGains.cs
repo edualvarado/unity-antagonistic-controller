@@ -38,6 +38,9 @@ public class AntagonisticGains : MonoBehaviour
     //public float leftArmKLY;
     //public float leftArmKLZ;
 
+    [Range(1f, 2.6f)]
+    public float stiffnessMultiplier;
+
     public float handKLX;
     public float handKLY;
     public float handKLZ;
@@ -86,28 +89,28 @@ public class AntagonisticGains : MonoBehaviour
         //leftArmController.pLY = leftArmKLY;
         //leftArmController.pLZ = leftArmKLZ;
 
-        rightHandController.pLX = handKLX;
-        rightHandController.pLY = handKLY;
-        rightHandController.pLZ = handKLZ;
+        rightHandController.pLX = handKLX * stiffnessMultiplier;
+        rightHandController.pLY = handKLY * stiffnessMultiplier;
+        rightHandController.pLZ = handKLZ * stiffnessMultiplier;
 
-        rightForeArmController.pLX = foreArmKLX;
-        rightForeArmController.pLY = foreArmKLY;
-        rightForeArmController.pLZ = foreArmKLZ;
+        rightForeArmController.pLX = foreArmKLX * stiffnessMultiplier;
+        rightForeArmController.pLY = foreArmKLY * stiffnessMultiplier;
+        rightForeArmController.pLZ = foreArmKLZ * stiffnessMultiplier;
 
-        rightArmController.pLX = armKLX;
-        rightArmController.pLY = armKLY;
-        rightArmController.pLZ = armKLZ;
+        rightArmController.pLX = armKLX * stiffnessMultiplier;
+        rightArmController.pLY = armKLY * stiffnessMultiplier;
+        rightArmController.pLZ = armKLZ * stiffnessMultiplier;
 
-        leftHandController.pLX = handKLX;
-        leftHandController.pLY = handKLY;
-        leftHandController.pLZ = handKLZ;
+        leftHandController.pLX = handKLX * stiffnessMultiplier;
+        leftHandController.pLY = handKLY * stiffnessMultiplier;
+        leftHandController.pLZ = handKLZ * stiffnessMultiplier;
 
-        leftForeArmController.pLX = foreArmKLX;
-        leftForeArmController.pLY = foreArmKLY;
-        leftForeArmController.pLZ = foreArmKLZ;
+        leftForeArmController.pLX = foreArmKLX * stiffnessMultiplier;
+        leftForeArmController.pLY = foreArmKLY * stiffnessMultiplier;
+        leftForeArmController.pLZ = foreArmKLZ * stiffnessMultiplier;
 
-        leftArmController.pLX = armKLX;
-        leftArmController.pLY = armKLX;
-        leftArmController.pLZ = armKLX;
+        leftArmController.pLX = armKLX * stiffnessMultiplier;
+        leftArmController.pLY = armKLX * stiffnessMultiplier;
+        leftArmController.pLZ = armKLX * stiffnessMultiplier;
     }
 }

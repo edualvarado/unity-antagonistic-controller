@@ -4,16 +4,33 @@ using UnityEngine;
 
 public class SafetyRegionLeft : SafetyRegion
 {
+
+    #region Instance Fields
+
     [Header("Left Hand - Debug")]
     public ArmsFastIK leftHand;
-    public float distanceToObstacleFromLeft;
     public Vector3 hitLeft;
+    public float distanceToObstacleFromLeft;
+    public Vector3 hitLeftStay;
+    public float distanceToObstacleFromLeftStay;
+
+    [Header("Left Hand Placement - Debug")]
     public Vector3 hitNormalLeft;
     public Vector3 hitOffsetLeft;
-    public bool isLeftHandMovingInitially;
-    public bool isLeftHandReturningInitially;
+    public Vector3 raycastOriginLeft;
+
+    [Header("Left Hand Flags - Debug")]
+    public bool hasLeftStartedMovingIn;
+    public bool hasLeftContact;
+    public bool hasLeftStartedMovingOut;
+
+    #endregion
+
+    #region Read-only & Static Fields
 
     private SphereCollider sphereColliderLeft;
+
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +41,7 @@ public class SafetyRegionLeft : SafetyRegion
     // Update is called once per frame
     void Update()
     {
+        // Set Safety Region
         sphereColliderLeft.radius = radiusRegion;
         sphereColliderLeft.center = transform.InverseTransformPoint(originRegion.position) + originOffset;
     }
@@ -32,19 +50,19 @@ public class SafetyRegionLeft : SafetyRegion
     {
         if (other.CompareTag("Obstacle"))
         {
-            //Debug.Log("[INFO] Entering obstacle LEFT");
+            Debug.Log("[INFO] Obstacle ENTERS LEFT");
 
-            // We protect our shoulder in this version.
-            Vector3 raycastOriginLeft = originRegion.position;
-
-            // Get the closest point in the external object to the previous body part to protect (shoulder in this case)
+            // We protect the origin, and get the closest point in the external object to the previous body part to protect (shoulder in this case)
+            raycastOriginLeft = originRegion.position;
             hitLeft = Physics.ClosestPoint(raycastOriginLeft, other, other.transform.position, other.transform.rotation);
-
-            // Remember that you are calculating the distance to the center (in a wall, it would be far away)
             distanceToObstacleFromLeft = Vector3.Distance(hitLeft, originRegion.position);
 
-            // Start moving
-            isLeftHandMovingInitially = true;
+            // Start moving to the target
+            hasLeftStartedMovingIn = true;
+            hasLeftStartedMovingOut = false;
+            hasLeftContact = false;
+            Debug.Log("hasLeftStartedMovingIn: " + hasLeftStartedMovingIn + " | hasLeftStartedMovingOut: " + hasLeftStartedMovingOut + " | hasLeftContact: " + hasLeftContact);
+            // hasLeftStartedMovingIn: TRUE, hasLeftStartedMovingOut: FALSE, hasLeftContact: FALSE
         }
     }
 
@@ -52,16 +70,27 @@ public class SafetyRegionLeft : SafetyRegion
     {
         if(other.CompareTag("Obstacle"))
         {
-            //Debug.Log("[INFO] Staying obstacle LEFT");
+            //Debug.Log("[INFO] Obstacle STAYS LEFT");
 
-            // We protect our shoulder in this version.
-            Vector3 raycastOriginLeft = originRegion.position;
+            // We protect the origin, and get the closest point in the external object to the previous body part to protect (shoulder in this case)
+            raycastOriginLeft = originRegion.position;
+            hitLeftStay = Physics.ClosestPoint(raycastOriginLeft, other, other.transform.position, other.transform.rotation);
+            distanceToObstacleFromLeftStay = Vector3.Distance(hitLeftStay, originRegion.position);
 
-            // Get the closest point in the external object to the previous body part to protect (shoulder in this case)
-            hitLeft = Physics.ClosestPoint(raycastOriginLeft, other, other.transform.position, other.transform.rotation);
-
-            // Remember that you are calculating the distance to the center (in a wall, it would be far away)
+            // If we get to away from the first hit position, we update to the closest one.
             distanceToObstacleFromLeft = Vector3.Distance(hitLeft, originRegion.position);
+            if (distanceToObstacleFromLeft > 0.4f) // TODO: Put LENGTH of ARM
+            {
+                hitLeft = hitLeftStay;
+                distanceToObstacleFromLeft = distanceToObstacleFromLeftStay;
+            }
+
+            // Until the moment we arrived, we keep updating the position
+            if(!hasLeftContact)
+            {
+                hitLeft = hitLeftStay;
+                distanceToObstacleFromLeft = distanceToObstacleFromLeftStay;
+            }
 
             Debug.DrawRay(raycastOriginLeft, (hitLeft - originRegion.position), Color.blue);
 
@@ -76,28 +105,44 @@ public class SafetyRegionLeft : SafetyRegion
                 Debug.DrawRay(hitLeft, hitNormalLeft * 0.2f, Color.cyan);
 
                 // Set target where it his, based on if reacting or just placing the hand.
-                leftHand.SetTargetStay(reactionTime, isLeftHandMovingInitially);
+                leftHand.SetTargetStay(reactionTime, hasLeftStartedMovingIn);
             }
 
             // Activate -> TODO: Have weights would be great to decide the amount of IK
             leftHand.activateIK = true;
 
-            // Stop reacting phase
-            isLeftHandMovingInitially = false;
+            // In process of reaching
+            //hasLeftStartedMovingIn = false; // TODO: THIS WORKS
+            hasLeftStartedMovingOut = false;
+            Debug.Log("hasLeftStartedMovingIn: " + hasLeftStartedMovingIn + " | hasLeftStartedMovingOut: " + hasLeftStartedMovingOut + " | hasLeftContact: " + hasLeftContact);
+            // hasLeftStartedMovingIn: FALSE, hasLeftStartedMovingOut: FALSE, hasLeftContact: FALSE -> TRUE
         }
+
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Obstacle"))
         {
-            //Debug.Log("[INFO] Exiting obstacle LEFT");
+            Debug.Log("[INFO] Obstacle EXITS LEFT");
 
-            // For the moment is not used
-            isLeftHandReturningInitially = true;
+            // Starts moving out
+            hasLeftStartedMovingIn = false;
+            hasLeftStartedMovingOut = true;
+            hasLeftContact = false;
+            Debug.Log("hasLeftStartedMovingIn: " + hasLeftStartedMovingIn + " | hasLeftStartedMovingOut: " + hasLeftStartedMovingOut + " | hasLeftContact: " + hasLeftContact);
+            // hasLeftStartedMovingIn: FALSE, hasLeftStartedMovingOut: TRUE, hasLeftContact: FALSE
 
             // Set target back
-            leftHand.SetTargetBack(reactionTime, isLeftHandReturningInitially);
+            leftHand.SetTargetBack(reactionTime, hasLeftStartedMovingOut);
+
+            // End -> IF THIS THEN DOESNT WORK
+            //hasLeftStartedMovingIn = false;
+            //hasLeftStartedMovingOut = false;
+            //hasLeftContact = false;
+            Debug.Log("hasLeftStartedMovingIn: " + hasLeftStartedMovingIn + " | hasLeftStartedMovingOut: " + hasLeftStartedMovingOut + " | hasLeftContact: " + hasLeftContact);
+            // hasLeftStartedMovingIn: FALSE, hasLeftStartedMovingOut: FALSE, hasLeftContact: FALSE
+
         }
     }
 }

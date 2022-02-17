@@ -4059,9 +4059,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originRegion: {fileID: 1904840852391078110}
-  originOffset: {x: -0.3, y: 0, z: 0.5}
+  originOffset: {x: -0.1, y: 0, z: 0.5}
   radiusRegion: 0.6
-  reactionTime: 0.2
+  reactionTime: 0.1
   leftHand: {fileID: 7170379307483878355}
   distanceToObstacleFromLeft: 0
   hitLeft: {x: 0, y: 0, z: 0}
@@ -4222,9 +4222,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originRegion: {fileID: 3849705244601195322}
-  originOffset: {x: 0.3, y: 0, z: 0.5}
+  originOffset: {x: 0.1, y: 0, z: 0.5}
   radiusRegion: 0.6
-  reactionTime: 0.2
+  reactionTime: 0.1
   rightHand: {fileID: 7170379307483878354}
   distanceToObstacleFromRight: 0
   hitRight: {x: 0, y: 0, z: 0}
