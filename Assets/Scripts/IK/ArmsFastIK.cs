@@ -1,3 +1,12 @@
+/****************************************************
+ * File: SafetyRegionLeft.cs
+   * Author: Eduardo Alvarado
+   * Email: eduardo.alvarado-pinero@polytechnique.edu
+   * Date: Created by LIX on 27/01/2021
+   * Project: ** WORKING TITLE **
+   * Last update: 18/02/2022
+*****************************************************/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,6 +59,7 @@ public class ArmsFastIK : MonoBehaviour
     public Transform kinBody;
     public SafetyRegionLeft safetyRegionLeft;
     public SafetyRegionRight safetyRegionRight;
+    public Collider _col;
 
     // Start is called before the first frame update
     void Awake()
@@ -109,6 +119,10 @@ public class ArmsFastIK : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+    }
+
     private void Update()
     {
         if (!activateIK)
@@ -137,7 +151,8 @@ public class ArmsFastIK : MonoBehaviour
     public void SetInitialTarget(Transform trf)
     {
         // In rest pose, the position of each target will be the hand position, and hits rotation will be fixed to those rest rotations.
-        Target.transform.position = trf.transform.position;
+        Target.transform.position = trf.transform.position;        
+        //Target.transform.position = Vector3.Lerp(Target.transform.position, trf.position, 0.1f * Time.deltaTime);
 
         if (Target.CompareTag("LeftHand"))
         {
@@ -155,7 +170,9 @@ public class ArmsFastIK : MonoBehaviour
     /// <param name="trf"></param>
     public void SetConstantTarget(Transform trf)
     {
+        // In rest pose, the position of each target will be the hand position, and hits rotation will be fixed to those rest rotations.
         TargetConstant.transform.position = trf.transform.position;
+        //TargetConstant.transform.position = Vector3.Lerp(TargetConstant.transform.position, trf.position, 0.1f * Time.deltaTime);
 
         if (Target.CompareTag("LeftHand"))
         {
@@ -184,12 +201,12 @@ public class ArmsFastIK : MonoBehaviour
             if (Target.CompareTag("LeftHand"))
             {
                 Vector3 surfaceHit = new Vector3(-safetyRegionLeft.hitNormalLeft.z, 0, safetyRegionLeft.hitNormalLeft.x);
-                Debug.DrawRay(safetyRegionLeft.hitLeft, surfaceHit * 0.2f, Color.green);
+                Debug.DrawRay(safetyRegionLeft.hitLeftFixed, surfaceHit * 0.2f, Color.green);
 
                 if (surfaceHit != Vector3.zero)
                     rotationToNormal = Quaternion.LookRotation(surfaceHit, Vector3.Cross(surfaceHit, safetyRegionLeft.hitNormalLeft));
 
-                Target.transform.position = safetyRegionLeft.hitLeft;
+                Target.transform.position = safetyRegionLeft.hitLeftFixed;
                 Target.transform.rotation = rotationToNormal;
             }
             else if (Target.CompareTag("RightHand"))
@@ -250,7 +267,7 @@ public class ArmsFastIK : MonoBehaviour
 
             if (Target.CompareTag("LeftHand"))
             {
-                Target.transform.position = Vector3.Lerp(startPos, safetyRegionLeft.hitLeft, normalizedTime);
+                Target.transform.position = Vector3.Lerp(startPos, safetyRegionLeft.hitLeftFixed, normalizedTime);
                 
                 Vector3 forwardHit = new Vector3(-safetyRegionLeft.hitNormalLeft.z, 0, safetyRegionLeft.hitNormalLeft.x);
                 if (forwardHit != Vector3.zero)

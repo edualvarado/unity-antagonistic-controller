@@ -1,3 +1,12 @@
+/****************************************************
+ * File: SafetyRegionLeft.cs
+   * Author: Eduardo Alvarado
+   * Email: eduardo.alvarado-pinero@polytechnique.edu
+   * Date: Created by LIX on 27/01/2021
+   * Project: ** WORKING TITLE **
+   * Last update: 18/02/2022
+*****************************************************/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,28 +16,31 @@ public class SafetyRegionLeft : SafetyRegion
 
     #region Instance Fields
 
-    [Header("Left Hand - Debug")]
-    public ArmsFastIK leftHand;
-    public Vector3 hitLeft;
-    public float distanceToObstacleFromLeft;
-    public Vector3 hitLeftStay;
-    public float distanceToObstacleFromLeftStay;
+    [Header("Left Hand - IK")]
+    public ArmsFastIK leftHandIK;
 
-    [Header("Left Hand Placement - Debug")]
-    public Vector3 hitNormalLeft;
+    [Header("Left Hand - Hit")]
     public Vector3 hitOffsetLeft;
+    public Vector3 hitLeftFixed;
+    public float distanceToObstacleFromHitLeftFixed;
+    public Vector3 hitLeft;
+    public float distanceToObstacleFromHitLeft;
+    public Vector3 hitNormalLeft;
     public Vector3 raycastOriginLeft;
 
-    [Header("Left Hand Flags - Debug")]
+    [Header("Left Hand - Debug")]
     public bool hasLeftStartedMovingIn;
     public bool hasLeftContact;
     public bool hasLeftStartedMovingOut;
+    public bool firstContact = false;
 
     #endregion
 
     #region Read-only & Static Fields
 
     private SphereCollider sphereColliderLeft;
+    private Transform leftTarget;
+    private Transform leftHandTransform;
 
     #endregion
 
@@ -36,6 +48,8 @@ public class SafetyRegionLeft : SafetyRegion
     void Start()
     {
         sphereColliderLeft = GetComponent<SphereCollider>();
+        leftTarget = GameObject.Find("Target Left Hand").GetComponent<Transform>();
+        leftHandTransform = leftHandIK.gameObject.GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -50,12 +64,12 @@ public class SafetyRegionLeft : SafetyRegion
     {
         if (other.CompareTag("Obstacle"))
         {
-            Debug.Log("[INFO] Obstacle ENTERS LEFT");
+            //Debug.Log("[INFO] Obstacle ENTERS LEFT");
+            firstContact = true;
 
             // We protect the origin, and get the closest point in the external object to the previous body part to protect (shoulder in this case)
             raycastOriginLeft = originRegion.position;
-            hitLeft = Physics.ClosestPoint(raycastOriginLeft, other, other.transform.position, other.transform.rotation);
-            distanceToObstacleFromLeft = Vector3.Distance(hitLeft, originRegion.position);
+            hitLeftFixed = Physics.ClosestPoint(raycastOriginLeft, other, other.transform.position, other.transform.rotation) + (leftTarget.up * hitOffsetLeft.y) + (leftTarget.right * hitOffsetLeft.x) + (leftTarget.forward * hitOffsetLeft.z);
 
             // Start moving to the target
             hasLeftStartedMovingIn = true;
@@ -74,45 +88,59 @@ public class SafetyRegionLeft : SafetyRegion
 
             // We protect the origin, and get the closest point in the external object to the previous body part to protect (shoulder in this case)
             raycastOriginLeft = originRegion.position;
-            hitLeftStay = Physics.ClosestPoint(raycastOriginLeft, other, other.transform.position, other.transform.rotation);
-            distanceToObstacleFromLeftStay = Vector3.Distance(hitLeftStay, originRegion.position);
+            hitLeft = Physics.ClosestPoint(raycastOriginLeft, other, other.transform.position, other.transform.rotation);
 
             // If we get to away from the first hit position, we update to the closest one.
-            distanceToObstacleFromLeft = Vector3.Distance(hitLeft, originRegion.position);
-            if (distanceToObstacleFromLeft > 0.4f) // TODO: Put LENGTH of ARM
-            {
-                hitLeft = hitLeftStay;
-                distanceToObstacleFromLeft = distanceToObstacleFromLeftStay;
-            }
+            distanceToObstacleFromHitLeftFixed = Vector3.Distance(hitLeftFixed, hitLeft);
+            Debug.DrawLine(hitLeft, hitLeftFixed, Color.green);
+
+            // New - I dont like it
+            float distanceToHand = Vector3.Distance(hitLeft, leftHandTransform.position);
+            Debug.Log("distanceToHand: " + distanceToHand);
 
             // Until the moment we arrived, we keep updating the position
-            if(!hasLeftContact)
+            if (!hasLeftContact)
             {
-                hitLeft = hitLeftStay;
-                distanceToObstacleFromLeft = distanceToObstacleFromLeftStay;
+                Debug.Log("UPDATING SINCE WE DID NOT ARRIVED YET");
+                hitLeftFixed = hitLeft;
             }
 
-            Debug.DrawRay(raycastOriginLeft, (hitLeft - originRegion.position), Color.blue);
+            if (firstContact)
+            {
+                if (hasLeftContact && (distanceToObstacleFromHitLeftFixed > 0.5f)) // TODO: Put LENGTH of ARM?
+                {
+                    Debug.Log("UPDATING SINCE DISTANCE IS LARGER");
+                    hitLeftFixed = hitLeft + (leftTarget.up * hitOffsetLeft.y) + (leftTarget.right * hitOffsetLeft.x) + (leftTarget.forward * hitOffsetLeft.z);
+                    firstContact = false;
+                }
+            }
+            else
+            {
+                if (hasLeftContact && ((distanceToObstacleFromHitLeftFixed > 0.5f))) // TODO: Put LENGTH of ARM?
+                {
+                    Debug.Log("UPDATING SINCE DISTANCE IS LARGER");
+                    hitLeftFixed = hitLeft + (leftTarget.up * hitOffsetLeft.y) + (leftTarget.right * hitOffsetLeft.x) + (leftTarget.forward * hitOffsetLeft.z);
+                }
+            }
+
+            Debug.DrawRay(raycastOriginLeft, (hitLeftFixed - originRegion.position), Color.blue);
 
             // Launch a ray from the body part to protect, in the direction the closest point (like in the previous red ray). It it is an obstacle, enter.
-            if (Physics.Raycast(raycastOriginLeft, (hitLeft - originRegion.position), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Obstacle")))
+            if (Physics.Raycast(raycastOriginLeft, (hitLeftFixed - originRegion.position), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Obstacle")))
             {
                 // hit.point is equal than hitLeft. We just use hit to calculate the normal in that point, thanks to the ray.
                 hitNormalLeft = hit.normal;
 
-                // TODO: Improve offset
-                hitLeft = hitLeft + hitOffsetLeft.x * hitNormalLeft;
-                Debug.DrawRay(hitLeft, hitNormalLeft * 0.2f, Color.cyan);
+                Debug.DrawRay(hitLeftFixed, hitNormalLeft * 0.2f, Color.cyan);
 
                 // Set target where it his, based on if reacting or just placing the hand.
-                leftHand.SetTargetStay(reactionTime, hasLeftStartedMovingIn);
+                leftHandIK.SetTargetStay(reactionTime, hasLeftStartedMovingIn);
             }
 
             // Activate -> TODO: Have weights would be great to decide the amount of IK
-            leftHand.activateIK = true;
+            leftHandIK.activateIK = true;
 
             // In process of reaching
-            //hasLeftStartedMovingIn = false; // TODO: THIS WORKS
             hasLeftStartedMovingOut = false;
             Debug.Log("hasLeftStartedMovingIn: " + hasLeftStartedMovingIn + " | hasLeftStartedMovingOut: " + hasLeftStartedMovingOut + " | hasLeftContact: " + hasLeftContact);
             // hasLeftStartedMovingIn: FALSE, hasLeftStartedMovingOut: FALSE, hasLeftContact: FALSE -> TRUE
@@ -134,15 +162,15 @@ public class SafetyRegionLeft : SafetyRegion
             // hasLeftStartedMovingIn: FALSE, hasLeftStartedMovingOut: TRUE, hasLeftContact: FALSE
 
             // Set target back
-            leftHand.SetTargetBack(reactionTime, hasLeftStartedMovingOut);
-
-            // End -> IF THIS THEN DOESNT WORK
-            //hasLeftStartedMovingIn = false;
-            //hasLeftStartedMovingOut = false;
-            //hasLeftContact = false;
-            Debug.Log("hasLeftStartedMovingIn: " + hasLeftStartedMovingIn + " | hasLeftStartedMovingOut: " + hasLeftStartedMovingOut + " | hasLeftContact: " + hasLeftContact);
-            // hasLeftStartedMovingIn: FALSE, hasLeftStartedMovingOut: FALSE, hasLeftContact: FALSE
-
+            leftHandIK.SetTargetBack(reactionTime, hasLeftStartedMovingOut);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(hitLeftFixed, 0.05f);
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(hitLeft, 0.05f);
     }
 }

@@ -46,8 +46,8 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1.59
   m_Drag: 10
-  m_AngularDrag: 10
-  m_UseGravity: 1
+  m_AngularDrag: 49.9
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623532570005711}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
@@ -314,7 +314,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0024463509, y: 0.40595403, z: 0.005169651}
+  m_ConnectedAnchor: {x: -0.0024468277, y: 0.40595403, z: 0.005169651}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -788,6 +788,7 @@ MonoBehaviour:
   leftHandController: {fileID: 3092514557242679201}
   leftForeArmController: {fileID: 3092514556973599890}
   leftArmController: {fileID: 3092514557591848794}
+  stiffnessMultiplier: 2.6
   handKLX: 10
   handKLY: 1
   handKLZ: 10
@@ -846,8 +847,8 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 10
-  m_AngularDrag: 10
-  m_UseGravity: 1
+  m_AngularDrag: 49.9
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -877,7 +878,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000003940347, y: 0.27614477, z: -0.0000001101546}
+  m_ConnectedAnchor: {x: -0.00000039403466, y: 0.2761443, z: -0.000000110154595}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -968,7 +969,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623532839076803}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
@@ -1267,7 +1268,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.061058667, y: 0.0911043, z: 0.007055072}
+  m_ConnectedAnchor: {x: -0.06105819, y: 0.0911043, z: 0.007055072}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -1481,7 +1482,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623533172998659}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2123,7 +2124,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623533373452733}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2504,7 +2505,7 @@ Rigidbody:
   m_Mass: 1.59
   m_Drag: 10
   m_AngularDrag: 49.9
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -2641,7 +2642,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623533403131666}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
@@ -3066,8 +3067,8 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 2.95
   m_Drag: 10
-  m_AngularDrag: 10
-  m_UseGravity: 1
+  m_AngularDrag: 49.9
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -3204,7 +3205,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623533588814599}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
@@ -5028,7 +5029,7 @@ Rigidbody:
   m_Mass: 2.95
   m_Drag: 10
   m_AngularDrag: 49.9
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -5165,7 +5166,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623534636773826}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
@@ -5330,7 +5331,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 10
   m_AngularDrag: 49.9
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -5451,7 +5452,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623534695646599}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 

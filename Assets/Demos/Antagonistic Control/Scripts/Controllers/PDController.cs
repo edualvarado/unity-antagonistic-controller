@@ -2,8 +2,9 @@
  * File: PDController.cs
    * Author: Eduardo Alvarado
    * Email: eduardo.alvarado-pinero@polytechnique.edu
-   * Date: Created by LIX on 27/01/2022
-   * Last update: 27/01/2022
+   * Date: Created by LIX on 27/01/2021
+   * Project: ** WORKING TITLE **
+   * Last update: 18/02/2022
 *****************************************************/
 
 /* Status: STABLE */

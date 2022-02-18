@@ -1804,6 +1804,7 @@ MonoBehaviour:
   kinBody: {fileID: 968796218716793542}
   safetyRegionLeft: {fileID: 7170379306008190274}
   safetyRegionRight: {fileID: 0}
+  _col: {fileID: 0}
 --- !u!1 &4570854228350851340
 GameObject:
   m_ObjectHideFlags: 0
@@ -2632,7 +2633,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6022386670828169427}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4001,6 +4002,7 @@ MonoBehaviour:
   kinBody: {fileID: 968796218716793542}
   safetyRegionLeft: {fileID: 7170379306008190274}
   safetyRegionRight: {fileID: 7170379306721617693}
+  _col: {fileID: 0}
 --- !u!1 &7170379306008190287
 GameObject:
   m_ObjectHideFlags: 0
@@ -4061,14 +4063,18 @@ MonoBehaviour:
   originRegion: {fileID: 1904840852391078110}
   originOffset: {x: -0.1, y: 0, z: 0.5}
   radiusRegion: 0.6
-  reactionTime: 0.1
+  reactionTime: 3
   leftHand: {fileID: 7170379307483878355}
-  distanceToObstacleFromLeft: 0
   hitLeft: {x: 0, y: 0, z: 0}
+  distanceToObstacleFromLeft: 0
+  hitLeftStay: {x: 0, y: 0, z: 0}
+  distanceToObstacleFromLeftStay: 0
   hitNormalLeft: {x: 0, y: 0, z: 0}
   hitOffsetLeft: {x: 0, y: 0, z: 0}
-  isLeftHandMovingInitially: 0
-  isLeftHandReturningInitially: 0
+  raycastOriginLeft: {x: 0, y: 0, z: 0}
+  hasLeftStartedMovingIn: 0
+  hasLeftContact: 0
+  hasLeftStartedMovingOut: 0
 --- !u!1 &7170379306135414507
 GameObject:
   m_ObjectHideFlags: 0
@@ -4181,7 +4187,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7170379306721617695
 Transform:
   m_ObjectHideFlags: 0
@@ -4230,8 +4236,8 @@ MonoBehaviour:
   hitRight: {x: 0, y: 0, z: 0}
   hitNormalRight: {x: 0, y: 0, z: 0}
   hitOffsetRight: {x: 0, y: 0, z: 0}
-  isRightHandMovingInitially: 0
-  isRightHandReturningInitially: 0
+  hasRightStartedMovingIn: 0
+  hasRightStartedMovingOut: 0
 --- !u!1 &7170379307079623658
 GameObject:
   m_ObjectHideFlags: 0
@@ -4832,7 +4838,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8542549872708990060}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
