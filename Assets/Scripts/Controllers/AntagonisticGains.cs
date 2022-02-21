@@ -23,31 +23,7 @@ public class AntagonisticGains : MonoBehaviour
     public JointController leftForeArmController;
     public JointController leftArmController;
 
-    //public float rightHandKLX;
-    //public float rightHandKLY;
-    //public float rightHandKLZ;
-
-    //public float rightForeArmKLX;
-    //public float rightForeArmKLY;
-    //public float rightForeArmKLZ;
-
-    //public float rightArmKLX;
-    //public float rightArmKLY;
-    //public float rightArmKLZ;
-
-    //public float leftHandKLX;
-    //public float leftHandKLY;
-    //public float leftHandKLZ;
-
-    //public float leftForeArmKLX;
-    //public float leftForeArmKLY;
-    //public float leftForeArmKLZ;
-
-    //public float leftArmKLX;
-    //public float leftArmKLY;
-    //public float leftArmKLZ;
-
-    [Range(1f, 2.6f)]
+    [Range(1f, 2.5f)]
     public float stiffnessMultiplier;
 
     public float handKLX;
@@ -74,30 +50,6 @@ public class AntagonisticGains : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //rightHandController.pLX = rightHandKLX;
-        //rightHandController.pLY = rightHandKLY;
-        //rightHandController.pLZ = rightHandKLZ;
-
-        //rightForeArmController.pLX = rightForeArmKLX;
-        //rightForeArmController.pLY = rightForeArmKLY;
-        //rightForeArmController.pLZ = rightForeArmKLZ;
-
-        //rightArmController.pLX = rightArmKLX;
-        //rightArmController.pLY = rightArmKLY;
-        //rightArmController.pLZ = rightArmKLZ;
-
-        //leftHandController.pLX = leftHandKLX;
-        //leftHandController.pLY = leftHandKLY;
-        //leftHandController.pLZ = leftHandKLZ;
-
-        //leftForeArmController.pLX = leftForeArmKLX;
-        //leftForeArmController.pLY = leftForeArmKLY;
-        //leftForeArmController.pLZ = leftForeArmKLZ;
-
-        //leftArmController.pLX = leftArmKLX;
-        //leftArmController.pLY = leftArmKLY;
-        //leftArmController.pLZ = leftArmKLZ;
-
         rightHandController.pLX = handKLX * stiffnessMultiplier;
         rightHandController.pLY = handKLY * stiffnessMultiplier;
         rightHandController.pLZ = handKLZ * stiffnessMultiplier;

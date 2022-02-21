@@ -1,27 +1,55 @@
+/****************************************************
+ * File: SafetyRegionRight.cs
+   * Author: Eduardo Alvarado
+   * Email: eduardo.alvarado-pinero@polytechnique.edu
+   * Date: Created by LIX on 27/01/2021
+   * Project: ** WORKING TITLE **
+   * Last update: 18/02/2022
+*****************************************************/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SafetyRegionRight : SafetyRegion
 {
-    [Header("Right Hand - Debug")]
-    public ArmsFastIK rightHand;
-    public float distanceToObstacleFromRight;
+    #region Instance Fields
+
+    [Header("Right Hand - IK")]
+    public ArmsFastIK rightHandIK;
+    public bool drawRays;
+
+    [Header("Right Hand - Hit")]
+    public Vector3 hitOffsetRight;
+    public Vector3 hitRightFixed;
     public Vector3 hitRight;
     public Vector3 hitNormalRight;
-    public Vector3 hitOffsetRight;
+    public Vector3 raycastOriginRight;
+
+    [Header("Right Hand - Debug")]
     public bool hasRightStartedMovingIn;
+    public bool hasRightTargetReached;
     public bool hasRightStartedMovingOut;
+    public bool isRightInRange = false;
+
+    #endregion
+
+    #region Read-only & Static Fields
 
     private SphereCollider sphereColliderRight;
+    private Transform rightTargetTransform;
+    private BoxCollider rightHandKinematic;
+    public bool isKinematicRightHandTouching;
 
-    // Start is called before the first frame update
+    #endregion
+
     void Start()
     {
         sphereColliderRight = GetComponent<SphereCollider>();
+        rightTargetTransform = GameObject.Find("Target Right Hand").GetComponent<Transform>();
+        rightHandKinematic = rightHandIK.gameObject.GetComponent<BoxCollider>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         sphereColliderRight.radius = radiusRegion;
@@ -32,58 +60,89 @@ public class SafetyRegionRight : SafetyRegion
     {
         if (other.CompareTag("Obstacle"))
         {
-            //Debug.Log("[INFO] Entering obstacle RIGHT");
+            //Debug.Log("[INFO] Obstacle ENTERS RIGHT");
 
-            // We protect our shoulder in this version.
-            Vector3 raycastOriginRight = originRegion.position;
+            // We protect the origin, and get the closest point in the external object to the previous body part to protect
+            raycastOriginRight = originRegion.position;
 
-            // Get the closest point in the external object to the previous body part to protect (shoulder in this case)
-            hitRight = Physics.ClosestPoint(raycastOriginRight, other, other.transform.position, other.transform.rotation);
+            // Create an offset, in case it is necessary
+            Vector3 offset = (rightTargetTransform.up * hitOffsetRight.y) + (rightTargetTransform.right * hitOffsetRight.x) + (rightTargetTransform.forward * hitOffsetRight.z);
 
-            // Remember that you are calculating the distance to the center (in a wall, it would be far away)
-            distanceToObstacleFromRight = Vector3.Distance(hitRight, originRegion.position);
-                      
-            // Start moving
+            // Fix the first contact position
+            hitRightFixed = Physics.ClosestPoint(raycastOriginRight, other, other.transform.position, other.transform.rotation) + offset;
+
+            // Start moving to the target
             hasRightStartedMovingIn = true;
-        }
+            hasRightStartedMovingOut = false;
+            hasRightTargetReached = false;
+            Debug.Log("[INFO] hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
+            // hasRightStartedMovingIn: TRUE, hasRightStartedMovingOut: FALSE, hasRightTargeReached: FALSE
+         }
     }
 
     private void OnTriggerStay(Collider other)
     {
         if(other.CompareTag("Obstacle"))
         {
-            //Debug.Log("[INFO] Staying obstacle RIGHT");
+            //Debug.Log("[INFO] Obstacle STAYS RIGHT");
 
-            // We protect our shoulder in this version.
-            Vector3 raycastOriginRight = originRegion.position;
+            // We protect the origin, and get the closest point in the external object to the previous body part to protect
+            raycastOriginRight = originRegion.position;
 
-            // Get the closest point in the external object to the previous body part to protect (shoulder in this case)
+            // Keep track of the contact position, without updating the fixed one
             hitRight = Physics.ClosestPoint(raycastOriginRight, other, other.transform.position, other.transform.rotation);
 
-            // Remember that you are calculating the distance to the center (in a wall, it would be far away)
-            distanceToObstacleFromRight = Vector3.Distance(hitRight, originRegion.position);
-
-            Debug.DrawRay(raycastOriginRight, (hitRight - originRegion.position), Color.blue);
-
-            // Launch a ray from the body part to protect, in the direction the closest point (like in the previous red ray). It it is an obstacle, enter.
-            if (Physics.Raycast(raycastOriginRight, (hitRight - originRegion.position), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Obstacle")))
+            // 1. We update if we did not reach yet the position
+            // 2. Or if we stop being in contact when the distance to the hit is larger than the arm itself
+            if (!hasRightTargetReached)
             {
-                // hit.point is equal than hitLeft. We just use hit to calculate the normal in that point, thanks to the ray.
-                hitNormalRight = hit.normal;
+                hitRightFixed = hitRight;
+            }
+            else
+            {
+                //hitRightFixed = hitRight; // TEST
 
-                // TODO: Improve offset
-                hitRight = hitRight + hitOffsetRight.x * hitNormalRight;
-                Debug.DrawRay(hitRight, hitNormalRight * 0.2f, Color.cyan);
+                // TODO: One for static objects, and other for dynamic?
 
-                // Set target where it his, based on if reacting or just placing the hand.
-                rightHand.SetTargetStay(reactionTime, hasRightStartedMovingIn);
+                //if(isKinematicLeftHandTouching)
+                //{
+                //    hitLeftFixed = hitLeft;
+                //}
+
+                // TODO: The right hand does not go as expected
+                if (!isRightInRange)
+                {
+                    Debug.Log("Updating!");
+                    Vector3 offset = (rightTargetTransform.up * hitOffsetRight.y) + (rightTargetTransform.right * hitOffsetRight.x) + (rightTargetTransform.forward * hitOffsetRight.z);
+                    rightHandIK.SetTargetUpdate(hitRightFixed, offset, 0.5f); // TODO: Time that takes to make the small jump
+                }
             }
 
-            // Activate -> TODO: Have weights would be great to decide the amount of IK
-            rightHand.activateIK = true;
+            // Launch a ray from the body part to protect, in the direction the closest point (like in the previous red ray)
+            if (Physics.Raycast(raycastOriginRight, (hitRightFixed - originRegion.position), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Obstacle")))
+            {
+                hitNormalRight = hit.normal;
 
-            // Stop reacting
-            hasRightStartedMovingIn = false;
+                if (drawRays)
+                {
+                    Debug.DrawRay(raycastOriginRight, (hitRightFixed - originRegion.position), Color.blue);
+                    Debug.DrawRay(hitRightFixed, hitNormalRight * 0.2f, Color.cyan);
+                }
+
+                // Set target where it his, based on if reacting or just placing the hand
+                // hasRightStartedMovingIn will be TRUE until we reach the object
+                rightHandIK.SetTargetStay(reactionTime, hasRightStartedMovingIn);
+            }
+
+            // Activate - TODO: Have weights would be great to decide the amount of IK
+            rightHandIK.activateIK = true;
+
+            // Once we have finished, we update the variables
+            hasRightStartedMovingOut = false;
+            if (hasRightTargetReached)
+                hasRightStartedMovingIn = false;
+            Debug.Log("[INFO] hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
+            // hasRightStartedMovingIn: FALSE, hasRightStartedMovingOut: FALSE, hasRightTargeReached: FALSE -> TRUE (when the coroutine finishes)
         }
     }
 
@@ -91,13 +150,25 @@ public class SafetyRegionRight : SafetyRegion
     {
         if (other.CompareTag("Obstacle"))
         {
-            //Debug.Log("[INFO] Exiting obstacle RIGHT");
+            //Debug.Log("[INFO] Obstacle EXITS RIGHT");
 
-            // For the moment is not used
+            // Starts moving out
+            hasRightStartedMovingIn = false;
             hasRightStartedMovingOut = true;
+            hasRightTargetReached = false;
+            Debug.Log("[INFO] hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
+            // hasRightStartedMovingIn: FALSE, hasRightStartedMovingOut: TRUE, hasRightTargeReached: FALSE
 
-            // Set target back
-            rightHand.SetTargetBack(reactionTime, hasRightStartedMovingOut);
+            // Set target back to original position - TODO: FIX the original position
+            rightHandIK.SetTargetBack(reactionTime, hasRightStartedMovingOut);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(hitRightFixed, 0.05f);
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(hitRight, 0.05f);
     }
 }

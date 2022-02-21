@@ -14,36 +14,32 @@ using UnityEditor;
 
 public class ArmsFastIK : MonoBehaviour
 {
-    /// <summary>
-    /// Chain length of bones
-    /// </summary>
-    public int ChainLength = 2;
 
-    /// <summary>
-    /// Target the chain should bent to
-    /// </summary>
+    #region Instance Fields
+
+    [Header("Fast IK - Settings")]
+    public int ChainLength = 2;
     public Transform Target;
     public Transform TargetConstant;
     public Transform Pole;
-
-    /// <summary>
-    /// Solver iterations per update
-    /// </summary>
-    [Header("Solver Parameters")]
-    public int Iterations = 10;
-
-    /// <summary>
-    /// Distance when the solver stops
-    /// </summary>
-    public float Delta = 0.001f;
-
-    /// <summary>
-    /// Strength of going back to the start position.
-    /// </summary>
+    public int Iterations = 10; // Solver iterations per update
+    public float Delta = 0.001f; // Distance when the solver stops
     [Range(0, 1)]
-    public float SnapBackStrength = 1f;
+    public float SnapBackStrength = 1f; // Strength of going back to the start position
 
-    protected float[] BonesLength; //Target to Origin
+    [Header("Safety Region - Settings")]
+    public bool activateIK;
+    public Quaternion rotationToNormal;
+    public Transform kinBody;
+    public SafetyRegionLeft safetyRegionLeft;
+    public SafetyRegionRight safetyRegionRight;
+    public Collider _col;
+
+    #endregion
+
+    #region Read-only & Static Fields
+
+    protected float[] BonesLength; // Target to Origin
     protected float CompleteLength;
     protected Transform[] Bones;
     protected Vector3[] Positions;
@@ -52,16 +48,8 @@ public class ArmsFastIK : MonoBehaviour
     protected Quaternion StartRotationTarget;
     protected Transform Root;
 
-    // NEW
-    [Header("Safety Region")]
-    public bool activateIK;
-    public Quaternion rotationToNormal;
-    public Transform kinBody;
-    public SafetyRegionLeft safetyRegionLeft;
-    public SafetyRegionRight safetyRegionRight;
-    public Collider _col;
+    #endregion
 
-    // Start is called before the first frame update
     void Awake()
     {
         Init();
@@ -119,10 +107,6 @@ public class ArmsFastIK : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-    }
-
     private void Update()
     {
         if (!activateIK)
@@ -132,7 +116,6 @@ public class ArmsFastIK : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void LateUpdate()
     {
         if (activateIK)
@@ -194,8 +177,10 @@ public class ArmsFastIK : MonoBehaviour
     /// <param name="hand"></param>
     public void SetTargetStay(float reactionTime, bool hasStartedMovingIn)
     {
-        if (hasStartedMovingIn) // For the first time, run the coroutine
+        if (hasStartedMovingIn)
+        {
             StartCoroutine(MoveHand(reactionTime));
+        }
         else
         {
             if (Target.CompareTag("LeftHand"))
@@ -224,6 +209,17 @@ public class ArmsFastIK : MonoBehaviour
     }
 
     /// <summary>
+    /// Update target to new position if we get to far from the original fixed position.
+    /// </summary>
+    /// <param name="startPos"></param>
+    /// <param name="offset"></param>
+    /// <param name="reactionTime"></param>
+    public void SetTargetUpdate(Vector3 startPos, Vector3 offset, float reactionTime)
+    {
+        StartCoroutine(MoveHandUpdate(startPos, offset, reactionTime));
+    }
+
+    /// <summary>
     /// Set target back to the original position after contact.
     /// </summary>
     /// <param name="pos"></param>
@@ -242,15 +238,11 @@ public class ArmsFastIK : MonoBehaviour
     // Coroutines //
     // ========== //
 
-    /// <summary>
-    /// Coroutine that performs the motion part.
-    /// </summary>
-    /// <param name="endPos"></param>
-    /// <param name="endRot"></param>
-    /// <param name="moveTime"></param>
-    /// <returns></returns>
+    /*
     IEnumerator MoveHand(float moveTime)
     {
+        Debug.Log("[COROUTINE] Executing MoveHand");
+
         // Store the initial, current position and rotation for the interpolation.
         Vector3 startPos = Target.transform.position;
         Quaternion startRot = Target.transform.rotation;
@@ -268,7 +260,7 @@ public class ArmsFastIK : MonoBehaviour
             if (Target.CompareTag("LeftHand"))
             {
                 Target.transform.position = Vector3.Lerp(startPos, safetyRegionLeft.hitLeftFixed, normalizedTime);
-                
+
                 Vector3 forwardHit = new Vector3(-safetyRegionLeft.hitNormalLeft.z, 0, safetyRegionLeft.hitNormalLeft.x);
                 if (forwardHit != Vector3.zero)
                     rotationToNormal = Quaternion.LookRotation(forwardHit, Vector3.Cross(forwardHit, safetyRegionLeft.hitNormalLeft));
@@ -298,15 +290,191 @@ public class ArmsFastIK : MonoBehaviour
         }
         while ((timeElapsed < moveTime) && !(safetyRegionLeft.hasLeftStartedMovingOut));
 
-        // Hand has arrived
+        //Hand has arrived
         if (Target.CompareTag("LeftHand"))
         {
-            safetyRegionLeft.hasLeftContact = true;
+            safetyRegionLeft.hasLeftTargeReached = true;
+        }
+        else if (Target.CompareTag("RightHand"))
+        {
+            safetyRegionRight.hasRightTargeReached = true;
+        }
+    }
+    */
+
+    IEnumerator MoveHand(float moveTime)
+    {
+        Debug.Log("[COROUTINE] Executing MoveHand");
+
+        // Store the initial, current position and rotation for the interpolation.
+        Vector3 startPos = Target.transform.position;
+        Quaternion startRot = Target.transform.rotation;
+
+        if(Target.CompareTag("LeftHand"))
+        {
+            // Initialize the time.
+            float timeElapsed = 0;
+
+            do
+            {
+                timeElapsed += Time.deltaTime;
+                float normalizedTime = timeElapsed / moveTime;
+
+                normalizedTime = Easing.EaseInOutCubic(normalizedTime);
+
+                Target.transform.position = Vector3.Lerp(startPos, safetyRegionLeft.hitLeftFixed, normalizedTime);
+
+                Vector3 forwardHit = new Vector3(-safetyRegionLeft.hitNormalLeft.z, 0, safetyRegionLeft.hitNormalLeft.x);
+                if (forwardHit != Vector3.zero)
+                    rotationToNormal = Quaternion.LookRotation(forwardHit, Vector3.Cross(forwardHit, safetyRegionLeft.hitNormalLeft));
+
+                //Target.transform.rotation = Quaternion.Slerp(startRot, rotationToNormal, normalizedTime);
+                //Target.transform.rotation = Quaternion.Euler(new Vector3(0f, Target.transform.rotation.eulerAngles.y, 0f));
+
+                // Not a priority, we just set the final rotation directly
+                Target.transform.rotation = rotationToNormal;
+
+                yield return null;
+            }
+            while ((timeElapsed < moveTime) && !(safetyRegionLeft.hasLeftStartedMovingOut));
+
+            safetyRegionLeft.hasLeftTargetReached = true;
+
+        }
+
+        if (Target.CompareTag("RightHand"))
+        {
+            // Initialize the time.
+            float timeElapsed = 0;
+
+            do
+            {
+                timeElapsed += Time.deltaTime;
+                float normalizedTime = timeElapsed / moveTime;
+
+                normalizedTime = Easing.EaseInOutCubic(normalizedTime);
+
+                Target.transform.position = Vector3.Lerp(startPos, safetyRegionRight.hitRightFixed, normalizedTime);
+
+                Vector3 forwardHit = new Vector3(safetyRegionRight.hitNormalRight.z, 0, -safetyRegionRight.hitNormalRight.x);
+                if (forwardHit != Vector3.zero)
+                    rotationToNormal = Quaternion.LookRotation(forwardHit, Vector3.Cross(forwardHit, safetyRegionRight.hitNormalRight));
+
+                //Target.transform.rotation = Quaternion.Slerp(startRot, rotationToNormal, normalizedTime);
+                //Target.transform.rotation = Quaternion.Euler(new Vector3(0f, Target.transform.rotation.eulerAngles.y, 0f));
+
+                // Not a priority, we just set the final rotation directly
+                Target.transform.rotation = rotationToNormal;
+
+                yield return null;
+            }
+            while ((timeElapsed < moveTime) && !(safetyRegionRight.hasRightStartedMovingOut));
+
+            safetyRegionRight.hasRightTargetReached = true;
+
+        }
+
+        // Hand has arrived
+        //if (Target.CompareTag("LeftHand"))
+        //{
+        //    safetyRegionLeft.hasLeftTargetReached = true;
+        //}
+        //if (Target.CompareTag("RightHand"))
+        //{
+        //    safetyRegionRight.hasRightTargetReached = true;
+        //}
+    }
+
+    /*
+    IEnumerator MoveHandUpdate(Vector3 startPos, Vector3 offset, float moveTime)
+    {
+        Debug.Log("[COROUTINE] Executing MoveHandUpdate");
+
+        // Initialize the time.
+        float timeElapsed = 0;
+
+        do
+        {
+            timeElapsed += Time.deltaTime;
+            float normalizedTime = timeElapsed / moveTime;
+
+            normalizedTime = Easing.EaseInOutCubic(normalizedTime);
+
+            if (Target.CompareTag("LeftHand"))
+            {
+                Vector3 centerPoint = (startPos + safetyRegionLeft.hitLeft + offset) / 2;
+                centerPoint += safetyRegionLeft.hitNormalLeft * 0.1f;
+
+                safetyRegionLeft.hitLeftFixed = Vector3.Lerp(Vector3.Lerp(startPos, centerPoint, normalizedTime), Vector3.Lerp(centerPoint, safetyRegionLeft.hitLeft + offset, normalizedTime), normalizedTime);
+            }
+
+            if(Target.CompareTag("RightHand"))
+            {
+                Vector3 centerPoint = (startPos + safetyRegionRight.hitRight + offset) / 2;
+                centerPoint += safetyRegionRight.hitNormalRight * 0.1f;
+
+                safetyRegionRight.hitRightFixed = Vector3.Lerp(Vector3.Lerp(startPos, centerPoint, normalizedTime), Vector3.Lerp(centerPoint, safetyRegionRight.hitRight + offset, normalizedTime), normalizedTime);
+            }
+
+            yield return null;
+        }
+        while (timeElapsed < moveTime);
+    }*/
+
+    IEnumerator MoveHandUpdate(Vector3 startPos, Vector3 offset, float moveTime)
+    {
+        Debug.Log("[COROUTINE] Executing MoveHandUpdate");
+
+        if(Target.CompareTag("LeftHand"))
+        {
+            // Initialize the time.
+            float timeElapsed = 0;
+
+            do
+            {
+                timeElapsed += Time.deltaTime;
+                float normalizedTime = timeElapsed / moveTime;
+
+                normalizedTime = Easing.EaseInOutCubic(normalizedTime);
+
+                Vector3 centerPoint = (startPos + safetyRegionLeft.hitLeft + offset) / 2;
+                centerPoint += safetyRegionLeft.hitNormalLeft * 0.1f;
+
+                safetyRegionLeft.hitLeftFixed = Vector3.Lerp(Vector3.Lerp(startPos, centerPoint, normalizedTime), Vector3.Lerp(centerPoint, safetyRegionLeft.hitLeft + offset, normalizedTime), normalizedTime);
+
+                yield return null;
+            }
+            while (timeElapsed < moveTime);
+        }
+
+        if(Target.CompareTag("RightHand"))
+        {
+            // Initialize the time.
+            float timeElapsed = 0;
+
+            do
+            {
+                timeElapsed += Time.deltaTime;
+                float normalizedTime = timeElapsed / moveTime;
+
+                normalizedTime = Easing.EaseInOutCubic(normalizedTime);
+
+                Vector3 centerPoint = (startPos + safetyRegionRight.hitRight + offset) / 2;
+                centerPoint += safetyRegionRight.hitNormalRight * 0.1f;
+
+                safetyRegionRight.hitRightFixed = Vector3.Lerp(Vector3.Lerp(startPos, centerPoint, normalizedTime), Vector3.Lerp(centerPoint, safetyRegionRight.hitRight + offset, normalizedTime), normalizedTime);
+
+                yield return null;
+            }
+            while (timeElapsed < moveTime);
         }
     }
 
+    /*
     IEnumerator MoveHandBack(float moveTime)
     {
+        Debug.Log("[COROUTINE] Executing MoveHandBack");
+
         // Store the initial, current position and rotation for the interpolation.
         Vector3 startPos = Target.transform.position;
         Quaternion startRot = Target.transform.rotation;
@@ -332,7 +500,7 @@ public class ArmsFastIK : MonoBehaviour
                 Target.transform.rotation = TargetConstant.transform.rotation;
 
             }
-            else if(Target.CompareTag("RightHand"))
+            else if (Target.CompareTag("RightHand"))
             {
                 Target.transform.position = Vector3.Lerp(startPos, TargetConstant.transform.position, normalizedTime);
 
@@ -349,7 +517,78 @@ public class ArmsFastIK : MonoBehaviour
         while ((timeElapsed < moveTime) && !(safetyRegionLeft.hasLeftStartedMovingIn));
 
         // Once the coroutine finishes, deactivate IK for this hand and follow kinematic animation.
-        if(!safetyRegionLeft.hasLeftStartedMovingIn)
+        if (Target.CompareTag("LeftHand") && !safetyRegionLeft.hasLeftStartedMovingIn)
+        {
+            activateIK = false;
+        }
+    }
+    */
+
+    IEnumerator MoveHandBack(float moveTime)
+    {
+        Debug.Log("[COROUTINE] Executing MoveHandBack");
+
+        // Store the initial, current position and rotation for the interpolation.
+        Vector3 startPos = Target.transform.position;
+        Quaternion startRot = Target.transform.rotation;
+
+        if (Target.CompareTag("LeftHand"))
+        {
+            // Initialize the time.
+            float timeElapsed = 0;
+
+            do
+            {
+                timeElapsed += Time.deltaTime;
+                float normalizedTime = timeElapsed / moveTime;
+
+                normalizedTime = Easing.EaseInOutCubic(normalizedTime);
+
+                Target.transform.position = Vector3.Lerp(startPos, TargetConstant.transform.position, normalizedTime);
+
+                //Target.transform.rotation = Quaternion.Slerp(startRot, TargetConstant.transform.rotation, normalizedTime);
+                //Target.transform.rotation = Quaternion.Euler(new Vector3(0f, Target.transform.rotation.eulerAngles.y, 0f));
+
+                // Not a priority, we just set the final rotation directly
+                Target.transform.rotation = TargetConstant.transform.rotation;
+
+                yield return null;
+            }
+            while ((timeElapsed < moveTime) && !(safetyRegionLeft.hasLeftStartedMovingIn));
+        }
+
+        if(Target.CompareTag("RightHand"))
+        {
+            // Initialize the time.
+            float timeElapsed = 0;
+
+            do
+            {
+                timeElapsed += Time.deltaTime;
+                float normalizedTime = timeElapsed / moveTime;
+
+                normalizedTime = Easing.EaseInOutCubic(normalizedTime);
+
+                Target.transform.position = Vector3.Lerp(startPos, TargetConstant.transform.position, normalizedTime);
+
+                //Target.transform.rotation = Quaternion.Slerp(startRot, TargetConstant.transform.rotation, normalizedTime);
+                //Target.transform.rotation = Quaternion.Euler(new Vector3(0f, Target.transform.rotation.eulerAngles.y, 0f));
+
+                // Not a priority, we just set the final rotation directly
+                Target.transform.rotation = TargetConstant.transform.rotation;
+
+                yield return null;
+            }
+            while ((timeElapsed < moveTime) && !(safetyRegionRight.hasRightStartedMovingIn));
+        }
+
+        // Once the coroutine finishes, deactivate IK for this hand and follow kinematic animation.
+        if (Target.CompareTag("LeftHand") && !safetyRegionLeft.hasLeftStartedMovingIn)
+        {
+            activateIK = false;
+        }
+
+        if (Target.CompareTag("RightHand") && !safetyRegionRight.hasRightStartedMovingIn)
         {
             activateIK = false;
         }
@@ -379,6 +618,17 @@ public class ArmsFastIK : MonoBehaviour
         //1st is possible to reach?
         if ((targetPosition - GetPositionRootSpace(Bones[0])).sqrMagnitude >= CompleteLength * CompleteLength)
         {
+            // Hand did not touch it yet
+            if (Target.CompareTag("LeftHand") && safetyRegionLeft.hasLeftTargetReached)
+            {
+                safetyRegionLeft.isLeftInRange = false;
+            }
+            
+            if (Target.CompareTag("RightHand") && safetyRegionRight.hasRightTargetReached)
+            {
+                safetyRegionRight.isRightInRange = false;
+            }
+
             //just strech it
             var direction = (targetPosition - Positions[0]).normalized;
             //set everything after root
@@ -387,6 +637,17 @@ public class ArmsFastIK : MonoBehaviour
         }
         else
         {
+            // Hand did touch it 
+            if (Target.CompareTag("LeftHand") && safetyRegionLeft.hasLeftTargetReached)
+            {
+                safetyRegionLeft.isLeftInRange = true;
+            }
+            
+            if (Target.CompareTag("RightHand") && safetyRegionRight.hasRightTargetReached)
+            {
+                safetyRegionRight.isRightInRange = true;
+            }
+
             for (int i = 0; i < Positions.Length - 1; i++)
                 Positions[i + 1] = Vector3.Lerp(Positions[i + 1], Positions[i] + StartDirectionSucc[i], SnapBackStrength);
 
@@ -409,6 +670,17 @@ public class ArmsFastIK : MonoBehaviour
                 //close enough?
                 if ((Positions[Positions.Length - 1] - targetPosition).sqrMagnitude < Delta * Delta)
                     break;
+            }
+
+            // Hand is coming back 
+            if (Target.CompareTag("LeftHand") && safetyRegionLeft.hasLeftStartedMovingOut)
+            {
+                safetyRegionLeft.isLeftInRange = false;
+            }
+            
+            if (Target.CompareTag("RightHand") && safetyRegionRight.hasRightStartedMovingOut)
+            {
+                safetyRegionRight.isRightInRange = false;
             }
         }
 
@@ -469,6 +741,24 @@ public class ArmsFastIK : MonoBehaviour
         else
             current.rotation = Root.rotation * rotation;
     }
+
+    /*
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Obstacle"))
+        {
+            safetyRegionLeft.isKinematicLeftHandTouching = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Obstacle"))
+        {
+            safetyRegionLeft.isKinematicLeftHandTouching = false;
+        }
+    }
+    */
 
     void OnDrawGizmos()
     {
