@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18
+      value: 21.249998
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -29,7 +29,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15
+      value: 20.73
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -37,15 +37,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326074, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_Name
-      value: Wrecking Ball - 5Kg
+      value: Wrecking Ball - 5Kg (2)
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326074, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_IsActive
@@ -91,6 +91,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.1936345
       objectReference: {fileID: 0}
+    - target: {fileID: 2131981081088269039, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
+      propertyPath: m_TagString
+      value: Dynamic Obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 2131981081088269042, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -101,3 +105,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
+--- !u!1 &6637984949911319695 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2131981081597214040, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
+  m_PrefabInstance: {fileID: 4722179631542569431}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &849436086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6637984949911319695}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d2108c0d7e0e8647b6a5ce59ff38371, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: -0.25

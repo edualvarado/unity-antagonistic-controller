@@ -10,6 +10,8 @@ TagManager:
   - Ground
   - RightForeArm
   - RightArm
+  - Dynamic Obstacle
+  - Static Obstacle
   layers:
   - Default
   - TransparentFX

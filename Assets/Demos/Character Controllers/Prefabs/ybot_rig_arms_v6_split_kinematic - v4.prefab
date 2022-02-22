@@ -2633,7 +2633,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6022386670828169427}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4061,20 +4061,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originRegion: {fileID: 1904840852391078110}
-  originOffset: {x: -0.1, y: 0, z: 0.5}
+  originOffset: {x: -0.4, y: 0, z: 0.5}
   radiusRegion: 0.6
-  reactionTime: 3
-  leftHand: {fileID: 7170379307483878355}
+  reactionTime: 1.5
+  ragdollLeftHand: {fileID: 0}
+  leftHandIK: {fileID: 7170379307483878355}
+  fixHandToDynamicObject: 0
+  drawIK: 0
+  hitOffsetLeft: {x: 0.03, y: 0, z: 0}
+  hitLeftFixed: {x: 0, y: 0, z: 0}
+  localHitLeftFixed: {x: 0, y: 0, z: 0}
   hitLeft: {x: 0, y: 0, z: 0}
-  distanceToObstacleFromLeft: 0
-  hitLeftStay: {x: 0, y: 0, z: 0}
-  distanceToObstacleFromLeftStay: 0
   hitNormalLeft: {x: 0, y: 0, z: 0}
-  hitOffsetLeft: {x: 0, y: 0, z: 0}
   raycastOriginLeft: {x: 0, y: 0, z: 0}
   hasLeftStartedMovingIn: 0
-  hasLeftContact: 0
+  hasLeftTargetReached: 0
   hasLeftStartedMovingOut: 0
+  isLeftInRange: 0
 --- !u!1 &7170379306135414507
 GameObject:
   m_ObjectHideFlags: 0
@@ -4187,7 +4190,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7170379306721617695
 Transform:
   m_ObjectHideFlags: 0
@@ -4228,16 +4231,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originRegion: {fileID: 3849705244601195322}
-  originOffset: {x: 0.1, y: 0, z: 0.5}
+  originOffset: {x: 0.4, y: 0, z: 0.5}
   radiusRegion: 0.6
-  reactionTime: 0.1
-  rightHand: {fileID: 7170379307483878354}
-  distanceToObstacleFromRight: 0
+  reactionTime: 1.5
+  ragdollRightHand: {fileID: 0}
+  rightHandIK: {fileID: 7170379307483878354}
+  fixHandToDynamicObject: 0
+  drawIK: 0
+  hitOffsetRight: {x: 0.03, y: 0, z: 0}
+  hitRightFixed: {x: 0, y: 0, z: 0}
+  localHitRightFixed: {x: 0, y: 0, z: 0}
   hitRight: {x: 0, y: 0, z: 0}
   hitNormalRight: {x: 0, y: 0, z: 0}
-  hitOffsetRight: {x: 0, y: 0, z: 0}
+  raycastOriginRight: {x: 0, y: 0, z: 0}
   hasRightStartedMovingIn: 0
+  hasRightTargetReached: 0
   hasRightStartedMovingOut: 0
+  isRightInRange: 0
 --- !u!1 &7170379307079623658
 GameObject:
   m_ObjectHideFlags: 0
@@ -4838,7 +4848,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8542549872708990060}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

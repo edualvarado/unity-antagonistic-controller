@@ -396,7 +396,7 @@ public class JointControllerImitation
 
         // TEST - Isoline with Clamped Errors
         // 2) DEBUG: This makes the slope to be limited within the range of the hard limits
-        interceptX = (0f) / (kinematicLocalErrorMaxXClamp);
+        interceptX = (-gravityTorqueVectorLocal.x) / (kinematicLocalErrorMaxXClamp);
         slopeX = (kinematicLocalErrorMinXClamp) / (-(kinematicLocalErrorMaxXClamp));
         KPHX = KPLX * slopeX + interceptX; // ERROR: KPH is NaN is the denominator is 0
 
@@ -479,7 +479,7 @@ public class JointControllerImitation
         //KPHY = KPLY * slopeY + interceptY;
 
         // TEST - Isoline with Clamped Errors
-        interceptY = (0f) / kinematicLocalErrorMaxYClamp;
+        interceptY = (-gravityTorqueVectorLocal.y) / kinematicLocalErrorMaxYClamp;
         slopeY = (kinematicLocalErrorMinYClamp) / (-(kinematicLocalErrorMaxYClamp));
         KPHY = KPLY * slopeY + interceptY; // ERROR: KPH is NaN is the denominator is 0
 
@@ -562,7 +562,7 @@ public class JointControllerImitation
         //KPHZ = KPLZ * slopeZ + interceptZ;
 
         // TEST - Isoline with Clamped Errors
-        interceptZ = (0f) / kinematicLocalErrorMaxZClamp;
+        interceptZ = (-gravityTorqueVectorLocal.z) / kinematicLocalErrorMaxZClamp;
         slopeZ = (kinematicLocalErrorMinZClamp) / (-(kinematicLocalErrorMaxZClamp));
         KPHZ = KPLZ * slopeZ + interceptZ; // ERROR: KPH is NaN is the denominator is 0
 

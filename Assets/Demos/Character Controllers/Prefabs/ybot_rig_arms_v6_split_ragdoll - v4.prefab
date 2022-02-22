@@ -50,7 +50,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!136 &4765623532570005706
 CapsuleCollider:
@@ -238,6 +238,10 @@ MonoBehaviour:
   minHardLimitZ: -25
   maxHardLimitZ: 25
   drawLimitsZ: 0
+  distance3D: {x: 0, y: 0, z: 0}
+  gravityAcc: {x: 0, y: 0, z: 0}
+  gravityTorqueVector: {x: 0, y: 0, z: 0}
+  gravityTorqueVectorLocal: {x: 0, y: 0, z: 0}
 --- !u!1 &4765623532586227487
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,7 +792,7 @@ MonoBehaviour:
   leftHandController: {fileID: 3092514557242679201}
   leftForeArmController: {fileID: 3092514556973599890}
   leftArmController: {fileID: 3092514557591848794}
-  stiffnessMultiplier: 2.6
+  stiffnessMultiplier: 1.5
   handKLX: 10
   handKLY: 1
   handKLZ: 10
@@ -851,7 +855,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!65 &3092514557242679199
 BoxCollider:
@@ -860,7 +864,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623532839076803}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e0c2cc9b711ba4d41bc4d19825bf7ab8, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1023,6 +1027,10 @@ MonoBehaviour:
   minHardLimitZ: -90
   maxHardLimitZ: 90
   drawLimitsZ: 0
+  distance3D: {x: 0, y: 0, z: 0}
+  gravityAcc: {x: 0, y: 0, z: 0}
+  gravityTorqueVector: {x: 0, y: 0, z: 0}
+  gravityTorqueVectorLocal: {x: 0, y: 0, z: 0}
 --- !u!1 &4765623532904624680
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,7 +1490,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623533172998659}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2124,7 +2132,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623533373452733}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2508,7 +2516,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!136 &4765623533403131673
 CapsuleCollider:
@@ -2696,6 +2704,10 @@ MonoBehaviour:
   minHardLimitZ: -25
   maxHardLimitZ: 25
   drawLimitsZ: 0
+  distance3D: {x: 0, y: 0, z: 0}
+  gravityAcc: {x: 0, y: 0, z: 0}
+  gravityTorqueVector: {x: 0, y: 0, z: 0}
+  gravityTorqueVectorLocal: {x: 0, y: 0, z: 0}
 --- !u!1 &4765623533429162650
 GameObject:
   m_ObjectHideFlags: 0
@@ -3071,7 +3083,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!136 &4765623533588814594
 CapsuleCollider:
@@ -3259,6 +3271,10 @@ MonoBehaviour:
   minHardLimitZ: -80
   maxHardLimitZ: 80
   drawLimitsZ: 0
+  distance3D: {x: 0, y: 0, z: 0}
+  gravityAcc: {x: 0, y: 0, z: 0}
+  gravityTorqueVector: {x: 0, y: 0, z: 0}
+  gravityTorqueVectorLocal: {x: 0, y: 0, z: 0}
 --- !u!1 &4765623533631331841
 GameObject:
   m_ObjectHideFlags: 0
@@ -5032,7 +5048,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!136 &4765623534636773833
 CapsuleCollider:
@@ -5220,6 +5236,10 @@ MonoBehaviour:
   minHardLimitZ: -80
   maxHardLimitZ: 80
   drawLimitsZ: 0
+  distance3D: {x: 0, y: 0, z: 0}
+  gravityAcc: {x: 0, y: 0, z: 0}
+  gravityTorqueVector: {x: 0, y: 0, z: 0}
+  gravityTorqueVectorLocal: {x: 0, y: 0, z: 0}
 --- !u!1 &4765623534659419155
 GameObject:
   m_ObjectHideFlags: 0
@@ -5506,3 +5526,7 @@ MonoBehaviour:
   minHardLimitZ: -90
   maxHardLimitZ: 90
   drawLimitsZ: 0
+  distance3D: {x: 0, y: 0, z: 0}
+  gravityAcc: {x: 0, y: 0, z: 0}
+  gravityTorqueVector: {x: 0, y: 0, z: 0}
+  gravityTorqueVectorLocal: {x: 0, y: 0, z: 0}

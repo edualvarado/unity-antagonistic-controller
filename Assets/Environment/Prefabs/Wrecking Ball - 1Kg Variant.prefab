@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15
+      value: 16.759998
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -29,7 +29,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15
+      value: 16.82
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326074, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_Name
-      value: Wrecking Ball - 1Kg
+      value: Wrecking Ball - 1Kg (1)
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326074, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_IsActive
@@ -90,6 +90,10 @@ PrefabInstance:
     - target: {fileID: 2131981081088269038, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.1936345
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131981081088269039, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
+      propertyPath: m_TagString
+      value: Dynamic Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 2131981081088269042, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_Materials.Array.data[0]

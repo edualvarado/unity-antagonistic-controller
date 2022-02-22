@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 581516834125061140}
   m_Layer: 10
   m_Name: Sphere
-  m_TagString: Obstacle
+  m_TagString: Dynamic Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

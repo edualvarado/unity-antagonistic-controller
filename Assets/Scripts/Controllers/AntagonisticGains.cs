@@ -23,7 +23,7 @@ public class AntagonisticGains : MonoBehaviour
     public JointController leftForeArmController;
     public JointController leftArmController;
 
-    [Range(1f, 2.5f)]
+    [Range(0f, 2.5f)]
     public float stiffnessMultiplier;
 
     public float handKLX;

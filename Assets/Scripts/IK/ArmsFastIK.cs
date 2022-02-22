@@ -339,7 +339,6 @@ public class ArmsFastIK : MonoBehaviour
             while ((timeElapsed < moveTime) && !(safetyRegionLeft.hasLeftStartedMovingOut));
 
             safetyRegionLeft.hasLeftTargetReached = true;
-
         }
 
         if (Target.CompareTag("RightHand"))
@@ -371,18 +370,7 @@ public class ArmsFastIK : MonoBehaviour
             while ((timeElapsed < moveTime) && !(safetyRegionRight.hasRightStartedMovingOut));
 
             safetyRegionRight.hasRightTargetReached = true;
-
         }
-
-        // Hand has arrived
-        //if (Target.CompareTag("LeftHand"))
-        //{
-        //    safetyRegionLeft.hasLeftTargetReached = true;
-        //}
-        //if (Target.CompareTag("RightHand"))
-        //{
-        //    safetyRegionRight.hasRightTargetReached = true;
-        //}
     }
 
     /*
@@ -610,7 +598,9 @@ public class ArmsFastIK : MonoBehaviour
 
         //get position
         for (int i = 0; i < Bones.Length; i++)
+        {
             Positions[i] = GetPositionRootSpace(Bones[i]);
+        }
 
         var targetPosition = GetPositionRootSpace(Target);
         var targetRotation = GetRotationRootSpace(Target);
@@ -740,25 +730,7 @@ public class ArmsFastIK : MonoBehaviour
             current.rotation = rotation;
         else
             current.rotation = Root.rotation * rotation;
-    }
-
-    /*
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Obstacle"))
-        {
-            safetyRegionLeft.isKinematicLeftHandTouching = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Obstacle"))
-        {
-            safetyRegionLeft.isKinematicLeftHandTouching = false;
-        }
-    }
-    */
+    }  
 
     void OnDrawGizmos()
     {

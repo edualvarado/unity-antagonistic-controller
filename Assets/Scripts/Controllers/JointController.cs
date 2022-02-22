@@ -167,6 +167,12 @@ public class JointController : MonoBehaviour
     private float slopeZCurrent;
     private float interceptZCurrent;
 
+    [Header("External Forces")]
+    public Vector3 distance3D;
+    public Vector3 gravityAcc;
+    public Vector3 gravityTorqueVector;
+    public Vector3 gravityTorqueVectorLocal;
+
     // Others
     private ConfigurableJoint _jointAnt;
     private Transform _currentTransform;
@@ -180,12 +186,6 @@ public class JointController : MonoBehaviour
     private Quaternion _currentGlobalOrientation;
     private Quaternion _kinematicLocalOrientation;
     private Quaternion _kinematicGlobalOrientation;
-
-    // External Forces
-    private Vector3 distance3D;
-    private Vector3 gravityAcc;
-    private Vector3 gravityTorqueVector;
-    private Vector3 gravityTorqueVectorLocal;
 
     // For Normal PD Controller
     private Quaternion newRotationLocal;
@@ -647,12 +647,15 @@ public class JointController : MonoBehaviour
         // Calculate forces relative to the RB - Distance from root to the COM
         distance3D = _objectRigidbody.worldCenterOfMass - transform.position;
 
+        Debug.DrawRay(_objectRigidbody.worldCenterOfMass, Vector3.up, Color.red);
+        Debug.DrawRay(transform.position, Vector3.up, Color.blue);
+
         // 1. Gravity force and generated torque
         gravityAcc = Physics.gravity;
         gravityTorqueVector = Vector3.Cross(distance3D, _objectRigidbody.mass * gravityAcc); // Remember: wrt. global coord. system
         gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // Remember: wrt. local coord. system
         //Debug.DrawRay(transform.position, distance3D, Color.blue);
-        //Debug.DrawRay(transform.position, gravityTorqueVectorLocal, Color.red);
+        Debug.DrawRay(transform.position, gravityTorqueVectorLocal, Color.red);
         //Debug.DrawRay(_objectRigidbody.worldCenterOfMass, gravityAcc, Color.green);
 
         /* TODO - This should be improved, also maybe adding other external forces? */
@@ -834,6 +837,20 @@ public class JointController : MonoBehaviour
 
         #endregion
     }
+
+    #endregion
+
+    #region Collider
+
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    if(collision.gameObject.CompareTag("Dynamic Obstacle") || collision.gameObject.CompareTag("Static Obstacle"))
+    //    {
+    //        Debug.Log("COLLISION");
+    //        float step = 1f * Time.deltaTime;
+    //        transform.position = Vector3.MoveTowards(transform.position, kinematicLimb.transform.position, step);
+    //    }
+    //}
 
     #endregion
 

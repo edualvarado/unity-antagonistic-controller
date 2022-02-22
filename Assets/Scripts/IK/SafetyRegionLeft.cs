@@ -16,12 +16,15 @@ public class SafetyRegionLeft : SafetyRegion
     #region Instance Fields
 
     [Header("Left Hand - IK")]
+    public GameObject ragdollLeftHand;
     public ArmsFastIK leftHandIK;
-    public bool drawRays;
+    public bool fixHandToDynamicObject = false;
+    public bool drawIK;
 
     [Header("Left Hand - Hit")]
     public Vector3 hitOffsetLeft;
     public Vector3 hitLeftFixed;
+    public Vector3 localHitLeftFixed;
     public Vector3 hitLeft;
     public Vector3 hitNormalLeft;
     public Vector3 raycastOriginLeft;
@@ -38,8 +41,6 @@ public class SafetyRegionLeft : SafetyRegion
 
     private SphereCollider sphereColliderLeft;
     private Transform leftTargetTransform;
-    private BoxCollider leftHandKinematic;
-    public bool isKinematicLeftHandTouching;
 
     #endregion
 
@@ -47,7 +48,6 @@ public class SafetyRegionLeft : SafetyRegion
     {
         sphereColliderLeft = GetComponent<SphereCollider>();
         leftTargetTransform = GameObject.Find("Target Left Hand").GetComponent<Transform>();
-        leftHandKinematic = leftHandIK.gameObject.GetComponent<BoxCollider>();
     }
 
     void Update()
@@ -58,7 +58,7 @@ public class SafetyRegionLeft : SafetyRegion
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Obstacle"))
+        if (other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle"))
         {
             //Debug.Log("[INFO] Obstacle ENTERS LEFT");
 
@@ -82,7 +82,7 @@ public class SafetyRegionLeft : SafetyRegion
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.CompareTag("Obstacle"))
+        if(other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle"))
         {
             //Debug.Log("[INFO] Obstacle STAYS LEFT");
 
@@ -97,22 +97,35 @@ public class SafetyRegionLeft : SafetyRegion
             if (!hasLeftTargetReached)
             {
                 hitLeftFixed = hitLeft;
+                localHitLeftFixed = (hitLeftFixed - other.transform.position);
             }
             else
             {
-                hitLeftFixed = hitLeft; // TEST
-
-                // TODO: One for static objects, and other for dynamic?
-
-                //if(isKinematicLeftHandTouching)
-                //{
-                //    hitLeftFixed = hitLeft;
-                //}
-
-                if (!isLeftInRange)
+                // 1. If the object can move, we update always to the closest position for convenience - TODO: Maybe look to fix with respect to the object?
+                // 2. If the object is rigid like a wall, to the updates when we are far from the fixed position
+                if(other.CompareTag("Dynamic Obstacle"))
                 {
                     Vector3 offset = (leftTargetTransform.up * hitOffsetLeft.y) + (leftTargetTransform.right * hitOffsetLeft.x) + (leftTargetTransform.forward * hitOffsetLeft.z);
-                    leftHandIK.SetTargetUpdate(hitLeftFixed, offset, 0.5f); // TODO: Time that takes to make the small jump
+
+                    if (fixHandToDynamicObject)
+                        hitLeftFixed = other.transform.position + localHitLeftFixed + offset;
+                    else
+                        hitLeftFixed = hitLeft + offset;
+                }
+                else if(other.CompareTag("Static Obstacle"))
+                {
+                    if (!isLeftInRange)
+                    {
+                        Vector3 offset = (leftTargetTransform.up * hitOffsetLeft.y) + (leftTargetTransform.right * hitOffsetLeft.x) + (leftTargetTransform.forward * hitOffsetLeft.z);
+                        leftHandIK.SetTargetUpdate(hitLeftFixed, offset, 0.5f); // TODO: Time that takes to make the small jump
+                    }
+                }
+
+                // In a last layer, we attract the ragdoll hand position to the kinematic one, keepeing the rotation to the controller
+                if (isLeftInRange)
+                {
+                    float step = 1f * Time.deltaTime;
+                    ragdollLeftHand.transform.position = Vector3.MoveTowards(ragdollLeftHand.transform.position, hitLeftFixed, step);
                 }
             }
 
@@ -121,7 +134,7 @@ public class SafetyRegionLeft : SafetyRegion
             {
                 hitNormalLeft = hit.normal;
 
-                if (drawRays)
+                if (drawIK)
                 {
                     Debug.DrawRay(raycastOriginLeft, (hitLeftFixed - originRegion.position), Color.blue);
                     Debug.DrawRay(hitLeftFixed, hitNormalLeft * 0.2f, Color.cyan);
@@ -146,7 +159,7 @@ public class SafetyRegionLeft : SafetyRegion
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Obstacle"))
+        if (other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle"))
         {
             //Debug.Log("[INFO] Obstacle EXITS LEFT");
 
