@@ -61,9 +61,10 @@ public class AntagonisticController
         
         _P = currentLowError;
         _I += _P * dt;
-        _D = (_P - _previousError) / dt; // or _D = delta
+        _D = delta;
 
-        _previousError = currentLowError;
+        //_D = (_P - _previousError) / dt; // or _D = delta
+        //_previousError = currentLowError;
 
         return _PL * _kPL + _PH * _kPH + _I * _kI + _D * _kD;
     }

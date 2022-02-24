@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3092514556973599890}
   m_Layer: 8
   m_Name: mixamorig:LeftForeArm
-  m_TagString: Untagged
+  m_TagString: LeftForeArm
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -191,6 +191,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controllerType: 2
   kinematicLimb: {fileID: 0}
+  hand: {fileID: 4765623532839076803}
+  foreArm: {fileID: 4765623532570005711}
+  arm: {fileID: 4765623533588814599}
   activateDefaultPD: 0
   spring: 1600
   damper: 0.3
@@ -203,6 +206,7 @@ MonoBehaviour:
   deployDesiredRotation: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
+  requiredAntagonisticTorque: {x: 0, y: 0, z: 0}
   debugMode: 0
   multGrav: 1
   pLX: 25
@@ -684,12 +688,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623532821786555}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4201bfb83a7dd840bfd7eb233edad57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  copyKinematicHands: 0
+  copyKinematicHands: 1
   kinematicRightHandBones:
   - {fileID: 0}
   - {fileID: 0}
@@ -817,7 +821,7 @@ GameObject:
   - component: {fileID: 3092514557242679201}
   m_Layer: 8
   m_Name: mixamorig:LeftHand
-  m_TagString: Untagged
+  m_TagString: LeftHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -980,6 +984,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controllerType: 2
   kinematicLimb: {fileID: 0}
+  hand: {fileID: 4765623532839076803}
+  foreArm: {fileID: 4765623532570005711}
+  arm: {fileID: 4765623533588814599}
   activateDefaultPD: 0
   spring: 1600
   damper: 0.3
@@ -992,6 +999,7 @@ MonoBehaviour:
   deployDesiredRotation: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
+  requiredAntagonisticTorque: {x: 0, y: 0, z: 0}
   debugMode: 0
   multGrav: 1
   pLX: 10
@@ -2657,6 +2665,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controllerType: 2
   kinematicLimb: {fileID: 0}
+  hand: {fileID: 4765623534695646599}
+  foreArm: {fileID: 4765623533403131666}
+  arm: {fileID: 4765623534636773826}
   activateDefaultPD: 0
   spring: 1600
   damper: 0.3
@@ -2669,6 +2680,7 @@ MonoBehaviour:
   deployDesiredRotation: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
+  requiredAntagonisticTorque: {x: 0, y: 0, z: 0}
   debugMode: 0
   multGrav: 1
   pLX: 25
@@ -3049,7 +3061,7 @@ GameObject:
   - component: {fileID: 3092514557591848794}
   m_Layer: 8
   m_Name: mixamorig:LeftArm
-  m_TagString: Untagged
+  m_TagString: LeftArm
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3224,6 +3236,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controllerType: 2
   kinematicLimb: {fileID: 0}
+  hand: {fileID: 4765623532839076803}
+  foreArm: {fileID: 4765623532570005711}
+  arm: {fileID: 4765623533588814599}
   activateDefaultPD: 0
   spring: 1600
   damper: 0.3
@@ -3236,6 +3251,7 @@ MonoBehaviour:
   deployDesiredRotation: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
+  requiredAntagonisticTorque: {x: 0, y: 0, z: 0}
   debugMode: 0
   multGrav: 1
   pLX: 50
@@ -5189,6 +5205,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controllerType: 2
   kinematicLimb: {fileID: 0}
+  hand: {fileID: 4765623534695646599}
+  foreArm: {fileID: 4765623533403131666}
+  arm: {fileID: 4765623534636773826}
   activateDefaultPD: 0
   spring: 1600
   damper: 0.3
@@ -5201,6 +5220,7 @@ MonoBehaviour:
   deployDesiredRotation: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
+  requiredAntagonisticTorque: {x: 0, y: 0, z: 0}
   debugMode: 0
   multGrav: 1
   pLX: 50
@@ -5479,6 +5499,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controllerType: 2
   kinematicLimb: {fileID: 0}
+  hand: {fileID: 4765623534695646599}
+  foreArm: {fileID: 4765623533403131666}
+  arm: {fileID: 4765623534636773826}
   activateDefaultPD: 0
   spring: 1600
   damper: 0.3
@@ -5491,6 +5514,7 @@ MonoBehaviour:
   deployDesiredRotation: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
+  requiredAntagonisticTorque: {x: 0, y: 0, z: 0}
   debugMode: 0
   multGrav: 1
   pLX: 10

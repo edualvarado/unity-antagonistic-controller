@@ -326,8 +326,6 @@ public class JointControllerImitation
         // Swing-Twist Decomposition of current/kinematic orientation on main axis
         Quaternion currentLocalOrientationQuaternionX = GetRotationComponentAboutAxis(currentLocalOrientation, Vector3.right);
         Quaternion kinematicLocalOrientationQuaternionX = GetRotationComponentAboutAxis(kinematicLocalOrientation, Vector3.right);
-        //Quaternion currentLocalOrientationQuaternionX = GetRotationComponentAboutAxis(currentLocalOrientation, currentTransform.right);
-        //Quaternion kinematicLocalOrientationQuaternionX = GetRotationComponentAboutAxis(kinematicLocalOrientation, kinematicTransform.right);
 
         // Axis-Angle Conversion of current orientation
         float currentLocalOrientationQuaternionXAngle = 0.0f;
@@ -575,10 +573,7 @@ public class JointControllerImitation
 
         #endregion
 
-        Vector3 torqueApplied = GetOutput(currentLocalErrorMinX, currentLocalErrorMaxX, currentLocalErrorMinY, currentLocalErrorMaxY, currentLocalErrorMinZ, currentLocalErrorMaxZ, angularVelocity.magnitude, Time.fixedDeltaTime);
-
-        // TEST - Torque with Clamped Errors
-        //Vector3 torqueApplied = GetOutput(currentLocalErrorMinXClamp, currentLocalErrorMaxXClamp, currentLocalErrorMinY, currentLocalErrorMaxY, currentLocalErrorMinZ, currentLocalErrorMaxZ, angularVelocity.magnitude, Time.fixedDeltaTime);
+        Vector3 torqueApplied = GetOutput(currentLocalErrorMinX, currentLocalErrorMaxX, currentLocalErrorMinY, currentLocalErrorMaxY, currentLocalErrorMinZ, currentLocalErrorMaxZ, angularVelocity.magnitude, fixedDeltaTime);
 
         return torqueApplied;
     }
@@ -624,7 +619,7 @@ public class JointControllerImitation
         return twist;
     }
 
-    // TODO: Full Swing-Twist Decomp. - Still TODO
+    // Full Swing-Twist Decomposition - TODO
     private Quaternion SwingTwistDecomposition(Quaternion q, Vector3 twistAxis)
     {
         // Extract complex part of the quaternion and represent it as a direction

@@ -23,15 +23,29 @@ public class JointController : MonoBehaviour
     // Normal PD Controller
     private readonly PDController _normalPDController = new PDController(1f, 0f, 0.1f);
 
-    // Antagonistic PD Controller
-    //private readonly AntagonisticController _antagonisticControllerX = new AntagonisticController(1f, 0f, 0f, 0.1f);
-    //private readonly AntagonisticController _antagonisticControllerY = new AntagonisticController(1f, 0f, 0f, 0.1f);
-    //private readonly AntagonisticController _antagonisticControllerZ = new AntagonisticController(1f, 0f, 0f, 0.1f);
-
     // Antagonistic PD Controller middle class array
     private readonly JointControllerImitation _antagonisticControllerXYZ = new JointControllerImitation(1f, 0.0f, 0.0f, 0.01f,
                                                                                                         1f, 0.0f, 0.0f, 0.01f,
                                                                                                         1f, 0.0f, 0.0f, 0.01f);
+
+    // Others
+    private ConfigurableJoint _jointAnt;
+    private Transform _currentTransform;
+    private Transform _kinematicTransform;
+    private Rigidbody _objectRigidbody;
+
+    // Orientations
+    private Quaternion _initialLocalOrientation;
+    private Quaternion _initialGlobalOrientation;
+    private Quaternion _currentLocalOrientation;
+    private Quaternion _currentGlobalOrientation;
+    private Quaternion _kinematicLocalOrientation;
+    private Quaternion _kinematicGlobalOrientation;
+
+    // For Normal PD Controller
+    private Quaternion newRotationLocal;
+    private Quaternion newRotationGlobal;
+
     // Window Graph - Right Hand
     private WindowGraph _rightHandGraph;
     private RectTransform _rightHandGraphContainer;
@@ -87,6 +101,8 @@ public class JointController : MonoBehaviour
 
     #region Instance Fields
 
+    public float DELTATIME = 0.02f;
+
     public enum Controller
     {
         DefaultPDController, NormalPDController, AntagonisticController
@@ -96,6 +112,11 @@ public class JointController : MonoBehaviour
     public Controller controllerType;
     public Transform kinematicLimb;
 
+    [Header("Ragdoll Limbs")]
+    public GameObject hand;
+    public GameObject foreArm;
+    public GameObject arm;
+
     [Header("Default PD Controller - Settings")]
     public bool activateDefaultPD;
     public float spring;
@@ -104,6 +125,7 @@ public class JointController : MonoBehaviour
     [Header("Normal PD Controller - Settings")]
     public bool activateNormalPD;
     public bool applyNormalTorque;
+    public Vector3 requiredTorque;
     public bool globalMode = true;
     public float Kp;
     public float Ki;
@@ -113,6 +135,7 @@ public class JointController : MonoBehaviour
     [Header("Antagonistic Controller - Settings")]
     public bool activateAntagonisticPD;
     public bool applyAntTorque;
+    public Vector3 requiredAntagonisticLocalTorque;
     public bool debugMode;
     public float multGrav = 1f;
 
@@ -128,10 +151,10 @@ public class JointController : MonoBehaviour
     public float minHardLimitX;
     public float maxHardLimitX;
     public bool drawLimitsX;
-    private bool applyAntTorqueX;
-    private float torqueAppliedX;
-    private float slopeXCurrent;
-    private float interceptXCurrent;
+    public float slopeXCurrent;
+    public float interceptXCurrent;
+    //private bool applyAntTorqueX;
+    //private float torqueAppliedX;
 
     [Header("Antagonistic Controller - Settings - Y")]
     public float pLY;
@@ -145,10 +168,10 @@ public class JointController : MonoBehaviour
     public float minHardLimitY;
     public float maxHardLimitY;
     public bool drawLimitsY;
-    private bool applyAntTorqueY;
-    private float torqueAppliedY;
-    private float slopeYCurrent;
-    private float interceptYCurrent;
+    public float slopeYCurrent;
+    public float interceptYCurrent;
+    //private bool applyAntTorqueY;
+    //private float torqueAppliedY;
 
     [Header("Antagonistic Controller - Settings - Z")]
     public float pLZ;
@@ -162,50 +185,16 @@ public class JointController : MonoBehaviour
     public float minHardLimitZ;
     public float maxHardLimitZ;
     public bool drawLimitsZ;
-    private bool applyAntTorqueZ;
-    private float torqueAppliedZ;
-    private float slopeZCurrent;
-    private float interceptZCurrent;
+    public float slopeZCurrent;
+    public float interceptZCurrent;
+    //private bool applyAntTorqueZ;
+    //private float torqueAppliedZ;
 
     [Header("External Forces")]
     public Vector3 distance3D;
     public Vector3 gravityAcc;
     public Vector3 gravityTorqueVector;
     public Vector3 gravityTorqueVectorLocal;
-
-    // Others
-    private ConfigurableJoint _jointAnt;
-    private Transform _currentTransform;
-    private Transform _kinematicTransform;
-    private Rigidbody _objectRigidbody;
-
-    // Orientations
-    private Quaternion _initialLocalOrientation;
-    private Quaternion _initialGlobalOrientation;
-    private Quaternion _currentLocalOrientation;
-    private Quaternion _currentGlobalOrientation;
-    private Quaternion _kinematicLocalOrientation;
-    private Quaternion _kinematicGlobalOrientation;
-
-    // For Normal PD Controller
-    private Quaternion newRotationLocal;
-    private Quaternion newRotationGlobal;
-
-    // For Antagonistic Controller
-    private Quaternion currentLocalRotationMinX;
-    private Quaternion currentLocalRotationMaxX;
-    private Quaternion kinematicLocalRotationMinX;
-    private Quaternion kinematicLocalRotationMaxX;
-
-    private Quaternion currentLocalRotationMinY;
-    private Quaternion currentLocalRotationMaxY;
-    private Quaternion kinematicLocalRotationMinY;
-    private Quaternion kinematicLocalRotationMaxY;
-
-    private Quaternion currentLocalRotationMinZ;
-    private Quaternion currentLocalRotationMaxZ;
-    private Quaternion kinematicLocalRotationMinZ;
-    private Quaternion kinematicLocalRotationMaxZ;
 
     #endregion
 
@@ -240,6 +229,8 @@ public class JointController : MonoBehaviour
 
     private void Start()
     {
+        #region UI
+
         // Get Toggle UI
         rightHandToggleX = GameObject.Find("RightHandToggleX").GetComponent<Toggle>();
         rightHandToggleY = GameObject.Find("RightHandToggleY").GetComponent<Toggle>();
@@ -337,10 +328,17 @@ public class JointController : MonoBehaviour
             _rightArmLineZ = _rightArmGraph.CreateLine(_rightArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.blue, "rightArmLineZ");
             _rightArmLineZCurrent = _rightArmGraph.CreateLine(_rightArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.black, "rightArmLineZCurrent");
         }
+
+        #endregion
     }
 
     private void Update()
     {
+        //Debug.Log("[UPDATE] FixedDeltaTime: " + Time.fixedDeltaTime.ToString("F4"));
+        //Debug.Log("[UPDATE] DeltaTime: " + Time.deltaTime.ToString("F4"));
+
+        #region Setting Limits
+
         // Set hard limit to the limit in the joints
         var lowAngularXJoint = _jointAnt.lowAngularXLimit;
         lowAngularXJoint.limit = minHardLimitX;
@@ -385,14 +383,8 @@ public class JointController : MonoBehaviour
             Debug.DrawRay(transform.position, Quaternion.AngleAxis(minSoftLimitZ, transform.forward) * transform.parent.up * 0.4f, Color.red);
             Debug.DrawRay(transform.position, Quaternion.AngleAxis(maxSoftLimitZ, transform.forward) * transform.parent.up * 0.4f, Color.green);
         }
-    }
 
-    private void FixedUpdate()
-    {
-        if (DesiredLocalRotation == null || this._currentTransform == null || this._objectRigidbody == null || this.kinematicLimb == null)
-        {
-            return;
-        }
+        #endregion
 
         #region Update Gains and Isoline
 
@@ -400,22 +392,6 @@ public class JointController : MonoBehaviour
         this._normalPDController.KP = this.Kp;
         this._normalPDController.KI = this.Ki;
         this._normalPDController.KD = this.Kd;
-
-        // Antagonistic PD Controller (Old)
-        /*
-        this._antagonisticControllerX.KPL = this.pLX;
-        this._antagonisticControllerX.KPH = this.pHX;
-        this._antagonisticControllerX.KI = this.iX;
-        this._antagonisticControllerX.KD = this.dX;
-        this._antagonisticControllerY.KPL = this.pLY;
-        this._antagonisticControllerY.KPH = this.pHY;
-        this._antagonisticControllerY.KI = this.iY;
-        this._antagonisticControllerY.KD = this.dY;
-        this._antagonisticControllerZ.KPL = this.pLZ;
-        this._antagonisticControllerZ.KPH = this.pHZ;
-        this._antagonisticControllerZ.KI = this.iZ;
-        this._antagonisticControllerZ.KD = this.dZ;
-        */
 
         // Antagonistic PD Controller with Middle Array
         this._antagonisticControllerXYZ.KPLX = this.pLX;
@@ -456,7 +432,6 @@ public class JointController : MonoBehaviour
         #region Plot
 
         // Window Graph Update - Right Hand
-
         if (this.gameObject.CompareTag("RightHand"))
         {
             _rightHandGraph.MoveCircle(_rightHandPointX, new Vector2(pLX, pHX));
@@ -514,6 +489,7 @@ public class JointController : MonoBehaviour
             }
         }
 
+        // Window Graph Update - Right Fore Arm
         if (this.gameObject.CompareTag("RightForeArm"))
         {
             _rightForeArmGraph.MoveCircle(_rightForeArmPointX, new Vector2(pLX, pHX));
@@ -571,6 +547,7 @@ public class JointController : MonoBehaviour
             }
         }
 
+        // Window Graph Update - Right Arm
         if (this.gameObject.CompareTag("RightArm"))
         {
             _rightArmGraph.MoveCircle(_rightArmPointX, new Vector2(pLX, pHX));
@@ -628,7 +605,18 @@ public class JointController : MonoBehaviour
             }
         }
 
-        #endregion  
+        #endregion
+    }
+
+    private void FixedUpdate()
+    {
+        //Debug.Log("[FIXED UPDATE] FixedDeltaTime: " + Time.fixedDeltaTime.ToString("F4"));
+        //Debug.Log("[FIXED UPDATE] DeltaTime: " + Time.deltaTime.ToString("F4"));
+
+        if (DesiredLocalRotation == null || this._currentTransform == null || this._objectRigidbody == null || this.kinematicLimb == null)
+        {
+            return;
+        }
 
         #region Getting Orientations
 
@@ -645,20 +633,32 @@ public class JointController : MonoBehaviour
         #region External Forces
 
         // Calculate forces relative to the RB - Distance from root to the COM
-        distance3D = _objectRigidbody.worldCenterOfMass - transform.position;
-
-        Debug.DrawRay(_objectRigidbody.worldCenterOfMass, Vector3.up, Color.red);
-        Debug.DrawRay(transform.position, Vector3.up, Color.blue);
 
         // 1. Gravity force and generated torque
-        gravityAcc = Physics.gravity;
-        gravityTorqueVector = Vector3.Cross(distance3D, _objectRigidbody.mass * gravityAcc); // Remember: wrt. global coord. system
-        gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // Remember: wrt. local coord. system
-        //Debug.DrawRay(transform.position, distance3D, Color.blue);
-        Debug.DrawRay(transform.position, gravityTorqueVectorLocal, Color.red);
-        //Debug.DrawRay(_objectRigidbody.worldCenterOfMass, gravityAcc, Color.green);
+        gravityAcc = Physics.gravity * multGrav;
 
-        /* TODO - This should be improved, also maybe adding other external forces? */
+        if (this.CompareTag("RightHand"))
+        {
+            distance3D = _objectRigidbody.worldCenterOfMass - transform.position;
+            gravityTorqueVector = Vector3.Cross(distance3D, _objectRigidbody.mass * gravityAcc); // Remember: wrt. global coord. system
+            gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // Remember: wrt. local coord. system // TODO REVIEW
+
+            //Debug.DrawRay(_objectRigidbody.worldCenterOfMass, Vector3.up, Color.red);
+            //Debug.DrawRay(transform.position, Vector3.up, Color.blue);
+            Debug.DrawRay(transform.position, distance3D, Color.red);
+            Debug.DrawRay(transform.position, gravityTorqueVectorLocal, Color.yellow);
+        }
+        else if (this.CompareTag("RightForeArm"))
+        {
+            distance3D = ((_objectRigidbody.worldCenterOfMass - transform.position) + (hand.GetComponent<Rigidbody>().worldCenterOfMass - transform.position)) / 2;
+            gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + hand.GetComponent<Rigidbody>().mass) * gravityAcc); // Remember: wrt. global coord. system
+            gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // Remember: wrt. local coord. system // TODO REVIEW
+
+            //Debug.DrawRay(_objectRigidbody.worldCenterOfMass, Vector3.up, Color.red);
+            //Debug.DrawRay(transform.position, Vector3.up, Color.blue);
+            Debug.DrawRay(transform.position, distance3D, Color.red);
+            Debug.DrawRay(transform.position, gravityTorqueVectorLocal, Color.yellow);
+        }
 
         #endregion
 
@@ -717,17 +717,17 @@ public class JointController : MonoBehaviour
         if ((controllerType == Controller.NormalPDController) && (activateNormalPD))
         {
 
-            // Hotfix related to the Inertia issue
-            _objectRigidbody.angularDrag = 10f;
+            // TEST - Hotfix related to the Inertia issue
+            //_objectRigidbody.angularDrag = 10f;
 
-            Vector3 requiredTorque = ComputeRequiredTorque(_currentLocalOrientation,
+            requiredTorque = ComputeRequiredTorque(_currentLocalOrientation,
                                                            _currentGlobalOrientation,
                                                            _kinematicLocalOrientation,
                                                            _kinematicGlobalOrientation,
                                                            DesiredLocalRotation,
                                                            this._objectRigidbody.angularVelocity,
                                                            gravityTorqueVectorLocal,
-                                                           Time.fixedDeltaTime);
+                                                           DELTATIME);
 
             Debug.Log("[INFO: " + this.gameObject.name + "] Normal PD Controller (Angle-axis) requiredTorque: " + requiredTorque);
 
@@ -752,10 +752,10 @@ public class JointController : MonoBehaviour
 
         if ((controllerType == Controller.AntagonisticController) && (activateAntagonisticPD))
         {
-            // Hotfix related to the Inertia issue
-            _objectRigidbody.angularDrag = 49.9f;
+            // TEST - Hotfix related to the Inertia issue
+            //_objectRigidbody.angularDrag = 49.9f;
 
-            Vector3 requiredAntagonisticTorque = _antagonisticControllerXYZ.ComputeRequiredAntagonisticTorque(minSoftLimitX, maxSoftLimitX,
+            requiredAntagonisticLocalTorque = _antagonisticControllerXYZ.ComputeRequiredAntagonisticTorque(minSoftLimitX, maxSoftLimitX,
                                                                                                               minSoftLimitY, maxSoftLimitY,
                                                                                                               minSoftLimitZ, maxSoftLimitZ,
                                                                                                               minHardLimitX, maxHardLimitX,
@@ -767,652 +767,76 @@ public class JointController : MonoBehaviour
                                                                                                               _kinematicGlobalOrientation,
                                                                                                               DesiredLocalRotation,
                                                                                                               this._objectRigidbody.angularVelocity,
-                                                                                                              gravityTorqueVectorLocal * multGrav,
-                                                                                                              Time.fixedDeltaTime,
+                                                                                                              gravityTorqueVectorLocal,
+                                                                                                              DELTATIME,
                                                                                                               debugMode,
                                                                                                               _currentTransform, _kinematicTransform);
+
+
+            // 1. Is this torque Local
+            Debug.Log("1. requiredAntagonisticTorque (LOCAL): " + requiredAntagonisticLocalTorque.ToString("F4"));
+
+            // TEST 1 - Keep torque in Local Space
+
+            // 2. We rotate the torque by the Inertia Tensor Rotation
+            Vector3 torqueRotatedLocal = _objectRigidbody.inertiaTensorRotation * requiredAntagonisticLocalTorque;
+            Debug.Log("requiredAntagonisticLocalTorque rotated by inertiaTensorRotation (torqueRotatedLocal): " + torqueRotatedLocal.ToString("F4"));
+
+            // 3. We mutiply by the Inertia Tensor
+            torqueRotatedLocal.Scale(_objectRigidbody.inertiaTensor);
+            Debug.Log("torqueRotatedLocal scaled by inertiaTensor, which is the torque (Local): " + torqueRotatedLocal.ToString("F4"));
+
+            // 4. Rotate back the Inertia Tensor Rotation
+            Vector3 torqueRotatedBackLocal = Quaternion.Inverse(_objectRigidbody.inertiaTensorRotation) * torqueRotatedLocal; // This is the final torque to apply
+            Debug.Log("torqueRotatedLocal rotated back by inertiaTensorRotation (torqueRotatedBackLocal): " + torqueRotatedBackLocal.ToString("F4"));
+
+            // TEST 2 - Transform to Global 
+
             /*
-            Vector3 requiredAntagonisticTorqueX = ComputeRequiredAntagonisticTorqueX(_currentLocalOrientation,
-                                                                                     _currentGlobalOrientation,
-                                                                                     _kinematicLocalOrientation,
-                                                                                     _kinematicGlobalOrientation,
-                                                                                     DesiredLocalRotation,
-                                                                                     this._objectRigidbody.angularVelocity,
-                                                                                     gravityTorqueVectorLocal,
-                                                                                     Time.fixedDeltaTime);
+            // 2. Convert rotation of inertia tensor to global (instead of leaving it it local and transforming the torque to local instead)
+            Quaternion inertiaTensorRotationGlobal = _objectRigidbody.inertiaTensorRotation * transform.rotation; // 1.way MOVING TO GLOBAL 2.way SAME
+            Debug.Log("2. inertiaTensorRotationGlobal: " + inertiaTensorRotationGlobal.ToString("F4"));
 
-            Vector3 requiredAntagonisticTorqueY = ComputeRequiredAntagonisticTorqueY(_currentLocalOrientation,
-                                                                                     _currentGlobalOrientation,
-                                                                                     _kinematicLocalOrientation,
-                                                                                     _kinematicGlobalOrientation,
-                                                                                     DesiredLocalRotation,
-                                                                                     this._objectRigidbody.angularVelocity,
-                                                                                     gravityTorqueVectorLocal,
-                                                                                     Time.fixedDeltaTime);
+            // 3. Take torque to global and rotate by inertiaTensorRotationGlobal
+            Vector3 torqueRotatedGlobal = Quaternion.Inverse(inertiaTensorRotationGlobal) * transform.TransformDirection(requiredAntagonisticLocalTorque); // 1.way WITH INVERSE 2.way WITHOUT INVERSE
+            Debug.Log("3. requiredAntagonisticGlobalTorque: " + transform.TransformDirection(requiredAntagonisticLocalTorque).ToString("F4"));
+            Debug.Log("3. torqueRotatedGlobal: " + torqueRotatedGlobal.ToString("F4")); // 1.way BRINGS IT BACK TO LOCAL, when we make the INVERSE ABOVE!!! 2.way ??
 
-            Vector3 requiredAntagonisticTorqueZ = ComputeRequiredAntagonisticTorqueZ(_currentLocalOrientation,
-                                                                                     _currentGlobalOrientation,
-                                                                                     _kinematicLocalOrientation,
-                                                                                     _kinematicGlobalOrientation,
-                                                                                     DesiredLocalRotation,
-                                                                                     this._objectRigidbody.angularVelocity,
-                                                                                     gravityTorqueVectorLocal,
-                                                                                     Time.fixedDeltaTime);
+            // 4. We mutiply by the Inertia Tensor
+            torqueRotatedGlobal.Scale(_objectRigidbody.inertiaTensor);
+            Debug.Log("4. torqueRotatedGlobal scaled by inertiaTensor, which is the torque (Global): " + torqueRotatedGlobal.ToString("F4"));
+
+            // 5. Rotate back the Inertia Tensor Rotation
+            Vector3 torqueRotatedBackGlobal = _objectRigidbody.inertiaTensorRotation * torqueRotatedGlobal;  // 1.way WITHOUT INVERSE WORKING // 2.way WITH INVERSE NOT WORKING
+            Debug.Log("5. torqueRotatedGlobal rotated back by inertiaTensorRotation (torqueRotatedBackGlobal): " + torqueRotatedBackGlobal.ToString("F4"));
+
+            // 6. Bring back torque to local
+            Vector3 torqueRotatedBackLocal = transform.InverseTransformDirection(torqueRotatedBackGlobal); // 1.way NOT WORKING 2.way NOT WORKING
+            Debug.Log("6. torqueRotatedBackLocal: " + torqueRotatedBackLocal.ToString("F4"));
             */
-
 
             if (debugMode)
             {
-                Debug.Log("[INFO: " + this.gameObject.name + "] NEW Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorque: " + requiredAntagonisticTorque);
-
-                /*
-                Debug.Log("[INFO: " + this.gameObject.name + "] Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorqueX: " + requiredAntagonisticTorqueX);
-                Debug.Log("[INFO: " + this.gameObject.name + "] Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorqueY: " + requiredAntagonisticTorqueY);
-                Debug.Log("[INFO: " + this.gameObject.name + "] Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorqueZ: " + requiredAntagonisticTorqueZ);
-                */
+                Debug.Log("[INFO: " + this.gameObject.name + "] NEW Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorque: " + requiredAntagonisticLocalTorque);
             }
 
-            if(applyAntTorque)
+            if (applyAntTorque)
             {
-                this._objectRigidbody.AddRelativeTorque(requiredAntagonisticTorque, ForceMode.Force);
-            }
-            
-            /*
-            if (applyAntTorqueX)
-            {
-                this._objectRigidbody.AddRelativeTorque(requiredAntagonisticTorqueX, ForceMode.Force);
-            }
+                //this._objectRigidbody.AddRelativeTorque(requiredAntagonisticLocalTorque, ForceMode.Force); // Needs 49.9 angular drag
 
-            if (applyAntTorqueY)
-            {
-                this._objectRigidbody.AddRelativeTorque(requiredAntagonisticTorqueY, ForceMode.Force);
-            }
+                this._objectRigidbody.AddRelativeTorque(torqueRotatedBackLocal, ForceMode.Force); // TEST 1 We stay in local space -> WORKS
+                //this._objectRigidbody.AddTorque(transform.TransformDirection(torqueRotatedBackLocal), ForceMode.Force); // TEST 1 in Global Space -> Also WORKS
 
-            if (applyAntTorqueZ)
-            {
-                this._objectRigidbody.AddRelativeTorque(requiredAntagonisticTorqueZ, ForceMode.Force);
+                //this._objectRigidbody.AddRelativeTorque(torqueRotatedBackGlobal, ForceMode.Force); // TEST 2 Alternative
             }
-            */
         }
 
         #endregion
     }
-
-    #endregion
-
-    #region Collider
-
-    //private void OnCollisionStay(Collision collision)
-    //{
-    //    if(collision.gameObject.CompareTag("Dynamic Obstacle") || collision.gameObject.CompareTag("Static Obstacle"))
-    //    {
-    //        Debug.Log("COLLISION");
-    //        float step = 1f * Time.deltaTime;
-    //        transform.position = Vector3.MoveTowards(transform.position, kinematicLimb.transform.position, step);
-    //    }
-    //}
 
     #endregion
 
     #region Old Instance Methods
-
-    /*
-    /// <summary>
-    /// Compute torque for X-axis using Antagonistic Controller.
-    /// </summary>
-    /// <param name="currentLocalOrientation"></param>
-    /// <param name="currentGlobalOrientation"></param>
-    /// <param name="kinematicLocalOrientation"></param>
-    /// <param name="kinematicGlobalOrientation"></param>
-    /// <param name="desiredLocalRotation"></param>
-    /// <param name="angularVelocity"></param>
-    /// <param name="gravityTorqueVectorLocal"></param>
-    /// <param name="fixedDeltaTime"></param>
-    /// <returns></returns>
-    private Vector3 ComputeRequiredAntagonisticTorqueX(Quaternion currentLocalOrientation, Quaternion currentGlobalOrientation,
-                                                       Quaternion kinematicLocalOrientation, Quaternion kinematicGlobalOrientation,
-                                                       Quaternion desiredLocalRotation, Vector3 angularVelocity, Vector3 gravityTorqueVectorLocal,
-                                                       float fixedDeltaTime)
-    {
-
-        #region Orientations
-
-        // Component-wise projection of Min/Max Euler Axis - It should not be needed
-        Quaternion minAngleQuaternionX = Quaternion.Euler(new Vector3(minSoftLimitX, 0f, 0f));
-        Quaternion maxAngleQuaternionX = Quaternion.Euler(new Vector3(maxSoftLimitX, 0f, 0f));
-
-        // Swing-Twist Decomposition of current/kinematic orientation on main axis
-        Quaternion currentLocalOrientationQuaternionX = getRotationComponentAboutAxis(currentLocalOrientation, Vector3.right);
-        Quaternion kinematicLocalOrientationQuaternionX = getRotationComponentAboutAxis(kinematicLocalOrientation, Vector3.right);
-
-        // Axis-Angle Conversion of current orientation
-        float currentLocalOrientationQuaternionXAngle = 0.0f;
-        Vector3 currentLocalOrientationQuaternionXAxis = Vector3.zero;
-        currentLocalOrientationQuaternionX.ToAngleAxis(out currentLocalOrientationQuaternionXAngle, out currentLocalOrientationQuaternionXAxis);
-        currentLocalOrientationQuaternionX.Normalize();
-
-        // Axis-Angle Conversion of kinematic orientation
-        float kinematicLocalOrientationQuaternionXAngle = 0.0f;
-        Vector3 kinematicLocalOrientationQuaternionXAxis = Vector3.zero;
-        kinematicLocalOrientationQuaternionX.ToAngleAxis(out kinematicLocalOrientationQuaternionXAngle, out kinematicLocalOrientationQuaternionXAxis);
-        kinematicLocalOrientationQuaternionX.Normalize();
-
-        // Angles to be negative when < 0f
-        float currentLocalOrientationQuaternionXAngleCorrected = (currentLocalOrientationQuaternionXAngle > 180) ? currentLocalOrientationQuaternionXAngle - 360 : currentLocalOrientationQuaternionXAngle;
-        float kinematicLocalOrientationQuaternionXAngleCorrected = (kinematicLocalOrientationQuaternionXAngle > 180) ? kinematicLocalOrientationQuaternionXAngle - 360 : kinematicLocalOrientationQuaternionXAngle;
-
-        // Print axis and angle
-        Debug.Log("[INFO: " + this.gameObject.name + "] Current Orientation X Axis: " + currentLocalOrientationQuaternionXAxis + " | Current Orientation X Angle: " + currentLocalOrientationQuaternionXAngleCorrected);
-        Debug.Log("[INFO: " + this.gameObject.name + "] Kinematic Orientation X Axis: " + kinematicLocalOrientationQuaternionXAxis + " | Current Orientation X Angle: " + kinematicLocalOrientationQuaternionXAngleCorrected);
-
-        #endregion
-
-        #region Current Rotations - Not needed
-
-        // Create Rotation from X-projected Current Orientation to minAngleQuaternionX and convert to Angle-Axis
-        //currentLocalRotationMinX = minAngleQuaternionX * Quaternion.Inverse(currentLocalOrientation); // You shouldn't use the entire Quaternion
-        currentLocalRotationMinX = minAngleQuaternionX * Quaternion.Inverse(currentLocalOrientationQuaternionX); // Using the projection
-
-        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
-        // We want the equivalant short rotation eg. -10 degrees
-        // Check if rotation is greater than 190 degees == q.w is negative
-        if (currentLocalRotationMinX.w < 0)
-        {
-            // Convert the quaterion to eqivalent "short way around" quaterion
-            currentLocalRotationMinX.x = -currentLocalRotationMinX.x;
-            currentLocalRotationMinX.y = -currentLocalRotationMinX.y;
-            currentLocalRotationMinX.z = -currentLocalRotationMinX.z;
-            currentLocalRotationMinX.w = -currentLocalRotationMinX.w;
-        }
-        float currentLocalRotationMinXAngle = 0.0f;
-        Vector3 currentLocalRotationMinXAxis = Vector3.zero;
-        currentLocalRotationMinX.ToAngleAxis(out currentLocalRotationMinXAngle, out currentLocalRotationMinXAxis);
-        currentLocalRotationMinXAxis.Normalize();
-
-        // Create Rotation from X-projected Current Orientation to maxAngleQuaternionX and convert to Angle-Axis
-        //currentLocalRotationMaxX = maxAngleQuaternionX * Quaternion.Inverse(currentLocalOrientation); // You shouldn't use the entire Quaternion
-        currentLocalRotationMaxX = maxAngleQuaternionX * Quaternion.Inverse(currentLocalOrientationQuaternionX); // Using the projection
-
-        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
-        // We want the equivalant short rotation eg. -10 degrees
-        // Check if rotation is greater than 190 degees == q.w is negative
-        if (currentLocalRotationMaxX.w < 0)
-        {
-            // Convert the quaterion to eqivalent "short way around" quaterion
-            currentLocalRotationMaxX.x = -currentLocalRotationMaxX.x;
-            currentLocalRotationMaxX.y = -currentLocalRotationMaxX.y;
-            currentLocalRotationMaxX.z = -currentLocalRotationMaxX.z;
-            currentLocalRotationMaxX.w = -currentLocalRotationMaxX.w;
-        }
-        float currentLocalRotationMaxXAngle = 0.0f;
-        Vector3 currentLocalRotationMaxXAxis = Vector3.zero;
-        currentLocalRotationMaxX.ToAngleAxis(out currentLocalRotationMaxXAngle, out currentLocalRotationMaxXAxis);
-        currentLocalRotationMaxXAxis.Normalize();
-
-        #endregion
-
-        #region Kinematic Rotations - Not needed
-
-        // Create Rotation from X-projected Kinematic Orientation to minAngleQuaternionX and convert to Angle-Axis
-
-        //kinematicLocalRotationMinX = minAngleQuaternionX * Quaternion.Inverse(kinematicLocalOrientation); // You shouldn't use the entire Quaternion
-        kinematicLocalRotationMinX = minAngleQuaternionX * Quaternion.Inverse(kinematicLocalOrientationQuaternionX); // Using the projection
-        
-        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
-        // We want the equivalant short rotation eg. -10 degrees
-        // Check if rotation is greater than 190 degees == q.w is negative
-        if (kinematicLocalRotationMinX.w < 0)
-        {
-            // Convert the quaterion to eqivalent "short way around" quaterion
-            kinematicLocalRotationMinX.x = -kinematicLocalRotationMinX.x;
-            kinematicLocalRotationMinX.y = -kinematicLocalRotationMinX.y;
-            kinematicLocalRotationMinX.z = -kinematicLocalRotationMinX.z;
-            kinematicLocalRotationMinX.w = -kinematicLocalRotationMinX.w;
-        }
-        float kinematicLocalRotationMinXAngle = 0.0f;
-        Vector3 kinematicLocalRotationMinXAxis = Vector3.zero;
-        kinematicLocalRotationMinX.ToAngleAxis(out kinematicLocalRotationMinXAngle, out kinematicLocalRotationMinXAxis);
-        kinematicLocalRotationMinXAxis.Normalize();
-
-        // Create Rotation from X-projected Kinematic Orientation to maxAngleQuaternionX and convert to Angle-Axis
-
-        //kinematicLocalRotationMaxX = maxAngleQuaternionX * Quaternion.Inverse(kinematicLocalOrientation); // You shouldn't use the entire Quaternion
-        kinematicLocalRotationMaxX = maxAngleQuaternionX * Quaternion.Inverse(kinematicLocalOrientationQuaternionX); // Using the projection
-        
-        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
-        // We want the equivalant short rotation eg. -10 degrees
-        // Check if rotation is greater than 190 degees == q.w is negative
-        if (kinematicLocalRotationMaxX.w < 0)
-        {
-            // Convert the quaterion to eqivalent "short way around" quaterion
-            kinematicLocalRotationMaxX.x = -kinematicLocalRotationMaxX.x;
-            kinematicLocalRotationMaxX.y = -kinematicLocalRotationMaxX.y;
-            kinematicLocalRotationMaxX.z = -kinematicLocalRotationMaxX.z;
-            kinematicLocalRotationMaxX.w = -kinematicLocalRotationMaxX.w;
-        }
-        float kinematicLocalRotationMaxXAngle = 0.0f;
-        Vector3 kinematicLocalRotationMaxXAxis = Vector3.zero;
-        kinematicLocalRotationMaxX.ToAngleAxis(out kinematicLocalRotationMaxXAngle, out kinematicLocalRotationMaxXAxis);
-        kinematicLocalRotationMaxXAxis.Normalize();
-
-        #endregion
-
-        #region Estimate Errors from Rotation - Not needed
-
-        float errorLocalRotationMinX = (currentLocalRotationMinXAngle * currentLocalRotationMinXAxis).x;
-        float errorLocalRotationMaxX = (currentLocalRotationMaxXAngle * currentLocalRotationMaxXAxis).x;
-        Debug.Log("[INFO: " + this.gameObject.name + "] errorLocalRotationMinX: " + errorLocalRotationMinX + " | errorLocalRotationMaxX: " + errorLocalRotationMaxX);
-
-        #endregion
-
-        #region Estimate Errors directly from Axis-Angle
-
-        float currentLocalErrorMinX = minSoftLimitX - currentLocalOrientationQuaternionXAngleCorrected;
-        float currentLocalErrorMaxX = maxSoftLimitX - currentLocalOrientationQuaternionXAngleCorrected;
-        Debug.Log("[INFO: " + this.gameObject.name + "] currentLocalErrorMinX: " + currentLocalErrorMinX + " | currentLocalErrorMaxX: " + currentLocalErrorMaxX);
-
-        float kinematicLocalErrorMinX = minSoftLimitX - kinematicLocalOrientationQuaternionXAngleCorrected;
-        float kinematicLocalErrorMaxX = maxSoftLimitX - kinematicLocalOrientationQuaternionXAngleCorrected;
-        Debug.Log("[INFO: " + this.gameObject.name + "] kinematicLocalErrorMinX: " + kinematicLocalErrorMinX + " | kinematicLocalErrorMaxX: " + kinematicLocalErrorMaxX);
-
-        #endregion
-
-        #region Isoline with Rotation errors - Not Needed
-
-        interceptX = (0f) / (kinematicLocalRotationMaxXAngle * kinematicLocalRotationMaxXAxis).x;
-        slopeX = ((kinematicLocalRotationMinXAngle * kinematicLocalRotationMinXAxis).x) / (-(kinematicLocalRotationMaxXAngle * kinematicLocalRotationMaxXAxis).x);
-        pHX = pLX * slopeX + interceptX;
-        this._antagonisticControllerX.KPL = pLX;
-        this._antagonisticControllerX.KPH = pHX;
-        torqueAppliedX = _antagonisticControllerX.GetOutput(errorLocalRotationMinX, errorLocalRotationMaxX, angularVelocity.magnitude, Time.fixedDeltaTime);
-
-        #endregion
-
-        #region Isoline with Angle errors
-
-        interceptX = (0f) / kinematicLocalErrorMaxX;
-        slopeX = (kinematicLocalErrorMinX) / (-(kinematicLocalErrorMaxX));
-        pHX = pLX * slopeX + interceptX;
-        this._antagonisticControllerX.KPL = pLX;
-        this._antagonisticControllerX.KPH = pHX;
-        torqueAppliedX = _antagonisticControllerX.GetOutput(currentLocalErrorMinX, currentLocalErrorMaxX, angularVelocity.magnitude, Time.fixedDeltaTime);
-
-        #endregion
-
-        return new Vector3(torqueAppliedX, 0f, 0f);
-    }
-
-    /// <summary>
-    /// Compute torque for Y-axis using Antagonistic Controller.
-    /// </summary>
-    /// <param name="currentLocalOrientation"></param>
-    /// <param name="currentGlobalOrientation"></param>
-    /// <param name="kinematicLocalOrientation"></param>
-    /// <param name="kinematicGlobalOrientation"></param>
-    /// <param name="desiredLocalRotation"></param>
-    /// <param name="angularVelocity"></param>
-    /// <param name="gravityTorqueVectorLocal"></param>
-    /// <param name="fixedDeltaTime"></param>
-    /// <returns></returns>
-    private Vector3 ComputeRequiredAntagonisticTorqueY(Quaternion currentLocalOrientation, Quaternion currentGlobalOrientation,
-                                                       Quaternion kinematicLocalOrientation, Quaternion kinematicGlobalOrientation,
-                                                       Quaternion desiredLocalRotation, Vector3 angularVelocity, Vector3 gravityTorqueVectorLocal,
-                                                       float fixedDeltaTime)
-    {
-
-        #region Orientations
-
-        // Component-wise projection of Min/Max Euler Axis - It should not be needed
-        Quaternion minAngleQuaternionY = Quaternion.Euler(new Vector3(0f, minSoftLimitY, 0f));
-        Quaternion maxAngleQuaternionY = Quaternion.Euler(new Vector3(0f, maxSoftLimitY, 0f));
-
-        // Swing-Twist Decomposition of current/kinematic orientation on main axis
-        Quaternion currentLocalOrientationQuaternionY = getRotationComponentAboutAxis(currentLocalOrientation, Vector3.up);
-        Quaternion kinematicLocalOrientationQuaternionY = getRotationComponentAboutAxis(kinematicLocalOrientation, Vector3.up);
-
-        // Axis-Angle Conversion of current orientation
-        float currentLocalOrientationQuaternionYAngle = 0.0f;
-        Vector3 currentLocalOrientationQuaternionYAxis = Vector3.zero;
-        currentLocalOrientationQuaternionY.ToAngleAxis(out currentLocalOrientationQuaternionYAngle, out currentLocalOrientationQuaternionYAxis);
-        currentLocalOrientationQuaternionY.Normalize();
-
-        // Axis-Angle Conversion of kinematic orientation
-        float kinematicLocalOrientationQuaternionYAngle = 0.0f;
-        Vector3 kinematicLocalOrientationQuaternionYAxis = Vector3.zero;
-        kinematicLocalOrientationQuaternionY.ToAngleAxis(out kinematicLocalOrientationQuaternionYAngle, out kinematicLocalOrientationQuaternionYAxis);
-        kinematicLocalOrientationQuaternionY.Normalize();
-
-        // Angles to be negative when < 0f
-        float currentLocalOrientationQuaternionYAngleCorrected = (currentLocalOrientationQuaternionYAngle > 180) ? currentLocalOrientationQuaternionYAngle - 360 : currentLocalOrientationQuaternionYAngle;
-        float kinematicLocalOrientationQuaternionYAngleCorrected = (kinematicLocalOrientationQuaternionYAngle > 180) ? kinematicLocalOrientationQuaternionYAngle - 360 : kinematicLocalOrientationQuaternionYAngle;
-
-        // Print axis and angle
-        Debug.Log("[INFO: " + this.gameObject.name + "] Current Orientation Y Axis: " + currentLocalOrientationQuaternionYAxis + " | Current Orientation Y Angle: " + currentLocalOrientationQuaternionYAngleCorrected);
-        Debug.Log("[INFO: " + this.gameObject.name + "] Kinematic Orientation Y Axis: " + kinematicLocalOrientationQuaternionYAxis + " | Current Orientation Y Angle: " + kinematicLocalOrientationQuaternionYAngleCorrected);
-
-        #endregion
-
-        #region Current Rotations - Not needed
-
-        // Create Rotation from Y-projected Current Orientation to minAngleQuaternionY and convert to Angle-Axis
-        //currentLocalRotationMinY = minAngleQuaternionY * Quaternion.Inverse(currentLocalOrientation); // You shouldn't use the entire Quaternion
-        currentLocalRotationMinY = minAngleQuaternionY * Quaternion.Inverse(currentLocalOrientationQuaternionY); // Using the projection
-
-        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
-        // We want the equivalant short rotation eg. -10 degrees
-        // Check if rotation is greater than 190 degees == q.w is negative
-        if (currentLocalRotationMinY.w < 0)
-        {
-            // Convert the quaterion to eqivalent "short way around" quaterion
-            currentLocalRotationMinY.x = -currentLocalRotationMinY.x;
-            currentLocalRotationMinY.y = -currentLocalRotationMinY.y;
-            currentLocalRotationMinY.z = -currentLocalRotationMinY.z;
-            currentLocalRotationMinY.w = -currentLocalRotationMinY.w;
-        }
-        float currentLocalRotationMinYAngle = 0.0f;
-        Vector3 currentLocalRotationMinYAxis = Vector3.zero;
-        currentLocalRotationMinY.ToAngleAxis(out currentLocalRotationMinYAngle, out currentLocalRotationMinYAxis);
-        currentLocalRotationMinYAxis.Normalize();
-
-        // Create Rotation from Y-projected Current Orientation to maxAngleQuaternionY and convert to Angle-Axis
-        //currentLocalRotationMaxY = maxAngleQuaternionY * Quaternion.Inverse(currentLocalOrientation); // You shouldn't use the entire Quaternion
-        currentLocalRotationMaxY = maxAngleQuaternionY * Quaternion.Inverse(currentLocalOrientationQuaternionY); // Using the projection
-
-        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
-        // We want the equivalant short rotation eg. -10 degrees
-        // Check if rotation is greater than 190 degees == q.w is negative
-        if (currentLocalRotationMaxY.w < 0)
-        {
-            // Convert the quaterion to eqivalent "short way around" quaterion
-            currentLocalRotationMaxY.x = -currentLocalRotationMaxY.x;
-            currentLocalRotationMaxY.y = -currentLocalRotationMaxY.y;
-            currentLocalRotationMaxY.z = -currentLocalRotationMaxY.z;
-            currentLocalRotationMaxY.w = -currentLocalRotationMaxY.w;
-        }
-        float currentLocalRotationMaxYAngle = 0.0f;
-        Vector3 currentLocalRotationMaxYAxis = Vector3.zero;
-        currentLocalRotationMaxY.ToAngleAxis(out currentLocalRotationMaxYAngle, out currentLocalRotationMaxYAxis);
-        currentLocalRotationMaxYAxis.Normalize();
-        
-        #endregion
-
-        #region Kinematic Rotations - Not needed
-
-        // Create Rotation from Y-projected Kinematic Orientation to minAngleQuaternionX and convert to Angle-Axis
-
-        //kinematicLocalRotationMinY = minAngleQuaternionY * Quaternion.Inverse(kinematicLocalOrientation); // You shouldn't use the entire Quaternion
-        kinematicLocalRotationMinY = minAngleQuaternionY * Quaternion.Inverse(kinematicLocalOrientationQuaternionY); // Using the projection
-        
-        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
-        // We want the equivalant short rotation eg. -10 degrees
-        // Check if rotation is greater than 190 degees == q.w is negative
-        if (kinematicLocalRotationMinY.w < 0)
-        {
-            // Convert the quaterion to eqivalent "short way around" quaterion
-            kinematicLocalRotationMinY.x = -kinematicLocalRotationMinY.x;
-            kinematicLocalRotationMinY.y = -kinematicLocalRotationMinY.y;
-            kinematicLocalRotationMinY.z = -kinematicLocalRotationMinY.z;
-            kinematicLocalRotationMinY.w = -kinematicLocalRotationMinY.w;
-        }
-        float kinematicLocalRotationMinYAngle = 0.0f;
-        Vector3 kinematicLocalRotationMinYAxis = Vector3.zero;
-        kinematicLocalRotationMinY.ToAngleAxis(out kinematicLocalRotationMinYAngle, out kinematicLocalRotationMinYAxis);
-        kinematicLocalRotationMinYAxis.Normalize();
-
-        // Create Rotation from Y-projected Kinematic Orientation to maxAngleQuaternionY and convert to Angle-Axis
-
-        //kinematicLocalRotationMaxY = maxAngleQuaternionY * Quaternion.Inverse(kinematicLocalOrientation); // You shouldn't use the entire Quaternion
-        kinematicLocalRotationMaxY = maxAngleQuaternionY * Quaternion.Inverse(kinematicLocalOrientationQuaternionY); // Using the projection
-        
-        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
-        // We want the equivalant short rotation eg. -10 degrees
-        // Check if rotation is greater than 190 degees == q.w is negative
-        if (kinematicLocalRotationMaxY.w < 0)
-        {
-            // Convert the quaterion to eqivalent "short way around" quaterion
-            kinematicLocalRotationMaxY.x = -kinematicLocalRotationMaxY.x;
-            kinematicLocalRotationMaxY.y = -kinematicLocalRotationMaxY.y;
-            kinematicLocalRotationMaxY.z = -kinematicLocalRotationMaxY.z;
-            kinematicLocalRotationMaxY.w = -kinematicLocalRotationMaxY.w;
-        }
-        float kinematicLocalRotationMaxYAngle = 0.0f;
-        Vector3 kinematicLocalRotationMaxYAxis = Vector3.zero;
-        kinematicLocalRotationMaxY.ToAngleAxis(out kinematicLocalRotationMaxYAngle, out kinematicLocalRotationMaxYAxis);
-        kinematicLocalRotationMaxYAxis.Normalize();
-
-        #endregion
-
-        #region Estimate Errors from Rotation - Not needed
-
-        float errorLocalRotationMinY = (currentLocalRotationMinYAngle * currentLocalRotationMinYAxis).y;
-        float errorLocalRotationMaxY = (currentLocalRotationMaxYAngle * currentLocalRotationMaxYAxis).y;
-        Debug.Log("[INFO: " + this.gameObject.name + "] errorLocalRotationMinY: " + errorLocalRotationMinY + " | errorLocalRotationMaxY: " + errorLocalRotationMaxY);
-
-        #endregion
-
-        #region Estimate Errors directly from Axis-Angle
-
-        float currentLocalErrorMinY = minSoftLimitY - currentLocalOrientationQuaternionYAngleCorrected;
-        float currentLocalErrorMaxY = maxSoftLimitY - currentLocalOrientationQuaternionYAngleCorrected;
-        Debug.Log("[INFO: " + this.gameObject.name + "] currentLocalErrorMinY: " + currentLocalErrorMinY + " | currentLocalErrorMaxY: " + currentLocalErrorMaxY);
-
-        float kinematicLocalErrorMinY = minSoftLimitY - kinematicLocalOrientationQuaternionYAngleCorrected;
-        float kinematicLocalErrorMaxY = maxSoftLimitY - kinematicLocalOrientationQuaternionYAngleCorrected;
-        Debug.Log("[INFO: " + this.gameObject.name + "] kinematicLocalErrorMinY: " + kinematicLocalErrorMinY + " | kinematicLocalErrorMaxY: " + kinematicLocalErrorMaxY);
-
-        #endregion
-
-        #region Isoline with Rotation errors - Not Needed
-
-        interceptY = (0f) / (kinematicLocalRotationMaxYAngle * kinematicLocalRotationMaxYAxis).y;
-        slopeY = ((kinematicLocalRotationMinYAngle * kinematicLocalRotationMinYAxis).y) / (-(kinematicLocalRotationMaxYAngle * kinematicLocalRotationMaxYAxis).y);
-        pHY = pLY * slopeY + interceptY;
-        this._antagonisticControllerY.KPL = pLY;
-        this._antagonisticControllerY.KPH = pHY;
-        torqueAppliedY = _antagonisticControllerY.GetOutput(errorLocalRotationMinY, errorLocalRotationMaxY, angularVelocity.magnitude, Time.fixedDeltaTime);
-
-        #endregion
-
-        #region Isoline with Angle errors
-
-        interceptY = (0f) / kinematicLocalErrorMaxY;
-        slopeY = (kinematicLocalErrorMinY) / (-(kinematicLocalErrorMaxY));
-        pHY = pLY * slopeY + interceptY;
-        this._antagonisticControllerY.KPL = pLY;
-        this._antagonisticControllerY.KPH = pHY;
-        torqueAppliedY = _antagonisticControllerY.GetOutput(currentLocalErrorMinY, currentLocalErrorMaxY, angularVelocity.magnitude, Time.fixedDeltaTime);
-
-        #endregion
-
-        return new Vector3(0f, torqueAppliedY, 0f);
-    }
-
-    /// <summary>
-    /// Compute torque for Z-axis using Antagonistic Controller.
-    /// </summary>
-    /// <param name="currentLocalOrientation"></param>
-    /// <param name="currentGlobalOrientation"></param>
-    /// <param name="kinematicLocalOrientation"></param>
-    /// <param name="kinematicGlobalOrientation"></param>
-    /// <param name="desiredLocalRotation"></param>
-    /// <param name="angularVelocity"></param>
-    /// <param name="gravityTorqueVectorLocal"></param>
-    /// <param name="fixedDeltaTime"></param>
-    /// <returns></returns>
-    private Vector3 ComputeRequiredAntagonisticTorqueZ(Quaternion currentLocalOrientation, Quaternion currentGlobalOrientation,
-                                                       Quaternion kinematicLocalOrientation, Quaternion kinematicGlobalOrientation,
-                                                       Quaternion desiredLocalRotation, Vector3 angularVelocity, Vector3 gravityTorqueVectorLocal,
-                                                       float fixedDeltaTime)
-    {
-
-        #region Orientations
-
-        // Component-wise projection of Min/Max Euler Axis - It should not be needed
-        Quaternion minAngleQuaternionZ = Quaternion.Euler(new Vector3(0f, 0f, minSoftLimitZ));
-        Quaternion maxAngleQuaternionZ = Quaternion.Euler(new Vector3(0f, 0f, maxSoftLimitZ));
-
-        // Swing-Twist Decomposition of current/kinematic orientation on main axis
-        Quaternion currentLocalOrientationQuaternionZ = getRotationComponentAboutAxis(currentLocalOrientation, Vector3.forward);
-        Quaternion kinematicLocalOrientationQuaternionZ = getRotationComponentAboutAxis(kinematicLocalOrientation, Vector3.forward);
-
-        // Axis-Angle Conversion of current orientation
-        float currentLocalOrientationQuaternionZAngle = 0.0f;
-        Vector3 currentLocalOrientationQuaternionZAxis = Vector3.zero;
-        currentLocalOrientationQuaternionZ.ToAngleAxis(out currentLocalOrientationQuaternionZAngle, out currentLocalOrientationQuaternionZAxis);
-        currentLocalOrientationQuaternionZ.Normalize();
-
-        // Axis-Angle Conversion of kinematic orientation
-        float kinematicLocalOrientationQuaternionZAngle = 0.0f;
-        Vector3 kinematicLocalOrientationQuaternionZAxis = Vector3.zero;
-        kinematicLocalOrientationQuaternionZ.ToAngleAxis(out kinematicLocalOrientationQuaternionZAngle, out kinematicLocalOrientationQuaternionZAxis);
-        kinematicLocalOrientationQuaternionZ.Normalize();
-
-        // Angles to be negative when < 0f
-        float currentLocalOrientationQuaternionZAngleCorrected = (currentLocalOrientationQuaternionZAngle > 180) ? currentLocalOrientationQuaternionZAngle - 360 : currentLocalOrientationQuaternionZAngle;
-        float kinematicLocalOrientationQuaternionZAngleCorrected = (kinematicLocalOrientationQuaternionZAngle > 180) ? kinematicLocalOrientationQuaternionZAngle - 360 : kinematicLocalOrientationQuaternionZAngle;
-
-        // Print axis and angle
-        Debug.Log("[INFO: " + this.gameObject.name + "] Current Orientation Z Axis: " + currentLocalOrientationQuaternionZAxis + " | Current Orientation Z Angle: " + currentLocalOrientationQuaternionZAngleCorrected);
-        Debug.Log("[INFO: " + this.gameObject.name + "] Kinematic Orientation Z Axis: " + kinematicLocalOrientationQuaternionZAxis + " | Current Orientation Z Angle: " + kinematicLocalOrientationQuaternionZAngleCorrected);
-
-        #endregion
-
-        #region Current Rotations - Not needed
-
-        // Create Rotation from Z-projected Current Orientation to minAngleQuaternionZ and convert to Angle-Axis
-        //currentLocalRotationMinZ = minAngleQuaternionZ * Quaternion.Inverse(currentLocalOrientation); // You shouldn't use the entire Quaternion
-        currentLocalRotationMinZ = minAngleQuaternionZ * Quaternion.Inverse(currentLocalOrientationQuaternionZ); // Using the projection
-
-        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
-        // We want the equivalant short rotation eg. -10 degrees
-        // Check if rotation is greater than 190 degees == q.w is negative
-        if (currentLocalRotationMinZ.w < 0)
-        {
-            // Convert the quaterion to eqivalent "short way around" quaterion
-            currentLocalRotationMinZ.x = -currentLocalRotationMinZ.x;
-            currentLocalRotationMinZ.y = -currentLocalRotationMinZ.y;
-            currentLocalRotationMinZ.z = -currentLocalRotationMinZ.z;
-            currentLocalRotationMinZ.w = -currentLocalRotationMinZ.w;
-        }
-        float currentLocalRotationMinZAngle = 0.0f;
-        Vector3 currentLocalRotationMinZAxis = Vector3.zero;
-        currentLocalRotationMinZ.ToAngleAxis(out currentLocalRotationMinZAngle, out currentLocalRotationMinZAxis);
-        currentLocalRotationMinZAxis.Normalize();
-
-        // Create Rotation from Y-projected Current Orientation to maxAngleQuaternionY and convert to Angle-Axis
-        //currentLocalRotationMaxY = maxAngleQuaternionY * Quaternion.Inverse(currentLocalOrientation); // You shouldn't use the entire Quaternion
-        currentLocalRotationMaxZ = maxAngleQuaternionZ * Quaternion.Inverse(currentLocalOrientationQuaternionZ); // Using the projection
-
-        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
-        // We want the equivalant short rotation eg. -10 degrees
-        // Check if rotation is greater than 190 degees == q.w is negative
-        if (currentLocalRotationMaxZ.w < 0)
-        {
-            // Convert the quaterion to eqivalent "short way around" quaterion
-            currentLocalRotationMaxZ.x = -currentLocalRotationMaxZ.x;
-            currentLocalRotationMaxZ.y = -currentLocalRotationMaxZ.y;
-            currentLocalRotationMaxZ.z = -currentLocalRotationMaxZ.z;
-            currentLocalRotationMaxZ.w = -currentLocalRotationMaxZ.w;
-        }
-        float currentLocalRotationMaxZAngle = 0.0f;
-        Vector3 currentLocalRotationMaxZAxis = Vector3.zero;
-        currentLocalRotationMaxZ.ToAngleAxis(out currentLocalRotationMaxZAngle, out currentLocalRotationMaxZAxis);
-        currentLocalRotationMaxZAxis.Normalize();
-
-        #endregion
-
-        #region Kinematic Rotations - Not needed
-
-        // Create Rotation from Z-projected Kinematic Orientation to minAngleQuaternionZ and convert to Angle-Axis
-
-        //kinematicLocalRotationMinZ = minAngleQuaternionZ * Quaternion.Inverse(kinematicLocalOrientation); // You shouldn't use the entire Quaternion
-        kinematicLocalRotationMinZ = minAngleQuaternionZ * Quaternion.Inverse(kinematicLocalOrientationQuaternionZ); // Using the projection
-
-        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
-        // We want the equivalant short rotation eg. -10 degrees
-        // Check if rotation is greater than 190 degees == q.w is negative
-        if (kinematicLocalRotationMinZ.w < 0)
-        {
-            // Convert the quaterion to eqivalent "short way around" quaterion
-            kinematicLocalRotationMinZ.x = -kinematicLocalRotationMinZ.x;
-            kinematicLocalRotationMinZ.y = -kinematicLocalRotationMinZ.y;
-            kinematicLocalRotationMinZ.z = -kinematicLocalRotationMinZ.z;
-            kinematicLocalRotationMinZ.w = -kinematicLocalRotationMinZ.w;
-        }
-        float kinematicLocalRotationMinZAngle = 0.0f;
-        Vector3 kinematicLocalRotationMinZAxis = Vector3.zero;
-        kinematicLocalRotationMinZ.ToAngleAxis(out kinematicLocalRotationMinZAngle, out kinematicLocalRotationMinZAxis);
-        kinematicLocalRotationMinZAxis.Normalize();
-
-        // Create Rotation from Z-projected Kinematic Orientation to maxAngleQuaternionZ and convert to Angle-Axis
-
-        //kinematicLocalRotationMaxZ = maxAngleQuaternionZ * Quaternion.Inverse(kinematicLocalOrientation); // You shouldn't use the entire Quaternion
-        kinematicLocalRotationMaxZ = maxAngleQuaternionZ * Quaternion.Inverse(kinematicLocalOrientationQuaternionZ); // Using the projection
-
-        // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
-        // We want the equivalant short rotation eg. -10 degrees
-        // Check if rotation is greater than 190 degees == q.w is negative
-        if (kinematicLocalRotationMaxZ.w < 0)
-        {
-            // Convert the quaterion to eqivalent "short way around" quaterion
-            kinematicLocalRotationMaxZ.x = -kinematicLocalRotationMaxZ.x;
-            kinematicLocalRotationMaxZ.y = -kinematicLocalRotationMaxZ.y;
-            kinematicLocalRotationMaxZ.z = -kinematicLocalRotationMaxZ.z;
-            kinematicLocalRotationMaxZ.w = -kinematicLocalRotationMaxZ.w;
-        }
-        float kinematicLocalRotationMaxZAngle = 0.0f;
-        Vector3 kinematicLocalRotationMaxZAxis = Vector3.zero;
-        kinematicLocalRotationMaxY.ToAngleAxis(out kinematicLocalRotationMaxZAngle, out kinematicLocalRotationMaxZAxis);
-        kinematicLocalRotationMaxZAxis.Normalize();
-
-        #endregion
-
-        #region Estimate Errors from Rotation - Not needed
-
-        float errorLocalRotationMinZ = (currentLocalRotationMinZAngle * currentLocalRotationMinZAxis).z;
-        float errorLocalRotationMaxZ = (currentLocalRotationMaxZAngle * currentLocalRotationMaxZAxis).z;
-        Debug.Log("[INFO: " + this.gameObject.name + "] errorLocalRotationMinZ: " + errorLocalRotationMinZ + " | errorLocalRotationMaxZ: " + errorLocalRotationMaxZ);
-
-        #endregion
-
-        #region Estimate Errors directly from Axis-Angle
-
-        float currentLocalErrorMinZ = minSoftLimitZ - currentLocalOrientationQuaternionZAngleCorrected;
-        float currentLocalErrorMaxZ = maxSoftLimitZ - currentLocalOrientationQuaternionZAngleCorrected;
-        Debug.Log("[INFO: " + this.gameObject.name + "] currentLocalErrorMinZ: " + currentLocalErrorMinZ + " | currentLocalErrorMaxZ: " + currentLocalErrorMaxZ);
-
-        float kinematicLocalErrorMinZ = minSoftLimitZ - kinematicLocalOrientationQuaternionZAngleCorrected;
-        float kinematicLocalErrorMaxZ = maxSoftLimitZ - kinematicLocalOrientationQuaternionZAngleCorrected;
-        Debug.Log("[INFO: " + this.gameObject.name + "] kinematicLocalErrorMinZ: " + kinematicLocalErrorMinZ + " | kinematicLocalErrorMaxZ: " + kinematicLocalErrorMaxZ);
-
-        #endregion
-
-        #region Isoline with Rotation errors - Not Needed
-
-        interceptZ = (0f) / (kinematicLocalRotationMaxZAngle * kinematicLocalRotationMaxZAxis).z;
-        slopeZ = ((kinematicLocalRotationMinZAngle * kinematicLocalRotationMinZAxis).z) / (-(kinematicLocalRotationMaxZAngle * kinematicLocalRotationMaxZAxis).z);
-        pHZ = pLZ * slopeZ + interceptZ;
-        this._antagonisticControllerZ.KPL = pLZ;
-        this._antagonisticControllerZ.KPH = pHZ;
-        torqueAppliedZ = _antagonisticControllerZ.GetOutput(errorLocalRotationMinZ, errorLocalRotationMaxZ, angularVelocity.magnitude, Time.fixedDeltaTime);
-
-        #endregion
-
-        #region Isoline with Angle errors
-
-        interceptZ = (0f) / kinematicLocalErrorMaxZ;
-        slopeZ = (kinematicLocalErrorMinZ) / (-(kinematicLocalErrorMaxZ));
-        pHZ = pLZ * slopeZ + interceptZ;
-        this._antagonisticControllerZ.KPL = pLZ;
-        this._antagonisticControllerZ.KPH = pHZ;
-        torqueAppliedZ = _antagonisticControllerZ.GetOutput(currentLocalErrorMinZ, currentLocalErrorMaxZ, angularVelocity.magnitude, Time.fixedDeltaTime);
-
-        #endregion
-
-        return new Vector3(0f, 0f, torqueAppliedZ);
-    }
-
-    */
 
     /// <summary>
     /// Compute torque using Normal PD Controller.
@@ -1534,15 +958,15 @@ public class JointController : MonoBehaviour
         /* ========================================= */
 
         // Normal Torque [Local]
-        float torqueLocal = _normalPDController.GetOutput(newRotationErrorLocal, angularVelocity.magnitude, Time.fixedDeltaTime);
+        float torqueLocal = _normalPDController.GetOutput(newRotationErrorLocal, angularVelocity.magnitude, fixedDeltaTime);
         //Debug.Log("[INFO] torqueLocal * rotationNewAxis: " + (torqueLocal * rotationNewAxisLocal));
 
         /*     2. Improved Torque Estimation (B)     */
         /* ========================================= */
 
         // Improved Torque [Global] and [Local]
-        Vector3 torqueImprovedGlobal = _normalPDController.GetOutputAxisAngle(newRotationErrorGlobal, rotationNewAxisGlobal, angularVelocity, Time.fixedDeltaTime);
-        Vector3 torqueImprovedLocal = _normalPDController.GetOutputAxisAngle(newRotationErrorLocal, rotationNewAxisLocal, angularVelocity, Time.fixedDeltaTime);
+        Vector3 torqueImprovedGlobal = _normalPDController.GetOutputAxisAngle(newRotationErrorGlobal, rotationNewAxisGlobal, angularVelocity, fixedDeltaTime);
+        Vector3 torqueImprovedLocal = _normalPDController.GetOutputAxisAngle(newRotationErrorLocal, rotationNewAxisLocal, angularVelocity, fixedDeltaTime);
         //Debug.Log("[INFO] torqueImprovedGlobal: " + torqueImprovedGlobal);
         //Debug.Log("[INFO] torqueImprovedLocal: " + torqueImprovedLocal);
 

@@ -57,9 +57,10 @@ public class PDController
     {
         _P = currentError;
         _I += _P * dt;
-        _D = (_P - _previousError) / dt; // or _D = delta
+        _D = delta;
 
-        _previousError = currentError;
+        //_D = (_P - _previousError) / dt; // or _D = delta
+        //_previousError = currentError;
 
         return _P * _kP + _I * _kI + _D * _kD;
     }
@@ -74,14 +75,13 @@ public class PDController
     /// <returns></returns>
     public Vector3 GetOutputAxisAngle(float error, Vector3 axis, Vector3 delta, float dt)
     {
-
         // Euler Integration for Backward PD
         //float g = 1 / (1 + _kD * dt + _kPL * dt * dt);
         //float ksg = _kPL * g;
         //float kdg = (_kD + _kPL * dt) * g;
 
         // 1. In Vector3 space
-        // -------------------
+        // -----------------------------------
 
         _PVector = (error * Mathf.Deg2Rad) * axis;
         _IVector += _PVector * dt;
@@ -94,14 +94,17 @@ public class PDController
 
         _P = (error * Mathf.Deg2Rad);
         _I += _P * dt;
-        _D = (_P - _previousError) / dt; // or _D = delta.magnitude
+        _D = delta.magnitude;
 
-        _previousError = error * Mathf.Deg2Rad;
+        //_D = (_P - _previousError) / dt; // or _D = delta.magnitude
+        //_previousError = error * Mathf.Deg2Rad;
 
         float outputScalar = _kP * _P + _kD * _D;
         //float outputScalar = ksg * _P + kdg * _D; // Output w/ Euler Integration
 
         Vector3 output2 = outputScalar * axis;
+
+        // -----------------------------------
 
         //Debug.Log("[INFO] output1: " + output1 + " | output2: " + output2); // Both are the same
 

@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Obstacle
   - LeftHand
   - RightHand
   - Ground
@@ -12,6 +11,8 @@ TagManager:
   - RightArm
   - Dynamic Obstacle
   - Static Obstacle
+  - LeftForeArm
+  - LeftArm
   layers:
   - Default
   - TransparentFX

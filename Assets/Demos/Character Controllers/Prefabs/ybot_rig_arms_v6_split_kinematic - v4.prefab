@@ -4063,7 +4063,7 @@ MonoBehaviour:
   originRegion: {fileID: 1904840852391078110}
   originOffset: {x: -0.4, y: 0, z: 0.5}
   radiusRegion: 0.6
-  reactionTime: 1.5
+  reactionTime: 1
   ragdollLeftHand: {fileID: 0}
   leftHandIK: {fileID: 7170379307483878355}
   fixHandToDynamicObject: 0
@@ -4233,7 +4233,7 @@ MonoBehaviour:
   originRegion: {fileID: 3849705244601195322}
   originOffset: {x: 0.4, y: 0, z: 0.5}
   radiusRegion: 0.6
-  reactionTime: 1.5
+  reactionTime: 1
   ragdollRightHand: {fileID: 0}
   rightHandIK: {fileID: 7170379307483878354}
   fixHandToDynamicObject: 0
