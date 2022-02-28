@@ -78,7 +78,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000046408593, y: 0.27404666, z: -0.00000017322598}
+  m_ConnectedAnchor: {x: -0.00000046408604, y: 0.2740476, z: -0.0000004414469}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: -1}
   m_XMotion: 1
@@ -184,11 +184,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623532570005711}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DELTATIME: 0.02
   controllerType: 2
   kinematicLimb: {fileID: 0}
   hand: {fileID: 4765623532839076803}
@@ -199,15 +200,17 @@ MonoBehaviour:
   damper: 0.3
   activateNormalPD: 0
   applyNormalTorque: 0
+  requiredTorque: {x: 0, y: 0, z: 0}
   globalMode: 1
   Kp: 1600
   Ki: 0
   Kd: 0.3
   deployDesiredRotation: 0
+  debugModeNormal: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
-  requiredAntagonisticTorque: {x: 0, y: 0, z: 0}
-  debugMode: 0
+  requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
+  debugModeAntagonistic: 0
   multGrav: 1
   pLX: 25
   pHX: 0
@@ -220,6 +223,8 @@ MonoBehaviour:
   minHardLimitX: -170
   maxHardLimitX: 0
   drawLimitsX: 0
+  slopeXCurrent: 0
+  interceptXCurrent: 0
   pLY: 2.5
   pHY: 0
   iY: 0
@@ -231,6 +236,8 @@ MonoBehaviour:
   minHardLimitY: -25
   maxHardLimitY: 25
   drawLimitsY: 0
+  slopeYCurrent: 0
+  interceptYCurrent: 0
   pLZ: 25
   pHZ: 0
   iZ: 0
@@ -242,6 +249,8 @@ MonoBehaviour:
   minHardLimitZ: -25
   maxHardLimitZ: 25
   drawLimitsZ: 0
+  slopeZCurrent: 0
+  interceptZCurrent: 0
   distance3D: {x: 0, y: 0, z: 0}
   gravityAcc: {x: 0, y: 0, z: 0}
   gravityTorqueVector: {x: 0, y: 0, z: 0}
@@ -322,7 +331,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0024468277, y: 0.40595403, z: 0.005169651}
+  m_ConnectedAnchor: {x: -0.0024472673, y: 0.40595403, z: 0.005169912}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -853,7 +862,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623532839076803}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 10
   m_AngularDrag: 49.9
   m_UseGravity: 0
@@ -886,7 +895,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000039403466, y: 0.2761443, z: -0.000000110154595}
+  m_ConnectedAnchor: {x: -0.00000039403469, y: 0.2761449, z: -0.00000016975923}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -977,11 +986,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623532839076803}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DELTATIME: 0.02
   controllerType: 2
   kinematicLimb: {fileID: 0}
   hand: {fileID: 4765623532839076803}
@@ -992,15 +1002,17 @@ MonoBehaviour:
   damper: 0.3
   activateNormalPD: 0
   applyNormalTorque: 0
+  requiredTorque: {x: 0, y: 0, z: 0}
   globalMode: 1
   Kp: 1600
   Ki: 0
   Kd: 0.3
   deployDesiredRotation: 0
+  debugModeNormal: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
-  requiredAntagonisticTorque: {x: 0, y: 0, z: 0}
-  debugMode: 0
+  requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
+  debugModeAntagonistic: 0
   multGrav: 1
   pLX: 10
   pHX: 0
@@ -1013,6 +1025,8 @@ MonoBehaviour:
   minHardLimitX: -50
   maxHardLimitX: 50
   drawLimitsX: 0
+  slopeXCurrent: 0
+  interceptXCurrent: 0
   pLY: 1
   pHY: 0
   iY: 0
@@ -1024,6 +1038,8 @@ MonoBehaviour:
   minHardLimitY: -50
   maxHardLimitY: 50
   drawLimitsY: 0
+  slopeYCurrent: 0
+  interceptYCurrent: 0
   pLZ: 10
   pHZ: 0
   iZ: 0
@@ -1035,6 +1051,8 @@ MonoBehaviour:
   minHardLimitZ: -90
   maxHardLimitZ: 90
   drawLimitsZ: 0
+  slopeZCurrent: 0
+  interceptZCurrent: 0
   distance3D: {x: 0, y: 0, z: 0}
   gravityAcc: {x: 0, y: 0, z: 0}
   gravityTorqueVector: {x: 0, y: 0, z: 0}
@@ -1284,7 +1302,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.06105819, y: 0.0911043, z: 0.007055072}
+  m_ConnectedAnchor: {x: -0.06105854, y: 0.0911043, z: 0.0070553627}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -1717,7 +1735,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0024472876, y: 0.4059543, z: 0.005144509}
+  m_ConnectedAnchor: {x: 0.0024475632, y: 0.4059543, z: 0.0051448965}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -1972,7 +1990,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.000000584241, y: 0.13360202, z: -0.016264793}
+  m_ConnectedAnchor: {x: -0.0000013651548, y: 0.13360202, z: -0.01626499}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -2359,7 +2377,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.09124469, y: -0.06656394, z: -0.0005537648}
+  m_ConnectedAnchor: {x: 0.09124414, y: -0.06656394, z: -0.00055412244}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -2520,7 +2538,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1.59
   m_Drag: 10
-  m_AngularDrag: 49.9
+  m_AngularDrag: 10
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -2552,7 +2570,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000006198742, y: 0.27404663, z: -0.00000021234155}
+  m_ConnectedAnchor: {x: 0.000000061987414, y: 0.27404654, z: -0.00000036135316}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -2658,11 +2676,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623533403131666}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DELTATIME: 0.02
   controllerType: 2
   kinematicLimb: {fileID: 0}
   hand: {fileID: 4765623534695646599}
@@ -2673,15 +2692,17 @@ MonoBehaviour:
   damper: 0.3
   activateNormalPD: 0
   applyNormalTorque: 0
+  requiredTorque: {x: 0, y: 0, z: 0}
   globalMode: 1
   Kp: 1600
   Ki: 0
   Kd: 0.3
   deployDesiredRotation: 0
+  debugModeNormal: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
-  requiredAntagonisticTorque: {x: 0, y: 0, z: 0}
-  debugMode: 0
+  requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
+  debugModeAntagonistic: 0
   multGrav: 1
   pLX: 25
   pHX: 0
@@ -2694,6 +2715,8 @@ MonoBehaviour:
   minHardLimitX: 0
   maxHardLimitX: 170
   drawLimitsX: 0
+  slopeXCurrent: 0
+  interceptXCurrent: 0
   pLY: 2.5
   pHY: 0
   iY: 0
@@ -2705,6 +2728,8 @@ MonoBehaviour:
   minHardLimitY: -25
   maxHardLimitY: 25
   drawLimitsY: 0
+  slopeYCurrent: 0
+  interceptYCurrent: 0
   pLZ: 25
   pHZ: 0
   iZ: 0
@@ -2716,6 +2741,8 @@ MonoBehaviour:
   minHardLimitZ: -25
   maxHardLimitZ: 25
   drawLimitsZ: 0
+  slopeZCurrent: 0
+  interceptZCurrent: 0
   distance3D: {x: 0, y: 0, z: 0}
   gravityAcc: {x: 0, y: 0, z: 0}
   gravityTorqueVector: {x: 0, y: 0, z: 0}
@@ -3123,7 +3150,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0026593148, y: 0.12655015, z: 0.026009046}
+  m_ConnectedAnchor: {x: 0.0026593148, y: 0.1265496, z: 0.026008897}
   serializedVersion: 2
   m_SecondaryAxis: {x: -1, y: 0, z: 0}
   m_XMotion: 1
@@ -3229,11 +3256,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623533588814599}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DELTATIME: 0.02
   controllerType: 2
   kinematicLimb: {fileID: 0}
   hand: {fileID: 4765623532839076803}
@@ -3244,15 +3272,17 @@ MonoBehaviour:
   damper: 0.3
   activateNormalPD: 0
   applyNormalTorque: 0
+  requiredTorque: {x: 0, y: 0, z: 0}
   globalMode: 1
   Kp: 1600
   Ki: 0
   Kd: 0.3
   deployDesiredRotation: 0
+  debugModeNormal: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
-  requiredAntagonisticTorque: {x: 0, y: 0, z: 0}
-  debugMode: 0
+  requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
+  debugModeAntagonistic: 0
   multGrav: 1
   pLX: 50
   pHX: 0
@@ -3265,6 +3295,8 @@ MonoBehaviour:
   minHardLimitX: -100
   maxHardLimitX: 70
   drawLimitsX: 0
+  slopeXCurrent: 0
+  interceptXCurrent: 0
   pLY: 5
   pHY: 0
   iY: 0
@@ -3276,6 +3308,8 @@ MonoBehaviour:
   minHardLimitY: -80
   maxHardLimitY: 80
   drawLimitsY: 0
+  slopeYCurrent: 0
+  interceptYCurrent: 0
   pLZ: 50
   pHZ: 0
   iZ: 0
@@ -3287,6 +3321,8 @@ MonoBehaviour:
   minHardLimitZ: -80
   maxHardLimitZ: 80
   drawLimitsZ: 0
+  slopeZCurrent: 0
+  interceptZCurrent: 0
   distance3D: {x: 0, y: 0, z: 0}
   gravityAcc: {x: 0, y: 0, z: 0}
   gravityTorqueVector: {x: 0, y: 0, z: 0}
@@ -3518,7 +3554,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.061057422, y: 0.091105014, z: 0.0070550684}
+  m_ConnectedAnchor: {x: 0.061057165, y: 0.091105014, z: 0.0070560295}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -3878,7 +3914,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: -0.105, z: -0.03}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000015379154, y: 0.28214514, z: -0.006911177}
+  m_ConnectedAnchor: {x: -0.0000010482726, y: 0.28214514, z: -0.006911088}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -4299,7 +4335,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000016499353, y: 0.215689, z: -0.026497569}
+  m_ConnectedAnchor: {x: 0.0000021917322, y: 0.215689, z: -0.026496692}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -4566,7 +4602,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.091244705, y: -0.066564046, z: -0.0005537698}
+  m_ConnectedAnchor: {x: -0.09124387, y: -0.066564046, z: -0.00055427646}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -5060,7 +5096,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 2.95
   m_Drag: 10
-  m_AngularDrag: 49.9
+  m_AngularDrag: 10
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -5092,7 +5128,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0026601618, y: 0.12655015, z: -0.02600917}
+  m_ConnectedAnchor: {x: 0.0026601618, y: 0.12655039, z: -0.02600935}
   serializedVersion: 2
   m_SecondaryAxis: {x: -1, y: 0, z: 0}
   m_XMotion: 1
@@ -5198,11 +5234,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623534636773826}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DELTATIME: 0.02
   controllerType: 2
   kinematicLimb: {fileID: 0}
   hand: {fileID: 4765623534695646599}
@@ -5213,15 +5250,17 @@ MonoBehaviour:
   damper: 0.3
   activateNormalPD: 0
   applyNormalTorque: 0
+  requiredTorque: {x: 0, y: 0, z: 0}
   globalMode: 1
   Kp: 1600
   Ki: 0
   Kd: 0.3
   deployDesiredRotation: 0
+  debugModeNormal: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
-  requiredAntagonisticTorque: {x: 0, y: 0, z: 0}
-  debugMode: 0
+  requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
+  debugModeAntagonistic: 0
   multGrav: 1
   pLX: 50
   pHX: 0
@@ -5234,6 +5273,8 @@ MonoBehaviour:
   minHardLimitX: -70
   maxHardLimitX: 100
   drawLimitsX: 0
+  slopeXCurrent: 0
+  interceptXCurrent: 0
   pLY: 5
   pHY: 0
   iY: 0
@@ -5245,6 +5286,8 @@ MonoBehaviour:
   minHardLimitY: -80
   maxHardLimitY: 80
   drawLimitsY: 0
+  slopeYCurrent: 0
+  interceptYCurrent: 0
   pLZ: 50
   pHZ: 0
   iZ: 0
@@ -5256,6 +5299,8 @@ MonoBehaviour:
   minHardLimitZ: -80
   maxHardLimitZ: 80
   drawLimitsZ: 0
+  slopeZCurrent: 0
+  interceptZCurrent: 0
   distance3D: {x: 0, y: 0, z: 0}
   gravityAcc: {x: 0, y: 0, z: 0}
   gravityTorqueVector: {x: 0, y: 0, z: 0}
@@ -5368,9 +5413,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623534695646599}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 10
-  m_AngularDrag: 49.9
+  m_AngularDrag: 10
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -5401,7 +5446,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000015174187, y: 0.2761449, z: -0.00000021234155}
+  m_ConnectedAnchor: {x: -0.00000015174196, y: 0.27614394, z: -0.0000001527369}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 1
@@ -5497,6 +5542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DELTATIME: 0.02
   controllerType: 2
   kinematicLimb: {fileID: 0}
   hand: {fileID: 4765623534695646599}
@@ -5505,17 +5551,19 @@ MonoBehaviour:
   activateDefaultPD: 0
   spring: 1600
   damper: 0.3
-  activateNormalPD: 0
-  applyNormalTorque: 0
+  activateNormalPD: 1
+  applyNormalTorque: 1
+  requiredTorque: {x: 0, y: 0, z: 0}
   globalMode: 1
   Kp: 1600
   Ki: 0
   Kd: 0.3
   deployDesiredRotation: 0
-  activateAntagonisticPD: 1
-  applyAntTorque: 1
-  requiredAntagonisticTorque: {x: 0, y: 0, z: 0}
-  debugMode: 0
+  debugModeNormal: 0
+  activateAntagonisticPD: 0
+  applyAntTorque: 0
+  requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
+  debugModeAntagonistic: 0
   multGrav: 1
   pLX: 10
   pHX: 0
@@ -5528,6 +5576,8 @@ MonoBehaviour:
   minHardLimitX: -50
   maxHardLimitX: 50
   drawLimitsX: 0
+  slopeXCurrent: 0
+  interceptXCurrent: 0
   pLY: 1
   pHY: 0
   iY: 0
@@ -5539,6 +5589,8 @@ MonoBehaviour:
   minHardLimitY: -50
   maxHardLimitY: 50
   drawLimitsY: 0
+  slopeYCurrent: 0
+  interceptYCurrent: 0
   pLZ: 10
   pHZ: 0
   iZ: 0
@@ -5550,6 +5602,8 @@ MonoBehaviour:
   minHardLimitZ: -90
   maxHardLimitZ: 90
   drawLimitsZ: 0
+  slopeZCurrent: 0
+  interceptZCurrent: 0
   distance3D: {x: 0, y: 0, z: 0}
   gravityAcc: {x: 0, y: 0, z: 0}
   gravityTorqueVector: {x: 0, y: 0, z: 0}

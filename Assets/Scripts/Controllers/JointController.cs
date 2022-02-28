@@ -131,12 +131,13 @@ public class JointController : MonoBehaviour
     public float Ki;
     public float Kd;
     public bool deployDesiredRotation;
+    public bool debugModeNormal;
 
     [Header("Antagonistic Controller - Settings")]
     public bool activateAntagonisticPD;
     public bool applyAntTorque;
     public Vector3 requiredAntagonisticLocalTorque;
-    public bool debugMode;
+    public bool debugModeAntagonistic;
     public float multGrav = 1f;
 
     [Header("Antagonistic Controller - Settings - X")]
@@ -716,20 +717,20 @@ public class JointController : MonoBehaviour
 
         if ((controllerType == Controller.NormalPDController) && (activateNormalPD))
         {
-
-            // TEST - Hotfix related to the Inertia issue
-            //_objectRigidbody.angularDrag = 10f;
-
             requiredTorque = ComputeRequiredTorque(_currentLocalOrientation,
-                                                           _currentGlobalOrientation,
-                                                           _kinematicLocalOrientation,
-                                                           _kinematicGlobalOrientation,
-                                                           DesiredLocalRotation,
-                                                           this._objectRigidbody.angularVelocity,
-                                                           gravityTorqueVectorLocal,
-                                                           DELTATIME);
+                                                   _currentGlobalOrientation,
+                                                   _kinematicLocalOrientation,
+                                                   _kinematicGlobalOrientation,
+                                                   DesiredLocalRotation,
+                                                   this._objectRigidbody.angularVelocity,
+                                                   gravityTorqueVectorLocal,
+                                                   DELTATIME);
 
-            Debug.Log("[INFO: " + this.gameObject.name + "] Normal PD Controller (Angle-axis) requiredTorque: " + requiredTorque);
+
+            if (debugModeNormal)
+            {
+                Debug.Log("[INFO: " + this.gameObject.name + "] Normal PD Controller (Angle-axis) requiredTorque: " + requiredTorque);
+            }
 
             if (applyNormalTorque)
             {
@@ -752,9 +753,6 @@ public class JointController : MonoBehaviour
 
         if ((controllerType == Controller.AntagonisticController) && (activateAntagonisticPD))
         {
-            // TEST - Hotfix related to the Inertia issue
-            //_objectRigidbody.angularDrag = 49.9f;
-
             requiredAntagonisticLocalTorque = _antagonisticControllerXYZ.ComputeRequiredAntagonisticTorque(minSoftLimitX, maxSoftLimitX,
                                                                                                               minSoftLimitY, maxSoftLimitY,
                                                                                                               minSoftLimitZ, maxSoftLimitZ,
@@ -769,26 +767,26 @@ public class JointController : MonoBehaviour
                                                                                                               this._objectRigidbody.angularVelocity,
                                                                                                               gravityTorqueVectorLocal,
                                                                                                               DELTATIME,
-                                                                                                              debugMode,
+                                                                                                              debugModeAntagonistic,
                                                                                                               _currentTransform, _kinematicTransform);
 
 
             // 1. Is this torque Local
-            Debug.Log("1. requiredAntagonisticTorque (LOCAL): " + requiredAntagonisticLocalTorque.ToString("F4"));
+            //Debug.Log("1. requiredAntagonisticTorque (LOCAL): " + requiredAntagonisticLocalTorque.ToString("F4"));
 
             // TEST 1 - Keep torque in Local Space
 
             // 2. We rotate the torque by the Inertia Tensor Rotation
             Vector3 torqueRotatedLocal = _objectRigidbody.inertiaTensorRotation * requiredAntagonisticLocalTorque;
-            Debug.Log("requiredAntagonisticLocalTorque rotated by inertiaTensorRotation (torqueRotatedLocal): " + torqueRotatedLocal.ToString("F4"));
+            //Debug.Log("requiredAntagonisticLocalTorque rotated by inertiaTensorRotation (torqueRotatedLocal): " + torqueRotatedLocal.ToString("F4"));
 
             // 3. We mutiply by the Inertia Tensor
             torqueRotatedLocal.Scale(_objectRigidbody.inertiaTensor);
-            Debug.Log("torqueRotatedLocal scaled by inertiaTensor, which is the torque (Local): " + torqueRotatedLocal.ToString("F4"));
+            //Debug.Log("torqueRotatedLocal scaled by inertiaTensor, which is the torque (Local): " + torqueRotatedLocal.ToString("F4"));
 
             // 4. Rotate back the Inertia Tensor Rotation
             Vector3 torqueRotatedBackLocal = Quaternion.Inverse(_objectRigidbody.inertiaTensorRotation) * torqueRotatedLocal; // This is the final torque to apply
-            Debug.Log("torqueRotatedLocal rotated back by inertiaTensorRotation (torqueRotatedBackLocal): " + torqueRotatedBackLocal.ToString("F4"));
+            //Debug.Log("torqueRotatedLocal rotated back by inertiaTensorRotation (torqueRotatedBackLocal): " + torqueRotatedBackLocal.ToString("F4"));
 
             // TEST 2 - Transform to Global 
 
@@ -815,9 +813,9 @@ public class JointController : MonoBehaviour
             Debug.Log("6. torqueRotatedBackLocal: " + torqueRotatedBackLocal.ToString("F4"));
             */
 
-            if (debugMode)
+            if (debugModeAntagonistic)
             {
-                Debug.Log("[INFO: " + this.gameObject.name + "] NEW Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorque: " + requiredAntagonisticLocalTorque);
+                Debug.Log("[INFO: " + this.gameObject.name + "] Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorque: " + requiredAntagonisticLocalTorque);
             }
 
             if (applyAntTorque)
@@ -857,6 +855,8 @@ public class JointController : MonoBehaviour
     {
         #region Orientations and Rotations
 
+        /*
+
         // Current Local Orientation in Angle-axis
         float currentAngle = 0.0f;
         Vector3 currentAxis = Vector3.zero;
@@ -872,12 +872,15 @@ public class JointController : MonoBehaviour
         Vector3 rotationAxis = Vector3.zero;
         desiredLocalRotation.ToAngleAxis(out rotationAngle, out rotationAxis); // <--- Wrong Quaternion, is wrt. joint coordinate system!
 
+        */
+
         #endregion
 
         #region Rotations
 
         // Create Rotation from Current Local Orientation to Kinematic Local Orientation and convert to Angle-Axis
-        newRotationLocal = kinematicLocalOrientation * Quaternion.Inverse(currentLocalOrientation);
+        newRotationLocal = Quaternion.Inverse(currentLocalOrientation) * kinematicLocalOrientation; // Works
+        //newRotationLocal = kinematicLocalOrientation * Quaternion.Inverse(currentLocalOrientation); // Creates jitter above limits
 
         // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
         // We want the equivalant short rotation eg. -10 degrees
@@ -896,7 +899,7 @@ public class JointController : MonoBehaviour
         rotationNewAxisLocal.Normalize();
 
         // Create Rotation from Current Global Orientation to Kinematic Global Orientation and convert to Angle-Axis
-        newRotationGlobal = kinematicGlobalOrientation * Quaternion.Inverse(currentGlobalOrientation);
+        newRotationGlobal = kinematicGlobalOrientation * Quaternion.Inverse(currentGlobalOrientation); // Works
 
         // Q can be the-long-rotation-around-the-sphere eg. 350 degrees
         // We want the equivalant short rotation eg. -10 degrees
@@ -936,6 +939,7 @@ public class JointController : MonoBehaviour
 
         // Estimate Angle Error Local
         float newRotationErrorLocal = rotationNewAngleLocal;
+
         //Debug.Log("[INFO: " + this.gameObject.name + "] newRotationErrorLocal: " + newRotationErrorLocal);
 
         // Rotation Axis Local
@@ -944,6 +948,7 @@ public class JointController : MonoBehaviour
 
         // Estimate Angle Error Global
         float newRotationErrorGlobal = rotationNewAngleGlobal;
+
         //Debug.Log("[INFO: " + this.gameObject.name + "] newRotationErrorGlobal: " + newRotationErrorGlobal);
 
         // Rotation Axis Global
@@ -974,19 +979,20 @@ public class JointController : MonoBehaviour
 
         #region Inertia
 
+        // Global -> WORKS (If doing it in world, we need to bring the rotation inertia to world. Then, inverse->no-inverse and have global.
+
         // Convert rotation of inertia tensor to global
         Quaternion rotInertia2World = _objectRigidbody.inertiaTensorRotation * transform.rotation;
 
-        // Global
         torqueImprovedGlobal = Quaternion.Inverse(rotInertia2World) * torqueImprovedGlobal;
         torqueImprovedGlobal.Scale(_objectRigidbody.inertiaTensor);
         torqueImprovedGlobal = rotInertia2World * torqueImprovedGlobal;
         //Debug.Log("[INFO] torqueImprovedGlobal: " + torqueImprovedGlobal);
 
-        // Local -> TODO - It is probably wrong
-        //torqueImprovedLocal = Quaternion.Inverse(rotInertia2World) * torqueImprovedLocal;
-        //torqueImprovedLocal.Scale(_objectRigidbody.inertiaTensor);
+        // Local -> TODO - inertiaTensorRotation already in local. Then, no-inverse->inverse and have local.
         torqueImprovedLocal = _objectRigidbody.inertiaTensorRotation * torqueImprovedLocal;
+        torqueImprovedLocal.Scale(_objectRigidbody.inertiaTensor);
+        torqueImprovedLocal = Quaternion.Inverse(_objectRigidbody.inertiaTensorRotation) * torqueImprovedLocal;
         // Debug.Log("[INFO] torqueImprovedLocal: " + torqueImprovedLocal);
 
         #endregion

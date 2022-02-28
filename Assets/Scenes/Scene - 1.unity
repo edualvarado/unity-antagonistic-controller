@@ -12598,30 +12598,6 @@ PrefabInstance:
       propertyPath: kinematicLimb
       value: 
       objectReference: {fileID: 751362255296677391}
-    - target: {fileID: 3092514556484229594, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: applyAntTorque
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3092514556484229594, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: controllerType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3092514556484229594, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: activateNormalPD
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3092514556484229594, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: applyNormalTorque
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3092514556484229594, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: activateAntagonisticPD
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3092514556973599890, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3092514556973599890, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: kinematicLimb
       value: 
@@ -12630,14 +12606,6 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 2124374413}
-    - target: {fileID: 3092514557242679200, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_Mass
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3092514557242679201, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3092514557242679201, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: kinematicLimb
       value: 
@@ -12646,10 +12614,6 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 1013239511}
-    - target: {fileID: 3092514557591848794, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3092514557591848794, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: kinematicLimb
       value: 
@@ -12702,42 +12666,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ybot_rig_arms_v6_split_ragdoll - v4
       objectReference: {fileID: 0}
-    - target: {fileID: 4765623533403131678, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_AngularDrag
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 4765623533437734913, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 8762967931768202977}
     - target: {fileID: 4765623534636773827, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623534636773827, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: kinematicLimb
       value: 
       objectReference: {fileID: 1478144921623616560}
-    - target: {fileID: 4765623534636773836, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_AngularDrag
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623534695646597, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_Drag
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623534695646597, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_Mass
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623534695646597, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_AngularDrag
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7550342776444820644, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7550342776444820644, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: kinematicLimb
       value: 
