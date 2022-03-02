@@ -424,7 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e82faab64d42c8f43bfe6f745ad66155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joystickMode: 1
+  joystickMode: 0
   rootKinematicSkeleton: {fileID: 4301555423947334394}
   moveSpeed: 1
   offsetKinematicMovement: 3

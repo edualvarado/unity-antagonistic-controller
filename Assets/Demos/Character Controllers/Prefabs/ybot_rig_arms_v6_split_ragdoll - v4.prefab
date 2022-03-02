@@ -46,11 +46,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1.59
   m_Drag: 10
-  m_AngularDrag: 49.9
-  m_UseGravity: 0
+  m_AngularDrag: 30
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!136 &4765623532570005706
 CapsuleCollider:
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623532570005711}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
@@ -207,10 +207,12 @@ MonoBehaviour:
   Kd: 0.3
   deployDesiredRotation: 0
   debugModeNormal: 0
+  drawModeNormal: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
   requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
   debugModeAntagonistic: 0
+  drawModeAntagonistic: 0
   multGrav: 1
   pLX: 25
   pHX: 0
@@ -864,11 +866,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 0.5
   m_Drag: 10
-  m_AngularDrag: 49.9
-  m_UseGravity: 0
+  m_AngularDrag: 30
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!65 &3092514557242679199
 BoxCollider:
@@ -986,7 +988,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623532839076803}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
@@ -1009,10 +1011,12 @@ MonoBehaviour:
   Kd: 0.3
   deployDesiredRotation: 0
   debugModeNormal: 0
+  drawModeNormal: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
   requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
   debugModeAntagonistic: 0
+  drawModeAntagonistic: 0
   multGrav: 1
   pLX: 10
   pHX: 0
@@ -2538,11 +2542,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1.59
   m_Drag: 10
-  m_AngularDrag: 10
-  m_UseGravity: 0
+  m_AngularDrag: 30
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!136 &4765623533403131673
 CapsuleCollider:
@@ -2676,7 +2680,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623533403131666}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
@@ -2699,10 +2703,12 @@ MonoBehaviour:
   Kd: 0.3
   deployDesiredRotation: 0
   debugModeNormal: 0
+  drawModeNormal: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
   requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
   debugModeAntagonistic: 0
+  drawModeAntagonistic: 0
   multGrav: 1
   pLX: 25
   pHX: 0
@@ -3118,11 +3124,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 2.95
   m_Drag: 10
-  m_AngularDrag: 49.9
-  m_UseGravity: 0
+  m_AngularDrag: 30
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!136 &4765623533588814594
 CapsuleCollider:
@@ -3256,7 +3262,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623533588814599}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
@@ -3279,10 +3285,12 @@ MonoBehaviour:
   Kd: 0.3
   deployDesiredRotation: 0
   debugModeNormal: 0
+  drawModeNormal: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
   requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
   debugModeAntagonistic: 0
+  drawModeAntagonistic: 0
   multGrav: 1
   pLX: 50
   pHX: 0
@@ -5096,11 +5104,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 2.95
   m_Drag: 10
-  m_AngularDrag: 10
-  m_UseGravity: 0
+  m_AngularDrag: 30
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!136 &4765623534636773833
 CapsuleCollider:
@@ -5234,7 +5242,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4765623534636773826}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f34a98f3e296dc04db288cf72dd0844d, type: 3}
   m_Name: 
@@ -5257,10 +5265,12 @@ MonoBehaviour:
   Kd: 0.3
   deployDesiredRotation: 0
   debugModeNormal: 0
+  drawModeNormal: 0
   activateAntagonisticPD: 1
   applyAntTorque: 1
   requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
   debugModeAntagonistic: 0
+  drawModeAntagonistic: 0
   multGrav: 1
   pLX: 50
   pHX: 0
@@ -5415,8 +5425,8 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 0.5
   m_Drag: 10
-  m_AngularDrag: 10
-  m_UseGravity: 0
+  m_AngularDrag: 30
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -5551,8 +5561,8 @@ MonoBehaviour:
   activateDefaultPD: 0
   spring: 1600
   damper: 0.3
-  activateNormalPD: 1
-  applyNormalTorque: 1
+  activateNormalPD: 0
+  applyNormalTorque: 0
   requiredTorque: {x: 0, y: 0, z: 0}
   globalMode: 1
   Kp: 1600
@@ -5560,10 +5570,12 @@ MonoBehaviour:
   Kd: 0.3
   deployDesiredRotation: 0
   debugModeNormal: 0
-  activateAntagonisticPD: 0
-  applyAntTorque: 0
+  drawModeNormal: 0
+  activateAntagonisticPD: 1
+  applyAntTorque: 1
   requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
   debugModeAntagonistic: 0
+  drawModeAntagonistic: 0
   multGrav: 1
   pLX: 10
   pHX: 0

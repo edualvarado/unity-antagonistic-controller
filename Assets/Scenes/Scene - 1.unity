@@ -2467,7 +2467,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556606207}
-  m_LocalRotation: {x: 0.12891944, y: -0.42256787, z: 0.060865093, w: 0.89504844}
+  m_LocalRotation: {x: 0.12891941, y: -0.42256784, z: 0.060865093, w: 0.89504844}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4233,7 +4233,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.14513569, y: -0.4213941, z: 0.06852107, w: 0.8925624}
+  m_LocalRotation: {x: 0.14513569, y: -0.4213941, z: 0.06852106, w: 0.8925624}
   m_LocalPosition: {x: 11.094522, y: 2.5, z: 17.375145}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -11626,6 +11626,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ybot_rig_arms_v6_split_kinematic - v4
       objectReference: {fileID: 0}
+    - target: {fileID: 448683945012981885, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: dff7989d11c1f4f4187622adc54e6ac2, type: 2}
     - target: {fileID: 968796218716793542, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -11671,9 +11675,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7170379306008190274, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
+      propertyPath: hitOffsetLeft.x
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 7170379306008190274, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
       propertyPath: ragdollLeftHand
       value: 
       objectReference: {fileID: 872730073}
+    - target: {fileID: 7170379306721617693, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
+      propertyPath: hitOffsetRight.x
+      value: 0.03
+      objectReference: {fileID: 0}
     - target: {fileID: 7170379306721617693, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
       propertyPath: ragdollRightHand
       value: 
@@ -12435,6 +12447,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 61120158}
     m_Modifications:
     - target: {fileID: 1141373237, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1141373237, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: copyKinematicHands
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1141373237, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: kinematicLeftHandBones.Array.data[0]
       value: 
       objectReference: {fileID: 1550388952}
@@ -12606,6 +12626,10 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 2124374413}
+    - target: {fileID: 3092514557242679200, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_AngularDrag
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 3092514557242679201, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: kinematicLimb
       value: 
@@ -12618,6 +12642,10 @@ PrefabInstance:
       propertyPath: kinematicLimb
       value: 
       objectReference: {fileID: 1033837191}
+    - target: {fileID: 4765623532570005707, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_AngularDrag
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 4765623532821786554, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -12666,14 +12694,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: ybot_rig_arms_v6_split_ragdoll - v4
       objectReference: {fileID: 0}
+    - target: {fileID: 4765623533403131678, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_AngularDrag
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 4765623533437734913, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 8762967931768202977}
+    - target: {fileID: 4765623533588814593, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_AngularDrag
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 4765623534636773827, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: kinematicLimb
       value: 
       objectReference: {fileID: 1478144921623616560}
+    - target: {fileID: 4765623534636773836, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_AngularDrag
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4765623534695646597, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: m_AngularDrag
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 7550342776444820644, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: kinematicLimb
       value: 

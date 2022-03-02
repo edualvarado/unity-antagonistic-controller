@@ -132,12 +132,14 @@ public class JointController : MonoBehaviour
     public float Kd;
     public bool deployDesiredRotation;
     public bool debugModeNormal;
+    public bool drawModeNormal;
 
     [Header("Antagonistic Controller - Settings")]
     public bool activateAntagonisticPD;
     public bool applyAntTorque;
     public Vector3 requiredAntagonisticLocalTorque;
     public bool debugModeAntagonistic;
+    public bool drawModeAntagonistic;
     public float multGrav = 1f;
 
     [Header("Antagonistic Controller - Settings - X")]
@@ -636,29 +638,86 @@ public class JointController : MonoBehaviour
         // Calculate forces relative to the RB - Distance from root to the COM
 
         // 1. Gravity force and generated torque
-        gravityAcc = Physics.gravity * multGrav;
+        gravityAcc = Physics.gravity;
 
         if (this.CompareTag("RightHand"))
         {
             distance3D = _objectRigidbody.worldCenterOfMass - transform.position;
-            gravityTorqueVector = Vector3.Cross(distance3D, _objectRigidbody.mass * gravityAcc); // Remember: wrt. global coord. system
-            gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // Remember: wrt. local coord. system // TODO REVIEW
+            gravityTorqueVector = Vector3.Cross(distance3D, _objectRigidbody.mass * gravityAcc); // wrt. global coord. system
+            gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
 
-            //Debug.DrawRay(_objectRigidbody.worldCenterOfMass, Vector3.up, Color.red);
-            //Debug.DrawRay(transform.position, Vector3.up, Color.blue);
-            Debug.DrawRay(transform.position, distance3D, Color.red);
-            Debug.DrawRay(transform.position, gravityTorqueVectorLocal, Color.yellow);
+            Debug.DrawRay(transform.position, distance3D, Color.cyan);
+            Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+
+            gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
+
+            //Debug.Log("gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
         }
         else if (this.CompareTag("RightForeArm"))
         {
             distance3D = ((_objectRigidbody.worldCenterOfMass - transform.position) + (hand.GetComponent<Rigidbody>().worldCenterOfMass - transform.position)) / 2;
-            gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + hand.GetComponent<Rigidbody>().mass) * gravityAcc); // Remember: wrt. global coord. system
-            gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // Remember: wrt. local coord. system // TODO REVIEW
+            gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + hand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
+            gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
 
-            //Debug.DrawRay(_objectRigidbody.worldCenterOfMass, Vector3.up, Color.red);
-            //Debug.DrawRay(transform.position, Vector3.up, Color.blue);
-            Debug.DrawRay(transform.position, distance3D, Color.red);
-            Debug.DrawRay(transform.position, gravityTorqueVectorLocal, Color.yellow);
+            Debug.DrawRay(transform.position, distance3D, Color.cyan);
+            Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+
+            gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
+
+            //Debug.Log("gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
+        }
+        else if (this.CompareTag("RightArm"))
+        {
+            distance3D = ((_objectRigidbody.worldCenterOfMass - transform.position) + (foreArm.GetComponent<Rigidbody>().worldCenterOfMass - transform.position) + (hand.GetComponent<Rigidbody>().worldCenterOfMass - transform.position)) / 3;
+            gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + foreArm.GetComponent<Rigidbody>().mass  + hand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
+            gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
+
+            Debug.DrawRay(transform.position, distance3D, Color.cyan);
+            Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+
+            gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
+
+            //Debug.Log("gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
+        }
+
+        if (this.CompareTag("LeftHand"))
+        {
+            distance3D = _objectRigidbody.worldCenterOfMass - transform.position;
+            gravityTorqueVector = Vector3.Cross(distance3D, _objectRigidbody.mass * gravityAcc); // wrt. global coord. system
+            gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
+
+            Debug.DrawRay(transform.position, distance3D, Color.cyan);
+            Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+
+            gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
+
+            //Debug.Log("gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
+        }
+        else if (this.CompareTag("LeftForeArm"))
+        {
+            distance3D = ((_objectRigidbody.worldCenterOfMass - transform.position) + (hand.GetComponent<Rigidbody>().worldCenterOfMass - transform.position)) / 2;
+            gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + hand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
+            gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
+
+            Debug.DrawRay(transform.position, distance3D, Color.cyan);
+            Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+
+            gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
+
+            //Debug.Log("gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
+        }
+        else if (this.CompareTag("LeftArm"))
+        {
+            distance3D = ((_objectRigidbody.worldCenterOfMass - transform.position) + (foreArm.GetComponent<Rigidbody>().worldCenterOfMass - transform.position) + (hand.GetComponent<Rigidbody>().worldCenterOfMass - transform.position)) / 3;
+            gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + foreArm.GetComponent<Rigidbody>().mass + hand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
+            gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
+
+            Debug.DrawRay(transform.position, distance3D, Color.cyan);
+            Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+
+            gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
+
+            //Debug.Log("gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
         }
 
         #endregion
@@ -724,12 +783,17 @@ public class JointController : MonoBehaviour
                                                    DesiredLocalRotation,
                                                    this._objectRigidbody.angularVelocity,
                                                    gravityTorqueVectorLocal,
+                                                   debugModeNormal,
+                                                   drawModeNormal,
                                                    DELTATIME);
 
 
             if (debugModeNormal)
             {
-                Debug.Log("[INFO: " + this.gameObject.name + "] Normal PD Controller (Angle-axis) requiredTorque: " + requiredTorque);
+                if (globalMode)
+                    Debug.Log("[INFO: " + this.gameObject.name + "] Final Normal PD Controller (Angle-axis) requiredTorque [Global]: " + requiredTorque);
+                else
+                    Debug.Log("[INFO: " + this.gameObject.name + "] Final Normal PD Controller (Angle-axis) requiredTorque [Local]: " + requiredTorque);
             }
 
             if (applyNormalTorque)
@@ -753,65 +817,14 @@ public class JointController : MonoBehaviour
 
         if ((controllerType == Controller.AntagonisticController) && (activateAntagonisticPD))
         {
-            requiredAntagonisticLocalTorque = _antagonisticControllerXYZ.ComputeRequiredAntagonisticTorque(minSoftLimitX, maxSoftLimitX,
-                                                                                                              minSoftLimitY, maxSoftLimitY,
-                                                                                                              minSoftLimitZ, maxSoftLimitZ,
-                                                                                                              minHardLimitX, maxHardLimitX,
-                                                                                                              minHardLimitY, maxHardLimitY,
-                                                                                                              minHardLimitZ, maxHardLimitZ,
-                                                                                                              _currentLocalOrientation,
-                                                                                                              _currentGlobalOrientation,
-                                                                                                              _kinematicLocalOrientation,
-                                                                                                              _kinematicGlobalOrientation,
-                                                                                                              DesiredLocalRotation,
-                                                                                                              this._objectRigidbody.angularVelocity,
-                                                                                                              gravityTorqueVectorLocal,
-                                                                                                              DELTATIME,
-                                                                                                              debugModeAntagonistic,
-                                                                                                              _currentTransform, _kinematicTransform);
-
-
-            // 1. Is this torque Local
-            //Debug.Log("1. requiredAntagonisticTorque (LOCAL): " + requiredAntagonisticLocalTorque.ToString("F4"));
-
-            // TEST 1 - Keep torque in Local Space
-
-            // 2. We rotate the torque by the Inertia Tensor Rotation
-            Vector3 torqueRotatedLocal = _objectRigidbody.inertiaTensorRotation * requiredAntagonisticLocalTorque;
-            //Debug.Log("requiredAntagonisticLocalTorque rotated by inertiaTensorRotation (torqueRotatedLocal): " + torqueRotatedLocal.ToString("F4"));
-
-            // 3. We mutiply by the Inertia Tensor
-            torqueRotatedLocal.Scale(_objectRigidbody.inertiaTensor);
-            //Debug.Log("torqueRotatedLocal scaled by inertiaTensor, which is the torque (Local): " + torqueRotatedLocal.ToString("F4"));
-
-            // 4. Rotate back the Inertia Tensor Rotation
-            Vector3 torqueRotatedBackLocal = Quaternion.Inverse(_objectRigidbody.inertiaTensorRotation) * torqueRotatedLocal; // This is the final torque to apply
-            //Debug.Log("torqueRotatedLocal rotated back by inertiaTensorRotation (torqueRotatedBackLocal): " + torqueRotatedBackLocal.ToString("F4"));
-
-            // TEST 2 - Transform to Global 
-
-            /*
-            // 2. Convert rotation of inertia tensor to global (instead of leaving it it local and transforming the torque to local instead)
-            Quaternion inertiaTensorRotationGlobal = _objectRigidbody.inertiaTensorRotation * transform.rotation; // 1.way MOVING TO GLOBAL 2.way SAME
-            Debug.Log("2. inertiaTensorRotationGlobal: " + inertiaTensorRotationGlobal.ToString("F4"));
-
-            // 3. Take torque to global and rotate by inertiaTensorRotationGlobal
-            Vector3 torqueRotatedGlobal = Quaternion.Inverse(inertiaTensorRotationGlobal) * transform.TransformDirection(requiredAntagonisticLocalTorque); // 1.way WITH INVERSE 2.way WITHOUT INVERSE
-            Debug.Log("3. requiredAntagonisticGlobalTorque: " + transform.TransformDirection(requiredAntagonisticLocalTorque).ToString("F4"));
-            Debug.Log("3. torqueRotatedGlobal: " + torqueRotatedGlobal.ToString("F4")); // 1.way BRINGS IT BACK TO LOCAL, when we make the INVERSE ABOVE!!! 2.way ??
-
-            // 4. We mutiply by the Inertia Tensor
-            torqueRotatedGlobal.Scale(_objectRigidbody.inertiaTensor);
-            Debug.Log("4. torqueRotatedGlobal scaled by inertiaTensor, which is the torque (Global): " + torqueRotatedGlobal.ToString("F4"));
-
-            // 5. Rotate back the Inertia Tensor Rotation
-            Vector3 torqueRotatedBackGlobal = _objectRigidbody.inertiaTensorRotation * torqueRotatedGlobal;  // 1.way WITHOUT INVERSE WORKING // 2.way WITH INVERSE NOT WORKING
-            Debug.Log("5. torqueRotatedGlobal rotated back by inertiaTensorRotation (torqueRotatedBackGlobal): " + torqueRotatedBackGlobal.ToString("F4"));
-
-            // 6. Bring back torque to local
-            Vector3 torqueRotatedBackLocal = transform.InverseTransformDirection(torqueRotatedBackGlobal); // 1.way NOT WORKING 2.way NOT WORKING
-            Debug.Log("6. torqueRotatedBackLocal: " + torqueRotatedBackLocal.ToString("F4"));
-            */
+            requiredAntagonisticLocalTorque = _antagonisticControllerXYZ.ComputeRequiredAntagonisticTorque(minSoftLimitX, maxSoftLimitX, minSoftLimitY, maxSoftLimitY, minSoftLimitZ, maxSoftLimitZ,
+                                                                                                           minHardLimitX, maxHardLimitX, minHardLimitY, maxHardLimitY, minHardLimitZ, maxHardLimitZ,
+                                                                                                           _currentTransform, _kinematicTransform,
+                                                                                                           _currentLocalOrientation, _currentGlobalOrientation,
+                                                                                                           _kinematicLocalOrientation, _kinematicGlobalOrientation,
+                                                                                                           DesiredLocalRotation, this._objectRigidbody, gravityTorqueVectorLocal,
+                                                                                                           DELTATIME,
+                                                                                                           debugModeAntagonistic, drawModeAntagonistic);
 
             if (debugModeAntagonistic)
             {
@@ -820,12 +833,10 @@ public class JointController : MonoBehaviour
 
             if (applyAntTorque)
             {
-                //this._objectRigidbody.AddRelativeTorque(requiredAntagonisticLocalTorque, ForceMode.Force); // Needs 49.9 angular drag
+                // Without going though the Inertia calculation, it would need 49.9 angular drag
 
-                this._objectRigidbody.AddRelativeTorque(torqueRotatedBackLocal, ForceMode.Force); // TEST 1 We stay in local space -> WORKS
-                //this._objectRigidbody.AddTorque(transform.TransformDirection(torqueRotatedBackLocal), ForceMode.Force); // TEST 1 in Global Space -> Also WORKS
-
-                //this._objectRigidbody.AddRelativeTorque(torqueRotatedBackGlobal, ForceMode.Force); // TEST 2 Alternative
+                this._objectRigidbody.AddRelativeTorque(requiredAntagonisticLocalTorque, ForceMode.Force); // TEST 1 We stay in local space -> WORKS
+                //this._objectRigidbody.AddTorque(transform.TransformDirection(requiredAntagonisticLocalTorque), ForceMode.Force); // TEST 1 in Global Space -> Also WORKS
             }
         }
 
@@ -851,7 +862,7 @@ public class JointController : MonoBehaviour
     private Vector3 ComputeRequiredTorque(Quaternion currentLocalOrientation, Quaternion currentGlobalOrientation, 
                                           Quaternion kinematicLocalOrientation, Quaternion kinematicGlobalOrientation,
                                           Quaternion desiredLocalRotation, Vector3 angularVelocity, Vector3 gravityTorqueVectorLocal, 
-                                          float fixedDeltaTime)
+                                          bool debugModeNormal, bool drawModeNormal, float fixedDeltaTime)
     {
         #region Orientations and Rotations
 
@@ -940,20 +951,34 @@ public class JointController : MonoBehaviour
         // Estimate Angle Error Local
         float newRotationErrorLocal = rotationNewAngleLocal;
 
-        //Debug.Log("[INFO: " + this.gameObject.name + "] newRotationErrorLocal: " + newRotationErrorLocal);
-
-        // Rotation Axis Local
-        //Debug.Log("[INFO: " + this.gameObject.name + "] rotationNewAxisLocal: " + rotationNewAxisLocal);
-        //Debug.DrawRay(this.transform.position, rotationNewAxisLocal, Color.blue);
+        if (debugModeNormal)
+        {
+            if (!globalMode)
+            {
+                Debug.Log("[INFO: " + this.gameObject.name + "] rotationNewAngleLocal: " + rotationNewAngleLocal);
+                Debug.Log("[INFO: " + this.gameObject.name + "] rotationNewAxisLocal: " + rotationNewAxisLocal);  
+            }
+        }
 
         // Estimate Angle Error Global
         float newRotationErrorGlobal = rotationNewAngleGlobal;
 
-        //Debug.Log("[INFO: " + this.gameObject.name + "] newRotationErrorGlobal: " + newRotationErrorGlobal);
+        if (debugModeNormal)
+        {
+            if (globalMode)
+            {
+                Debug.Log("[INFO: " + this.gameObject.name + "] rotationNewAngleGlobal: " + rotationNewAngleGlobal);
+                Debug.Log("[INFO: " + this.gameObject.name + "] rotationNewAxisGlobal: " + rotationNewAxisGlobal);  
+            }
+        }
 
-        // Rotation Axis Global
-        //Debug.Log("[INFO: " + this.gameObject.name + "] rotationNewAxisGlobal: " + rotationNewAxisGlobal);
-        //Debug.DrawRay(this.transform.position, rotationNewAxisGlobal, Color.blue);
+        if (drawModeNormal)
+        {
+            if(globalMode)
+                Debug.DrawRay(this.transform.position, rotationNewAxisGlobal, Color.blue);
+            else
+                Debug.DrawRay(this.transform.position, transform.TransformDirection(rotationNewAxisLocal), Color.blue);
+        }
 
         #endregion
 
@@ -963,7 +988,7 @@ public class JointController : MonoBehaviour
         /* ========================================= */
 
         // Normal Torque [Local]
-        float torqueLocal = _normalPDController.GetOutput(newRotationErrorLocal, angularVelocity.magnitude, fixedDeltaTime);
+        //float torqueLocal = _normalPDController.GetOutput(newRotationErrorLocal, angularVelocity.magnitude, fixedDeltaTime);
         //Debug.Log("[INFO] torqueLocal * rotationNewAxis: " + (torqueLocal * rotationNewAxisLocal));
 
         /*     2. Improved Torque Estimation (B)     */
@@ -972,8 +997,14 @@ public class JointController : MonoBehaviour
         // Improved Torque [Global] and [Local]
         Vector3 torqueImprovedGlobal = _normalPDController.GetOutputAxisAngle(newRotationErrorGlobal, rotationNewAxisGlobal, angularVelocity, fixedDeltaTime);
         Vector3 torqueImprovedLocal = _normalPDController.GetOutputAxisAngle(newRotationErrorLocal, rotationNewAxisLocal, angularVelocity, fixedDeltaTime);
-        //Debug.Log("[INFO] torqueImprovedGlobal: " + torqueImprovedGlobal);
-        //Debug.Log("[INFO] torqueImprovedLocal: " + torqueImprovedLocal);
+
+        if (debugModeNormal)
+        {
+            if(globalMode)
+                Debug.Log("[INFO] torqueImprovedGlobal (acceleration): " + torqueImprovedGlobal);
+            else
+                Debug.Log("[INFO] torqueImprovedLocal (acceleration): " + torqueImprovedLocal); 
+        }
 
         #endregion
 
@@ -987,13 +1018,27 @@ public class JointController : MonoBehaviour
         torqueImprovedGlobal = Quaternion.Inverse(rotInertia2World) * torqueImprovedGlobal;
         torqueImprovedGlobal.Scale(_objectRigidbody.inertiaTensor);
         torqueImprovedGlobal = rotInertia2World * torqueImprovedGlobal;
-        //Debug.Log("[INFO] torqueImprovedGlobal: " + torqueImprovedGlobal);
 
-        // Local -> TODO - inertiaTensorRotation already in local. Then, no-inverse->inverse and have local.
+        // Local -> WORKS - inertiaTensorRotation already in local. Then, no-inverse->inverse and have local.
         torqueImprovedLocal = _objectRigidbody.inertiaTensorRotation * torqueImprovedLocal;
         torqueImprovedLocal.Scale(_objectRigidbody.inertiaTensor);
         torqueImprovedLocal = Quaternion.Inverse(_objectRigidbody.inertiaTensorRotation) * torqueImprovedLocal;
-        // Debug.Log("[INFO] torqueImprovedLocal: " + torqueImprovedLocal);
+
+        if (debugModeNormal)
+        {
+            if(globalMode)
+                Debug.Log("[INFO] torqueImprovedGlobal (torque): " + torqueImprovedGlobal);
+            else
+                Debug.Log("[INFO] torqueImprovedLocal (torque): " + torqueImprovedLocal); 
+        }
+
+        if(drawModeNormal)
+        {
+            if (globalMode)
+                Debug.DrawRay(this.transform.position, torqueImprovedGlobal, Color.yellow);
+            else
+                Debug.DrawRay(this.transform.position, transform.TransformDirection(torqueImprovedLocal), Color.yellow);
+        }
 
         #endregion
 
