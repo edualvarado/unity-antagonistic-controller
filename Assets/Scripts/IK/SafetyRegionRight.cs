@@ -60,7 +60,7 @@ public class SafetyRegionRight : SafetyRegion
     {
         if (other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle"))
         {
-            //Debug.Log("[INFO] Obstacle ENTERS RIGHT");
+            Debug.Log("[INFO] Obstacle ENTERS RIGHT");
 
             // We protect the origin, and get the closest point in the external object to the previous body part to protect
             raycastOriginRight = originRegion.position;
@@ -77,12 +77,12 @@ public class SafetyRegionRight : SafetyRegion
             hasRightTargetReached = false;
             Debug.Log("[INFO] hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
             // hasRightStartedMovingIn: TRUE, hasRightStartedMovingOut: FALSE, hasRightTargeReached: FALSE
-         }
+        }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle"))
+        if (other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle"))
         {
             //Debug.Log("[INFO] Obstacle STAYS RIGHT");
 
@@ -122,11 +122,11 @@ public class SafetyRegionRight : SafetyRegion
                 }
 
                 // In a last layer, we attract the ragdoll hand position to the kinematic one, keepeing the rotation to the controller
-                if (isRightInRange)
-                {
-                    float step = 1f * Time.deltaTime;
-                    ragdollRightHand.transform.position = Vector3.MoveTowards(ragdollRightHand.transform.position, hitRightFixed, step);
-                }
+                //if (isRightInRange)
+                //{
+                //    float step = 1f * Time.deltaTime;
+                //    ragdollRightHand.transform.position = Vector3.MoveTowards(ragdollRightHand.transform.position, hitRightFixed, step);
+                //}
             }
 
             // Launch a ray from the body part to protect, in the direction the closest point (like in the previous red ray)
@@ -161,7 +161,7 @@ public class SafetyRegionRight : SafetyRegion
     {
         if (other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle"))
         {
-            //Debug.Log("[INFO] Obstacle EXITS RIGHT");
+            Debug.Log("[INFO] Obstacle EXITS RIGHT");
 
             // Starts moving out
             hasRightStartedMovingIn = false;

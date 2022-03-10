@@ -60,7 +60,7 @@ public class SafetyRegionLeft : SafetyRegion
     {
         if (other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle"))
         {
-            //Debug.Log("[INFO] Obstacle ENTERS LEFT");
+            Debug.Log("[INFO] Obstacle ENTERS LEFT");
 
             // We protect the origin, and get the closest point in the external object to the previous body part to protect
             raycastOriginLeft = originRegion.position;
@@ -122,11 +122,11 @@ public class SafetyRegionLeft : SafetyRegion
                 }
 
                 // In a last layer, we attract the ragdoll hand position to the kinematic one, keepeing the rotation to the controller
-                if (isLeftInRange)
-                {
-                    float step = 1f * Time.deltaTime;
-                    ragdollLeftHand.transform.position = Vector3.MoveTowards(ragdollLeftHand.transform.position, hitLeftFixed, step);
-                }
+                //if (isLeftInRange)
+                //{
+                //    float step = 1f * Time.deltaTime;
+                //    ragdollLeftHand.transform.position = Vector3.MoveTowards(ragdollLeftHand.transform.position, hitLeftFixed, step);
+                //}
             }
 
             // Launch a ray from the body part to protect, in the direction the closest point (like in the previous red ray)
@@ -161,7 +161,7 @@ public class SafetyRegionLeft : SafetyRegion
     {
         if (other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle"))
         {
-            //Debug.Log("[INFO] Obstacle EXITS LEFT");
+            Debug.Log("[INFO] Obstacle EXITS LEFT");
 
             // Starts moving out
             hasLeftStartedMovingIn = false;

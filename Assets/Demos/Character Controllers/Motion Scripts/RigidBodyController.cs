@@ -17,6 +17,7 @@ public class RigidBodyController : MonoBehaviour
 
     [Header("Input - Options")]
     public bool joystickMode = true;
+    public bool fightMode = true;
 
     [Header("Motion - Options")]
     public Transform rootKinematicSkeleton;
@@ -100,6 +101,15 @@ public class RigidBodyController : MonoBehaviour
 
         if (!joystickMode)
         {
+
+            if(fightMode)
+            {
+                if (Input.GetKey(KeyCode.Space))
+                    _anim.SetBool("isRunning", true);
+                else
+                    _anim.SetBool("isRunning", false);
+            }
+
             if (_inputs != Vector3.zero)
             {
                 _anim.SetBool("isWalking", true);

@@ -425,6 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystickMode: 0
+  fightMode: 1
   rootKinematicSkeleton: {fileID: 4301555423947334394}
   moveSpeed: 1
   offsetKinematicMovement: 3
@@ -1803,7 +1804,7 @@ MonoBehaviour:
   rotationToNormal: {x: 0, y: 0, z: 0, w: 0}
   kinBody: {fileID: 968796218716793542}
   safetyRegionLeft: {fileID: 7170379306008190274}
-  safetyRegionRight: {fileID: 0}
+  safetyRegionRight: {fileID: 7170379306721617693}
   _col: {fileID: 0}
 --- !u!1 &4570854228350851340
 GameObject:
@@ -4068,7 +4069,7 @@ MonoBehaviour:
   leftHandIK: {fileID: 7170379307483878355}
   fixHandToDynamicObject: 0
   drawIK: 0
-  hitOffsetLeft: {x: 0.03, y: 0, z: 0}
+  hitOffsetLeft: {x: 0, y: 0, z: 0}
   hitLeftFixed: {x: 0, y: 0, z: 0}
   localHitLeftFixed: {x: 0, y: 0, z: 0}
   hitLeft: {x: 0, y: 0, z: 0}
@@ -4238,7 +4239,7 @@ MonoBehaviour:
   rightHandIK: {fileID: 7170379307483878354}
   fixHandToDynamicObject: 0
   drawIK: 0
-  hitOffsetRight: {x: 0.03, y: 0, z: 0}
+  hitOffsetRight: {x: 0, y: 0, z: 0}
   hitRightFixed: {x: 0, y: 0, z: 0}
   localHitRightFixed: {x: 0, y: 0, z: 0}
   hitRight: {x: 0, y: 0, z: 0}

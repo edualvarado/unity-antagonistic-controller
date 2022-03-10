@@ -2318,6 +2318,7 @@ GameObject:
   - component: {fileID: 7244432966600211280}
   - component: {fileID: 7244432966600211286}
   - component: {fileID: 7244432966600211287}
+  - component: {fileID: 483205272}
   m_Layer: 9
   m_Name: ybot_rig_arms_v6_split_interpolated - v3
   m_TagString: Untagged
@@ -2445,6 +2446,103 @@ MonoBehaviour:
   blendingFactorSpine: 0
   fixLeftArmKinematic: 0
   fixRightArmKinematic: 0
+--- !u!114 &483205272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7244432966600211281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4201bfb83a7dd840bfd7eb233edad57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  copyKinematicHands: 0
+  kinematicRightHandBones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ragdollRightHandBones:
+  - {fileID: 3615526020301452636}
+  - {fileID: 2092051521979384528}
+  - {fileID: 7967425546317756730}
+  - {fileID: 5142799602624986280}
+  - {fileID: 2701008535849187741}
+  - {fileID: 1445222354496792207}
+  - {fileID: 1374264028521315392}
+  - {fileID: 4345442213926891062}
+  - {fileID: 7234479256958608410}
+  - {fileID: 7230353853935865071}
+  - {fileID: 4915693868361550735}
+  - {fileID: 7293124268511256527}
+  - {fileID: 803114981283592420}
+  - {fileID: 1175045402794534038}
+  - {fileID: 3285739236861152395}
+  - {fileID: 826987421915752585}
+  - {fileID: 311768703027067077}
+  - {fileID: 4284002970723865945}
+  - {fileID: 5406534968247574867}
+  - {fileID: 1721171813549632910}
+  kinematicLeftHandBones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ragdollLeftHandBones:
+  - {fileID: 4347174292748582056}
+  - {fileID: 7863294190477846559}
+  - {fileID: 5270052418453740558}
+  - {fileID: 4701070106983326186}
+  - {fileID: 7442683068994588270}
+  - {fileID: 6508063704792847159}
+  - {fileID: 6553943614067895750}
+  - {fileID: 7023111824672548584}
+  - {fileID: 2888249907749566629}
+  - {fileID: 8340691663533940613}
+  - {fileID: 3794748463404763098}
+  - {fileID: 1910580097941670651}
+  - {fileID: 3654686785321800179}
+  - {fileID: 3791331120785124218}
+  - {fileID: 1655714616330273001}
+  - {fileID: 6595255775268284564}
+  - {fileID: 485432038815667337}
+  - {fileID: 6674753381156746140}
+  - {fileID: 1443002801066968313}
+  - {fileID: 983686613505994288}
 --- !u!1 &7348085999198336036
 GameObject:
   m_ObjectHideFlags: 0

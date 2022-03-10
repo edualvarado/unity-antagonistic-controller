@@ -1,0 +1,3349 @@
+; FBX 6.1.0 project file
+; ----------------------------------------------------
+
+FBXHeaderExtension:  {
+	FBXHeaderVersion: 1003
+	FBXVersion: 6100
+}
+CreationTime: "2021-11-03 12:49:20:000"
+
+; Object definitions
+;------------------------------------------------------------------
+
+Definitions:  {
+	Version: 100
+	Count: 64
+	ObjectType: "Model" {
+		Count: 63
+	}
+	ObjectType: "Geometry" {
+		Count: 0
+	}
+	ObjectType: "Pose" {
+		Count: 1
+	}
+	ObjectType: "GlobalSettings" {
+		Count: 1
+	}
+}
+
+; Object properties
+;------------------------------------------------------------------
+
+Objects:  {
+	Model: "Model::DummyRig", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",0.000000000000000,0.000000000000000,0.000000000000000
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.000002504478065,-0.000000000000000,0.000000000000000
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::root", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",0.000000000000000,0.000000000000000,0.000000000000000
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.000005008955724,0.000000000000394,-0.000003968822947
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-hips", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",-0.000006684580057,88.539947509765625,-4.155290126800537
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.000000226441423,-1.396831528430134,90.000002504348856
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-spine", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",17.945907592773438,0.000001354878123,0.000000238418579
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.000000303459063,-4.012863776536840,-0.000000010631131
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-chest", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",15.002983093261719,0.000001132693569,0.000000238418579
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-0.000000817234976,10.698506933795475,-0.000000076521035
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-upperChest", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",14.210981369018555,0.000001072898613,0.000000238418579
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.000000267680800,-3.541024703719517,-0.000000008274442
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-neck", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",20.774671554565430,0.000001568444873,-0.000000476837158
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.000000884253640,-11.553127523502923,-0.000000089453768
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-head", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",6.786167144775391,0.000000512340023,-0.000000953674316
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-0.000000517468512,6.821660398163719,-0.000000030841584
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-jaw", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",0.399750709533691,0.000000030180061,-0.183753490447998
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.000199316412366,-102.664819301124268,0.000024055607590
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-shoulder.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",20.774671554565430,0.000001568444873,-0.000000476837158
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-90.344018642274392,10.985068374196594,-99.113940555423142
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-upper_arm.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",17.239255905151367,-0.139322519302368,-6.861155986785889
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",88.671407767378227,5.790616875968742,-4.602329592475604
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-forearm.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",24.156953811645508,-0.000008940696716,0.000000238418579
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",3.408551904106841,-25.559548006296886,-0.435634267739547
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-hand.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",26.793483734130859,-0.000015778467059,-0.000002145767212
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",89.077401041832360,-4.412713295832567,4.361744716698713
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-palm_01.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",6.908302307128906,3.318556308746338,0.420557439327240
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-1.451739099002670,-4.776862696997158,2.088797352912897
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_index_01.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",6.574795722961426,-0.000000238418579,-0.000006318092346
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.066365513060014,-1.873872857517472,-1.099990653328160
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_index_02.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",4.077976703643799,0.000000238418579,0.000006675720215
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-0.293718037908255,-0.000439843974210,-0.000036759055242
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_index_03.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",3.552223682403564,0.000003337860107,-0.000004678964615
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",1.092312240040608,3.523994480797761,1.429236187008450
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-thumb_01.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",-3.226207733154297,-0.938786745071411,0.730066657066345
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",75.887738848855591,-20.536963277493349,57.502331263690060
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-thumb_02.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",5.476181507110596,0.000016212463379,0.000003457069397
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-35.133249996066169,11.412910570031931,8.835478922576085
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-thumb_03.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",4.505302429199219,-0.000000953674316,-0.000000715255737
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",1.794707123055730,4.284106383290112,-0.293198623366217
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-palm_02.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",7.204938888549805,1.199669361114502,-0.369646698236465
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.743004039529640,-6.013775377852017,-6.400624058949466
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_middle_01.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",6.142745971679688,-0.000001430511475,-0.000005707144737
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.511727057405023,2.164775523466363,-2.589407957278623
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_middle_02.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",4.265799522399902,-0.000001907348633,-0.000003948807716
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.038066968776580,0.000135186998040,0.000108687621998
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_middle_03.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",3.715813636779785,0.000000953674316,0.000003494322300
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.525348589044125,3.604815895802994,1.093315424074952
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-palm_03.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",6.600199699401855,-1.152520179748535,-1.095259070396423
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-9.329082179740212,-9.239254093097273,-10.973811368670782
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_ring_01.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",6.084474086761475,-0.000000715255737,0.000001281499863
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",7.768344680806814,3.114727197853658,-9.552104077840086
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_ring_02.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",4.007753849029541,-0.000000476837158,0.000005885958672
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.221330132279616,-0.000157011769258,-0.000181197263170
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_ring_03.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",3.491068601608276,0.000000953674316,0.000022970139980
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",1.135357372850435,3.637222582093719,1.097261138981098
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-palm_04.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",5.868004798889160,-2.975203752517700,-1.202065587043762
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.343390828770939,-8.629392478523233,-19.496122702707648
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_pinky_01.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",5.712862491607666,0.000001013278961,-0.000008418224752
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-5.618962269295521,-3.905888499982608,-11.414501150334896
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_pinky_02.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",3.135936498641968,-0.000001549720764,0.000005714595318
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-0.002498675089017,-0.000613970650792,-0.000031896400962
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_pinky_03.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",2.731650590896606,-0.000001192092896,-0.000000059604645
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",2.056054066362138,4.565961823353100,1.568175468217826
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-shoulder.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",20.774671554565430,0.000001568444873,-0.000000476837158
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",90.344004981896049,10.985082888348581,99.113933725233977
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-upper_arm.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",17.239253997802734,0.139325022697449,-6.861141204833984
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-88.671407767378227,5.790610045779572,4.602338983985712
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-forearm.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",24.156959533691406,-0.000001609325409,0.000000894069672
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-3.408575382882113,-25.559537761013132,0.435694832307578
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-hand.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",26.793485641479492,0.000015927944332,-0.000000357627869
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-89.077394211643195,-4.412725675550438,-4.361797223777957
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-palm_01.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",6.908304214477539,-3.318554401397705,0.420553028583527
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",1.451742620818961,-4.776877211149144,-2.088791589940785
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_index_01.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",6.574793815612793,0.000002861022949,0.000003248453140
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-0.066364078987092,-1.873861971903483,1.099984783634342
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_index_02.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",4.077990531921387,0.000002861022949,0.000007539987564
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.293718624877636,-0.000436065723586,0.000040824188844
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_index_03.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",3.552225589752197,0.000004053115845,-0.000001460313797
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-1.092311386266961,3.523990852259764,-1.429235653399921
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-thumb_01.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",-3.226210594177246,0.938787937164307,0.730085790157318
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-75.887718358288069,-20.536963277493349,-57.502338093879231
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-thumb_02.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",5.476182460784912,0.000000715255737,0.000002622604370
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",35.133229505498662,11.412913131352871,-8.835475507481501
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-thumb_03.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",4.505299568176270,0.000008106231689,-0.000003814697266
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-1.794708617159611,4.284108944611051,0.293200250872230
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-palm_02.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",7.204939842224121,-1.199668645858765,-0.369651228189468
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-0.743000944600172,-6.013789038230357,6.400632169799105
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_middle_01.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",6.142743110656738,0.000000476837158,-0.000011343508959
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-0.511728017900375,2.164778511674125,2.589406249731331
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_middle_02.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",4.265802383422852,0.000000000000000,0.000011406838894
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-0.038067102178713,0.000132890748701,-0.000113862862617
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_middle_03.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",3.715823173522949,-0.000000953674316,0.000009298324585
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-0.525349762982888,3.604824433539457,-1.093313929971071
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-palm_03.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",6.600201606750488,1.152521967887878,-1.095279097557068
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",9.329083887287505,-9.239264338381027,10.973814783765368
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_ring_01.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",6.084482192993164,-0.000001192092896,-0.000004321336746
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-7.768342119485874,3.114726984410246,9.552100662745502
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_ring_02.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",4.007752418518066,0.000000238418579,-0.000009045004845
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-0.221331826486696,-0.000161393286731,0.000181579217966
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_ring_03.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",3.491072893142700,0.000000476837158,-0.000007316470146
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-1.135357372850435,3.637243926434875,-1.097262099476450
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-palm_04.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",5.868004322052002,2.975205659866333,-1.202085614204407
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-0.343391122255630,-8.629404431354281,19.496120995160357
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_pinky_01.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",5.712854862213135,0.000000149011612,-0.000035132281482
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",5.618961415521874,-3.905852214602642,11.414492612598433
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_pinky_02.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",3.135934352874756,0.000001013278961,-0.000003814697266
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",0.002501449853367,-0.000643852780521,0.000034350335790
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-f_pinky_03.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",2.731657981872559,-0.000001311302185,0.000003695487976
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-2.056054493248961,4.565964384674039,-1.568174614444180
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-thigh.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",6.445566654205322,-7.564618110656738,0.487754136323929
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",5.148609829839731,-178.629828080060093,2.499907079385609
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-shin.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",46.664806365966797,0.000003308057785,0.000000387430191
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-3.263965977444575,-1.814466006550902,2.153490129966814
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-foot.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",37.212940216064453,0.000004172325134,0.000000417232513
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-1.147222798820906,57.667847237846736,-5.869427013706821
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-toe.L", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",16.861284255981445,0.000001639127731,0.000000774860382
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",173.273907921645616,29.017942575541589,0.436207816866843
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-thigh.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",6.445566177368164,7.564619064331055,0.487753838300705
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-5.148627332199479,-178.629828080060093,-2.500022338827852
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-shin.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",46.664813995361328,0.000003635883331,0.000000253319740
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",3.263969605982572,-1.814465366220668,-2.153490556853638
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-foot.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",37.212940216064453,0.000001773238182,0.000000387430191
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",1.147209565329389,57.667847237846736,5.869419756630828
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Model: "Model::B-toe.R", "Limb" {
+		Version: 232
+		Properties60:  {
+			Property: "QuaternionInterpolate", "bool", "",0
+			Property: "Lcl Translation", "Lcl Translation", "A+",16.861286163330078,0.000002175569534,0.000000894069672
+			Property: "Lcl Rotation", "Lcl Rotation", "A+",-173.273935242402302,29.017935745352418,-0.436200132904026
+			Property: "Lcl Scaling", "Lcl Scaling", "A+",1.0,1.0,1.0
+		}
+		MultiLayer: 0
+		MultiTake: 1
+		Shading: Y
+		Culling: "CullingOff"
+		TypeFlags: "Skeleton"
+	}
+	Pose: "Pose::BIND_POSES", "BindPose" {
+		Type: "BindPose"
+		Version: 100
+		Properties60:  {
+		}
+		NbPoseNodes: 63
+		PoseNode:  {
+			Node: "Model::DummyRig"
+			Matrix: 1.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,1.000000000000000,0.000000043711388,0.000000000000000,0.000000000000000,-0.000000043711388,1.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::root"
+			Matrix: 1.000000000000000,-0.000000063040154,-0.000000000000009,0.000000000000000,0.000000075497901,1.000000000000000,0.000000131134158,0.000000000000000,0.000000000000001,-0.000000131134158,1.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,0.000000000000000,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-hips"
+			Matrix: 0.000000075497901,0.999702870845795,0.024377021938562,0.000000000000000,-1.000000000000000,0.000000028841072,0.000000003703054,0.000000000000000,0.000000000000001,-0.024377021938562,0.999702811241150,0.000000000000000,-0.000000000000005,88.539947509765625,-4.155278682708740,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-spine"
+			Matrix: 0.000000075497901,0.995546102523804,0.094276905059814,0.000000000000000,-1.000000000000000,0.000000028527246,0.000000008980348,0.000000000000000,0.000000000000000,-0.094276897609234,0.995545983314514,0.000000000000000,-0.000000000000004,106.480522155761719,-3.717810630798340,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-chest"
+			Matrix: 0.000000075497901,0.995742857456207,-0.092176012694836,0.000000000000000,-1.000000000000000,0.000000028542097,-0.000000005096457,0.000000000000000,0.000000000000000,0.092176057398319,0.995742678642273,0.000000000000000,-0.000000000000004,121.416687011718750,-2.303375720977783,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-upperChest"
+			Matrix: 0.000000075497901,0.999534904956818,-0.030499788001180,0.000000000000000,-1.000000000000000,0.000000028828389,-0.000000000440031,0.000000000000000,0.000000000000000,0.030499814078212,0.999534666538239,0.000000000000000,-0.000000000000004,135.567169189453125,-3.613287448883057,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-neck"
+			Matrix: 0.000000075497901,0.985392153263092,0.170301422476768,0.000000000000000,-1.000000000000000,0.000000027760642,0.000000014720039,0.000000000000000,-0.000000000000000,-0.170301452279091,0.985391914844513,0.000000000000000,-0.000000000000004,156.332183837890625,-4.246911048889160,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-head"
+			Matrix: 0.000000075497901,0.998644471168518,0.052051581442356,0.000000000000000,-1.000000000000000,0.000000028761164,0.000000005792424,0.000000000000000,0.000000000000000,-0.052051603794098,0.998644292354584,0.000000000000000,-0.000000000000004,163.019226074218750,-3.091216087341309,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-jaw"
+			Matrix: 0.000000075497958,-0.269735008478165,0.962934553623199,0.000000000000000,-1.000000000000000,-0.000003740306511,-0.000000954395773,0.000000000000000,0.000003814700904,-0.962934732437134,-0.269735127687454,0.000000000000000,-0.000000000000004,163.427993774414062,-3.253912925720215,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-shoulder.L"
+			Matrix: 0.969283580780029,-0.161235287785530,-0.185721933841705,0.000000000000000,-0.189095109701157,-0.005697221495211,-0.981942117214203,0.000000000000000,0.157265678048134,0.986899673938751,-0.036011043936014,0.000000000000000,-0.000000000000004,156.332183837890625,-4.246911048889160,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-upper_arm.L"
+			Matrix: 0.960456609725952,-0.259012132883072,-0.102156750857830,0.000000000000000,0.252837330102921,0.965003490447998,-0.069582723081112,0.000000000000000,0.116604335606098,0.041002131998539,0.992331564426422,0.000000000000000,15.657051086425781,146.782150268554688,-7.064735889434814,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-forearm.L"
+			Matrix: 0.915013432502747,-0.222586542367935,0.336460888385773,0.000000000000000,0.241339072585106,0.970334053039551,-0.014400488696992,0.000000000000000,-0.323274195194244,0.094377785921097,0.941587209701538,0.000000000000000,38.858757019042969,140.525207519531250,-9.532531738281250,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-hand.L"
+			Matrix: 0.903086483478546,-0.140444219112396,0.405846059322357,0.000000000000000,-0.391120344400406,0.121334031224251,0.912306427955627,0.000000000000000,-0.177371025085449,-0.982625901699066,0.054644532501698,0.000000000000000,63.375152587890625,134.561340332031250,-0.517573177814484,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-palm_01.L"
+			Matrix: 0.870374917984009,-0.217284947633743,0.441854715347290,0.000000000000000,-0.417288362979889,0.150853291153908,0.896166086196899,0.000000000000000,-0.261378616094589,-0.964381039142609,0.040628436952829,0.000000000000000,68.241401672363281,133.580520629882812,5.336654663085938,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_index_01.L"
+			Matrix: 0.869208693504333,-0.251557856798172,0.425670802593231,0.000000000000000,-0.400838255882263,0.145546019077301,0.904513716697693,0.000000000000000,-0.289492219686508,-0.956836104393005,0.025675859302282,0.000000000000000,73.963935852050781,132.151916503906250,8.241758346557617,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_index_02.L"
+			Matrix: 0.869206726551056,-0.251565277576447,0.425670444965363,0.000000000000000,-0.399348378181458,0.150448992848396,0.904370546340942,0.000000000000000,-0.291549921035767,-0.956075489521027,0.030309092253447,0.000000000000000,77.508552551269531,131.126068115234375,9.977636337280273,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_index_03.L"
+			Matrix: 0.875272095203400,-0.188499405980110,0.445384860038757,0.000000000000000,-0.425368577241898,0.138166561722755,0.894411385059357,0.000000000000000,-0.230133280158043,-0.972305655479431,0.040751624852419,0.000000000000000,80.596168518066406,130.232452392578125,11.489712715148926,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-thumb_01.L"
+			Matrix: 0.016629377380013,-0.328490883111954,0.944360852241516,0.000000000000000,-0.510385990142822,-0.814960479736328,-0.274492174386978,0.000000000000000,0.859785139560699,-0.477423846721649,-0.181209161877632,0.000000000000000,65.634307861328125,133.435836791992188,3.099492073059082,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-thumb_02.L"
+			Matrix: -0.230869635939598,-0.346403658390045,0.909232497215271,0.000000000000000,-0.892486989498138,-0.296782851219177,-0.339687317609787,0.000000000000000,0.387513786554337,-0.889901518821716,-0.240642383694649,0.000000000000000,65.725372314453125,131.636962890625000,8.270977020263672,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-thumb_03.L"
+			Matrix: -0.254615306854248,-0.277439236640930,0.926390051841736,0.000000000000000,-0.881645321846008,-0.327004462480545,-0.340249985456467,0.000000000000000,0.397332608699799,-0.903380215167999,-0.161342471837997,0.000000000000000,64.685234069824219,130.076309204101562,12.367345809936523,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-palm_02.L"
+			Matrix: 0.917297601699829,-0.255199849605560,0.305677711963654,0.000000000000000,-0.291548192501068,0.092448115348816,0.952078223228455,0.000000000000000,-0.271229565143585,-0.962458670139313,0.010399389080703,0.000000000000000,69.478187561035156,134.058242797851562,3.480790615081787,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_middle_01.L"
+			Matrix: 0.939114630222321,-0.222575634717941,0.261772304773331,0.000000000000000,-0.251905679702759,0.072143815457821,0.965058982372284,0.000000000000000,-0.233683824539185,-0.972242653369904,0.011683250777423,0.000000000000000,75.112907409667969,132.490615844726562,5.358489036560059,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_middle_02.L"
+			Matrix: 0.939114689826965,-0.222573205828667,0.261774092912674,0.000000000000000,-0.252062678337097,0.071498267352581,0.965066015720367,0.000000000000000,-0.233514189720154,-0.972290873527527,0.011042690835893,0.000000000000000,79.118980407714844,131.541152954101562,6.475157260894775,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_middle_03.L"
+			Matrix: 0.946967899799347,-0.159598603844643,0.278892040252686,0.000000000000000,-0.271522790193558,0.066704198718071,0.960117638111115,0.000000000000000,-0.171836674213409,-0.984925866127014,0.019832091405988,0.000000000000000,82.608558654785156,130.714111328125000,7.447862148284912,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-palm_03.L"
+			Matrix: 0.920080602169037,-0.316652834415436,0.230615630745888,0.000000000000000,-0.155859455466270,0.244190558791161,0.957120001316071,0.000000000000000,-0.359388917684555,-0.916570901870728,0.175321564078331,0.000000000000000,69.980751037597656,134.570785522460938,1.049790620803833,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_ring_01.L"
+			Matrix: 0.951336741447449,-0.302461057901382,0.058961879462004,0.000000000000000,-0.042659338563681,0.060231216251850,0.997272372245789,0.000000000000000,-0.305187404155731,-0.951256930828094,0.044397357851267,0.000000000000000,75.578956604003906,132.644119262695312,2.452965736389160,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_ring_02.L"
+			Matrix: 0.951336026191711,-0.302463859319687,0.058958847075701,0.000000000000000,-0.043834939599037,0.056555174291134,0.997436583042145,0.000000000000000,-0.305022984743118,-0.951481640338898,0.040544468909502,0.000000000000000,79.391677856445312,131.431930541992188,2.689270734786987,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_ring_03.L"
+			Matrix: 0.967758178710938,-0.240357488393784,0.075319290161133,0.000000000000000,-0.066869586706161,0.043130788952112,0.996828973293304,0.000000000000000,-0.242843896150589,-0.969725787639618,0.025667563080788,0.000000000000000,82.712860107421875,130.376007080078125,2.895100593566895,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-palm_04.L"
+			Matrix: 0.944112896919250,-0.318364709615707,0.085415489971638,0.000000000000000,-0.069228984415531,0.061836730688810,0.995682477951050,0.000000000000000,-0.322271943092346,-0.945949435234070,0.036340776830912,0.000000000000000,70.051345825195312,134.557418823242188,-0.916050374507904,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_pinky_01.L"
+			Matrix: 0.915006399154663,-0.387988388538361,-0.110586203634739,0.000000000000000,0.156158372759819,0.087861016392708,0.983816564083099,0.000000000000000,-0.371993154287338,-0.917467057704926,0.140980944037437,0.000000000000000,75.444923400878906,132.738647460937500,-0.428083866834641,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_pinky_02.L"
+			Matrix: 0.915002346038818,-0.387998282909393,-0.110585235059261,0.000000000000000,0.156175106763840,0.087900817394257,0.983810365200043,0.000000000000000,-0.371996134519577,-0.917459070682526,0.141025036573410,0.000000000000000,78.314323425292969,131.521942138671875,-0.774874746799469,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_pinky_03.L"
+			Matrix: 0.945630669593811,-0.311188220977783,-0.094581641256809,0.000000000000000,0.120312616229057,0.064510338008404,0.990637838840485,0.000000000000000,-0.302173256874084,-0.948156476020813,0.098442777991295,0.000000000000000,80.813789367675781,130.462066650390625,-1.076954722404480,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-shoulder.R"
+			Matrix: -0.969283521175385,-0.161235287785530,-0.185722082853317,0.000000000000000,-0.189095407724380,0.005697176791728,0.981942057609558,0.000000000000000,-0.157265558838844,0.986899673938751,-0.036011014133692,0.000000000000000,-0.000000000000004,156.332183837890625,-4.246911048889160,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-upper_arm.R"
+			Matrix: -0.960456371307373,-0.259011954069138,-0.102156728506088,0.000000000000000,0.252837061882019,-0.965003490447998,0.069582663476467,0.000000000000000,-0.116604447364807,0.041002117097378,0.992331445217133,0.000000000000000,-15.657050132751465,146.782150268554688,-7.064735889434814,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-forearm.R"
+			Matrix: -0.915012896060944,-0.222587272524834,0.336460769176483,0.000000000000000,0.241339713335037,-0.970333874225616,0.014400170184672,0.000000000000000,0.323273926973343,0.094377711415291,0.941587030887604,0.000000000000000,-38.858753204345703,140.525207519531250,-9.532531738281250,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-hand.R"
+			Matrix: -0.903085947036743,-0.140444025397301,0.405846029520035,0.000000000000000,-0.391120254993439,-0.121334023773670,-0.912306070327759,0.000000000000000,0.177370920777321,-0.982625961303711,0.054644532501698,0.000000000000000,-63.375141143798828,134.561309814453125,-0.517573177814484,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-palm_01.R"
+			Matrix: -0.870374321937561,-0.217284992337227,0.441854596138000,0.000000000000000,-0.417288124561310,-0.150853306055069,-0.896165788173676,0.000000000000000,0.261378675699234,-0.964381039142609,0.040628392249346,0.000000000000000,-68.241386413574219,133.580490112304688,5.336655616760254,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_index_01.R"
+			Matrix: -0.869208097457886,-0.251557707786560,0.425670772790909,0.000000000000000,-0.400838077068329,-0.145546063780785,-0.904513418674469,0.000000000000000,0.289492070674896,-0.956836104393005,0.025675922632217,0.000000000000000,-73.963920593261719,132.151885986328125,8.241759300231934,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_index_02.R"
+			Matrix: -0.869206190109253,-0.251565098762512,0.425670325756073,0.000000000000000,-0.399348109960556,-0.150449007749557,-0.904370307922363,0.000000000000000,0.291549712419510,-0.956075489521027,0.030309185385704,0.000000000000000,-77.508537292480469,131.126037597656250,9.977637290954590,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_index_03.R"
+			Matrix: -0.875271499156952,-0.188499242067337,0.445384711027145,0.000000000000000,-0.425368309020996,-0.138166606426239,-0.894411146640778,0.000000000000000,0.230133175849915,-0.972305655479431,0.040751677006483,0.000000000000000,-80.596153259277344,130.232421875000000,11.489713668823242,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-thumb_01.R"
+			Matrix: -0.016629209741950,-0.328490853309631,0.944360315799713,0.000000000000000,-0.510385870933533,0.814960360527039,0.274492114782333,0.000000000000000,-0.859784543514252,-0.477423906326294,-0.181208953261375,0.000000000000000,-65.634292602539062,133.435806274414062,3.099492788314819,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-thumb_02.R"
+			Matrix: 0.230869665741920,-0.346403568983078,0.909232079982758,0.000000000000000,-0.892486453056335,0.296783000230789,0.339687317609787,0.000000000000000,-0.387513607740402,-0.889901399612427,-0.240642026066780,0.000000000000000,-65.725357055664062,131.636932373046875,8.270977020263672,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-thumb_03.R"
+			Matrix: 0.254615306854248,-0.277439147233963,0.926389575004578,0.000000000000000,-0.881644785404205,0.327004611492157,0.340249955654144,0.000000000000000,-0.397332429885864,-0.903380036354065,-0.161342129111290,0.000000000000000,-64.685218811035156,130.076278686523438,12.367345809936523,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-palm_02.R"
+			Matrix: -0.917297005653381,-0.255199909210205,0.305677592754364,0.000000000000000,-0.291548073291779,-0.092448167502880,-0.952078044414520,0.000000000000000,0.271229624748230,-0.962458610534668,0.010399385355413,0.000000000000000,-69.478172302246094,134.058212280273438,3.480791091918945,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_middle_01.R"
+			Matrix: -0.939113914966583,-0.222575590014458,0.261772155761719,0.000000000000000,-0.251905620098114,-0.072143845260143,-0.965058743953705,0.000000000000000,0.233683824539185,-0.972242593765259,0.011683255434036,0.000000000000000,-75.112892150878906,132.490585327148438,5.358489036560059,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_middle_02.R"
+			Matrix: -0.939113974571228,-0.222573205828667,0.261774033308029,0.000000000000000,-0.252062678337097,-0.071498319506645,-0.965065717697144,0.000000000000000,0.233514234423637,-0.972290813922882,0.011042675934732,0.000000000000000,-79.118965148925781,131.541122436523438,6.475156784057617,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_middle_03.R"
+			Matrix: -0.946967244148254,-0.159598454833031,0.278891950845718,0.000000000000000,-0.271522790193558,-0.066704235970974,-0.960117340087891,0.000000000000000,0.171836614608765,-0.984925866127014,0.019832102581859,0.000000000000000,-82.608543395996094,130.714080810546875,7.447861671447754,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-palm_03.R"
+			Matrix: -0.920079946517944,-0.316652745008469,0.230615600943565,0.000000000000000,-0.155859440565109,-0.244190648198128,-0.957119762897491,0.000000000000000,0.359388828277588,-0.916570901870728,0.175321504473686,0.000000000000000,-69.980735778808594,134.570755004882812,1.049790620803833,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_ring_01.R"
+			Matrix: -0.951336205005646,-0.302460998296738,0.058961998671293,0.000000000000000,-0.042659461498260,-0.060231372714043,-0.997272074222565,0.000000000000000,0.305187344551086,-0.951256930828094,0.044397387653589,0.000000000000000,-75.578941345214844,132.644088745117188,2.452965259552002,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_ring_02.R"
+			Matrix: -0.951335489749908,-0.302463859319687,0.058958958834410,0.000000000000000,-0.043835062533617,-0.056555300951004,-0.997436285018921,0.000000000000000,0.305022984743118,-0.951481640338898,0.040544468909502,0.000000000000000,-79.391662597656250,131.431900024414062,2.689270257949829,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_ring_03.R"
+			Matrix: -0.967757761478424,-0.240357145667076,0.075319394469261,0.000000000000000,-0.066869713366032,-0.043130923062563,-0.996828675270081,0.000000000000000,0.242843583226204,-0.969725906848907,0.025667598471045,0.000000000000000,-82.712844848632812,130.375976562500000,2.895100116729736,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-palm_04.R"
+			Matrix: -0.944112181663513,-0.318364650011063,0.085415527224541,0.000000000000000,-0.069229073822498,-0.061836786568165,-0.995682239532471,0.000000000000000,0.322271883487701,-0.945949494838715,0.036340773105621,0.000000000000000,-70.051330566406250,134.557388305664062,-0.916050195693970,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_pinky_01.R"
+			Matrix: -0.915005981922150,-0.387987792491913,-0.110586009919643,0.000000000000000,0.156157955527306,-0.087861150503159,-0.983816444873810,0.000000000000000,0.371992498636246,-0.917467296123505,0.140980809926987,0.000000000000000,-75.444908142089844,132.738616943359375,-0.428083956241608,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_pinky_02.R"
+			Matrix: -0.915001690387726,-0.387998133897781,-0.110585018992424,0.000000000000000,0.156174749135971,-0.087900973856449,-0.983810245990753,0.000000000000000,0.371995955705643,-0.917459130287170,0.141025006771088,0.000000000000000,-78.314308166503906,131.521911621093750,-0.774874925613403,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-f_pinky_03.R"
+			Matrix: -0.945630013942719,-0.311188042163849,-0.094581440091133,0.000000000000000,0.120312280952930,-0.064510472118855,-0.990637719631195,0.000000000000000,0.302173078060150,-0.948156535625458,0.098442748188972,0.000000000000000,-80.813774108886719,130.462036132812500,-1.076954841613770,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-thigh.L"
+			Matrix: 0.045534476637840,-0.998962759971619,-0.000181125025847,0.000000000000000,-0.994784951210022,-0.045325230807066,-0.090926028788090,0.000000000000000,0.090783357620239,0.004317367915064,-0.995849788188934,0.000000000000000,7.564618587493896,94.971702575683594,-3.510546207427979,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-shin.L"
+			Matrix: 0.010992052033544,-0.999322414398193,-0.035127595067024,0.000000000000000,-0.999329805374146,-0.009791371412575,-0.034042689949274,0.000000000000000,0.033637262880802,0.035477131605148,-0.998795032501221,0.000000000000000,9.689473152160645,48.355289459228516,-3.518998622894287,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-foot.L"
+			Matrix: 0.032081466168165,-0.561103582382202,0.827116847038269,0.000000000000000,-0.995041847229004,-0.095489606261253,-0.026221545413136,0.000000000000000,0.093675211071968,-0.822219073772430,-0.561404049396515,0.000000000000000,10.098516464233398,11.167564392089844,-4.826200008392334,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-toe.L"
+			Matrix: -0.024011882022023,-0.092443868517876,0.995419263839722,0.000000000000000,0.999393820762634,-0.025544824078679,0.021774696186185,0.000000000000000,0.023411087691784,0.995389938354492,0.093008145689964,0.000000000000000,10.639450073242188,1.706637024879456,9.120053291320801,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-thigh.R"
+			Matrix: -0.045534327626228,-0.998962759971619,-0.000181138762855,0.000000000000000,-0.994784951210022,0.045324992388487,0.090926036238670,0.000000000000000,-0.090783417224884,0.004317362327129,-0.995849788188934,0.000000000000000,-7.564618587493896,94.971702575683594,-3.510546445846558,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-shin.R"
+			Matrix: -0.010991898365319,-0.999322414398193,-0.035127595067024,0.000000000000000,-0.999329805374146,0.009791123680770,0.034042630344629,0.000000000000000,-0.033637262880802,0.035477124154568,-0.998795032501221,0.000000000000000,-9.689473152160645,48.355289459228516,-3.518998861312866,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-foot.R"
+			Matrix: -0.032081320881844,-0.561103641986847,0.827116906642914,0.000000000000000,-0.995041847229004,0.095489419996738,0.026221608743072,0.000000000000000,-0.093675211071968,-0.822219133377075,-0.561403989791870,0.000000000000000,-10.098516464233398,11.167564392089844,-4.826200008392334,1.000000000000000
+		}
+		PoseNode:  {
+			Node: "Model::B-toe.R"
+			Matrix: 0.024011656641960,-0.092443898320198,0.995419323444366,0.000000000000000,0.999393820762634,0.025544898584485,-0.021774431690574,0.000000000000000,-0.023411065340042,0.995390057563782,0.093008026480675,0.000000000000000,-10.639450073242188,1.706637024879456,9.120052337646484,1.000000000000000
+		}
+	}
+	GlobalSettings:  {
+		Version: 1000
+		Properties60:  {
+			Property: "UpAxis", "int", "",1
+			Property: "UpAxisSign", "int", "",1
+			Property: "FrontAxis", "int", "",2
+			Property: "FrontAxisSign", "int", "",1
+			Property: "CoordAxis", "int", "",0
+			Property: "CoordAxisSign", "int", "",1
+			Property: "UnitScaleFactor", "double", "",1
+		}
+	}
+}
+
+; Object relations
+;------------------------------------------------------------------
+
+Relations:  {
+	Model: "Model::DummyRig", "Limb" {
+	}
+	Model: "Model::root", "Limb" {
+	}
+	Model: "Model::B-hips", "Limb" {
+	}
+	Model: "Model::B-spine", "Limb" {
+	}
+	Model: "Model::B-chest", "Limb" {
+	}
+	Model: "Model::B-upperChest", "Limb" {
+	}
+	Model: "Model::B-neck", "Limb" {
+	}
+	Model: "Model::B-head", "Limb" {
+	}
+	Model: "Model::B-jaw", "Limb" {
+	}
+	Model: "Model::B-shoulder.L", "Limb" {
+	}
+	Model: "Model::B-upper_arm.L", "Limb" {
+	}
+	Model: "Model::B-forearm.L", "Limb" {
+	}
+	Model: "Model::B-hand.L", "Limb" {
+	}
+	Model: "Model::B-palm_01.L", "Limb" {
+	}
+	Model: "Model::B-f_index_01.L", "Limb" {
+	}
+	Model: "Model::B-f_index_02.L", "Limb" {
+	}
+	Model: "Model::B-f_index_03.L", "Limb" {
+	}
+	Model: "Model::B-thumb_01.L", "Limb" {
+	}
+	Model: "Model::B-thumb_02.L", "Limb" {
+	}
+	Model: "Model::B-thumb_03.L", "Limb" {
+	}
+	Model: "Model::B-palm_02.L", "Limb" {
+	}
+	Model: "Model::B-f_middle_01.L", "Limb" {
+	}
+	Model: "Model::B-f_middle_02.L", "Limb" {
+	}
+	Model: "Model::B-f_middle_03.L", "Limb" {
+	}
+	Model: "Model::B-palm_03.L", "Limb" {
+	}
+	Model: "Model::B-f_ring_01.L", "Limb" {
+	}
+	Model: "Model::B-f_ring_02.L", "Limb" {
+	}
+	Model: "Model::B-f_ring_03.L", "Limb" {
+	}
+	Model: "Model::B-palm_04.L", "Limb" {
+	}
+	Model: "Model::B-f_pinky_01.L", "Limb" {
+	}
+	Model: "Model::B-f_pinky_02.L", "Limb" {
+	}
+	Model: "Model::B-f_pinky_03.L", "Limb" {
+	}
+	Model: "Model::B-shoulder.R", "Limb" {
+	}
+	Model: "Model::B-upper_arm.R", "Limb" {
+	}
+	Model: "Model::B-forearm.R", "Limb" {
+	}
+	Model: "Model::B-hand.R", "Limb" {
+	}
+	Model: "Model::B-palm_01.R", "Limb" {
+	}
+	Model: "Model::B-f_index_01.R", "Limb" {
+	}
+	Model: "Model::B-f_index_02.R", "Limb" {
+	}
+	Model: "Model::B-f_index_03.R", "Limb" {
+	}
+	Model: "Model::B-thumb_01.R", "Limb" {
+	}
+	Model: "Model::B-thumb_02.R", "Limb" {
+	}
+	Model: "Model::B-thumb_03.R", "Limb" {
+	}
+	Model: "Model::B-palm_02.R", "Limb" {
+	}
+	Model: "Model::B-f_middle_01.R", "Limb" {
+	}
+	Model: "Model::B-f_middle_02.R", "Limb" {
+	}
+	Model: "Model::B-f_middle_03.R", "Limb" {
+	}
+	Model: "Model::B-palm_03.R", "Limb" {
+	}
+	Model: "Model::B-f_ring_01.R", "Limb" {
+	}
+	Model: "Model::B-f_ring_02.R", "Limb" {
+	}
+	Model: "Model::B-f_ring_03.R", "Limb" {
+	}
+	Model: "Model::B-palm_04.R", "Limb" {
+	}
+	Model: "Model::B-f_pinky_01.R", "Limb" {
+	}
+	Model: "Model::B-f_pinky_02.R", "Limb" {
+	}
+	Model: "Model::B-f_pinky_03.R", "Limb" {
+	}
+	Model: "Model::B-thigh.L", "Limb" {
+	}
+	Model: "Model::B-shin.L", "Limb" {
+	}
+	Model: "Model::B-foot.L", "Limb" {
+	}
+	Model: "Model::B-toe.L", "Limb" {
+	}
+	Model: "Model::B-thigh.R", "Limb" {
+	}
+	Model: "Model::B-shin.R", "Limb" {
+	}
+	Model: "Model::B-foot.R", "Limb" {
+	}
+	Model: "Model::B-toe.R", "Limb" {
+	}
+}
+
+; Object connections
+;------------------------------------------------------------------
+
+Connections:  {
+	Connect: "OO", "Model::DummyRig", "Model::Scene"
+	Connect: "OO", "Model::root", "Model::DummyRig"
+	Connect: "OO", "Model::B-hips", "Model::root"
+	Connect: "OO", "Model::B-spine", "Model::B-hips"
+	Connect: "OO", "Model::B-chest", "Model::B-spine"
+	Connect: "OO", "Model::B-upperChest", "Model::B-chest"
+	Connect: "OO", "Model::B-neck", "Model::B-upperChest"
+	Connect: "OO", "Model::B-head", "Model::B-neck"
+	Connect: "OO", "Model::B-jaw", "Model::B-head"
+	Connect: "OO", "Model::B-shoulder.L", "Model::B-upperChest"
+	Connect: "OO", "Model::B-upper_arm.L", "Model::B-shoulder.L"
+	Connect: "OO", "Model::B-forearm.L", "Model::B-upper_arm.L"
+	Connect: "OO", "Model::B-hand.L", "Model::B-forearm.L"
+	Connect: "OO", "Model::B-palm_01.L", "Model::B-hand.L"
+	Connect: "OO", "Model::B-f_index_01.L", "Model::B-palm_01.L"
+	Connect: "OO", "Model::B-f_index_02.L", "Model::B-f_index_01.L"
+	Connect: "OO", "Model::B-f_index_03.L", "Model::B-f_index_02.L"
+	Connect: "OO", "Model::B-thumb_01.L", "Model::B-palm_01.L"
+	Connect: "OO", "Model::B-thumb_02.L", "Model::B-thumb_01.L"
+	Connect: "OO", "Model::B-thumb_03.L", "Model::B-thumb_02.L"
+	Connect: "OO", "Model::B-palm_02.L", "Model::B-hand.L"
+	Connect: "OO", "Model::B-f_middle_01.L", "Model::B-palm_02.L"
+	Connect: "OO", "Model::B-f_middle_02.L", "Model::B-f_middle_01.L"
+	Connect: "OO", "Model::B-f_middle_03.L", "Model::B-f_middle_02.L"
+	Connect: "OO", "Model::B-palm_03.L", "Model::B-hand.L"
+	Connect: "OO", "Model::B-f_ring_01.L", "Model::B-palm_03.L"
+	Connect: "OO", "Model::B-f_ring_02.L", "Model::B-f_ring_01.L"
+	Connect: "OO", "Model::B-f_ring_03.L", "Model::B-f_ring_02.L"
+	Connect: "OO", "Model::B-palm_04.L", "Model::B-hand.L"
+	Connect: "OO", "Model::B-f_pinky_01.L", "Model::B-palm_04.L"
+	Connect: "OO", "Model::B-f_pinky_02.L", "Model::B-f_pinky_01.L"
+	Connect: "OO", "Model::B-f_pinky_03.L", "Model::B-f_pinky_02.L"
+	Connect: "OO", "Model::B-shoulder.R", "Model::B-upperChest"
+	Connect: "OO", "Model::B-upper_arm.R", "Model::B-shoulder.R"
+	Connect: "OO", "Model::B-forearm.R", "Model::B-upper_arm.R"
+	Connect: "OO", "Model::B-hand.R", "Model::B-forearm.R"
+	Connect: "OO", "Model::B-palm_01.R", "Model::B-hand.R"
+	Connect: "OO", "Model::B-f_index_01.R", "Model::B-palm_01.R"
+	Connect: "OO", "Model::B-f_index_02.R", "Model::B-f_index_01.R"
+	Connect: "OO", "Model::B-f_index_03.R", "Model::B-f_index_02.R"
+	Connect: "OO", "Model::B-thumb_01.R", "Model::B-palm_01.R"
+	Connect: "OO", "Model::B-thumb_02.R", "Model::B-thumb_01.R"
+	Connect: "OO", "Model::B-thumb_03.R", "Model::B-thumb_02.R"
+	Connect: "OO", "Model::B-palm_02.R", "Model::B-hand.R"
+	Connect: "OO", "Model::B-f_middle_01.R", "Model::B-palm_02.R"
+	Connect: "OO", "Model::B-f_middle_02.R", "Model::B-f_middle_01.R"
+	Connect: "OO", "Model::B-f_middle_03.R", "Model::B-f_middle_02.R"
+	Connect: "OO", "Model::B-palm_03.R", "Model::B-hand.R"
+	Connect: "OO", "Model::B-f_ring_01.R", "Model::B-palm_03.R"
+	Connect: "OO", "Model::B-f_ring_02.R", "Model::B-f_ring_01.R"
+	Connect: "OO", "Model::B-f_ring_03.R", "Model::B-f_ring_02.R"
+	Connect: "OO", "Model::B-palm_04.R", "Model::B-hand.R"
+	Connect: "OO", "Model::B-f_pinky_01.R", "Model::B-palm_04.R"
+	Connect: "OO", "Model::B-f_pinky_02.R", "Model::B-f_pinky_01.R"
+	Connect: "OO", "Model::B-f_pinky_03.R", "Model::B-f_pinky_02.R"
+	Connect: "OO", "Model::B-thigh.L", "Model::B-hips"
+	Connect: "OO", "Model::B-shin.L", "Model::B-thigh.L"
+	Connect: "OO", "Model::B-foot.L", "Model::B-shin.L"
+	Connect: "OO", "Model::B-toe.L", "Model::B-foot.L"
+	Connect: "OO", "Model::B-thigh.R", "Model::B-hips"
+	Connect: "OO", "Model::B-shin.R", "Model::B-thigh.R"
+	Connect: "OO", "Model::B-foot.R", "Model::B-shin.R"
+	Connect: "OO", "Model::B-toe.R", "Model::B-foot.R"
+}
+;Takes and animation section
+;----------------------------------------------------
+
+Takes:  {
+	Current: "HandPoses@Victory01_B"
+	Take: "HandPoses@Victory01_B" {
+		FileName: "HandPoses@Victory01_B.tak"
+		;Models animation
+		;----------------------------------------------------
+		Model: "Model::B-f_index_01.L" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 6.574799537658691
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,6.574799537658691,L,
+							1539538600,6.574799537658691,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -0.000002384185791
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000002384185791,L,
+							1539538600,-0.000002384185791,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000007480382919
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000007480382919,L,
+							1539538600,0.000007480382919,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: 2.787821110685800
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,2.787821110685800,L,
+							1539538600,2.787821110685800,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 4.770891404115283
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,4.770891404115283,L,
+							1539538600,4.770891404115283,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 12.159319618945377
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,12.159319618945377,L,
+							1539538600,12.159319618945377,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_index_02.L" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 4.077986717224121
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,4.077986717224121,L,
+							1539538600,4.077986717224121,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 0.000001907348633
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000001907348633,L,
+							1539538600,0.000001907348633,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000007450580597
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000007450580597,L,
+							1539538600,0.000007450580597,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: -0.294487928293761
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.294487928293761,L,
+							1539538600,-0.294487928293761,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 4.136553806650539
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,4.136553806650539,L,
+							1539538600,4.136553806650539,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -0.021229960500561
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.021229960500561,L,
+							1539538600,-0.021229960500561,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_index_03.L" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 3.552226543426514
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,3.552226543426514,L,
+							1539538600,3.552226543426514,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 0.000003814697266
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000003814697266,L,
+							1539538600,0.000003814697266,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -0.000012516975403
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000012516975403,L,
+							1539538600,-0.000012516975403,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: 1.100066105574148
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,1.100066105574148,L,
+							1539538600,1.100066105574148,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 7.660284257948197
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,7.660284257948197,L,
+							1539538600,7.660284257948197,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 1.508745565362807
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,1.508745565362807,L,
+							1539538600,1.508745565362807,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-thumb_01.L" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: -3.226207494735718
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-3.226207494735718,L,
+							1539538600,-3.226207494735718,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -0.938786506652832
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.938786506652832,L,
+							1539538600,-0.938786506652832,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.730080187320709
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.730080187320709,L,
+							1539538600,0.730080187320709,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: 64.303478469342139
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,64.303478469342139,L,
+							1539538600,64.303478469342139,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -51.625400860293169
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-51.625400860293169,L,
+							1539538600,-51.625400860293169,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 35.822699536170020
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,35.822699536170020,L,
+							1539538600,35.822699536170020,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-thumb_02.L" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 5.476166248321533
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,5.476166248321533,L,
+							1539538600,5.476166248321533,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -0.000010967254639
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000010967254639,L,
+							1539538600,-0.000010967254639,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000000953674316
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000000953674316,L,
+							1539538600,0.000000953674316,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: -59.334973470839394
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-59.334973470839394,L,
+							1539538600,-59.334973470839394,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -49.019417314559412
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-49.019417314559412,L,
+							1539538600,-49.019417314559412,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 68.616148703741203
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,68.616148703741203,L,
+							1539538600,68.616148703741203,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-thumb_03.L" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 4.505306243896484
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,4.505306243896484,L,
+							1539538600,4.505306243896484,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 0.000007808208466
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000007808208466,L,
+							1539538600,0.000007808208466,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -0.000002384185791
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000002384185791,L,
+							1539538600,-0.000002384185791,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: 7.206878371596830
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,7.206878371596830,L,
+							1539538600,7.206878371596830,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -75.574595165978465
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-75.574595165978465,L,
+							1539538600,-75.574595165978465,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -7.410532414531516
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-7.410532414531516,L,
+							1539538600,-7.410532414531516,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_middle_01.L" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 6.142740726470947
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,6.142740726470947,L,
+							1539538600,6.142740726470947,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 0.000000000000000
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000000000000000,L,
+							1539538600,0.000000000000000,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000011064112186
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000011064112186,L,
+							1539538600,0.000011064112186,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: -1.450659288783575
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-1.450659288783575,L,
+							1539538600,-1.450659288783575,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 11.575532251527823
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,11.575532251527823,L,
+							1539538600,11.575532251527823,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -9.958281767401822
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-9.958281767401822,L,
+							1539538600,-9.958281767401822,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_middle_02.L" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 4.265804767608643
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,4.265804767608643,L,
+							1539538600,4.265804767608643,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -0.000000953674316
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000000953674316,L,
+							1539538600,-0.000000953674316,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000022232532501
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000022232532501,L,
+							1539538600,0.000022232532501,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: 0.038160940573574
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.038160940573574,L,
+							1539538600,0.038160940573574,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 4.137192856224758
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,4.137192856224758,L,
+							1539538600,4.137192856224758,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.002839390596389
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.002839390596389,L,
+							1539538600,0.002839390596389,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_middle_03.L" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 3.715808868408203
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,3.715808868408203,L,
+							1539538600,3.715808868408203,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 0.000001907348633
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000001907348633,L,
+							1539538600,0.000001907348633,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000005513429642
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000005513429642,L,
+							1539538600,0.000005513429642,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: 0.529133901226481
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.529133901226481,L,
+							1539538600,0.529133901226481,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 7.741731702479543
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,7.741731702479543,L,
+							1539538600,7.741731702479543,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 1.131534067740821
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,1.131534067740821,L,
+							1539538600,1.131534067740821,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_ring_01.L" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 6.084468364715576
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,6.084468364715576,L,
+							1539538600,6.084468364715576,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 0.000003337860107
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000003337860107,L,
+							1539538600,0.000003337860107,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000000745058060
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000000745058060,L,
+							1539538600,0.000000745058060,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: 43.139143533563804
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,43.139143533563804,L,
+							1539538600,43.139143533563804,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -75.959367042681407
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-75.959367042681407,L,
+							1539538600,-75.959367042681407,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -46.498305699452118
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-46.498305699452118,L,
+							1539538600,-46.498305699452118,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_ring_02.L" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 4.007746219635010
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,4.007746219635010,L,
+							1539538600,4.007746219635010,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -0.000000441446900
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000000441446900,L,
+							1539538600,-0.000000441446900,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -0.000014334917068
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000014334917068,L,
+							1539538600,-0.000014334917068,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: -0.953397291380149
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.953397291380149,L,
+							1539538600,-0.953397291380149,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -103.450420829268836
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-103.450420829268836,L,
+							1539538600,-103.450420829268836,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.926741944535684
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.926741944535684,L,
+							1539538600,0.926741944535684,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_ring_03.L" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 3.491075515747070
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,3.491075515747070,L,
+							1539538600,3.491075515747070,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -0.000001102685928
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000001102685928,L,
+							1539538600,-0.000001102685928,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000003149267286
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000003149267286,L,
+							1539538600,0.000003149267286,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: -6.621122629037848
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-6.621122629037848,L,
+							1539538600,-6.621122629037848,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -99.875076345960764
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-99.875076345960764,L,
+							1539538600,-99.875076345960764,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 7.549111830148997
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,7.549111830148997,L,
+							1539538600,7.549111830148997,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_pinky_01.L" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 5.712848663330078
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,5.712848663330078,L,
+							1539538600,5.712848663330078,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -0.000000417232513
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000000417232513,L,
+							1539538600,-0.000000417232513,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000000957399607
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000000957399607,L,
+							1539538600,0.000000957399607,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: -25.318278404055704
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-25.318278404055704,L,
+							1539538600,-25.318278404055704,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -84.209450088290410
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-84.209450088290410,L,
+							1539538600,-84.209450088290410,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 28.893930245876430
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,28.893930245876430,L,
+							1539538600,28.893930245876430,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_pinky_02.L" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 3.135929346084595
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,3.135929346084595,L,
+							1539538600,3.135929346084595,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -0.000000610947609
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000000610947609,L,
+							1539538600,-0.000000610947609,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -0.000005524605513
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000005524605513,L,
+							1539538600,-0.000005524605513,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: 0.010692762031002
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.010692762031002,L,
+							1539538600,0.010692762031002,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -103.449088942380683
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-103.449088942380683,L,
+							1539538600,-103.449088942380683,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -0.010436262247500
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.010436262247500,L,
+							1539538600,-0.010436262247500,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_pinky_03.L" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 2.731653928756714
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,2.731653928756714,L,
+							1539538600,2.731653928756714,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 0.000001311302185
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000001311302185,L,
+							1539538600,0.000001311302185,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -0.000008117407560
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000008117407560,L,
+							1539538600,-0.000008117407560,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: -13.055442999370701
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-13.055442999370701,L,
+							1539538600,-13.055442999370701,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -99.111249460890164
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-99.111249460890164,L,
+							1539538600,-99.111249460890164,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 14.300345720893993
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,14.300345720893993,L,
+							1539538600,14.300345720893993,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_index_01.R" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 6.574788093566895
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,6.574788093566895,L,
+							1539538600,6.574788093566895,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 0.000000715255737
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000000715255737,L,
+							1539538600,0.000000715255737,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -0.000007331371307
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000007331371307,L,
+							1539538600,-0.000007331371307,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: -2.787819403138508
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-2.787819403138508,L,
+							1539538600,-2.787819403138508,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 4.770895246096691
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,4.770895246096691,L,
+							1539538600,4.770895246096691,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -12.159324741587254
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-12.159324741587254,L,
+							1539538600,-12.159324741587254,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_index_02.R" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 4.077981472015381
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,4.077981472015381,L,
+							1539538600,4.077981472015381,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -0.000003814697266
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000003814697266,L,
+							1539538600,-0.000003814697266,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000007510185242
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000007510185242,L,
+							1539538600,0.000007510185242,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: 0.294485553735807
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.294485553735807,L,
+							1539538600,0.294485553735807,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 4.136565759481586
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,4.136565759481586,L,
+							1539538600,4.136565759481586,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.021225443170859
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.021225443170859,L,
+							1539538600,0.021225443170859,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_index_03.R" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 3.552226305007935
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,3.552226305007935,L,
+							1539538600,3.552226305007935,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -0.000003814697266
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000003814697266,L,
+							1539538600,-0.000003814697266,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -0.000013232231140
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000013232231140,L,
+							1539538600,-0.000013232231140,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: -1.100067386234617
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-1.100067386234617,L,
+							1539538600,-1.100067386234617,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 7.660277427759027
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,7.660277427759027,L,
+							1539538600,7.660277427759027,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -1.508742897320163
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-1.508742897320163,L,
+							1539538600,-1.508742897320163,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-thumb_01.R" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: -3.226216316223145
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-3.226216316223145,L,
+							1539538600,-3.226216316223145,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 0.938786506652832
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.938786506652832,L,
+							1539538600,0.938786506652832,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.730073153972626
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.730073153972626,L,
+							1539538600,0.730073153972626,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: -64.303498959909646
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-64.303498959909646,L,
+							1539538600,-64.303498959909646,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -51.625332558401468
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-51.625332558401468,L,
+							1539538600,-51.625332558401468,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -35.822658555034998
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-35.822658555034998,L,
+							1539538600,-35.822658555034998,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-thumb_02.R" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 5.476170063018799
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,5.476170063018799,L,
+							1539538600,5.476170063018799,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -0.000001430511475
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000001430511475,L,
+							1539538600,-0.000001430511475,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000000000000000
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000000000000000,L,
+							1539538600,0.000000000000000,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: 59.334966640650229
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,59.334966640650229,L,
+							1539538600,59.334966640650229,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -49.019407069275658
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-49.019407069275658,L,
+							1539538600,-49.019407069275658,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -68.616141873552039
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-68.616141873552039,L,
+							1539538600,-68.616141873552039,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-thumb_03.R" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 4.505311965942383
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,4.505311965942383,L,
+							1539538600,4.505311965942383,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -0.000006422400475
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000006422400475,L,
+							1539538600,-0.000006422400475,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -0.000015258789062
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000015258789062,L,
+							1539538600,-0.000015258789062,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: -7.206837390461811
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-7.206837390461811,L,
+							1539538600,-7.206837390461811,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -75.574608826356794
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-75.574608826356794,L,
+							1539538600,-75.574608826356794,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 7.410494848491081
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,7.410494848491081,L,
+							1539538600,7.410494848491081,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_middle_01.R" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 6.142743110656738
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,6.142743110656738,L,
+							1539538600,6.142743110656738,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 0.000004291534424
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000004291534424,L,
+							1539538600,0.000004291534424,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000004805624485
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000004805624485,L,
+							1539538600,0.000004805624485,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: 1.450657261071165
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,1.450657261071165,L,
+							1539538600,1.450657261071165,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 11.575545058132517
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,11.575545058132517,L,
+							1539538600,11.575545058132517,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 9.958280059854529
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,9.958280059854529,L,
+							1539538600,9.958280059854529,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_middle_02.R" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 4.265796184539795
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,4.265796184539795,L,
+							1539538600,4.265796184539795,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 0.000001907348633
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000001907348633,L,
+							1539538600,0.000001907348633,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000004261732101
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000004261732101,L,
+							1539538600,0.000004261732101,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: -0.038164305642360
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.038164305642360,L,
+							1539538600,-0.038164305642360,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 4.137212066131798
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,4.137212066131798,L,
+							1539538600,4.137212066131798,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -0.002839313681722
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.002839313681722,L,
+							1539538600,-0.002839313681722,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_middle_03.R" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 3.715826749801636
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,3.715826749801636,L,
+							1539538600,3.715826749801636,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 0.000000953674316
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000000953674316,L,
+							1539538600,0.000000953674316,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000009447336197
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000009447336197,L,
+							1539538600,0.000009447336197,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: -0.529134861721833
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.529134861721833,L,
+							1539538600,-0.529134861721833,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 7.741729141158604
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,7.741729141158604,L,
+							1539538600,7.741729141158604,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -1.131534494627644
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-1.131534494627644,L,
+							1539538600,-1.131534494627644,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_ring_01.R" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 6.084479331970215
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,6.084479331970215,L,
+							1539538600,6.084479331970215,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 0.000000476837158
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000000476837158,L,
+							1539538600,0.000000476837158,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -0.000007688999176
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000007688999176,L,
+							1539538600,-0.000007688999176,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: -43.139150363752975
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-43.139150363752975,L,
+							1539538600,-43.139150363752975,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -75.959332891735556
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-75.959332891735556,L,
+							1539538600,-75.959332891735556,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 46.498333020208804
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,46.498333020208804,L,
+							1539538600,46.498333020208804,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_ring_02.R" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 4.007775783538818
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,4.007775783538818,L,
+							1539538600,4.007775783538818,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -0.000001214444637
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000001214444637,L,
+							1539538600,-0.000001214444637,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -0.000000059604645
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000000059604645,L,
+							1539538600,-0.000000059604645,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: 0.953355883358306
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.953355883358306,L,
+							1539538600,0.953355883358306,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -103.450400338701328
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-103.450400338701328,L,
+							1539538600,-103.450400338701328,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -0.926697975192902
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.926697975192902,L,
+							1539538600,-0.926697975192902,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_ring_03.R" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 3.491078853607178
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,3.491078853607178,L,
+							1539538600,3.491078853607178,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -0.000000253319740
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000000253319740,L,
+							1539538600,-0.000000253319740,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000001301057637
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000001301057637,L,
+							1539538600,0.000001301057637,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: 6.621067560637665
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,6.621067560637665,L,
+							1539538600,6.621067560637665,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -99.875090006339107
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-99.875090006339107,L,
+							1539538600,-99.875090006339107,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -7.549041820710005
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-7.549041820710005,L,
+							1539538600,-7.549041820710005,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_pinky_01.R" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 5.712852954864502
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,5.712852954864502,L,
+							1539538600,5.712852954864502,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 0.000001043081284
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000001043081284,L,
+							1539538600,0.000001043081284,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -0.000009055249393
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000009055249393,L,
+							1539538600,-0.000009055249393,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: 25.318237422920681
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,25.318237422920681,L,
+							1539538600,25.318237422920681,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -84.209409107155381
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-84.209409107155381,L,
+							1539538600,-84.209409107155381,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -28.893472623202040
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-28.893472623202040,L,
+							1539538600,-28.893472623202040,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_pinky_02.R" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 3.135951995849609
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,3.135951995849609,L,
+							1539538600,3.135951995849609,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: 0.000000968575478
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000000968575478,L,
+							1539538600,0.000000968575478,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000003337860107
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000003337860107,L,
+							1539538600,0.000003337860107,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: -0.010718462785539
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.010718462785539,L,
+							1539538600,-0.010718462785539,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -103.449082112191519
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-103.449082112191519,L,
+							1539538600,-103.449082112191519,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.010473889986421
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.010473889986421,L,
+							1539538600,0.010473889986421,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+		Model: "Model::B-f_pinky_03.R" {
+			Version: 1.1
+			Channel: "Transform" {
+				Channel: "T" {
+					Channel: "X" {
+						Default: 2.731651067733765
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,2.731651067733765,L,
+							1539538600,2.731651067733765,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -0.000000298023224
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-0.000000298023224,L,
+							1539538600,-0.000000298023224,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: 0.000015776604414
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,0.000015776604414,L,
+							1539538600,0.000015776604414,L
+						Color: 0,0,1
+					}
+					LayerType: 1
+				}
+				Channel: "R" {
+					Channel: "X" {
+						Default: 13.055380673894524
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,13.055380673894524,L,
+							1539538600,13.055380673894524,L
+						Color: 1,0,0
+					}
+					Channel: "Y" {
+						Default: -99.111256291079329
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-99.111256291079329,L,
+							1539538600,-99.111256291079329,L
+						Color: 0,1,0
+					}
+					Channel: "Z" {
+						Default: -14.300272296360417
+						KeyVer: 4005
+						KeyCount: 2
+						Key: 
+							0,-14.300272296360417,L,
+							1539538600,-14.300272296360417,L
+						Color: 0,0,1
+					}
+					LayerType: 2
+				}
+			}
+		}
+	}
+}

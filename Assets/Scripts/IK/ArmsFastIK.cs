@@ -1,5 +1,5 @@
 /****************************************************
- * File: SafetyRegionLeft.cs
+ * File: ArmsFaskIK.cs
    * Author: Eduardo Alvarado
    * Email: eduardo.alvarado-pinero@polytechnique.edu
    * Date: Created by LIX on 27/01/2021
@@ -141,7 +141,8 @@ public class ArmsFastIK : MonoBehaviour
         {
             Target.transform.rotation = kinBody.rotation * Quaternion.Euler(new Vector3(0, 0, 180f));
         }
-        else if (Target.CompareTag("RightHand"))
+        
+        if (Target.CompareTag("RightHand"))
         {
             Target.transform.rotation = kinBody.rotation * Quaternion.Euler(new Vector3(0, 0, 0));
         }
@@ -161,7 +162,8 @@ public class ArmsFastIK : MonoBehaviour
         {
             TargetConstant.transform.rotation = kinBody.rotation * Quaternion.Euler(new Vector3(0, 0, 180f));
         }
-        else if (Target.CompareTag("RightHand"))
+
+        if (Target.CompareTag("RightHand"))
         {
             TargetConstant.transform.rotation = kinBody.rotation * Quaternion.Euler(new Vector3(0, 0, 0));
         }
@@ -177,24 +179,28 @@ public class ArmsFastIK : MonoBehaviour
     /// <param name="hand"></param>
     public void SetTargetStay(float reactionTime, bool hasStartedMovingIn)
     {
+        //StartCoroutine(MoveHand(reactionTime));
+
         if (hasStartedMovingIn)
         {
             StartCoroutine(MoveHand(reactionTime));
         }
         else
         {
+
             if (Target.CompareTag("LeftHand"))
             {
-                Vector3 surfaceHit = new Vector3(-safetyRegionLeft.hitNormalLeft.z, 0, safetyRegionLeft.hitNormalLeft.x);
-                Debug.DrawRay(safetyRegionLeft.hitLeftFixed, surfaceHit * 0.2f, Color.green);
+                Vector3 forwardHit = new Vector3(-safetyRegionLeft.hitNormalLeft.z, 0, safetyRegionLeft.hitNormalLeft.x);
+                Debug.DrawRay(safetyRegionLeft.hitLeftFixed, forwardHit * 0.2f, Color.green);
 
-                if (surfaceHit != Vector3.zero)
-                    rotationToNormal = Quaternion.LookRotation(surfaceHit, Vector3.Cross(surfaceHit, safetyRegionLeft.hitNormalLeft));
+                if (forwardHit != Vector3.zero)
+                    rotationToNormal = Quaternion.LookRotation(forwardHit, Vector3.Cross(forwardHit, safetyRegionLeft.hitNormalLeft));
 
                 Target.transform.position = safetyRegionLeft.hitLeftFixed;
                 Target.transform.rotation = rotationToNormal;
             }
-            else if (Target.CompareTag("RightHand"))
+            
+            if (Target.CompareTag("RightHand"))
             {
                 Vector3 forwardHit = new Vector3(safetyRegionRight.hitNormalRight.z, 0, -safetyRegionRight.hitNormalRight.x);
                 Debug.DrawRay(safetyRegionRight.hitRight, forwardHit * 0.2f, Color.green);
@@ -202,7 +208,7 @@ public class ArmsFastIK : MonoBehaviour
                 if (forwardHit != Vector3.zero)
                     rotationToNormal = Quaternion.LookRotation(forwardHit, Vector3.Cross(forwardHit, safetyRegionRight.hitNormalRight));
 
-                Target.transform.position = safetyRegionRight.hitRight;
+                Target.transform.position = safetyRegionRight.hitRightFixed;
                 Target.transform.rotation = rotationToNormal;
             }
         }
@@ -237,71 +243,6 @@ public class ArmsFastIK : MonoBehaviour
 
     // Coroutines //
     // ========== //
-
-    /*
-    IEnumerator MoveHand(float moveTime)
-    {
-        Debug.Log("[COROUTINE] Executing MoveHand");
-
-        // Store the initial, current position and rotation for the interpolation.
-        Vector3 startPos = Target.transform.position;
-        Quaternion startRot = Target.transform.rotation;
-
-        // Initialize the time.
-        float timeElapsed = 0;
-
-        do
-        {
-            timeElapsed += Time.deltaTime;
-            float normalizedTime = timeElapsed / moveTime;
-
-            normalizedTime = Easing.EaseInOutCubic(normalizedTime);
-
-            if (Target.CompareTag("LeftHand"))
-            {
-                Target.transform.position = Vector3.Lerp(startPos, safetyRegionLeft.hitLeftFixed, normalizedTime);
-
-                Vector3 forwardHit = new Vector3(-safetyRegionLeft.hitNormalLeft.z, 0, safetyRegionLeft.hitNormalLeft.x);
-                if (forwardHit != Vector3.zero)
-                    rotationToNormal = Quaternion.LookRotation(forwardHit, Vector3.Cross(forwardHit, safetyRegionLeft.hitNormalLeft));
-
-                //Target.transform.rotation = Quaternion.Slerp(startRot, rotationToNormal, normalizedTime);
-                //Target.transform.rotation = Quaternion.Euler(new Vector3(0f, Target.transform.rotation.eulerAngles.y, 0f));
-
-                // Not a priority, we just set the final rotation directly
-                Target.transform.rotation = rotationToNormal;
-            }
-            else if (Target.CompareTag("RightHand"))
-            {
-                Target.transform.position = Vector3.Lerp(startPos, safetyRegionRight.hitRight, normalizedTime);
-
-                Vector3 forwardHit = new Vector3(safetyRegionRight.hitNormalRight.z, 0, -safetyRegionRight.hitNormalRight.x);
-                if (forwardHit != Vector3.zero)
-                    rotationToNormal = Quaternion.LookRotation(forwardHit, Vector3.Cross(forwardHit, safetyRegionRight.hitNormalRight));
-
-                //Target.transform.rotation = Quaternion.Lerp(startRot, rotationToNormal, normalizedTime);
-                //Target.transform.rotation = Quaternion.Euler(new Vector3(0f, Target.transform.rotation.eulerAngles.y, 0f));
-
-                // Not a priority, we just set the final rotation directly
-                Target.transform.rotation = rotationToNormal;
-            }
-
-            yield return null;
-        }
-        while ((timeElapsed < moveTime) && !(safetyRegionLeft.hasLeftStartedMovingOut));
-
-        //Hand has arrived
-        if (Target.CompareTag("LeftHand"))
-        {
-            safetyRegionLeft.hasLeftTargeReached = true;
-        }
-        else if (Target.CompareTag("RightHand"))
-        {
-            safetyRegionRight.hasRightTargeReached = true;
-        }
-    }
-    */
-
     IEnumerator MoveHand(float moveTime)
     {
         Debug.Log("[COROUTINE] Executing MoveHand");
@@ -373,42 +314,6 @@ public class ArmsFastIK : MonoBehaviour
         }
     }
 
-    /*
-    IEnumerator MoveHandUpdate(Vector3 startPos, Vector3 offset, float moveTime)
-    {
-        Debug.Log("[COROUTINE] Executing MoveHandUpdate");
-
-        // Initialize the time.
-        float timeElapsed = 0;
-
-        do
-        {
-            timeElapsed += Time.deltaTime;
-            float normalizedTime = timeElapsed / moveTime;
-
-            normalizedTime = Easing.EaseInOutCubic(normalizedTime);
-
-            if (Target.CompareTag("LeftHand"))
-            {
-                Vector3 centerPoint = (startPos + safetyRegionLeft.hitLeft + offset) / 2;
-                centerPoint += safetyRegionLeft.hitNormalLeft * 0.1f;
-
-                safetyRegionLeft.hitLeftFixed = Vector3.Lerp(Vector3.Lerp(startPos, centerPoint, normalizedTime), Vector3.Lerp(centerPoint, safetyRegionLeft.hitLeft + offset, normalizedTime), normalizedTime);
-            }
-
-            if(Target.CompareTag("RightHand"))
-            {
-                Vector3 centerPoint = (startPos + safetyRegionRight.hitRight + offset) / 2;
-                centerPoint += safetyRegionRight.hitNormalRight * 0.1f;
-
-                safetyRegionRight.hitRightFixed = Vector3.Lerp(Vector3.Lerp(startPos, centerPoint, normalizedTime), Vector3.Lerp(centerPoint, safetyRegionRight.hitRight + offset, normalizedTime), normalizedTime);
-            }
-
-            yield return null;
-        }
-        while (timeElapsed < moveTime);
-    }*/
-
     IEnumerator MoveHandUpdate(Vector3 startPos, Vector3 offset, float moveTime)
     {
         Debug.Log("[COROUTINE] Executing MoveHandUpdate");
@@ -457,60 +362,6 @@ public class ArmsFastIK : MonoBehaviour
             while (timeElapsed < moveTime);
         }
     }
-
-    /*
-    IEnumerator MoveHandBack(float moveTime)
-    {
-        Debug.Log("[COROUTINE] Executing MoveHandBack");
-
-        // Store the initial, current position and rotation for the interpolation.
-        Vector3 startPos = Target.transform.position;
-        Quaternion startRot = Target.transform.rotation;
-
-        // Initialize the time.
-        float timeElapsed = 0;
-
-        do
-        {
-            timeElapsed += Time.deltaTime;
-            float normalizedTime = timeElapsed / moveTime;
-
-            normalizedTime = Easing.EaseInOutCubic(normalizedTime);
-
-            if (Target.CompareTag("LeftHand"))
-            {
-                Target.transform.position = Vector3.Lerp(startPos, TargetConstant.transform.position, normalizedTime);
-
-                //Target.transform.rotation = Quaternion.Slerp(startRot, TargetConstant.transform.rotation, normalizedTime);
-                //Target.transform.rotation = Quaternion.Euler(new Vector3(0f, Target.transform.rotation.eulerAngles.y, 0f));
-
-                // Not a priority, we just set the final rotation directly
-                Target.transform.rotation = TargetConstant.transform.rotation;
-
-            }
-            else if (Target.CompareTag("RightHand"))
-            {
-                Target.transform.position = Vector3.Lerp(startPos, TargetConstant.transform.position, normalizedTime);
-
-                //Target.transform.rotation = Quaternion.Slerp(startRot, TargetConstant.transform.rotation, normalizedTime);
-                //Target.transform.rotation = Quaternion.Euler(new Vector3(0f, Target.transform.rotation.eulerAngles.y, 0f));
-
-                // Not a priority, we just set the final rotation directly
-                Target.transform.rotation = TargetConstant.transform.rotation;
-
-            }
-
-            yield return null;
-        }
-        while ((timeElapsed < moveTime) && !(safetyRegionLeft.hasLeftStartedMovingIn));
-
-        // Once the coroutine finishes, deactivate IK for this hand and follow kinematic animation.
-        if (Target.CompareTag("LeftHand") && !safetyRegionLeft.hasLeftStartedMovingIn)
-        {
-            activateIK = false;
-        }
-    }
-    */
 
     IEnumerator MoveHandBack(float moveTime)
     {
@@ -581,6 +432,9 @@ public class ArmsFastIK : MonoBehaviour
             activateIK = false;
         }
     }
+
+    // IK //
+    // == //
 
     private void ResolveIK()
     {
