@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystickMode: 0
-  fightMode: 1
+  fightMode: 0
   rootKinematicSkeleton: {fileID: 4301555423947334394}
   moveSpeed: 1
   offsetKinematicMovement: 3
@@ -1755,6 +1755,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6308464394503186580}
   - component: {fileID: 7170379307483878355}
+  - component: {fileID: 1849855383}
+  - component: {fileID: 1849855382}
   m_Layer: 7
   m_Name: mixamorig:LeftHand
   m_TagString: Untagged
@@ -1806,6 +1808,35 @@ MonoBehaviour:
   safetyRegionLeft: {fileID: 7170379306008190274}
   safetyRegionRight: {fileID: 7170379306721617693}
   _col: {fileID: 0}
+--- !u!54 &1849855383
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4486201117851499841}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &1849855382
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4486201117851499841}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.05, y: 0.21, z: 0.13}
+  m_Center: {x: 0, y: 0.12, z: 0}
 --- !u!1 &4570854228350851340
 GameObject:
   m_ObjectHideFlags: 0
@@ -2634,7 +2665,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6022386670828169427}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3953,6 +3984,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3135303044877353221}
   - component: {fileID: 7170379307483878354}
+  - component: {fileID: 1981439033}
+  - component: {fileID: 1981439032}
   m_Layer: 7
   m_Name: mixamorig:RightHand
   m_TagString: Untagged
@@ -4004,6 +4037,35 @@ MonoBehaviour:
   safetyRegionLeft: {fileID: 7170379306008190274}
   safetyRegionRight: {fileID: 7170379306721617693}
   _col: {fileID: 0}
+--- !u!54 &1981439033
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7098853981309092542}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &1981439032
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7098853981309092542}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.05, y: 0.21, z: 0.13}
+  m_Center: {x: 0, y: 0.12, z: 0}
 --- !u!1 &7170379306008190287
 GameObject:
   m_ObjectHideFlags: 0
@@ -4021,7 +4083,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7170379306008190284
 Transform:
   m_ObjectHideFlags: 0
@@ -4239,7 +4301,7 @@ MonoBehaviour:
   rightHandIK: {fileID: 7170379307483878354}
   fixHandToDynamicObject: 0
   drawIK: 0
-  hitOffsetRight: {x: 0, y: 0, z: 0}
+  hitOffsetRight: {x: 0.02, y: 0, z: 0}
   hitRightFixed: {x: 0, y: 0, z: 0}
   localHitRightFixed: {x: 0, y: 0, z: 0}
   hitRight: {x: 0, y: 0, z: 0}

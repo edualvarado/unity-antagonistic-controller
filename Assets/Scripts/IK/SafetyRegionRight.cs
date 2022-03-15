@@ -75,7 +75,7 @@ public class SafetyRegionRight : SafetyRegion
             hasRightStartedMovingIn = true;
             hasRightStartedMovingOut = false;
             hasRightTargetReached = false;
-            Debug.Log("[INFO] hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
+            //Debug.Log("[INFO] hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
             // hasRightStartedMovingIn: TRUE, hasRightStartedMovingOut: FALSE, hasRightTargeReached: FALSE
         }
     }
@@ -152,7 +152,7 @@ public class SafetyRegionRight : SafetyRegion
             hasRightStartedMovingOut = false;
             if (hasRightTargetReached)
                 hasRightStartedMovingIn = false;
-            Debug.Log("[INFO] hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
+            //Debug.Log("[INFO] hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
             // hasRightStartedMovingIn: FALSE, hasRightStartedMovingOut: FALSE, hasRightTargeReached: FALSE -> TRUE (when the coroutine finishes)
         }
     }
@@ -167,7 +167,7 @@ public class SafetyRegionRight : SafetyRegion
             hasRightStartedMovingIn = false;
             hasRightStartedMovingOut = true;
             hasRightTargetReached = false;
-            Debug.Log("[INFO] hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
+            //Debug.Log("[INFO] hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
             // hasRightStartedMovingIn: FALSE, hasRightStartedMovingOut: TRUE, hasRightTargeReached: FALSE
 
             // Set target back to original position - TODO: FIX the original position

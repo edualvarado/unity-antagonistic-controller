@@ -75,7 +75,7 @@ public class SafetyRegionLeft : SafetyRegion
             hasLeftStartedMovingIn = true;
             hasLeftStartedMovingOut = false;
             hasLeftTargetReached = false;
-            Debug.Log("[INFO] hasLeftStartedMovingIn: " + hasLeftStartedMovingIn + " | hasLeftStartedMovingOut: " + hasLeftStartedMovingOut + " | hasLeftTargeReached: " + hasLeftTargetReached);
+            //Debug.Log("[INFO] hasLeftStartedMovingIn: " + hasLeftStartedMovingIn + " | hasLeftStartedMovingOut: " + hasLeftStartedMovingOut + " | hasLeftTargeReached: " + hasLeftTargetReached);
             // hasLeftStartedMovingIn: TRUE, hasLeftStartedMovingOut: FALSE, hasLeftTargeReached: FALSE
         }
     }
@@ -152,7 +152,7 @@ public class SafetyRegionLeft : SafetyRegion
             hasLeftStartedMovingOut = false;
             if (hasLeftTargetReached)
                 hasLeftStartedMovingIn = false;            
-            Debug.Log("[INFO] hasLeftStartedMovingIn: " + hasLeftStartedMovingIn + " | hasLeftStartedMovingOut: " + hasLeftStartedMovingOut + " | hasLeftTargeReached: " + hasLeftTargetReached);
+            //Debug.Log("[INFO] hasLeftStartedMovingIn: " + hasLeftStartedMovingIn + " | hasLeftStartedMovingOut: " + hasLeftStartedMovingOut + " | hasLeftTargeReached: " + hasLeftTargetReached);
             // hasLeftStartedMovingIn: FALSE, hasLeftStartedMovingOut: FALSE, hasLeftTargeReached: FALSE -> TRUE (when the coroutine finishes)
         }
     }
@@ -167,7 +167,7 @@ public class SafetyRegionLeft : SafetyRegion
             hasLeftStartedMovingIn = false;
             hasLeftStartedMovingOut = true;
             hasLeftTargetReached = false;
-            Debug.Log("[INFO] hasLeftStartedMovingIn: " + hasLeftStartedMovingIn + " | hasLeftStartedMovingOut: " + hasLeftStartedMovingOut + " | hasLeftTargeReached: " + hasLeftTargetReached);
+            //Debug.Log("[INFO] hasLeftStartedMovingIn: " + hasLeftStartedMovingIn + " | hasLeftStartedMovingOut: " + hasLeftStartedMovingOut + " | hasLeftTargeReached: " + hasLeftTargetReached);
             // hasLeftStartedMovingIn: FALSE, hasLeftStartedMovingOut: TRUE, hasLeftTargeReached: FALSE
 
             // Set target back to original position - TODO: FIX the original position

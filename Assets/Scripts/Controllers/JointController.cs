@@ -101,7 +101,9 @@ public class JointController : MonoBehaviour
 
     #region Instance Fields
 
+    // TEST
     public float DELTATIME = 0.02f;
+    bool hasJoint;
 
     public enum Controller
     {
@@ -613,8 +615,10 @@ public class JointController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // TEST
         //Debug.Log("[FIXED UPDATE] FixedDeltaTime: " + Time.fixedDeltaTime.ToString("F4"));
         //Debug.Log("[FIXED UPDATE] DeltaTime: " + Time.deltaTime.ToString("F4"));
+        //currentRot = this.transform.rotation;
 
         if (DesiredLocalRotation == null || this._currentTransform == null || this._objectRigidbody == null || this.kinematicLimb == null)
         {
@@ -1278,4 +1282,73 @@ public class JointController : MonoBehaviour
     }
 
     #endregion
+
+    #region Colliders
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if(this.gameObject.CompareTag("RightHand"))
+        {
+
+            Debug.Log("Physical Right Hand OnCollisionStay");
+
+            // 1. Add Force
+            //Vector3 forceDirection = kinematicLimb.transform.position - transform.position;
+            //_objectRigidbody.AddForce(forceDirection.normalized * attractionForce * Time.fixedDeltaTime);
+
+            // 2. Just fix pos
+            //this.transform.position = kinematicLimb.transform.position;
+            //this.transform.rotation = kinematicLimb.transform.rotation; // This make issues in the wrist
+
+            // 3. MoveRotation in addition
+            //this.transform.position = kinematicLimb.transform.position;
+            //_objectRigidbody.MoveRotation(_objectRigidbody.rotation * kinematicLimb.rotation);
+
+            // 4. Injecting other rotation
+            //this.transform.position = kinematicLimb.transform.position;
+            //Quaternion rotKin = Quaternion.LookRotation(-kinematicLimb.forward);
+            //_objectRigidbody.MoveRotation(_objectRigidbody.rotation * rotKin);
+
+            // 5. Adding spring joint and connect to kinematic limb
+            // In OnCollisionEnter and OnCollisionExit
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (this.gameObject.CompareTag("RightHand"))
+        {
+
+            Debug.Log("Physical Right Hand OnCollisionEnter");
+
+            // 5. Adding spring joint and connect to kinematic limb
+            if (!hasJoint)
+            {
+                //gameObject.AddComponent<SpringJoint>();
+                //gameObject.GetComponent<SpringJoint>().connectedBody = kinematicLimb.GetComponent<Rigidbody>();
+                //gameObject.GetComponent<SpringJoint>().spring = 10000f;
+                //gameObject.GetComponent<SpringJoint>().damper = 1f;
+                //hasJoint = true;
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (this.gameObject.CompareTag("RightHand"))
+        {
+
+            Debug.Log("Physical Right Hand OnCollisionExit");
+
+            // 5. Adding spring joint and connect to kinematic limb
+            if (hasJoint)
+            {
+                //Destroy(GetComponent<SpringJoint>());
+                //hasJoint = false;
+            }
+        }
+    }
+
+    #endregion
+
 }

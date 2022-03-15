@@ -78,7 +78,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000046408604, y: 0.2740476, z: -0.0000004414469}
+  m_ConnectedAnchor: {x: -0.00000046408596, y: 0.27404666, z: -0.00000038184226}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: -1}
   m_XMotion: 1
@@ -333,7 +333,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0024472673, y: 0.40595403, z: 0.005169912}
+  m_ConnectedAnchor: {x: -0.0024467905, y: 0.40595403, z: 0.005169949}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -704,7 +704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4201bfb83a7dd840bfd7eb233edad57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  copyKinematicHands: 1
+  copyKinematicHands: 0
   kinematicRightHandBones:
   - {fileID: 0}
   - {fileID: 0}
@@ -830,6 +830,7 @@ GameObject:
   - component: {fileID: 3092514557242679199}
   - component: {fileID: 3092514557242679198}
   - component: {fileID: 3092514557242679201}
+  - component: {fileID: 872730078}
   m_Layer: 8
   m_Name: mixamorig:LeftHand
   m_TagString: LeftHand
@@ -897,7 +898,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000039403469, y: 0.2761449, z: -0.00000016975923}
+  m_ConnectedAnchor: {x: -0.00000039403463, y: 0.27614442, z: -0.00000016975923}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -1061,6 +1062,30 @@ MonoBehaviour:
   gravityAcc: {x: 0, y: 0, z: 0}
   gravityTorqueVector: {x: 0, y: 0, z: 0}
   gravityTorqueVectorLocal: {x: 0, y: 0, z: 0}
+--- !u!145 &872730078
+SpringJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765623532839076803}
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: -0.0000000868959, y: -0.00000020861626, z: 0.00000002468699}
+  serializedVersion: 2
+  m_Spring: 10000
+  m_Damper: 0.2
+  m_MinDistance: 0
+  m_MaxDistance: 0
+  m_Tolerance: 0.025
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &4765623532904624680
 GameObject:
   m_ObjectHideFlags: 0
@@ -1306,7 +1331,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.06105854, y: 0.0911043, z: 0.0070553627}
+  m_ConnectedAnchor: {x: -0.061058063, y: 0.0911043, z: 0.007055333}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -1739,7 +1764,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0024475632, y: 0.4059543, z: 0.0051448965}
+  m_ConnectedAnchor: {x: 0.0024470864, y: 0.4059543, z: 0.0051448666}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -1994,7 +2019,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000013651548, y: 0.13360202, z: -0.01626499}
+  m_ConnectedAnchor: {x: -0.0000008894819, y: 0.13360202, z: -0.016265023}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -2381,7 +2406,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.09124414, y: -0.06656394, z: -0.00055412244}
+  m_ConnectedAnchor: {x: 0.091244616, y: -0.06656394, z: -0.00055415224}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -3156,7 +3181,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0026593148, y: 0.1265496, z: 0.026008897}
+  m_ConnectedAnchor: {x: 0.0026593148, y: 0.12655008, z: 0.026008867}
   serializedVersion: 2
   m_SecondaryAxis: {x: -1, y: 0, z: 0}
   m_XMotion: 1
@@ -4343,7 +4368,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000021917322, y: 0.215689, z: -0.026496692}
+  m_ConnectedAnchor: {x: 0.0000012405025, y: 0.215689, z: -0.026496625}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -4610,7 +4635,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.09124387, y: -0.066564046, z: -0.00055427646}
+  m_ConnectedAnchor: {x: -0.09124435, y: -0.066564046, z: -0.0005542392}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -5389,6 +5414,7 @@ GameObject:
   - component: {fileID: 7550342774965046249}
   - component: {fileID: 4765623534695646596}
   - component: {fileID: 3092514556484229594}
+  - component: {fileID: 2093957698}
   m_Layer: 8
   m_Name: mixamorig:RightHand
   m_TagString: RightHand
@@ -5456,7 +5482,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000015174196, y: 0.27614394, z: -0.0000001527369}
+  m_ConnectedAnchor: {x: -0.00000015174192, y: 0.27614442, z: -0.0000001527369}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 1
@@ -5620,3 +5646,27 @@ MonoBehaviour:
   gravityAcc: {x: 0, y: 0, z: 0}
   gravityTorqueVector: {x: 0, y: 0, z: 0}
   gravityTorqueVectorLocal: {x: 0, y: 0, z: 0}
+--- !u!145 &2093957698
+SpringJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765623534695646599}
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0.00000024925149, y: -0.0000002682206, z: -0.00000038670274}
+  serializedVersion: 2
+  m_Spring: 10000
+  m_Damper: 0.2
+  m_MinDistance: 0
+  m_MaxDistance: 0
+  m_Tolerance: 0.025
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
