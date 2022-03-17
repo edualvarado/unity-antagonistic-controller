@@ -4,7 +4,7 @@
    * Email: eduardo.alvarado-pinero@polytechnique.edu
    * Date: Created by LIX on 27/01/2021
    * Project: ** WORKING TITLE **
-   * Last update: 18/02/2022
+   * Last update: 17/03/2022
 *****************************************************/
 
 using System.Collections;
@@ -37,14 +37,9 @@ public class AntagonisticGains : MonoBehaviour
     public float armKLY;
     public float armKLZ;
 
-
     #endregion
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    #region Unity Methods
 
     // Update is called once per frame
     void Update()
@@ -73,4 +68,6 @@ public class AntagonisticGains : MonoBehaviour
         leftArmController.pLY = armKLX * stiffnessMultiplier;
         leftArmController.pLZ = armKLX * stiffnessMultiplier;
     }
+
+    #endregion
 }

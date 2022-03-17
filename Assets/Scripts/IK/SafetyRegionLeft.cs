@@ -4,7 +4,7 @@
    * Email: eduardo.alvarado-pinero@polytechnique.edu
    * Date: Created by LIX on 27/01/2021
    * Project: ** WORKING TITLE **
-   * Last update: 18/02/2022
+   * Last update: 17/03/2022
 *****************************************************/
 
 using System.Collections;
@@ -13,12 +13,18 @@ using UnityEngine;
 
 public class SafetyRegionLeft : SafetyRegion
 {
+    #region Read-only & Static Fields
+
+    private SphereCollider sphereColliderLeft;
+    private Transform leftTargetTransform;
+
+    #endregion
+
     #region Instance Fields
 
     [Header("Left Hand - IK")]
-    public GameObject ragdollLeftHand;
-    public ArmsFastIK leftHandIK;
-    public bool fixHandToDynamicObject = false;
+    public TargetIK leftTarget;
+    public bool fixHandToDynamicObject = false; // TEST
     public bool drawIK;
 
     [Header("Left Hand - Hit")]
@@ -37,12 +43,7 @@ public class SafetyRegionLeft : SafetyRegion
 
     #endregion
 
-    #region Read-only & Static Fields
-
-    private SphereCollider sphereColliderLeft;
-    private Transform leftTargetTransform;
-
-    #endregion
+    #region Unity Methods
 
     void Start()
     {
@@ -56,11 +57,14 @@ public class SafetyRegionLeft : SafetyRegion
         sphereColliderLeft.center = transform.InverseTransformPoint(originRegion.position) + originOffset;
     }
 
+    #endregion
+
+    // When an object enters in the Safety Region
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle"))
         {
-            Debug.Log("[INFO] Obstacle ENTERS LEFT");
+            //Debug.Log("[INFO] Obstacle ENTERS LEFT");
 
             // We protect the origin, and get the closest point in the external object to the previous body part to protect
             raycastOriginLeft = originRegion.position;
@@ -80,6 +84,7 @@ public class SafetyRegionLeft : SafetyRegion
         }
     }
 
+    // When an object stays in the Safety Region
     private void OnTriggerStay(Collider other)
     {
         if(other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle"))
@@ -103,7 +108,7 @@ public class SafetyRegionLeft : SafetyRegion
             {
                 // 1. If the object can move, we update always to the closest position for convenience - TODO: Maybe look to fix with respect to the object?
                 // 2. If the object is rigid like a wall, to the updates when we are far from the fixed position
-                if(other.CompareTag("Dynamic Obstacle"))
+                if (other.CompareTag("Dynamic Obstacle"))
                 {
                     Vector3 offset = (leftTargetTransform.up * hitOffsetLeft.y) + (leftTargetTransform.right * hitOffsetLeft.x) + (leftTargetTransform.forward * hitOffsetLeft.z);
 
@@ -117,16 +122,9 @@ public class SafetyRegionLeft : SafetyRegion
                     if (!isLeftInRange)
                     {
                         Vector3 offset = (leftTargetTransform.up * hitOffsetLeft.y) + (leftTargetTransform.right * hitOffsetLeft.x) + (leftTargetTransform.forward * hitOffsetLeft.z);
-                        leftHandIK.SetTargetUpdate(hitLeftFixed, offset, 0.5f); // TODO: Time that takes to make the small jump
+                        leftTarget.SetTargetUpdate(hitLeftFixed, offset, 0.5f); // TODO: Time that takes to make the small jump
                     }
                 }
-
-                // In a last layer, we attract the ragdoll hand position to the kinematic one, keepeing the rotation to the controller
-                //if (isLeftInRange)
-                //{
-                //    float step = 1f * Time.deltaTime;
-                //    ragdollLeftHand.transform.position = Vector3.MoveTowards(ragdollLeftHand.transform.position, hitLeftFixed, step);
-                //}
             }
 
             // Launch a ray from the body part to protect, in the direction the closest point (like in the previous red ray)
@@ -142,11 +140,11 @@ public class SafetyRegionLeft : SafetyRegion
 
                 // Set target where it his, based on if reacting or just placing the hand
                 // hasLeftStartedMovingIn will be TRUE until we reach the object
-                leftHandIK.SetTargetStay(reactionTime, hasLeftStartedMovingIn);
+                leftTarget.SetTargetStay(reactionTime, hasLeftStartedMovingIn);
             }
 
-            // Activate - TODO: Have weights would be great to decide the amount of IK
-            leftHandIK.activateIK = true;
+            // Allow IK from this point
+            leftTarget.activateIK = true;
 
             // Once we have finished, we update the variables
             hasLeftStartedMovingOut = false;
@@ -157,11 +155,12 @@ public class SafetyRegionLeft : SafetyRegion
         }
     }
 
+    // When an object exits in the Safety Region
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle"))
         {
-            Debug.Log("[INFO] Obstacle EXITS LEFT");
+            //Debug.Log("[INFO] Obstacle EXITS LEFT");
 
             // Starts moving out
             hasLeftStartedMovingIn = false;
@@ -171,7 +170,7 @@ public class SafetyRegionLeft : SafetyRegion
             // hasLeftStartedMovingIn: FALSE, hasLeftStartedMovingOut: TRUE, hasLeftTargeReached: FALSE
 
             // Set target back to original position - TODO: FIX the original position
-            leftHandIK.SetTargetBack(reactionTime, hasLeftStartedMovingOut);
+            leftTarget.SetTargetBack(reactionTime, hasLeftStartedMovingOut);
         }
     }
 

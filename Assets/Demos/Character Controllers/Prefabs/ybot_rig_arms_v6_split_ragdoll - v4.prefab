@@ -192,9 +192,9 @@ MonoBehaviour:
   DELTATIME: 0.02
   controllerType: 2
   kinematicLimb: {fileID: 0}
-  hand: {fileID: 4765623532839076803}
-  foreArm: {fileID: 4765623532570005711}
-  arm: {fileID: 4765623533588814599}
+  physicalHand: {fileID: 4765623532839076803}
+  physicalForeArm: {fileID: 4765623532570005711}
+  physicalArm: {fileID: 4765623533588814599}
   activateDefaultPD: 0
   spring: 1600
   damper: 0.3
@@ -213,7 +213,6 @@ MonoBehaviour:
   requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
   debugModeAntagonistic: 0
   drawModeAntagonistic: 0
-  multGrav: 1
   pLX: 25
   pHX: 0
   iX: 0
@@ -704,7 +703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4201bfb83a7dd840bfd7eb233edad57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  copyKinematicHands: 0
+  copyKinematicHands: 1
   kinematicRightHandBones:
   - {fileID: 0}
   - {fileID: 0}
@@ -809,14 +808,14 @@ MonoBehaviour:
   leftArmController: {fileID: 3092514557591848794}
   stiffnessMultiplier: 1.5
   handKLX: 10
-  handKLY: 1
+  handKLY: 5
   handKLZ: 10
-  foreArmKLX: 25
-  foreArmKLY: 2.5
-  foreArmKLZ: 25
-  armKLX: 50
-  armKLY: 5
-  armKLZ: 50
+  foreArmKLX: 22
+  foreArmKLY: 2.2
+  foreArmKLZ: 22
+  armKLX: 40
+  armKLY: 4
+  armKLZ: 40
 --- !u!1 &4765623532839076803
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,9 +996,9 @@ MonoBehaviour:
   DELTATIME: 0.02
   controllerType: 2
   kinematicLimb: {fileID: 0}
-  hand: {fileID: 4765623532839076803}
-  foreArm: {fileID: 4765623532570005711}
-  arm: {fileID: 4765623533588814599}
+  physicalHand: {fileID: 4765623532839076803}
+  physicalForeArm: {fileID: 4765623532570005711}
+  physicalArm: {fileID: 4765623533588814599}
   activateDefaultPD: 0
   spring: 1600
   damper: 0.3
@@ -1018,7 +1017,6 @@ MonoBehaviour:
   requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
   debugModeAntagonistic: 0
   drawModeAntagonistic: 0
-  multGrav: 1
   pLX: 10
   pHX: 0
   iX: 0
@@ -2713,9 +2711,9 @@ MonoBehaviour:
   DELTATIME: 0.02
   controllerType: 2
   kinematicLimb: {fileID: 0}
-  hand: {fileID: 4765623534695646599}
-  foreArm: {fileID: 4765623533403131666}
-  arm: {fileID: 4765623534636773826}
+  physicalHand: {fileID: 4765623534695646599}
+  physicalForeArm: {fileID: 4765623533403131666}
+  physicalArm: {fileID: 4765623534636773826}
   activateDefaultPD: 0
   spring: 1600
   damper: 0.3
@@ -2734,7 +2732,6 @@ MonoBehaviour:
   requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
   debugModeAntagonistic: 0
   drawModeAntagonistic: 0
-  multGrav: 1
   pLX: 25
   pHX: 0
   iX: 0
@@ -3295,9 +3292,9 @@ MonoBehaviour:
   DELTATIME: 0.02
   controllerType: 2
   kinematicLimb: {fileID: 0}
-  hand: {fileID: 4765623532839076803}
-  foreArm: {fileID: 4765623532570005711}
-  arm: {fileID: 4765623533588814599}
+  physicalHand: {fileID: 4765623532839076803}
+  physicalForeArm: {fileID: 4765623532570005711}
+  physicalArm: {fileID: 4765623533588814599}
   activateDefaultPD: 0
   spring: 1600
   damper: 0.3
@@ -3316,7 +3313,6 @@ MonoBehaviour:
   requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
   debugModeAntagonistic: 0
   drawModeAntagonistic: 0
-  multGrav: 1
   pLX: 50
   pHX: 0
   iX: 0
@@ -5275,9 +5271,9 @@ MonoBehaviour:
   DELTATIME: 0.02
   controllerType: 2
   kinematicLimb: {fileID: 0}
-  hand: {fileID: 4765623534695646599}
-  foreArm: {fileID: 4765623533403131666}
-  arm: {fileID: 4765623534636773826}
+  physicalHand: {fileID: 4765623534695646599}
+  physicalForeArm: {fileID: 4765623533403131666}
+  physicalArm: {fileID: 4765623534636773826}
   activateDefaultPD: 0
   spring: 1600
   damper: 0.3
@@ -5296,7 +5292,6 @@ MonoBehaviour:
   requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
   debugModeAntagonistic: 0
   drawModeAntagonistic: 0
-  multGrav: 1
   pLX: 50
   pHX: 0
   iX: 0
@@ -5581,9 +5576,9 @@ MonoBehaviour:
   DELTATIME: 0.02
   controllerType: 2
   kinematicLimb: {fileID: 0}
-  hand: {fileID: 4765623534695646599}
-  foreArm: {fileID: 4765623533403131666}
-  arm: {fileID: 4765623534636773826}
+  physicalHand: {fileID: 4765623534695646599}
+  physicalForeArm: {fileID: 4765623533403131666}
+  physicalArm: {fileID: 4765623534636773826}
   activateDefaultPD: 0
   spring: 1600
   damper: 0.3
@@ -5602,7 +5597,6 @@ MonoBehaviour:
   requiredAntagonisticLocalTorque: {x: 0, y: 0, z: 0}
   debugModeAntagonistic: 0
   drawModeAntagonistic: 0
-  multGrav: 1
   pLX: 10
   pHX: 0
   iX: 0

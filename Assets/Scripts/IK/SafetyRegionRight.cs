@@ -4,7 +4,7 @@
    * Email: eduardo.alvarado-pinero@polytechnique.edu
    * Date: Created by LIX on 27/01/2021
    * Project: ** WORKING TITLE **
-   * Last update: 18/02/2022
+   * Last update: 17/03/2022
 *****************************************************/
 
 using System.Collections;
@@ -13,11 +13,17 @@ using UnityEngine;
 
 public class SafetyRegionRight : SafetyRegion
 {
+    #region Read-only & Static Fields
+
+    private SphereCollider sphereColliderRight;
+    private Transform rightTargetTransform;
+
+    #endregion
+
     #region Instance Fields
 
     [Header("Right Hand - IK")]
-    public GameObject ragdollRightHand;
-    public ArmsFastIK rightHandIK;
+    public TargetIK rightTarget;
     public bool fixHandToDynamicObject = false;
     public bool drawIK;
 
@@ -37,12 +43,7 @@ public class SafetyRegionRight : SafetyRegion
 
     #endregion
 
-    #region Read-only & Static Fields
-
-    private SphereCollider sphereColliderRight;
-    private Transform rightTargetTransform;
-
-    #endregion
+    #region Unity Methods
 
     void Start()
     {
@@ -56,11 +57,14 @@ public class SafetyRegionRight : SafetyRegion
         sphereColliderRight.center = transform.InverseTransformPoint(originRegion.position) + originOffset;
     }
 
+    #endregion
+
+    // When an object enters in the Safety Region
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle"))
         {
-            Debug.Log("[INFO] Obstacle ENTERS RIGHT");
+            //Debug.Log("[INFO] Obstacle ENTERS RIGHT");
 
             // We protect the origin, and get the closest point in the external object to the previous body part to protect
             raycastOriginRight = originRegion.position;
@@ -80,6 +84,7 @@ public class SafetyRegionRight : SafetyRegion
         }
     }
 
+    // When an object stays in the Safety Region
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle"))
@@ -117,16 +122,9 @@ public class SafetyRegionRight : SafetyRegion
                     if (!isRightInRange)
                     {
                         Vector3 offset = (rightTargetTransform.up * hitOffsetRight.y) + (rightTargetTransform.right * hitOffsetRight.x) + (rightTargetTransform.forward * hitOffsetRight.z);
-                        rightHandIK.SetTargetUpdate(hitRightFixed, offset, 0.5f); // TODO: Time that takes to make the small jump
+                        rightTarget.SetTargetUpdate(hitRightFixed, offset, 0.5f); // TODO: Time that takes to make the small jump
                     }
                 }
-
-                // In a last layer, we attract the ragdoll hand position to the kinematic one, keepeing the rotation to the controller
-                //if (isRightInRange)
-                //{
-                //    float step = 1f * Time.deltaTime;
-                //    ragdollRightHand.transform.position = Vector3.MoveTowards(ragdollRightHand.transform.position, hitRightFixed, step);
-                //}
             }
 
             // Launch a ray from the body part to protect, in the direction the closest point (like in the previous red ray)
@@ -142,11 +140,11 @@ public class SafetyRegionRight : SafetyRegion
 
                 // Set target where it his, based on if reacting or just placing the hand
                 // hasRightStartedMovingIn will be TRUE until we reach the object
-                rightHandIK.SetTargetStay(reactionTime, hasRightStartedMovingIn);
+                rightTarget.SetTargetStay(reactionTime, hasRightStartedMovingIn);
             }
 
-            // Activate - TODO: Have weights would be great to decide the amount of IK
-            rightHandIK.activateIK = true;
+            // Allow IK from this point
+            rightTarget.activateIK = true;
 
             // Once we have finished, we update the variables
             hasRightStartedMovingOut = false;
@@ -157,11 +155,12 @@ public class SafetyRegionRight : SafetyRegion
         }
     }
 
+    // When an object exits in the Safety Region
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle"))
         {
-            Debug.Log("[INFO] Obstacle EXITS RIGHT");
+            //Debug.Log("[INFO] Obstacle EXITS RIGHT");
 
             // Starts moving out
             hasRightStartedMovingIn = false;
@@ -171,7 +170,7 @@ public class SafetyRegionRight : SafetyRegion
             // hasRightStartedMovingIn: FALSE, hasRightStartedMovingOut: TRUE, hasRightTargeReached: FALSE
 
             // Set target back to original position - TODO: FIX the original position
-            rightHandIK.SetTargetBack(reactionTime, hasRightStartedMovingOut);
+            rightTarget.SetTargetBack(reactionTime, hasRightStartedMovingOut);
         }
     }
 

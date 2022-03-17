@@ -331,6 +331,7 @@ GameObject:
   - component: {fileID: 448683945012981857}
   - component: {fileID: 448683945012981856}
   - component: {fileID: 448683945012981859}
+  - component: {fileID: 442100375}
   m_Layer: 7
   m_Name: ybot_rig_arms_v6_split_kinematic - v4
   m_TagString: Untagged
@@ -480,6 +481,28 @@ MonoBehaviour:
   rightFootAnimVariableName: RightFootCurve
   useProIKFeature: 1
   showSolverDebug: 1
+--- !u!114 &442100375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448683945012981884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be67a160bd828ac4f98693ae1e417d49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableArmsIK: 1
+  rightArmWeight: 0
+  leftArmWeight: 0
+  rotationOffsetRight: {x: 90, y: 90, z: 0}
+  rotationOffsetLeft: {x: -90, y: -90, z: 0}
+  headWeight: 0
+  leftTarget: {fileID: 7170379307483878355}
+  rightTarget: {fileID: 7170379307483878354}
+  activateIKLeft: 0
+  activateIKRight: 0
 --- !u!1 &490695756373850380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1795,19 +1818,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db42af3813de49246b4ef35fd989a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChainLength: 2
-  Target: {fileID: 4570854230190247418}
-  TargetConstant: {fileID: 7170379307079623659}
-  Pole: {fileID: 4570854229740263961}
-  Iterations: 10
-  Delta: 0.001
-  SnapBackStrength: 1
+  chainLength: 2
+  target: {fileID: 4570854230190247418}
+  targetConstant: {fileID: 7170379307079623659}
+  pole: {fileID: 4570854229740263961}
+  iterations: 10
+  delta: 0.001
+  snapBackStrength: 1
   activateIK: 0
-  rotationToNormal: {x: 0, y: 0, z: 0, w: 0}
-  kinBody: {fileID: 968796218716793542}
+  kinematicBody: {fileID: 968796218716793542}
   safetyRegionLeft: {fileID: 7170379306008190274}
   safetyRegionRight: {fileID: 7170379306721617693}
-  _col: {fileID: 0}
+  rotationToNormal: {x: 0, y: 0, z: 0, w: 0}
 --- !u!54 &1849855383
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4024,19 +4046,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db42af3813de49246b4ef35fd989a91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChainLength: 2
-  Target: {fileID: 4570854228350851343}
-  TargetConstant: {fileID: 7170379306135414504}
-  Pole: {fileID: 4570854230159932056}
-  Iterations: 10
-  Delta: 0.001
-  SnapBackStrength: 1
+  chainLength: 2
+  target: {fileID: 4570854228350851343}
+  targetConstant: {fileID: 7170379306135414504}
+  pole: {fileID: 4570854230159932056}
+  iterations: 10
+  delta: 0.001
+  snapBackStrength: 1
   activateIK: 0
-  rotationToNormal: {x: 0, y: 0, z: 0, w: 0}
-  kinBody: {fileID: 968796218716793542}
+  kinematicBody: {fileID: 968796218716793542}
   safetyRegionLeft: {fileID: 7170379306008190274}
   safetyRegionRight: {fileID: 7170379306721617693}
-  _col: {fileID: 0}
+  rotationToNormal: {x: 0, y: 0, z: 0, w: 0}
 --- !u!54 &1981439033
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4083,7 +4104,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7170379306008190284
 Transform:
   m_ObjectHideFlags: 0
@@ -4127,8 +4148,7 @@ MonoBehaviour:
   originOffset: {x: -0.4, y: 0, z: 0.5}
   radiusRegion: 0.6
   reactionTime: 1
-  ragdollLeftHand: {fileID: 0}
-  leftHandIK: {fileID: 7170379307483878355}
+  leftTarget: {fileID: 7170379307483878355}
   fixHandToDynamicObject: 0
   drawIK: 0
   hitOffsetLeft: {x: 0, y: 0, z: 0}
@@ -4297,8 +4317,7 @@ MonoBehaviour:
   originOffset: {x: 0.4, y: 0, z: 0.5}
   radiusRegion: 0.6
   reactionTime: 1
-  ragdollRightHand: {fileID: 0}
-  rightHandIK: {fileID: 7170379307483878354}
+  rightTarget: {fileID: 7170379307483878354}
   fixHandToDynamicObject: 0
   drawIK: 0
   hitOffsetRight: {x: 0.02, y: 0, z: 0}
@@ -4911,7 +4930,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8542549872708990060}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

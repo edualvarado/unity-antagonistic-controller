@@ -4,7 +4,7 @@
    * Email: eduardo.alvarado-pinero@polytechnique.edu
    * Date: Created by LIX on 27/01/2021
    * Project: ** WORKING TITLE **
-   * Last update: 18/02/2022
+   * Last update: 17/03/2022
 *****************************************************/
 
 /* Status: STABLE */
@@ -316,10 +316,9 @@ public class JointControllerImitation
 
     public Vector3 ComputeRequiredAntagonisticTorque(float minSoftLimitX, float maxSoftLimitX, float minSoftLimitY, float maxSoftLimitY, float minSoftLimitZ, float maxSoftLimitZ,
                                                      float minHardLimitX, float maxHardLimitX, float minHardLimitY, float maxHardLimitY, float minHardLimitZ, float maxHardLimitZ,
-                                                     Transform currentTransform, Transform kinematicTransform,
-                                                     Quaternion currentLocalOrientation, Quaternion currentGlobalOrientation, 
-                                                     Quaternion kinematicLocalOrientation, Quaternion kinematicGlobalOrientation, 
-                                                     Quaternion desiredLocalRotation, Rigidbody _objectRigidbody, Vector3 gravityTorqueVectorLocal, 
+                                                     Transform currentTransform,
+                                                     Quaternion currentLocalOrientation, Quaternion kinematicLocalOrientation, 
+                                                     Rigidbody _objectRigidbody, Vector3 gravityTorqueVectorLocal, 
                                                      float fixedDeltaTime, 
                                                      bool debugModeAntagonistic, bool drawModeAntagonistic)
     {
@@ -455,12 +454,6 @@ public class JointControllerImitation
         if(debugModeAntagonistic)
             Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMinY: " + currentLocalErrorMinY + " | currentLocalErrorMaxY: " + currentLocalErrorMaxY);
 
-        // Clamping Current Errors
-        //float currentLocalErrorMinYClamp = Mathf.Clamp(currentLocalErrorMinY, -100f, 0f);
-        //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMinYClamp: " + currentLocalErrorMinYClamp);
-        //float currentLocalErrorMaxYClamp = Mathf.Clamp(currentLocalErrorMaxY, 0f, 100f);
-        //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMaxYClamp: " + currentLocalErrorMaxYClamp);
-
         float kinematicLocalErrorMinY = minSoftLimitY - kinematicLocalOrientationQuaternionYAngleCorrected;
         float kinematicLocalErrorMaxY = maxSoftLimitY - kinematicLocalOrientationQuaternionYAngleCorrected;
 
@@ -477,10 +470,6 @@ public class JointControllerImitation
         #endregion
 
         #region Isoline with Angle errors - Y
-
-        //interceptY = (-gravityTorqueVectorLocal.y) / kinematicLocalErrorMaxY;
-        //slopeY = (kinematicLocalErrorMinY) / (-(kinematicLocalErrorMaxY));
-        //KPHY = KPLY * slopeY + interceptY;
 
         // Isoline with Clamped Errors
         interceptY = (-gravityTorqueVectorLocal.y) / kinematicLocalErrorMaxYClamp;
@@ -540,12 +529,6 @@ public class JointControllerImitation
         if(debugModeAntagonistic)
             Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMinZ: " + currentLocalErrorMinZ + " | currentLocalErrorMaxZ: " + currentLocalErrorMaxZ);
 
-        // Clamping Current Errors
-        //float currentLocalErrorMinZClamp = Mathf.Clamp(currentLocalErrorMinZ, -180f, 0f);
-        //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMinZClamp: " + currentLocalErrorMinZClamp);
-        //float currentLocalErrorMaxZClamp = Mathf.Clamp(currentLocalErrorMaxZ, 0f, 180f);
-        //Debug.Log("[INFO: " + currentTransform.gameObject.name + "] currentLocalErrorMaxZClamp: " + currentLocalErrorMaxZClamp);
-
         float kinematicLocalErrorMinZ = minSoftLimitZ - kinematicLocalOrientationQuaternionZAngleCorrected;
         float kinematicLocalErrorMaxZ = maxSoftLimitZ - kinematicLocalOrientationQuaternionZAngleCorrected;
         
@@ -563,10 +546,6 @@ public class JointControllerImitation
 
         #region Isoline with Angle errors - Z
 
-        //interceptZ = (-gravityTorqueVectorLocal.z) / kinematicLocalErrorMaxZ;
-        //slopeZ = (kinematicLocalErrorMinZ) / (-(kinematicLocalErrorMaxZ));
-        //KPHZ = KPLZ * slopeZ + interceptZ;
-
         // Isoline with Clamped Errors
         interceptZ = (-gravityTorqueVectorLocal.z) / kinematicLocalErrorMaxZClamp;
         slopeZ = (kinematicLocalErrorMinZClamp) / (-(kinematicLocalErrorMaxZClamp));
@@ -583,7 +562,10 @@ public class JointControllerImitation
 
         #region Torque Estimation
 
-        Vector3 torqueApplied = GetOutput(currentLocalErrorMinX, currentLocalErrorMaxX, currentLocalErrorMinY, currentLocalErrorMaxY, currentLocalErrorMinZ, currentLocalErrorMaxZ, _objectRigidbody.angularVelocity.magnitude, fixedDeltaTime);
+        Vector3 torqueApplied = GetOutput(currentLocalErrorMinX, currentLocalErrorMaxX, 
+                                          currentLocalErrorMinY, currentLocalErrorMaxY, 
+                                          currentLocalErrorMinZ, currentLocalErrorMaxZ, 
+                                          _objectRigidbody.angularVelocity.magnitude, fixedDeltaTime);
 
         if (debugModeAntagonistic)
         {
@@ -673,7 +655,6 @@ public class JointControllerImitation
         swing = q * Quaternion.Inverse(twist);
 
         return twist;
-
     }
 
     #endregion

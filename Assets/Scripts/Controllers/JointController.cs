@@ -4,7 +4,7 @@
    * Email: eduardo.alvarado-pinero@polytechnique.edu
    * Date: Created by LIX on 27/01/2021
    * Project: ** WORKING TITLE **
-   * Last update: 18/02/2022
+   * Last update: 17/03/2022
 *****************************************************/
 
 /* Status: STABLE */
@@ -23,16 +23,13 @@ public class JointController : MonoBehaviour
     // Normal PD Controller
     private readonly PDController _normalPDController = new PDController(1f, 0f, 0.1f);
 
-    // Antagonistic PD Controller middle class array
+    // Antagonistic PD Controller
     private readonly JointControllerImitation _antagonisticControllerXYZ = new JointControllerImitation(1f, 0.0f, 0.0f, 0.01f,
                                                                                                         1f, 0.0f, 0.0f, 0.01f,
                                                                                                         1f, 0.0f, 0.0f, 0.01f);
-
-    // Others
-    private ConfigurableJoint _jointAnt;
-    private Transform _currentTransform;
-    private Transform _kinematicTransform;
-    private Rigidbody _objectRigidbody;
+    // For Normal PD Controller
+    private Quaternion newRotationLocal;
+    private Quaternion newRotationGlobal;
 
     // Orientations
     private Quaternion _initialLocalOrientation;
@@ -42,9 +39,11 @@ public class JointController : MonoBehaviour
     private Quaternion _kinematicLocalOrientation;
     private Quaternion _kinematicGlobalOrientation;
 
-    // For Normal PD Controller
-    private Quaternion newRotationLocal;
-    private Quaternion newRotationGlobal;
+    // Others
+    private ConfigurableJoint _jointAnt;
+    private Transform _currentTransform;
+    private Transform _kinematicTransform;
+    private Rigidbody _objectRigidbody;
 
     // Window Graph - Right Hand
     private WindowGraph _rightHandGraph;
@@ -103,7 +102,6 @@ public class JointController : MonoBehaviour
 
     // TEST
     public float DELTATIME = 0.02f;
-    bool hasJoint;
 
     public enum Controller
     {
@@ -112,12 +110,12 @@ public class JointController : MonoBehaviour
 
     [Header("General Settings")]
     public Controller controllerType;
-    public Transform kinematicLimb;
+    public GameObject kinematicLimb;
 
-    [Header("Ragdoll Limbs")]
-    public GameObject hand;
-    public GameObject foreArm;
-    public GameObject arm;
+    [Header("Ragdoll Limbs for External Forces Calculation")]
+    public GameObject physicalHand;
+    public GameObject physicalForeArm;
+    public GameObject physicalArm;
 
     [Header("Default PD Controller - Settings")]
     public bool activateDefaultPD;
@@ -142,7 +140,6 @@ public class JointController : MonoBehaviour
     public Vector3 requiredAntagonisticLocalTorque;
     public bool debugModeAntagonistic;
     public bool drawModeAntagonistic;
-    public float multGrav = 1f;
 
     [Header("Antagonistic Controller - Settings - X")]
     public float pLX;
@@ -158,8 +155,6 @@ public class JointController : MonoBehaviour
     public bool drawLimitsX;
     public float slopeXCurrent;
     public float interceptXCurrent;
-    //private bool applyAntTorqueX;
-    //private float torqueAppliedX;
 
     [Header("Antagonistic Controller - Settings - Y")]
     public float pLY;
@@ -175,8 +170,6 @@ public class JointController : MonoBehaviour
     public bool drawLimitsY;
     public float slopeYCurrent;
     public float interceptYCurrent;
-    //private bool applyAntTorqueY;
-    //private float torqueAppliedY;
 
     [Header("Antagonistic Controller - Settings - Z")]
     public float pLZ;
@@ -192,8 +185,6 @@ public class JointController : MonoBehaviour
     public bool drawLimitsZ;
     public float slopeZCurrent;
     public float interceptZCurrent;
-    //private bool applyAntTorqueZ;
-    //private float torqueAppliedZ;
 
     [Header("External Forces")]
     public Vector3 distance3D;
@@ -213,23 +204,24 @@ public class JointController : MonoBehaviour
 
     private void Awake()
     {
-        this._currentTransform = transform;
-        this._kinematicTransform = kinematicLimb.transform;
-        this._objectRigidbody = GetComponent<Rigidbody>();
-        this._jointAnt = GetComponent<ConfigurableJoint>();
 
-        this._rightHandGraph = GameObject.Find("WindowGraphRightHand").GetComponent<WindowGraph>();
-        this._rightHandGraphContainer = GameObject.Find("GraphContainerRightHand").GetComponent<RectTransform>();
+        // Retrieve components
+        this._currentTransform = this.GetComponent<Transform>(); // Used in Antagonistic
+        this._kinematicTransform = kinematicLimb.GetComponent<Transform>();
+        this._objectRigidbody = this.GetComponent<Rigidbody>();
+        this._jointAnt = this.GetComponent<ConfigurableJoint>();
 
-        this._rightForeArmGraph = GameObject.Find("WindowGraphRightForeArm").GetComponent<WindowGraph>();
-        this._rightForeArmGraphContainer = GameObject.Find("GraphContainerRightForeArm").GetComponent<RectTransform>();
-
-        this._rightArmGraph = GameObject.Find("WindowGraphRightArm").GetComponent<WindowGraph>();
-        this._rightArmGraphContainer = GameObject.Find("GraphContainerRightArm").GetComponent<RectTransform>();
-
-        // Initial Orientations - They do not update!
+        // Initial Orientations - They do not update! (used for Default Controller)
         this._initialLocalOrientation = transform.localRotation;
         this._initialGlobalOrientation = transform.rotation;
+
+        // Window Graphs
+        this._rightHandGraph = GameObject.Find("WindowGraphRightHand").GetComponent<WindowGraph>();
+        this._rightHandGraphContainer = GameObject.Find("GraphContainerRightHand").GetComponent<RectTransform>();
+        this._rightForeArmGraph = GameObject.Find("WindowGraphRightForeArm").GetComponent<WindowGraph>();
+        this._rightForeArmGraphContainer = GameObject.Find("GraphContainerRightForeArm").GetComponent<RectTransform>();
+        this._rightArmGraph = GameObject.Find("WindowGraphRightArm").GetComponent<WindowGraph>();
+        this._rightArmGraphContainer = GameObject.Find("GraphContainerRightArm").GetComponent<RectTransform>();
     }
 
     private void Start()
@@ -339,6 +331,7 @@ public class JointController : MonoBehaviour
 
     private void Update()
     {
+        // TEST
         //Debug.Log("[UPDATE] FixedDeltaTime: " + Time.fixedDeltaTime.ToString("F4"));
         //Debug.Log("[UPDATE] DeltaTime: " + Time.deltaTime.ToString("F4"));
 
@@ -434,7 +427,7 @@ public class JointController : MonoBehaviour
 
         #endregion
 
-        #region Plot
+        #region Plots
 
         // Window Graph Update - Right Hand
         if (this.gameObject.CompareTag("RightHand"))
@@ -618,7 +611,6 @@ public class JointController : MonoBehaviour
         // TEST
         //Debug.Log("[FIXED UPDATE] FixedDeltaTime: " + Time.fixedDeltaTime.ToString("F4"));
         //Debug.Log("[FIXED UPDATE] DeltaTime: " + Time.deltaTime.ToString("F4"));
-        //currentRot = this.transform.rotation;
 
         if (DesiredLocalRotation == null || this._currentTransform == null || this._objectRigidbody == null || this.kinematicLimb == null)
         {
@@ -628,12 +620,12 @@ public class JointController : MonoBehaviour
         #region Getting Orientations
 
         // Get kinematic orientations to be followed (Kinematic Model)
-        _kinematicLocalOrientation = kinematicLimb.transform.localRotation;
-        _kinematicGlobalOrientation = kinematicLimb.transform.rotation;
+        _kinematicLocalOrientation = _kinematicTransform.localRotation;
+        _kinematicGlobalOrientation = _kinematicTransform.rotation;
 
         // Get current orientations to be moved (Ragdoll Model)
-        _currentLocalOrientation = transform.localRotation;
-        _currentGlobalOrientation = transform.rotation;
+        _currentLocalOrientation = _currentTransform.localRotation;
+        _currentGlobalOrientation = _currentTransform.rotation;
 
         #endregion
 
@@ -655,12 +647,12 @@ public class JointController : MonoBehaviour
 
             gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
 
-            //Debug.Log("gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
+            //Debug.Log("[INFO] gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
         }
         else if (this.CompareTag("RightForeArm"))
         {
-            distance3D = ((_objectRigidbody.worldCenterOfMass - transform.position) + (hand.GetComponent<Rigidbody>().worldCenterOfMass - transform.position)) / 2;
-            gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + hand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
+            distance3D = ((_objectRigidbody.worldCenterOfMass - transform.position) + (physicalHand.GetComponent<Rigidbody>().worldCenterOfMass - transform.position)) / 2;
+            gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + physicalHand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
             gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
 
             Debug.DrawRay(transform.position, distance3D, Color.cyan);
@@ -668,12 +660,12 @@ public class JointController : MonoBehaviour
 
             gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
 
-            //Debug.Log("gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
+            //Debug.Log("[INFO] gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
         }
         else if (this.CompareTag("RightArm"))
         {
-            distance3D = ((_objectRigidbody.worldCenterOfMass - transform.position) + (foreArm.GetComponent<Rigidbody>().worldCenterOfMass - transform.position) + (hand.GetComponent<Rigidbody>().worldCenterOfMass - transform.position)) / 3;
-            gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + foreArm.GetComponent<Rigidbody>().mass  + hand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
+            distance3D = ((_objectRigidbody.worldCenterOfMass - transform.position) + (physicalForeArm.GetComponent<Rigidbody>().worldCenterOfMass - transform.position) + (physicalHand.GetComponent<Rigidbody>().worldCenterOfMass - transform.position)) / 3;
+            gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + physicalForeArm.GetComponent<Rigidbody>().mass  + physicalHand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
             gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
 
             Debug.DrawRay(transform.position, distance3D, Color.cyan);
@@ -681,7 +673,7 @@ public class JointController : MonoBehaviour
 
             gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
 
-            //Debug.Log("gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
+            //Debug.Log("[INFO] gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
         }
 
         if (this.CompareTag("LeftHand"))
@@ -695,12 +687,12 @@ public class JointController : MonoBehaviour
 
             gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
 
-            //Debug.Log("gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
+            //Debug.Log("[INFO] gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
         }
         else if (this.CompareTag("LeftForeArm"))
         {
-            distance3D = ((_objectRigidbody.worldCenterOfMass - transform.position) + (hand.GetComponent<Rigidbody>().worldCenterOfMass - transform.position)) / 2;
-            gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + hand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
+            distance3D = ((_objectRigidbody.worldCenterOfMass - transform.position) + (physicalHand.GetComponent<Rigidbody>().worldCenterOfMass - transform.position)) / 2;
+            gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + physicalHand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
             gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
 
             Debug.DrawRay(transform.position, distance3D, Color.cyan);
@@ -708,12 +700,12 @@ public class JointController : MonoBehaviour
 
             gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
 
-            //Debug.Log("gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
+            //Debug.Log("[INFO] gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
         }
         else if (this.CompareTag("LeftArm"))
         {
-            distance3D = ((_objectRigidbody.worldCenterOfMass - transform.position) + (foreArm.GetComponent<Rigidbody>().worldCenterOfMass - transform.position) + (hand.GetComponent<Rigidbody>().worldCenterOfMass - transform.position)) / 3;
-            gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + foreArm.GetComponent<Rigidbody>().mass + hand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
+            distance3D = ((_objectRigidbody.worldCenterOfMass - transform.position) + (physicalForeArm.GetComponent<Rigidbody>().worldCenterOfMass - transform.position) + (physicalHand.GetComponent<Rigidbody>().worldCenterOfMass - transform.position)) / 3;
+            gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + physicalForeArm.GetComponent<Rigidbody>().mass + physicalHand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
             gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
 
             Debug.DrawRay(transform.position, distance3D, Color.cyan);
@@ -721,7 +713,7 @@ public class JointController : MonoBehaviour
 
             gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
 
-            //Debug.Log("gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
+            //Debug.Log("[INFO] gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
         }
 
         #endregion
@@ -780,16 +772,12 @@ public class JointController : MonoBehaviour
 
         if ((controllerType == Controller.NormalPDController) && (activateNormalPD))
         {
-            requiredTorque = ComputeRequiredTorque(_currentLocalOrientation,
-                                                   _currentGlobalOrientation,
-                                                   _kinematicLocalOrientation,
-                                                   _kinematicGlobalOrientation,
+            requiredTorque = ComputeRequiredTorque(_currentLocalOrientation, _currentGlobalOrientation,
+                                                   _kinematicLocalOrientation, _kinematicGlobalOrientation,
                                                    DesiredLocalRotation,
-                                                   this._objectRigidbody.angularVelocity,
-                                                   gravityTorqueVectorLocal,
-                                                   debugModeNormal,
-                                                   drawModeNormal,
-                                                   DELTATIME);
+                                                   this._objectRigidbody, gravityTorqueVectorLocal,
+                                                   DELTATIME,
+                                                   debugModeNormal, drawModeNormal);
 
 
             if (debugModeNormal)
@@ -807,7 +795,7 @@ public class JointController : MonoBehaviour
                 else
                     this._objectRigidbody.AddRelativeTorque(requiredTorque, ForceMode.Force); // Option (B) for Improved Torque [Local]
 
-                //this._objectRigidbody.AddRelativeTorque(requiredAngularAcceleration, ForceMode.Acceleration); // Option (A) for Torque [Local]
+                //this._objectRigidbody.AddRelativeTorque(requiredAngularAcceleration, ForceMode.Acceleration); // Option (A) for Angular Acceleration [Local]
             }
         }
 
@@ -823,10 +811,10 @@ public class JointController : MonoBehaviour
         {
             requiredAntagonisticLocalTorque = _antagonisticControllerXYZ.ComputeRequiredAntagonisticTorque(minSoftLimitX, maxSoftLimitX, minSoftLimitY, maxSoftLimitY, minSoftLimitZ, maxSoftLimitZ,
                                                                                                            minHardLimitX, maxHardLimitX, minHardLimitY, maxHardLimitY, minHardLimitZ, maxHardLimitZ,
-                                                                                                           _currentTransform, _kinematicTransform,
-                                                                                                           _currentLocalOrientation, _currentGlobalOrientation,
-                                                                                                           _kinematicLocalOrientation, _kinematicGlobalOrientation,
-                                                                                                           DesiredLocalRotation, this._objectRigidbody, gravityTorqueVectorLocal,
+                                                                                                           _currentTransform,
+                                                                                                           _currentLocalOrientation, 
+                                                                                                           _kinematicLocalOrientation,
+                                                                                                           this._objectRigidbody, gravityTorqueVectorLocal,
                                                                                                            DELTATIME,
                                                                                                            debugModeAntagonistic, drawModeAntagonistic);
 
@@ -837,10 +825,7 @@ public class JointController : MonoBehaviour
 
             if (applyAntTorque)
             {
-                // Without going though the Inertia calculation, it would need 49.9 angular drag
-
-                this._objectRigidbody.AddRelativeTorque(requiredAntagonisticLocalTorque, ForceMode.Force); // TEST 1 We stay in local space -> WORKS
-                //this._objectRigidbody.AddTorque(transform.TransformDirection(requiredAntagonisticLocalTorque), ForceMode.Force); // TEST 1 in Global Space -> Also WORKS
+                this._objectRigidbody.AddRelativeTorque(requiredAntagonisticLocalTorque, ForceMode.Force); // [Local]
             }
         }
 
@@ -849,7 +834,7 @@ public class JointController : MonoBehaviour
 
     #endregion
 
-    #region Old Instance Methods
+    #region Instance Methods
 
     /// <summary>
     /// Compute torque using Normal PD Controller.
@@ -865,8 +850,10 @@ public class JointController : MonoBehaviour
     /// <returns></returns>
     private Vector3 ComputeRequiredTorque(Quaternion currentLocalOrientation, Quaternion currentGlobalOrientation, 
                                           Quaternion kinematicLocalOrientation, Quaternion kinematicGlobalOrientation,
-                                          Quaternion desiredLocalRotation, Vector3 angularVelocity, Vector3 gravityTorqueVectorLocal, 
-                                          bool debugModeNormal, bool drawModeNormal, float fixedDeltaTime)
+                                          Quaternion desiredLocalRotation, 
+                                          Rigidbody _objectRigidbody, Vector3 gravityTorqueVectorLocal,
+                                          float fixedDeltaTime, 
+                                          bool debugModeNormal, bool drawModeNormal)
     {
         #region Orientations and Rotations
 
@@ -992,15 +979,15 @@ public class JointController : MonoBehaviour
         /* ========================================= */
 
         // Normal Torque [Local]
-        //float torqueLocal = _normalPDController.GetOutput(newRotationErrorLocal, angularVelocity.magnitude, fixedDeltaTime);
+        //float torqueLocal = _normalPDController.GetOutput(newRotationErrorLocal, _objectRigidbody.angularVelocity.magnitude, fixedDeltaTime);
         //Debug.Log("[INFO] torqueLocal * rotationNewAxis: " + (torqueLocal * rotationNewAxisLocal));
 
         /*     2. Improved Torque Estimation (B)     */
         /* ========================================= */
 
         // Improved Torque [Global] and [Local]
-        Vector3 torqueImprovedGlobal = _normalPDController.GetOutputAxisAngle(newRotationErrorGlobal, rotationNewAxisGlobal, angularVelocity, fixedDeltaTime);
-        Vector3 torqueImprovedLocal = _normalPDController.GetOutputAxisAngle(newRotationErrorLocal, rotationNewAxisLocal, angularVelocity, fixedDeltaTime);
+        Vector3 torqueImprovedGlobal = _normalPDController.GetOutputAxisAngle(newRotationErrorGlobal, rotationNewAxisGlobal, _objectRigidbody.angularVelocity, fixedDeltaTime);
+        Vector3 torqueImprovedLocal = _normalPDController.GetOutputAxisAngle(newRotationErrorLocal, rotationNewAxisLocal, _objectRigidbody.angularVelocity, fixedDeltaTime);
 
         if (debugModeNormal)
         {
@@ -1057,12 +1044,8 @@ public class JointController : MonoBehaviour
         if (globalMode)
             return torqueImprovedGlobal; // Working fine
         else
-            return torqueImprovedLocal; // Not entirely working
+            return torqueImprovedLocal; // Working fine
     }
-
-    #endregion
-
-    #region Instance Methods
 
     // Swing-Twist Decomposition - TODO 
     private Quaternion getRotationComponentAboutAxis(Quaternion rotation, Vector3 direction)
@@ -1283,52 +1266,22 @@ public class JointController : MonoBehaviour
 
     #endregion
 
-    #region Colliders
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if(this.gameObject.CompareTag("RightHand"))
-        {
-
-            Debug.Log("Physical Right Hand OnCollisionStay");
-
-            // 1. Add Force
-            //Vector3 forceDirection = kinematicLimb.transform.position - transform.position;
-            //_objectRigidbody.AddForce(forceDirection.normalized * attractionForce * Time.fixedDeltaTime);
-
-            // 2. Just fix pos
-            //this.transform.position = kinematicLimb.transform.position;
-            //this.transform.rotation = kinematicLimb.transform.rotation; // This make issues in the wrist
-
-            // 3. MoveRotation in addition
-            //this.transform.position = kinematicLimb.transform.position;
-            //_objectRigidbody.MoveRotation(_objectRigidbody.rotation * kinematicLimb.rotation);
-
-            // 4. Injecting other rotation
-            //this.transform.position = kinematicLimb.transform.position;
-            //Quaternion rotKin = Quaternion.LookRotation(-kinematicLimb.forward);
-            //_objectRigidbody.MoveRotation(_objectRigidbody.rotation * rotKin);
-
-            // 5. Adding spring joint and connect to kinematic limb
-            // In OnCollisionEnter and OnCollisionExit
-        }
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (this.gameObject.CompareTag("RightHand"))
         {
-
-            Debug.Log("Physical Right Hand OnCollisionEnter");
-
-            // 5. Adding spring joint and connect to kinematic limb
-            if (!hasJoint)
+            if (collision.gameObject.CompareTag("Dynamic Obstacle") || collision.gameObject.CompareTag("Static Obstacle"))
             {
-                //gameObject.AddComponent<SpringJoint>();
-                //gameObject.GetComponent<SpringJoint>().connectedBody = kinematicLimb.GetComponent<Rigidbody>();
-                //gameObject.GetComponent<SpringJoint>().spring = 10000f;
-                //gameObject.GetComponent<SpringJoint>().damper = 1f;
-                //hasJoint = true;
+                SpringJoint spring = GetComponent<SpringJoint>();
+                spring.spring = 10000;
+            } 
+        }
+        else if(this.gameObject.CompareTag("LeftHand"))
+        {
+            if (collision.gameObject.CompareTag("Dynamic Obstacle") || collision.gameObject.CompareTag("Static Obstacle"))
+            {
+                SpringJoint spring = GetComponent<SpringJoint>();
+                spring.spring = 10000;
             }
         }
     }
@@ -1337,18 +1290,21 @@ public class JointController : MonoBehaviour
     {
         if (this.gameObject.CompareTag("RightHand"))
         {
-
-            Debug.Log("Physical Right Hand OnCollisionExit");
-
-            // 5. Adding spring joint and connect to kinematic limb
-            if (hasJoint)
+            if (collision.gameObject.CompareTag("Dynamic Obstacle") || collision.gameObject.CompareTag("Static Obstacle"))
             {
-                //Destroy(GetComponent<SpringJoint>());
-                //hasJoint = false;
+                SpringJoint spring = GetComponent<SpringJoint>();
+                spring.spring = 10000;
+            } 
+        }
+        else if (this.gameObject.CompareTag("LeftHand"))
+        {
+            if (collision.gameObject.CompareTag("Dynamic Obstacle") || collision.gameObject.CompareTag("Static Obstacle"))
+            {
+                SpringJoint spring = GetComponent<SpringJoint>();
+                spring.spring = 10000;
             }
         }
     }
 
-    #endregion
 
 }
