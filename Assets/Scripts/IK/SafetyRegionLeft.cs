@@ -81,7 +81,7 @@ public class SafetyRegionLeft : SafetyRegion
             hasLeftTargetReached = false;
             //Debug.Log("[INFO] hasLeftStartedMovingIn: " + hasLeftStartedMovingIn + " | hasLeftStartedMovingOut: " + hasLeftStartedMovingOut + " | hasLeftTargeReached: " + hasLeftTargetReached);
             // hasLeftStartedMovingIn: TRUE, hasLeftStartedMovingOut: FALSE, hasLeftTargeReached: FALSE
-        }
+        } 
     }
 
     // When an object stays in the Safety Region

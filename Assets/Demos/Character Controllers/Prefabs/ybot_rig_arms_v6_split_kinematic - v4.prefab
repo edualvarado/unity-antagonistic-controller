@@ -4104,7 +4104,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7170379306008190284
 Transform:
   m_ObjectHideFlags: 0
@@ -4151,7 +4151,7 @@ MonoBehaviour:
   leftTarget: {fileID: 7170379307483878355}
   fixHandToDynamicObject: 0
   drawIK: 0
-  hitOffsetLeft: {x: 0, y: 0, z: 0}
+  hitOffsetLeft: {x: 0.02, y: 0, z: 0}
   hitLeftFixed: {x: 0, y: 0, z: 0}
   localHitLeftFixed: {x: 0, y: 0, z: 0}
   hitLeft: {x: 0, y: 0, z: 0}

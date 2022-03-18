@@ -366,7 +366,8 @@ public class TargetIK : MonoBehaviour
 
                 if (activateIK)
                 {
-                    armsIK.leftArmWeight = 1f; // TEST
+                    // TEST
+                    armsIK.leftArmWeight = 1f; 
                 }
 
                 Vector3 forwardHit = new Vector3(-safetyRegionLeft.hitNormalLeft.z, 0, safetyRegionLeft.hitNormalLeft.x);
@@ -402,7 +403,8 @@ public class TargetIK : MonoBehaviour
 
                 if (activateIK)
                 {
-                    armsIK.rightArmWeight = 1f; // TEST
+                    // TEST
+                    armsIK.rightArmWeight = 1f;
                 }
 
                 Vector3 forwardHit = new Vector3(safetyRegionRight.hitNormalRight.z, 0, -safetyRegionRight.hitNormalRight.x);
@@ -494,7 +496,8 @@ public class TargetIK : MonoBehaviour
 
                 target.transform.position = Vector3.Lerp(startPos, targetConstant.transform.position, normalizedTime);
 
-                armsIK.leftArmWeight = Mathf.Lerp(1f, 0f, normalizedTime); // TEST
+                // TEST
+                armsIK.leftArmWeight = Mathf.Lerp(1f, 0f, normalizedTime);
 
                 //Target.transform.rotation = Quaternion.Slerp(startRot, TargetConstant.transform.rotation, normalizedTime);
                 //Target.transform.rotation = Quaternion.Euler(new Vector3(0f, Target.transform.rotation.eulerAngles.y, 0f));
@@ -521,7 +524,8 @@ public class TargetIK : MonoBehaviour
 
                 target.transform.position = Vector3.Lerp(startPos, targetConstant.transform.position, normalizedTime);
 
-                armsIK.rightArmWeight = Mathf.Lerp(1f, 0f, normalizedTime); // TEST
+                // TEST
+                armsIK.rightArmWeight = Mathf.Lerp(1f, 0f, normalizedTime);
 
                 //Target.transform.rotation = Quaternion.Slerp(startRot, TargetConstant.transform.rotation, normalizedTime);
                 //Target.transform.rotation = Quaternion.Euler(new Vector3(0f, Target.transform.rotation.eulerAngles.y, 0f));

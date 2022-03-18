@@ -91,7 +91,6 @@ public class IKArmsPlacement : MonoBehaviour
                     animator.SetIKRotation(AvatarIKGoal.LeftHand, leftTarget.target.rotation * Quaternion.Euler(new Vector3(rotationOffsetLeft.x, rotationOffsetLeft.y, rotationOffsetLeft.z))); // TEST
                 }
             }
-
             // If the IK is not active, set the position and rotation of the hand and head back to the original position
             else
             {
