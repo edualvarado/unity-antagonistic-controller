@@ -433,7 +433,7 @@ MonoBehaviour:
   shooterCameraMode: 0
   rotationSpeed: 280
   blockCamera: 0
-  moveForwardOnly: 0
+  moveForwardOnly: 1
   moveDirection: {x: 0, y: 0, z: 0}
   _inputs: {x: 0, y: 0, z: 0}
   inputMagnitude: 0
@@ -1907,7 +1907,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4570854228350851340}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2291,7 +2291,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4570854230190247419}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2687,7 +2687,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6022386670828169427}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4098,13 +4098,13 @@ GameObject:
   - component: {fileID: 7170379306008190284}
   - component: {fileID: 7170379306008190285}
   - component: {fileID: 7170379306008190274}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LeftSafetyRegion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7170379306008190284
 Transform:
   m_ObjectHideFlags: 0
@@ -4145,13 +4145,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originRegion: {fileID: 1904840852391078110}
-  originOffset: {x: -0.4, y: 0, z: 0.5}
-  radiusRegion: 0.6
-  reactionTime: 1
+  originOffset: {x: -0.45, y: 0, z: 0.5}
+  radiusRegion: 0.5
+  reactionTime: 0.5
+  obstacles: []
+  nowObstacle: {fileID: 0}
+  prevObstacle: {fileID: 0}
+  colliderChanged: 0
   leftTarget: {fileID: 7170379307483878355}
   fixHandToDynamicObject: 0
   drawIK: 0
-  hitOffsetLeft: {x: 0.02, y: 0, z: 0}
+  hitOffsetLeft: {x: 0.03, y: 0, z: 0}
   hitLeftFixed: {x: 0, y: 0, z: 0}
   localHitLeftFixed: {x: 0, y: 0, z: 0}
   hitLeft: {x: 0, y: 0, z: 0}
@@ -4209,7 +4213,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7170379306135414507}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4267,7 +4271,7 @@ GameObject:
   - component: {fileID: 7170379306721617695}
   - component: {fileID: 7170379306721617692}
   - component: {fileID: 7170379306721617693}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RightSafetyRegion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4314,13 +4318,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originRegion: {fileID: 3849705244601195322}
-  originOffset: {x: 0.4, y: 0, z: 0.5}
-  radiusRegion: 0.6
-  reactionTime: 1
+  originOffset: {x: 0.45, y: 0, z: 0.5}
+  radiusRegion: 0.5
+  reactionTime: 0.5
+  obstacles: []
+  nowObstacle: {fileID: 0}
+  prevObstacle: {fileID: 0}
+  colliderChanged: 0
   rightTarget: {fileID: 7170379307483878354}
   fixHandToDynamicObject: 0
   drawIK: 0
-  hitOffsetRight: {x: 0.02, y: 0, z: 0}
+  hitOffsetRight: {x: 0.03, y: 0, z: 0}
   hitRightFixed: {x: 0, y: 0, z: 0}
   localHitRightFixed: {x: 0, y: 0, z: 0}
   hitRight: {x: 0, y: 0, z: 0}
@@ -4378,7 +4386,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7170379307079623658}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4930,7 +4938,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8542549872708990060}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

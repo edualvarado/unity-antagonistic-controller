@@ -19,16 +19,16 @@ public class SafetyRegionRight : SafetyRegion
     private SphereCollider sphereColliderRight;
     private Transform rightTargetTransform;
 
-    // Obstacles inside TEST
+    #endregion
+
+    #region Instance Fields
+
+    [Header("Right Hand - Obstacles")]
     [SerializeField]
     public List<Obstacle> obstacles = new List<Obstacle>();
     public Collider nowObstacle;
     public Collider prevObstacle;
     public bool colliderChanged = false;
-
-    #endregion
-
-    #region Instance Fields
 
     [Header("Right Hand - IK")]
     public TargetIK rightTarget;
@@ -72,7 +72,7 @@ public class SafetyRegionRight : SafetyRegion
     {
         if ((other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle")))
         {
-            Debug.Log("[INFO] New obstacle ENTERS: " + other.name);
+            //Debug.Log("[INFO] New obstacle ENTERS RIGHT: " + other.name);
 
             // We protect the origin, and get the closest point in the external object to the previous body part to protect
             raycastOriginRight = originRegion.position;
@@ -80,15 +80,14 @@ public class SafetyRegionRight : SafetyRegion
             // Create an offset, in case it is necessary
             Vector3 offset = (rightTargetTransform.up * hitOffsetRight.y) + (rightTargetTransform.right * hitOffsetRight.x) + (rightTargetTransform.forward * hitOffsetRight.z);
 
-            // If it was empty and we have now one obstacle
+            // For the first obstacle, the list is empty at this point
             if (obstacles.Count == 0)
             {
                 // Start moving to the target
                 hasRightStartedMovingIn = true;
                 hasRightStartedMovingOut = false;
                 hasRightTargetReached = false;
-                //Debug.Log("[INFO] hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
-                // hasRightStartedMovingIn: TRUE, hasRightStartedMovingOut: FALSE, hasRightTargeReached: FALSE  
+                Debug.Log("[TEST] 1) hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
             }
 
             // Add new obstacle to the dynamic list
@@ -102,7 +101,7 @@ public class SafetyRegionRight : SafetyRegion
     {
         if ((other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle")))
         {
-            Debug.Log("[INFO] Obstacle STAYS: " + other.name);
+            //Debug.Log("[INFO] Obstacle STAYS RIGHT: " + other.name);
 
             // We protect the origin, and get the closest point in the external object to the previous body part to protect
             raycastOriginRight = originRegion.position;
@@ -113,7 +112,7 @@ public class SafetyRegionRight : SafetyRegion
             currentObstacle.location = closestPoint;
             currentObstacle.distance = Vector3.Distance(closestPoint, raycastOriginRight);
 
-            // In case of multiple objects inside the region, we take the closest one
+            // In case of multiple objects inside the region, we take the closest one -> TODO Can be improved
             var min = 100f;
             for (int i = 0; i < obstacles.Count; i++)
             {
@@ -126,45 +125,54 @@ public class SafetyRegionRight : SafetyRegion
                 }
             }
 
-            // If we update the obstacle, we make colliderChanged TRUE
+            // If we update the obstacle for a new one, we make colliderChanged TRUE
             if(prevObstacle != nowObstacle)
             {
-                colliderChanged = true; // USE THIS VARIABLE TO ACT DIFFERENTLY WHEN WE MOVE THE TARGET
-                Debug.Log("[TEST] colliderChanged: " + colliderChanged);
+                colliderChanged = true;
+                Debug.Log("[TEST] colliderChanged RIGHT: " + colliderChanged);
                 prevObstacle = nowObstacle;
             }
 
             // Here, we already have the hitRight that corresponds to the closest point to the origin
             // Now, we need to take hitRightFixed and updated with the constantly tracked value of hitRight when is convenient
 
-            Debug.Log("[TEST] hitRight: " + hitRight);
-
             // =====
 
-            // 1. We update if we did not reach yet the position
-            // 2. Or if we stop being in contact when the distance to the hit is larger than the arm itself
-            if (!hasRightTargetReached && !colliderChanged)
+            // When do we update?
+            // 1. We update constantly to the hit if we did not reach yet the position or if we stop being in contact when the distance to the hit is larger than the arm itself
+            // 2. Otherwise, hasRightStartedMovingIn is false
+            if (hasRightStartedMovingIn) 
             {
-                hitRightFixed = hitRight;
+                // Create an offset, in case it is necessary
+                Vector3 offset = (rightTargetTransform.up * hitOffsetRight.y) + (rightTargetTransform.right * hitOffsetRight.x) + (rightTargetTransform.forward * hitOffsetRight.z);
+
+                Debug.Log("[TEST] Fixing to pose because hasRightStartedMovingIn: " + hasRightStartedMovingIn);
+                hitRightFixed = hitRight + offset;
                 localHitRightFixed = (hitRightFixed - other.transform.position);
+
             }
             else
             {
-                // 1. If the object can move, we update always to the closest position for convenience - TODO: Maybe look to fix with respect to the object? - TODO: If it is another obstacle, SMOOTH!
-                // 2. If the object is rigid like a wall, to the updates when we are far from the fixed position
+                // Two types of objects: Dynamic and Static
+                // 1. Dynamic: If the object can move, we update always to the closest position for convenience
+                // 2. If the object is rigid (like a wall), to the updates when we are far from the fixed position
                 if (other.CompareTag("Dynamic Obstacle"))
                 {
+                    // Create an offset, in case it is necessary
                     Vector3 offset = (rightTargetTransform.up * hitOffsetRight.y) + (rightTargetTransform.right * hitOffsetRight.x) + (rightTargetTransform.forward * hitOffsetRight.z);
 
+                    // Two modes: First one is experimental
                     if (fixHandToDynamicObject)
                     {
                         hitRightFixed = other.transform.position + localHitRightFixed + offset;
                     }
                     else
                     {
-                        // TEST
+                        // During the contact, we update constantly to the hit
+                        // If the system detects a change of obstacle, we update the bools, that will induce again the smooth transition
                         if(!colliderChanged && !hasRightStartedMovingIn)
                         {
+                            Debug.Log("[TEST] Fixing to pose because colliderChanged: " + colliderChanged + " and hasRightStartedMovingIn: " + hasRightStartedMovingIn);
                             hitRightFixed = hitRight + offset;
                         }
                         else if (colliderChanged)
@@ -173,8 +181,7 @@ public class SafetyRegionRight : SafetyRegion
                             hasRightStartedMovingIn = true;
                             hasRightStartedMovingOut = false;
                             hasRightTargetReached = false;
-
-                            //hitRightFixed = hitRight + offset;
+                            Debug.Log("[TEST] 2) hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
                         }
                     }
                 }
@@ -201,7 +208,7 @@ public class SafetyRegionRight : SafetyRegion
                     Debug.DrawRay(hitRightFixed, hitNormalRight * 0.2f, Color.cyan);
                 }
 
-                // Set target where it his, based on if reacting or just placing the hand
+                // Method in charge of moving behaviour, which changes if we are on the move or we arrived
                 // hasRightStartedMovingIn will be TRUE until we reach the object
                 rightTarget.SetTargetStay(reactionTime, hasRightStartedMovingIn);
             }
@@ -211,12 +218,11 @@ public class SafetyRegionRight : SafetyRegion
 
             // Once we have finished, we update the variables
             hasRightStartedMovingOut = false;
-            if (hasRightTargetReached)
+            if (hasRightTargetReached) 
                 hasRightStartedMovingIn = false;
-            //Debug.Log("[INFO] hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
-            // hasRightStartedMovingIn: FALSE, hasRightStartedMovingOut: FALSE, hasRightTargeReached: FALSE -> TRUE (when the coroutine finishes)
 
-            // TEST
+            Debug.Log("[TEST] 3) hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
+
             colliderChanged = false;
             Debug.Log("[TEST] colliderChanged: " + colliderChanged);
         }
@@ -227,22 +233,22 @@ public class SafetyRegionRight : SafetyRegion
     {
         if ((other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle")))
         {
-            Debug.Log("[TEST] Obstacle EXITS: " + other.name);
+            //Debug.Log("[TEST] Obstacle EXITS RIGHT: " + other.name);
 
             // Remove the obstacle instance from the dynamic list
             obstacles.RemoveAll(x => x.obstacle == other);
 
             // Set target back to original position
-            // This should only happen if NO OBJECTS ARE INSIDE THE REGION
+            // This should only happen if NO objects are inside the region
             if(obstacles.Count == 0)
             {
                 // Starts moving out
                 hasRightStartedMovingIn = false;
                 hasRightStartedMovingOut = true;
                 hasRightTargetReached = false;
-                //Debug.Log("[INFO] hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
-                // hasRightStartedMovingIn: FALSE, hasRightStartedMovingOut: TRUE, hasRightTargeReached: FALSE
+                Debug.Log("[TEST] 4) hasRightStartedMovingIn: " + hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + hasRightStartedMovingOut + " | hasRightTargeReached: " + hasRightTargetReached);
 
+                // Method in charge of moving back the hand
                 rightTarget.SetTargetBack(reactionTime, hasRightStartedMovingOut);
             }
         }

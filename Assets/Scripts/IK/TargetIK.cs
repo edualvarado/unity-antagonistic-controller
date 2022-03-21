@@ -198,7 +198,7 @@ public class TargetIK : MonoBehaviour
     }
 
     /// <summary>
-    /// Update IK target to new position if we get to far from the original fixed position.
+    /// Update IK target to new position if we get to far from the original fixed position (static obstacle).
     /// </summary>
     /// <param name="startPos"></param>
     /// <param name="offset"></param>
@@ -346,13 +346,13 @@ public class TargetIK : MonoBehaviour
     {
         Debug.Log("[COROUTINE] Executing MoveTarget");
 
-        // Store the initial, current position and rotation for the interpolation.
+        // Store the initial, current position and rotation for the interpolation
         Vector3 startPos = target.transform.position;
         Quaternion startRot = target.transform.rotation;
 
         if(target.CompareTag("LeftHand"))
         {
-            // Initialize the time.
+            // Initialize the time
             float timeElapsed = 0;
 
             do
@@ -382,14 +382,15 @@ public class TargetIK : MonoBehaviour
 
                 yield return null;
             }
-            while ((timeElapsed < moveTime) && !(safetyRegionLeft.hasLeftStartedMovingOut));
+            while ((timeElapsed < moveTime) && !(safetyRegionLeft.hasLeftTargetReached) && !(safetyRegionLeft.hasLeftStartedMovingOut)); // (timeElapsed < moveTime) && !(safetyRegionLeft.hasLeftStartedMovingOut) // HERE WAS THE FIX
 
             safetyRegionLeft.hasLeftTargetReached = true;
+            Debug.Log("[TEST] 5) hasLeftStartedMovingIn: " + safetyRegionLeft.hasLeftStartedMovingIn + " | hasLeftStartedMovingOut: " + safetyRegionLeft.hasLeftStartedMovingOut + " | hasLeftTargeReached: " + safetyRegionLeft.hasLeftTargetReached);
         }
 
         if (target.CompareTag("RightHand"))
         {
-            // Initialize the time.
+            // Initialize the time
             float timeElapsed = 0;
 
             do
@@ -419,9 +420,11 @@ public class TargetIK : MonoBehaviour
 
                 yield return null;
             }
-            while ((timeElapsed < moveTime) && !(safetyRegionRight.hasRightStartedMovingOut));
+            while ((timeElapsed < moveTime) && !(safetyRegionRight.hasRightTargetReached) && !(safetyRegionRight.hasRightStartedMovingOut)); // (timeElapsed < moveTime) && !(safetyRegionRight.hasRightStartedMovingOut) // HERE WAS THE FIX
 
             safetyRegionRight.hasRightTargetReached = true;
+            Debug.Log("[TEST] 5) hasRightStartedMovingIn: " + safetyRegionRight.hasRightStartedMovingIn + " | hasRightStartedMovingOut: " + safetyRegionRight.hasRightStartedMovingOut + " | hasRightTargeReached: " + safetyRegionRight.hasRightTargetReached);
+
         }
     }
 
@@ -431,7 +434,7 @@ public class TargetIK : MonoBehaviour
 
         if(target.CompareTag("LeftHand"))
         {
-            // Initialize the time.
+            // Initialize the time
             float timeElapsed = 0;
 
             do
@@ -453,7 +456,7 @@ public class TargetIK : MonoBehaviour
 
         if(target.CompareTag("RightHand"))
         {
-            // Initialize the time.
+            // Initialize the time
             float timeElapsed = 0;
 
             do
@@ -478,13 +481,13 @@ public class TargetIK : MonoBehaviour
     {
         Debug.Log("[COROUTINE] Executing MoveTargetBack");
 
-        // Store the initial, current position and rotation for the interpolation.
+        // Store the initial, current position and rotation for the interpolation
         Vector3 startPos = target.transform.position;
         Quaternion startRot = target.transform.rotation;
 
         if (target.CompareTag("LeftHand"))
         {
-            // Initialize the time.
+            // Initialize the time
             float timeElapsed = 0;
 
             do
@@ -512,7 +515,7 @@ public class TargetIK : MonoBehaviour
 
         if(target.CompareTag("RightHand"))
         {
-            // Initialize the time.
+            // Initialize the time
             float timeElapsed = 0;
 
             do
@@ -538,7 +541,7 @@ public class TargetIK : MonoBehaviour
             while ((timeElapsed < moveTime) && !(safetyRegionRight.hasRightStartedMovingIn));
         }
 
-        // Once the coroutine finishes, deactivate IK for this hand and follow kinematic animation.
+        // Once the coroutine finishes, deactivate IK for this hand and follow kinematic animation
         if (target.CompareTag("LeftHand") && !safetyRegionLeft.hasLeftStartedMovingIn)
         {
             activateIK = false;

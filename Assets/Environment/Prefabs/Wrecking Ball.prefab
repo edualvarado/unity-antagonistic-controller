@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 2131981081088269036}
   - component: {fileID: 2131981081088269037}
   m_Layer: 10
-  m_Name: Ball
+  m_Name: Ball 2
   m_TagString: Dynamic Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

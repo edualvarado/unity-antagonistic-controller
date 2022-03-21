@@ -3206,7 +3206,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 782306568}
-  m_LocalRotation: {x: -0.03904805, y: 0.95737845, z: -0.15567516, w: -0.24013953}
+  m_LocalRotation: {x: -0.039048046, y: 0.95737845, z: -0.15567516, w: -0.24013954}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3462,7 +3462,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 803435888}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.03, y: 1.18, z: 4.78}
+  m_LocalPosition: {x: 10.512, y: 1.18, z: 6.284}
   m_LocalScale: {x: 0.6030943, y: 0.6030943, z: 0.6030943}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4544,7 +4544,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.03904804, y: 0.95737845, z: -0.15567514, w: -0.24013951}
+  m_LocalRotation: {x: -0.039048035, y: 0.95737845, z: -0.15567514, w: -0.24013953}
   m_LocalPosition: {x: 13.887866, y: 2.5, z: 8.996466}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8924,7 +8924,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1806160261}
   m_Layer: 0
-  m_Name: ------------------- (1)
+  m_Name: -------------------
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10461,10 +10461,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wrecking Ball - Normal
       objectReference: {fileID: 0}
-    - target: {fileID: 2131981081088269039, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
-      propertyPath: m_Name
-      value: Ball 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
 --- !u!4 &2058112327 stripped
@@ -11358,10 +11354,6 @@ PrefabInstance:
     - target: {fileID: 2131981080105326074, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_Name
       value: Wrecking Ball - Normal
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131981081088269039, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
-      propertyPath: m_Name
-      value: Ball 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
@@ -12287,18 +12279,6 @@ PrefabInstance:
     - target: {fileID: 968796218716793542, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7170379306008190287, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7170379306721617693, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
-      propertyPath: hitOffsetRight.x
-      value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 7170379306721617694, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
-      propertyPath: m_Layer
-      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
@@ -13365,22 +13345,6 @@ PrefabInstance:
     - target: {fileID: 4765623532821786555, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: m_Name
       value: ybot_rig_arms_v6_split_ragdoll - v4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623533172998659, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623533172998669, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623533373452733, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765623533373452735, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4765623533437734913, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: m_ConnectedBody
