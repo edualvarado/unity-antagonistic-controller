@@ -433,7 +433,7 @@ MonoBehaviour:
   shooterCameraMode: 0
   rotationSpeed: 280
   blockCamera: 0
-  moveForwardOnly: 1
+  moveForwardOnly: 0
   moveDirection: {x: 0, y: 0, z: 0}
   _inputs: {x: 0, y: 0, z: 0}
   inputMagnitude: 0
