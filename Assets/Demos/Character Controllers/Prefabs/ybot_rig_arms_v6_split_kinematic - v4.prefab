@@ -1830,6 +1830,7 @@ MonoBehaviour:
   safetyRegionLeft: {fileID: 7170379306008190274}
   safetyRegionRight: {fileID: 7170379306721617693}
   rotationToNormal: {x: 0, y: 0, z: 0, w: 0}
+  debugIK: 0
 --- !u!54 &1849855383
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2050,7 +2051,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4570854229740263958}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 1, z: -0.49199998}
+  m_LocalPosition: {x: -0.5, y: 1.071, z: -0.49199998}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 4570854228875619745}
@@ -2175,7 +2176,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4570854230159932057}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1, z: -0.492}
+  m_LocalPosition: {x: 0.5, y: 1.071, z: -0.492}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 4570854228875619745}
@@ -4058,6 +4059,7 @@ MonoBehaviour:
   safetyRegionLeft: {fileID: 7170379306008190274}
   safetyRegionRight: {fileID: 7170379306721617693}
   rotationToNormal: {x: 0, y: 0, z: 0, w: 0}
+  debugIK: 0
 --- !u!54 &1981439033
 Rigidbody:
   m_ObjectHideFlags: 0

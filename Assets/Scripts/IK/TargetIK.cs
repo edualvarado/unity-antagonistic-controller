@@ -47,6 +47,9 @@ public class TargetIK : MonoBehaviour
     public SafetyRegionRight safetyRegionRight;
     public Quaternion rotationToNormal;
 
+    [Header("Safety Region - Debug")]
+    public bool debugIK;
+
     #endregion
 
     #region Unity Methods
@@ -117,7 +120,8 @@ public class TargetIK : MonoBehaviour
     private void Update()
     {
         // As long as IK is disable, we place the targets in the hands to follow the kinematic actions
-        if (!activateIK)
+        // If the debug mode is active, then we have freedom to move the target
+        if (!activateIK && !debugIK)
         {
             SetTarget(target, this.transform);
             SetTarget(targetConstant, this.transform);
@@ -126,10 +130,10 @@ public class TargetIK : MonoBehaviour
 
     void LateUpdate()
     {
-        if (activateIK)
+        // Debug mode for IK, so we can move freely the IK Target
+        if(debugIK)
         {
-            // We are going to replace this IK system with the one from Unity with built-in weights. The target system remains the same.
-            //ResolveIK(); 
+            ResolveIK();
         }
     }
 

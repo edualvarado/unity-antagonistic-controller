@@ -191,6 +191,7 @@ public class JointController : MonoBehaviour
     public Vector3 gravityAcc;
     public Vector3 gravityTorqueVector;
     public Vector3 gravityTorqueVectorLocal;
+    public bool drawTorques;
 
     #endregion
 
@@ -642,8 +643,11 @@ public class JointController : MonoBehaviour
             gravityTorqueVector = Vector3.Cross(distance3D, _objectRigidbody.mass * gravityAcc); // wrt. global coord. system
             gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
 
-            Debug.DrawRay(transform.position, distance3D, Color.cyan);
-            Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+            if (drawTorques)
+            {
+                Debug.DrawRay(transform.position, distance3D, Color.cyan);
+                Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+            }
 
             gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
 
@@ -655,8 +659,11 @@ public class JointController : MonoBehaviour
             gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + physicalHand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
             gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
 
-            Debug.DrawRay(transform.position, distance3D, Color.cyan);
-            Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+            if (drawTorques)
+            {
+                Debug.DrawRay(transform.position, distance3D, Color.cyan);
+                Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+            }
 
             gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
 
@@ -668,8 +675,11 @@ public class JointController : MonoBehaviour
             gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + physicalForeArm.GetComponent<Rigidbody>().mass  + physicalHand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
             gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
 
-            Debug.DrawRay(transform.position, distance3D, Color.cyan);
-            Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+            if (drawTorques)
+            {
+                Debug.DrawRay(transform.position, distance3D, Color.cyan);
+                Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+            }
 
             gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
 
@@ -682,8 +692,11 @@ public class JointController : MonoBehaviour
             gravityTorqueVector = Vector3.Cross(distance3D, _objectRigidbody.mass * gravityAcc); // wrt. global coord. system
             gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
 
-            Debug.DrawRay(transform.position, distance3D, Color.cyan);
-            Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+            if (drawTorques)
+            {
+                Debug.DrawRay(transform.position, distance3D, Color.cyan);
+                Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+            }
 
             gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
 
@@ -695,8 +708,11 @@ public class JointController : MonoBehaviour
             gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + physicalHand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
             gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
 
-            Debug.DrawRay(transform.position, distance3D, Color.cyan);
-            Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+            if (drawTorques)
+            {
+                Debug.DrawRay(transform.position, distance3D, Color.cyan);
+                Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+            }
 
             gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
 
@@ -708,8 +724,11 @@ public class JointController : MonoBehaviour
             gravityTorqueVector = Vector3.Cross(distance3D, (_objectRigidbody.mass + physicalForeArm.GetComponent<Rigidbody>().mass + physicalHand.GetComponent<Rigidbody>().mass) * gravityAcc); // wrt. global coord. system
             gravityTorqueVectorLocal = transform.InverseTransformDirection(gravityTorqueVector); // wrt. local coord. system
 
-            Debug.DrawRay(transform.position, distance3D, Color.cyan);
-            Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+            if (drawTorques)
+            {
+                Debug.DrawRay(transform.position, distance3D, Color.cyan);
+                Debug.DrawRay(transform.position, transform.TransformDirection(gravityTorqueVectorLocal), Color.yellow); // Drawing later would draw the ang. acceleration
+            }
 
             gravityTorqueVectorLocal.Scale(new Vector3(1 / _objectRigidbody.inertiaTensor.x, 1 / _objectRigidbody.inertiaTensor.y, 1 / _objectRigidbody.inertiaTensor.z));
 
