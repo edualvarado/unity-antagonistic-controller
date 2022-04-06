@@ -1331,7 +1331,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.06105867, y: 0.0911043, z: 0.007055538}
+  m_ConnectedAnchor: {x: -0.06105867, y: 0.0911043, z: 0.007055061}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -1557,7 +1557,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8539256768938050979, guid: 14321bea8553c044ca4c172f8f356073, type: 3}
+  - {fileID: 2100000, guid: a59502802c835f240a20282aa820f4bb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2199,7 +2199,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 30d7ff75285bd154a99cfc5effb0042e, type: 2}
+  - {fileID: 2100000, guid: cf9577fff5f245c40a4009cab25db537, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3587,7 +3587,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.061057433, y: 0.091105014, z: 0.0070555527}
+  m_ConnectedAnchor: {x: 0.061057433, y: 0.091105014, z: 0.0070560295}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -5482,7 +5482,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000015174189, y: 0.2761449, z: 0.00000032410026}
+  m_ConnectedAnchor: {x: -0.00000015174187, y: 0.2761449, z: -0.0000001527369}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 1
@@ -5657,7 +5657,7 @@ SpringJoint:
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000002492268, y: 0.00000020861651, z: 0.000000090134414}
+  m_ConnectedAnchor: {x: 0.00000024925154, y: 0.00000020861657, z: -0.00000038670274}
   serializedVersion: 2
   m_Spring: 10000
   m_Damper: 0.2

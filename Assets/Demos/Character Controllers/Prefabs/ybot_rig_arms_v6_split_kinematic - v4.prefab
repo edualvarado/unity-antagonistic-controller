@@ -743,7 +743,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -840037777384891287, guid: 14321bea8553c044ca4c172f8f356073, type: 3}
+  - {fileID: 2100000, guid: a59502802c835f240a20282aa820f4bb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1233,7 +1233,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6e0410277953b5247bc5602cfafb903f, type: 2}
+  - {fileID: 2100000, guid: cf9577fff5f245c40a4009cab25db537, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4147,8 +4147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originRegion: {fileID: 1904840852391078110}
-  originOffset: {x: -0.45, y: 0, z: 0.5}
-  radiusRegion: 0.5
+  originOffset: {x: -0.3, y: 0, z: 0.3}
+  radiusRegion: 0.4
   reactionTime: 0.5
   obstacles: []
   nowObstacle: {fileID: 0}
@@ -4320,8 +4320,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originRegion: {fileID: 3849705244601195322}
-  originOffset: {x: 0.45, y: 0, z: 0.5}
-  radiusRegion: 0.5
+  originOffset: {x: 0.3, y: 0, z: 0.3}
+  radiusRegion: 0.4
   reactionTime: 0.5
   obstacles: []
   nowObstacle: {fileID: 0}

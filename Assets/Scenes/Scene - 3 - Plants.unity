@@ -9705,14 +9705,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1599740180399989741, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: cf9577fff5f245c40a4009cab25db537, type: 2}
-    - target: {fileID: 8772626926867977339, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a59502802c835f240a20282aa820f4bb, type: 2}
+    - target: {fileID: 7170379306008190274, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
+      propertyPath: hitOffsetLeft.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7170379306721617693, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
+      propertyPath: hitOffsetRight.x
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
 --- !u!95 &2870343101416650615 stripped
@@ -10111,14 +10111,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ybot_rig_arms_v6_split_ragdoll - v4
       objectReference: {fileID: 0}
-    - target: {fileID: 4765623533172998669, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a59502802c835f240a20282aa820f4bb, type: 2}
-    - target: {fileID: 4765623533373452735, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: cf9577fff5f245c40a4009cab25db537, type: 2}
     - target: {fileID: 4765623533437734913, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: m_ConnectedBody
       value: 
