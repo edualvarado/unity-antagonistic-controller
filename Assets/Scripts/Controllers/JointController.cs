@@ -1285,22 +1285,23 @@ public class JointController : MonoBehaviour
 
     #endregion
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (this.gameObject.CompareTag("RightHand"))
         {
             if (collision.gameObject.CompareTag("Dynamic Obstacle") || collision.gameObject.CompareTag("Static Obstacle"))
             {
                 SpringJoint spring = GetComponent<SpringJoint>();
-                spring.spring = 10000;
-            } 
+                //spring.spring = 0;
+
+            }
         }
         else if(this.gameObject.CompareTag("LeftHand"))
         {
             if (collision.gameObject.CompareTag("Dynamic Obstacle") || collision.gameObject.CompareTag("Static Obstacle"))
             {
                 SpringJoint spring = GetComponent<SpringJoint>();
-                spring.spring = 10000;
+                //spring.spring = 0;
             }
         }
     }
@@ -1312,7 +1313,7 @@ public class JointController : MonoBehaviour
             if (collision.gameObject.CompareTag("Dynamic Obstacle") || collision.gameObject.CompareTag("Static Obstacle"))
             {
                 SpringJoint spring = GetComponent<SpringJoint>();
-                spring.spring = 10000;
+                //spring.spring = 0;
             } 
         }
         else if (this.gameObject.CompareTag("LeftHand"))
@@ -1320,7 +1321,7 @@ public class JointController : MonoBehaviour
             if (collision.gameObject.CompareTag("Dynamic Obstacle") || collision.gameObject.CompareTag("Static Obstacle"))
             {
                 SpringJoint spring = GetComponent<SpringJoint>();
-                spring.spring = 10000;
+                //spring.spring = 0;
             }
         }
     }

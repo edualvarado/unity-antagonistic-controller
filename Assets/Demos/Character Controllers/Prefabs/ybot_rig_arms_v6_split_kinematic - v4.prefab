@@ -4157,7 +4157,7 @@ MonoBehaviour:
   leftTarget: {fileID: 7170379307483878355}
   fixHandToDynamicObject: 0
   drawIK: 0
-  hitOffsetLeft: {x: 0.03, y: 0, z: 0}
+  hitOffsetLeft: {x: 0.05, y: 0, z: 0}
   hitLeftFixed: {x: 0, y: 0, z: 0}
   localHitLeftFixed: {x: 0, y: 0, z: 0}
   hitLeft: {x: 0, y: 0, z: 0}
@@ -4330,7 +4330,7 @@ MonoBehaviour:
   rightTarget: {fileID: 7170379307483878354}
   fixHandToDynamicObject: 0
   drawIK: 0
-  hitOffsetRight: {x: 0.03, y: 0, z: 0}
+  hitOffsetRight: {x: 0.05, y: 0, z: 0}
   hitRightFixed: {x: 0, y: 0, z: 0}
   localHitRightFixed: {x: 0, y: 0, z: 0}
   hitRight: {x: 0, y: 0, z: 0}

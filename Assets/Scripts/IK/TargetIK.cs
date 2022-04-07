@@ -119,6 +119,9 @@ public class TargetIK : MonoBehaviour
 
     private void Update()
     {
+        // Use just to measure the arm and say when we update the position for walls.
+        CheckArmsLength();
+
         // As long as IK is disable, we place the targets in the hands to follow the kinematic actions
         // If the debug mode is active, then we have freedom to move the target
         if (!activateIK && !debugIK)
@@ -134,6 +137,78 @@ public class TargetIK : MonoBehaviour
         if(debugIK)
         {
             ResolveIK();
+        }
+    }
+
+    private void CheckArmsLength()
+    {
+        if (target == null)
+            return;
+
+        if (bonesLength.Length != chainLength)
+            Init();
+
+        //Fabric
+
+        //  root
+        //  (bone0) (bonelen 0) (bone1) (bonelen 1) (bone2)...
+        //   x--------------------x--------------------x---...
+
+        //get position
+        for (int i = 0; i < bones.Length; i++)
+        {
+            positions[i] = GetPositionRootSpace(bones[i]);
+        }
+
+        var targetPosition = GetPositionRootSpace(target);
+        var targetRotation = GetRotationRootSpace(target);
+
+        //1st is possible to reach?
+        if ((targetPosition - GetPositionRootSpace(bones[0])).sqrMagnitude >= completeLength * completeLength)
+        {
+            // Hand did not touch it yet
+            if (target.CompareTag("LeftHand") && safetyRegionLeft.hasLeftTargetReached)
+            {
+                safetyRegionLeft.isLeftInRange = false;
+            }
+
+            if (target.CompareTag("RightHand") && safetyRegionRight.hasRightTargetReached)
+            {
+                safetyRegionRight.isRightInRange = false;
+            }
+
+            //just strech it
+            var direction = (targetPosition - positions[0]).normalized;
+            //set everything after root
+            for (int i = 1; i < positions.Length; i++)
+                positions[i] = positions[i - 1] + direction * bonesLength[i - 1];
+        }
+        else
+        {
+            // Hand did touch it 
+            if (target.CompareTag("LeftHand") && safetyRegionLeft.hasLeftTargetReached)
+            {
+                safetyRegionLeft.isLeftInRange = true;
+            }
+
+            if (target.CompareTag("RightHand") && safetyRegionRight.hasRightTargetReached)
+            {
+                safetyRegionRight.isRightInRange = true;
+            }
+
+            for (int i = 0; i < positions.Length - 1; i++)
+                positions[i + 1] = Vector3.Lerp(positions[i + 1], positions[i] + startDirectionSucc[i], snapBackStrength);
+
+            // Hand is coming back 
+            if (target.CompareTag("LeftHand") && safetyRegionLeft.hasLeftStartedMovingOut)
+            {
+                safetyRegionLeft.isLeftInRange = false;
+            }
+
+            if (target.CompareTag("RightHand") && safetyRegionRight.hasRightStartedMovingOut)
+            {
+                safetyRegionRight.isRightInRange = false;
+            }
         }
     }
 

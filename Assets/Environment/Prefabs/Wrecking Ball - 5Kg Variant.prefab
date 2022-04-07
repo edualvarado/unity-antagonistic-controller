@@ -25,15 +25,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.199999
+      value: 6.24
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.8
+      value: 0.54
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.82
+      value: 10.55
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326073, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -65,7 +65,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326074, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_Name
-      value: Wrecking Ball - 5Kg (1)
+      value: Wrecking Ball - 5Kg Variant
       objectReference: {fileID: 0}
     - target: {fileID: 2131981080105326074, guid: 2f982a84b240f6444957936c839d20e9, type: 3}
       propertyPath: m_IsActive
@@ -130,4 +130,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d2108c0d7e0e8647b6a5ce59ff38371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -0.25
+  speed: {x: -0.1, y: 0, z: 0}

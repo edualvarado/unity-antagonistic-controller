@@ -91,8 +91,13 @@ public class SafetyRegionLeft : SafetyRegion
 
             // Add new obstacle to the dynamic list
             Vector3 closestPoint = Physics.ClosestPoint(raycastOriginLeft, other, other.transform.position, other.transform.rotation) + offset;
-            obstacles.Add(new Obstacle(other, closestPoint, Vector3.Distance(closestPoint, raycastOriginLeft)));
-        } 
+
+            // TODO: Retrieve mass
+            if(other.gameObject.GetComponent<Rigidbody>())
+                obstacles.Add(new Obstacle(other, closestPoint, Vector3.Distance(closestPoint, raycastOriginLeft), other.gameObject.GetComponent<Rigidbody>().mass));
+            else
+                obstacles.Add(new Obstacle(other, closestPoint, Vector3.Distance(closestPoint, raycastOriginLeft), other.GetComponentInParent<Rigidbody>().mass));
+        }
     }
 
     // When an object stays in the Safety Region
@@ -110,7 +115,7 @@ public class SafetyRegionLeft : SafetyRegion
             Vector3 closestPoint = Physics.ClosestPoint(raycastOriginLeft, other, other.transform.position, other.transform.rotation);
             currentObstacle.location = closestPoint;
             currentObstacle.distance = Vector3.Distance(closestPoint, raycastOriginLeft);
-
+            
             // In case of multiple objects inside the region, we take the closest one -> TODO Can be improved
             var min = 100f;
             for (int i = 0; i < obstacles.Count; i++)
@@ -185,6 +190,7 @@ public class SafetyRegionLeft : SafetyRegion
                 {
                     if (!isLeftInRange)
                     {
+                        Debug.Log("WALL UPDATE LEFT");
                         Vector3 offset = (leftTargetTransform.up * hitOffsetLeft.y) + (leftTargetTransform.right * hitOffsetLeft.x) + (leftTargetTransform.forward * hitOffsetLeft.z);
                         leftTarget.SetTargetUpdate(hitLeftFixed, offset, 0.5f); // TODO: Time that takes to make the small jump
                     }

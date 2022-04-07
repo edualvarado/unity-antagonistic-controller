@@ -10,6 +10,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AntagonisticGains : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class AntagonisticGains : MonoBehaviour
     public JointController leftForeArmController;
     public JointController leftArmController;
 
-    public float stiffnessMultiplier;
+    [Range(0.5f, 5f)] public float stiffnessMultiplier;
 
     public float handKLX;
     public float handKLY;
@@ -39,11 +40,29 @@ public class AntagonisticGains : MonoBehaviour
 
     #endregion
 
+    #region UI
+
+    //public Slider stiffnessSlider;
+    //public Text stiffnessValue;
+
+    #endregion
+
     #region Unity Methods
+
+    private void Start()
+    {
+        // TODO: Initialize values slider
+        //stiffnessSlider.minValue = 0.5f;
+        //stiffnessSlider.maxValue = 5f;
+    }
 
     // Update is called once per frame
     void Update()
     {
+        // TODO
+        //stiffnessMultiplier = stiffnessSlider.value;
+        //stiffnessValue.text = stiffnessMultiplier.ToString();
+
         rightHandController.pLX = handKLX * stiffnessMultiplier;
         rightHandController.pLY = handKLY * stiffnessMultiplier;
         rightHandController.pLZ = handKLZ * stiffnessMultiplier;

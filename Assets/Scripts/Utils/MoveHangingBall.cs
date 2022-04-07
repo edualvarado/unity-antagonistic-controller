@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveHangingBall : MonoBehaviour
 {
 
-    public float speed = 1f;
+    public Vector3 speed;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +16,6 @@ public class MoveHangingBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + (speed * Time.deltaTime));
+        transform.position = new Vector3(transform.position.x + (speed.x * Time.deltaTime), transform.position.y + (speed.y * Time.deltaTime), transform.position.z + (speed.z * Time.deltaTime));
     }
 }

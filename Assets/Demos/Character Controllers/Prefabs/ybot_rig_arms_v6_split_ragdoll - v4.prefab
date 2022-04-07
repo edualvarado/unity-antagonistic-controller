@@ -219,9 +219,9 @@ MonoBehaviour:
   dX: 0.01
   slopeX: 0
   interceptX: 0
-  minSoftLimitX: -130
+  minSoftLimitX: -160
   maxSoftLimitX: 10
-  minHardLimitX: -120
+  minHardLimitX: -150
   maxHardLimitX: 0
   drawLimitsX: 0
   slopeXCurrent: 0
@@ -232,10 +232,10 @@ MonoBehaviour:
   dY: 0.01
   slopeY: 0
   interceptY: 0
-  minSoftLimitY: -35
-  maxSoftLimitY: 35
-  minHardLimitY: -25
-  maxHardLimitY: 25
+  minSoftLimitY: -90
+  maxSoftLimitY: 90
+  minHardLimitY: -80
+  maxHardLimitY: 80
   drawLimitsY: 0
   slopeYCurrent: 0
   interceptYCurrent: 0
@@ -245,10 +245,10 @@ MonoBehaviour:
   dZ: 0.01
   slopeZ: 0
   interceptZ: 0
-  minSoftLimitZ: -35
-  maxSoftLimitZ: 35
-  minHardLimitZ: -25
-  maxHardLimitZ: 25
+  minSoftLimitZ: -20
+  maxSoftLimitZ: 20
+  minHardLimitZ: -10
+  maxHardLimitZ: 10
   drawLimitsZ: 0
   slopeZCurrent: 0
   interceptZCurrent: 0
@@ -333,7 +333,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0024463583, y: 0.40595403, z: 0.005170612}
+  m_ConnectedAnchor: {x: -0.0024468352, y: 0.40595403, z: 0.005170612}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -807,14 +807,14 @@ MonoBehaviour:
   leftHandController: {fileID: 3092514557242679201}
   leftForeArmController: {fileID: 3092514556973599890}
   leftArmController: {fileID: 3092514557591848794}
-  stiffnessMultiplier: 1
-  handKLX: 40
-  handKLY: 20
-  handKLZ: 40
+  stiffnessMultiplier: 0.5
+  handKLX: 10
+  handKLY: 10
+  handKLZ: 10
   foreArmKLX: 100
   foreArmKLY: 5
   foreArmKLZ: 100
-  armKLX: 200
+  armKLX: 20
   armKLY: 20
   armKLZ: 200
 --- !u!1 &4765623532839076803
@@ -1024,10 +1024,10 @@ MonoBehaviour:
   dX: 0.01
   slopeX: 0
   interceptX: 0
-  minSoftLimitX: -60
-  maxSoftLimitX: 60
-  minHardLimitX: -50
-  maxHardLimitX: 50
+  minSoftLimitX: -90
+  maxSoftLimitX: 90
+  minHardLimitX: -80
+  maxHardLimitX: 80
   drawLimitsX: 0
   slopeXCurrent: 0
   interceptXCurrent: 0
@@ -1037,10 +1037,10 @@ MonoBehaviour:
   dY: 0.01
   slopeY: 0
   interceptY: 0
-  minSoftLimitY: -60
-  maxSoftLimitY: 60
-  minHardLimitY: -50
-  maxHardLimitY: 50
+  minSoftLimitY: -90
+  maxSoftLimitY: 90
+  minHardLimitY: -80
+  maxHardLimitY: 80
   drawLimitsY: 0
   slopeYCurrent: 0
   interceptYCurrent: 0
@@ -1075,7 +1075,7 @@ SpringJoint:
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: -0.00000008688979, y: 0.00000020861624, z: 0.00000014389632}
   serializedVersion: 2
-  m_Spring: 10000
+  m_Spring: 100000
   m_Damper: 0.2
   m_MinDistance: 0
   m_MaxDistance: 0
@@ -1331,7 +1331,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.06105867, y: 0.0911043, z: 0.007055061}
+  m_ConnectedAnchor: {x: -0.061058193, y: 0.0911043, z: 0.007055538}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -1764,7 +1764,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.002447295, y: 0.4059543, z: 0.0051454552}
+  m_ConnectedAnchor: {x: 0.0024468182, y: 0.4059543, z: 0.0051454552}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -2019,7 +2019,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000005805156, y: 0.13360202, z: -0.016264796}
+  m_ConnectedAnchor: {x: -0.0000010573527, y: 0.13360202, z: -0.016264796}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -2741,9 +2741,9 @@ MonoBehaviour:
   slopeX: 0
   interceptX: 0
   minSoftLimitX: -10
-  maxSoftLimitX: 130
+  maxSoftLimitX: 160
   minHardLimitX: 0
-  maxHardLimitX: 120
+  maxHardLimitX: 150
   drawLimitsX: 0
   slopeXCurrent: 0
   interceptXCurrent: 0
@@ -2753,10 +2753,10 @@ MonoBehaviour:
   dY: 0.01
   slopeY: 0
   interceptY: 0
-  minSoftLimitY: -35
-  maxSoftLimitY: 35
-  minHardLimitY: -25
-  maxHardLimitY: 25
+  minSoftLimitY: -90
+  maxSoftLimitY: 90
+  minHardLimitY: -80
+  maxHardLimitY: 80
   drawLimitsY: 0
   slopeYCurrent: 0
   interceptYCurrent: 0
@@ -2766,10 +2766,10 @@ MonoBehaviour:
   dZ: 0.01
   slopeZ: 0
   interceptZ: 0
-  minSoftLimitZ: -35
-  maxSoftLimitZ: 35
-  minHardLimitZ: -25
-  maxHardLimitZ: 25
+  minSoftLimitZ: -20
+  maxSoftLimitZ: 20
+  minHardLimitZ: -10
+  maxHardLimitZ: 10
   drawLimitsZ: 0
   slopeZCurrent: 0
   interceptZCurrent: 0
@@ -3179,11 +3179,11 @@ ConfigurableJoint:
   m_ConnectedBody: {fileID: 3092514557015684373}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 0, y: 0, z: -1}
+  m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0.0026593148, y: 0.12655018, z: 0.026009075}
   serializedVersion: 2
-  m_SecondaryAxis: {x: -1, y: 0, z: 0}
+  m_SecondaryAxis: {x: 0, y: 0, z: -1}
   m_XMotion: 1
   m_YMotion: 1
   m_ZMotion: 1
@@ -3587,7 +3587,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.061057433, y: 0.091105014, z: 0.0070560295}
+  m_ConnectedAnchor: {x: 0.061056957, y: 0.091105014, z: 0.0070555527}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -3947,7 +3947,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: -0.105, z: -0.03}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000015341901, y: 0.28214514, z: -0.006911181}
+  m_ConnectedAnchor: {x: -0.0000010573528, y: 0.28214514, z: -0.006911181}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -4368,7 +4368,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000016536607, y: 0.215689, z: -0.026496619}
+  m_ConnectedAnchor: {x: 0.0000011768235, y: 0.215689, z: -0.026496619}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
@@ -5159,11 +5159,11 @@ ConfigurableJoint:
   m_ConnectedBody: {fileID: 3092514557533501005}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 0, y: 0, z: 1}
+  m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0026601618, y: 0.12655018, z: -0.02600914}
+  m_ConnectedAnchor: {x: 0.0026601618, y: 0.12655066, z: -0.02600914}
   serializedVersion: 2
-  m_SecondaryAxis: {x: -1, y: 0, z: 0}
+  m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 1
   m_YMotion: 1
   m_ZMotion: 1
@@ -5482,7 +5482,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000015174187, y: 0.2761449, z: -0.0000001527369}
+  m_ConnectedAnchor: {x: -0.00000015174189, y: 0.2761449, z: 0.00000032410026}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 1
@@ -5608,10 +5608,10 @@ MonoBehaviour:
   dX: 0.01
   slopeX: 0
   interceptX: 0
-  minSoftLimitX: -60
-  maxSoftLimitX: 60
-  minHardLimitX: -50
-  maxHardLimitX: 50
+  minSoftLimitX: -90
+  maxSoftLimitX: 90
+  minHardLimitX: -80
+  maxHardLimitX: 80
   drawLimitsX: 0
   slopeXCurrent: 0
   interceptXCurrent: 0
@@ -5621,10 +5621,10 @@ MonoBehaviour:
   dY: 0.01
   slopeY: 0
   interceptY: 0
-  minSoftLimitY: -60
-  maxSoftLimitY: 60
-  minHardLimitY: -50
-  maxHardLimitY: 50
+  minSoftLimitY: -90
+  maxSoftLimitY: 90
+  minHardLimitY: -80
+  maxHardLimitY: 80
   drawLimitsY: 0
   slopeYCurrent: 0
   interceptYCurrent: 0
@@ -5657,9 +5657,9 @@ SpringJoint:
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000024925154, y: 0.00000020861657, z: -0.00000038670274}
+  m_ConnectedAnchor: {x: 0.0000002492268, y: 0.00000020861651, z: 0.000000090134414}
   serializedVersion: 2
-  m_Spring: 10000
+  m_Spring: 100000
   m_Damper: 0.2
   m_MinDistance: 0
   m_MaxDistance: 0

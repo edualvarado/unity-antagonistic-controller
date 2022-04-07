@@ -92,7 +92,12 @@ public class SafetyRegionRight : SafetyRegion
 
             // Add new obstacle to the dynamic list
             Vector3 closestPoint = Physics.ClosestPoint(raycastOriginRight, other, other.transform.position, other.transform.rotation) + offset;
-            obstacles.Add(new Obstacle(other, closestPoint, Vector3.Distance(closestPoint, raycastOriginRight)));
+
+            // TODO: Retrieve mass
+            if(other.gameObject.GetComponent<Rigidbody>())
+                obstacles.Add(new Obstacle(other, closestPoint, Vector3.Distance(closestPoint, raycastOriginRight), other.gameObject.GetComponent<Rigidbody>().mass));
+            else
+                obstacles.Add(new Obstacle(other, closestPoint, Vector3.Distance(closestPoint, raycastOriginRight), other.GetComponentInParent<Rigidbody>().mass));
         }
     }
 
@@ -189,6 +194,7 @@ public class SafetyRegionRight : SafetyRegion
                 {
                     if (!isRightInRange)
                     {
+                        Debug.Log("WALL UPDATE RIGHT");
                         Vector3 offset = (rightTargetTransform.up * hitOffsetRight.y) + (rightTargetTransform.right * hitOffsetRight.x) + (rightTargetTransform.forward * hitOffsetRight.z);
                         rightTarget.SetTargetUpdate(hitRightFixed, offset, 0.5f); // TODO: Time that takes to make the small jump
                     }
