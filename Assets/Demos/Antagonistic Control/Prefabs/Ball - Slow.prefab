@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 2699906311800985693}
   - component: {fileID: 7227796475226617454}
   - component: {fileID: -3991357285259168311}
+  - component: {fileID: 8193283264667649846}
   m_Layer: 10
   m_Name: Ball - Slow
-  m_TagString: Obstacle
+  m_TagString: Dynamic Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,3 +126,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914d716ed736d914d9f9b0575dad0ae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8193283264667649846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2449481422480573348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be9ef54a640de3949a2bfcebc5e0e04f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  realMass: 0
+  expectedMass: 1

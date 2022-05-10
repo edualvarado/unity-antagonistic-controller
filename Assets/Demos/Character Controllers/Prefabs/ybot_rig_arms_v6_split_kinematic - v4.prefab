@@ -480,7 +480,7 @@ MonoBehaviour:
   leftFootAnimVariableName: LeftFootCurve
   rightFootAnimVariableName: RightFootCurve
   useProIKFeature: 1
-  showSolverDebug: 1
+  showSolverDebug: 0
 --- !u!114 &442100375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4148,9 +4148,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originRegion: {fileID: 1904840852391078110}
   originOffset: {x: -0.3, y: 0, z: 0.3}
-  radiusRegion: 0.4
+  radiusRegion: 0.75
   reactionTime: 0.5
   obstacles: []
+  targetObstacle:
+    obstacle: {fileID: 0}
+    location: {x: 0, y: 0, z: 0}
+    distance: 0
+    realMass: 0
+    expectedMass: 0
   nowObstacle: {fileID: 0}
   prevObstacle: {fileID: 0}
   colliderChanged: 0
@@ -4321,9 +4327,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originRegion: {fileID: 3849705244601195322}
   originOffset: {x: 0.3, y: 0, z: 0.3}
-  radiusRegion: 0.4
+  radiusRegion: 0.75
   reactionTime: 0.5
   obstacles: []
+  targetObstacle:
+    obstacle: {fileID: 0}
+    location: {x: 0, y: 0, z: 0}
+    distance: 0
+    realMass: 0
+    expectedMass: 0
   nowObstacle: {fileID: 0}
   prevObstacle: {fileID: 0}
   colliderChanged: 0

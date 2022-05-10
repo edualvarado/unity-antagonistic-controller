@@ -320,7 +320,8 @@ public class JointControllerImitation
                                                      Quaternion currentLocalOrientation, Quaternion kinematicLocalOrientation, 
                                                      Rigidbody _objectRigidbody, Vector3 gravityTorqueVectorLocal, 
                                                      float fixedDeltaTime, 
-                                                     bool debugModeAntagonistic, bool drawModeAntagonistic)
+                                                     bool debugModeAntagonistic, bool drawModeAntagonistic,
+                                                     GameObject gameObject)
     {
         #region Orientations - X
 

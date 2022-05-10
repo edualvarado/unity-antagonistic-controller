@@ -253,7 +253,7 @@ public class TargetIK : MonoBehaviour
             if (target.CompareTag("LeftHand"))
             {
                 Vector3 forwardHit = new Vector3(-safetyRegionLeft.hitNormalLeft.z, 0, safetyRegionLeft.hitNormalLeft.x);
-                Debug.DrawRay(safetyRegionLeft.hitLeftFixed, forwardHit * 0.2f, Color.green);
+                //Debug.DrawRay(safetyRegionLeft.hitLeftFixed, forwardHit * 0.2f, Color.green);
 
                 if (forwardHit != Vector3.zero)
                     rotationToNormal = Quaternion.LookRotation(forwardHit, Vector3.Cross(forwardHit, safetyRegionLeft.hitNormalLeft));
@@ -265,7 +265,7 @@ public class TargetIK : MonoBehaviour
             if (target.CompareTag("RightHand"))
             {
                 Vector3 forwardHit = new Vector3(safetyRegionRight.hitNormalRight.z, 0, -safetyRegionRight.hitNormalRight.x);
-                Debug.DrawRay(safetyRegionRight.hitRight, forwardHit * 0.2f, Color.green);
+                //Debug.DrawRay(safetyRegionRight.hitRight, forwardHit * 0.2f, Color.green);
 
                 if (forwardHit != Vector3.zero)
                     rotationToNormal = Quaternion.LookRotation(forwardHit, Vector3.Cross(forwardHit, safetyRegionRight.hitNormalRight));
@@ -671,6 +671,7 @@ public class TargetIK : MonoBehaviour
 
 #endregion
 
+    /*
     void OnDrawGizmos()
     {
 #if UNITY_EDITOR
@@ -685,4 +686,5 @@ public class TargetIK : MonoBehaviour
         }
 #endif
     }
+    */
 }

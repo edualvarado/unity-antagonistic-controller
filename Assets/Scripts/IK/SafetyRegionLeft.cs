@@ -25,6 +25,7 @@ public class SafetyRegionLeft : SafetyRegion
     [Header("Left Hand - Obstacles")]
     [SerializeField]
     public List<Obstacle> obstacles = new List<Obstacle>();
+    public Obstacle targetObstacle;
     public Collider nowObstacle;
     public Collider prevObstacle;
     public bool colliderChanged = false;
@@ -94,9 +95,9 @@ public class SafetyRegionLeft : SafetyRegion
 
             // TODO: Retrieve mass
             if(other.gameObject.GetComponent<Rigidbody>())
-                obstacles.Add(new Obstacle(other, closestPoint, Vector3.Distance(closestPoint, raycastOriginLeft), other.gameObject.GetComponent<Rigidbody>().mass));
+                obstacles.Add(new Obstacle(other, closestPoint, Vector3.Distance(closestPoint, raycastOriginLeft), other.gameObject.GetComponent<ObstacleMass>().realMass, other.gameObject.GetComponent<ObstacleMass>().expectedMass));
             else
-                obstacles.Add(new Obstacle(other, closestPoint, Vector3.Distance(closestPoint, raycastOriginLeft), other.GetComponentInParent<Rigidbody>().mass));
+                obstacles.Add(new Obstacle(other, closestPoint, Vector3.Distance(closestPoint, raycastOriginLeft), other.GetComponentInParent<ObstacleMass>().realMass, other.GetComponentInParent<ObstacleMass>().expectedMass));
         }
     }
 
@@ -123,6 +124,7 @@ public class SafetyRegionLeft : SafetyRegion
                 if (min > obstacles[i].distance)
                 {
                     // We update the closest obstacle
+                    targetObstacle = obstacles[i]; // To provide to the Antagonistic Gains
                     nowObstacle = obstacles[i].obstacle;
                     hitLeft = obstacles[i].location;
                     min = obstacles[i].distance;
@@ -207,7 +209,7 @@ public class SafetyRegionLeft : SafetyRegion
                 if (drawIK)
                 {
                     Debug.DrawRay(raycastOriginLeft, (hitLeftFixed - originRegion.position), Color.blue);
-                    Debug.DrawRay(hitLeftFixed, hitNormalLeft * 0.2f, Color.cyan);
+                    Debug.DrawRay(hitLeftFixed, hitNormalLeft * 0.2f, Color.red);
                 }
 
                 // Method in charge of moving behaviour, which changes if we are on the move or we arrived
@@ -258,9 +260,9 @@ public class SafetyRegionLeft : SafetyRegion
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(hitLeftFixed, 0.05f);
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(hitLeft, 0.05f);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawSphere(hitLeftFixed, 0.05f);
+        //Gizmos.color = Color.green;
+        //Gizmos.DrawSphere(hitLeft, 0.05f);
     }
 }

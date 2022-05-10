@@ -499,6 +499,7 @@ GameObject:
   - component: {fileID: 2131981081088269043}
   - component: {fileID: 2131981081088269036}
   - component: {fileID: 2131981081088269037}
+  - component: {fileID: 3570403585060004446}
   m_Layer: 10
   m_Name: Ball 2
   m_TagString: Dynamic Obstacle
@@ -634,6 +635,21 @@ HingeJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &3570403585060004446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131981081088269039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be9ef54a640de3949a2bfcebc5e0e04f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  realMass: 0
+  expectedMass: 0
+  setSameMass: 1
 --- !u!1 &2131981081597214040
 GameObject:
   m_ObjectHideFlags: 0

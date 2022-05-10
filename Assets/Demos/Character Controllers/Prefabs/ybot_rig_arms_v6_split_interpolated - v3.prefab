@@ -2382,6 +2382,33 @@ MonoBehaviour:
   setMirror: 1
   syncRootsPositions: 1
   syncRootsRotations: 1
+  syncLegs: 0
+  upperLeftLegP: {fileID: 0}
+  bottomLeftLegP: {fileID: 0}
+  leftFoot1P: {fileID: 0}
+  leftFoot2P: {fileID: 0}
+  leftFoot3P: {fileID: 0}
+  upperRightLegP: {fileID: 0}
+  bottomRightLegP: {fileID: 0}
+  rightFoot1P: {fileID: 0}
+  rightFoot2P: {fileID: 0}
+  rightFoot3P: {fileID: 0}
+  upperLeftLegK: {fileID: 0}
+  bottomLeftLegK: {fileID: 0}
+  leftFoot1K: {fileID: 0}
+  leftFoot2K: {fileID: 0}
+  leftFoot3K: {fileID: 0}
+  upperRightLegK: {fileID: 0}
+  bottomRightLegK: {fileID: 0}
+  rightFoot1K: {fileID: 0}
+  rightFoot2K: {fileID: 0}
+  rightFoot3K: {fileID: 0}
+  syncLeftHand: 0
+  syncRightHand: 0
+  leftHandP: {fileID: 0}
+  rightHandP: {fileID: 0}
+  leftHandK: {fileID: 0}
+  rightHandK: {fileID: 0}
   throwAnchorUpperBody: 0
   throwAnchorLeftArm: 0
   throwAnchorRightArm: 0

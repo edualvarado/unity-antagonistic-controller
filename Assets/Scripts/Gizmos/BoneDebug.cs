@@ -71,7 +71,7 @@ public class BoneDebug : MonoBehaviour
                 if (colorBones == ColorBones.Blue)
                     Gizmos.color = Color.blue;
                 else if (colorBones == ColorBones.Green)
-                    Gizmos.color = Color.green;
+                    Gizmos.color = new Color(0.039f, 0.501f, 0f, 1f); // Instead of Color.green
                 else if (colorBones == ColorBones.Purple)
                     Gizmos.color = Color.magenta;
 

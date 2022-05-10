@@ -20,6 +20,36 @@ public class SetSkeletonsV3 : MonoBehaviour
     public bool syncRootsPositions = false;
     public bool syncRootsRotations = false;
 
+    // JUST PROVISIONAL TO MAKE THE PICTURE
+    public bool syncLegs = false;
+    public Transform upperLeftLegP;
+    public Transform bottomLeftLegP;
+    public Transform leftFoot1P;
+    public Transform leftFoot2P;
+    public Transform leftFoot3P;
+    public Transform upperRightLegP;
+    public Transform bottomRightLegP;
+    public Transform rightFoot1P;
+    public Transform rightFoot2P;
+    public Transform rightFoot3P;
+    public Transform upperLeftLegK;
+    public Transform bottomLeftLegK;
+    public Transform leftFoot1K;
+    public Transform leftFoot2K;
+    public Transform leftFoot3K;
+    public Transform upperRightLegK;
+    public Transform bottomRightLegK;
+    public Transform rightFoot1K;
+    public Transform rightFoot2K;
+    public Transform rightFoot3K;
+
+    public bool syncLeftHand = false;
+    public bool syncRightHand = false;
+    public Transform leftHandP;
+    public Transform rightHandP;
+    public Transform leftHandK;
+    public Transform rightHandK;
+
     [Header("Anchor - Debug")]
     public bool throwAnchorUpperBody;
     public bool throwAnchorLeftArm;
@@ -217,6 +247,21 @@ public class SetSkeletonsV3 : MonoBehaviour
         if (syncRootsRotations)
         {
             SyncRootsRotations();
+        }
+
+        if(syncLegs)
+        {
+            SyncLegs();
+        }
+
+        if (syncLeftHand)
+        {
+            SyncLeftHand();
+        }
+
+        if (syncRightHand)
+        {
+            SyncRightHand();
         }
     }
 
@@ -1157,6 +1202,43 @@ public class SetSkeletonsV3 : MonoBehaviour
 
         rootPhysicalSkeleton.position = hipConnector.transform.position;
         rootPhysicalSkeleton.rotation = hipConnector.transform.rotation;
+    }
+
+    private void SyncLegs()
+    {
+        upperLeftLegP.position = upperLeftLegK.position;
+        upperLeftLegP.rotation = upperLeftLegK.rotation;
+        bottomLeftLegP.position = bottomLeftLegK.position;
+        bottomLeftLegP.rotation = bottomLeftLegK.rotation;
+        leftFoot1P.position = leftFoot1K.position;
+        leftFoot1P.rotation = leftFoot1K.rotation;
+        leftFoot2P.position = leftFoot2K.position;
+        leftFoot2P.rotation = leftFoot2K.rotation;
+        leftFoot3P.position = leftFoot3K.position;
+        leftFoot3P.rotation = leftFoot3K.rotation;
+
+        upperRightLegP.position = upperRightLegK.position;
+        upperRightLegP.rotation = upperRightLegK.rotation;
+        bottomRightLegP.position = bottomRightLegK.position;
+        bottomRightLegP.rotation = bottomRightLegK.rotation;
+        rightFoot1P.position = rightFoot1K.position;
+        rightFoot1P.rotation = rightFoot1K.rotation;
+        rightFoot2P.position = rightFoot2K.position;
+        rightFoot2P.rotation = rightFoot2K.rotation;
+        rightFoot3P.position = rightFoot3K.position;
+        rightFoot3P.rotation = rightFoot3K.rotation;
+    }
+
+    private void SyncRightHand()
+    {
+        rightHandP.position = rightHandK.position;
+        rightHandP.rotation = rightHandK.rotation;
+    }
+
+    private void SyncLeftHand()
+    {
+        leftHandP.position = leftHandK.position;
+        leftHandP.rotation = leftHandK.rotation;
     }
 
     private void ResetInterpolatedSkeleton()

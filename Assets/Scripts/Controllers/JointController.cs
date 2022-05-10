@@ -102,6 +102,9 @@ public class JointController : MonoBehaviour
 
     // TEST
     public float DELTATIME = 0.02f;
+    //public float t = 0.0f;
+    //public bool springReachedLeft = false;
+    //public bool springReachedRight = false;
 
     public enum Controller
     {
@@ -111,6 +114,8 @@ public class JointController : MonoBehaviour
     [Header("General Settings")]
     public Controller controllerType;
     public GameObject kinematicLimb;
+    public SafetyRegionLeft safetyRegionLeft;
+    public SafetyRegionRight safetyRegionRight;
 
     [Header("Ragdoll Limbs for External Forces Calculation")]
     public GameObject physicalHand;
@@ -136,7 +141,10 @@ public class JointController : MonoBehaviour
 
     [Header("Antagonistic Controller - Settings")]
     public bool activateAntagonisticPD;
-    public bool applyAntTorque;
+    //public bool applyAntTorque;
+    public bool applyAntTorqueX;
+    public bool applyAntTorqueY;
+    public bool applyAntTorqueZ;
     public Vector3 requiredAntagonisticLocalTorque;
     public bool debugModeAntagonistic;
     public bool drawModeAntagonistic;
@@ -685,8 +693,7 @@ public class JointController : MonoBehaviour
 
             //Debug.Log("[INFO] gravityTorqueVectorLocal: " + gravityTorqueVectorLocal);
         }
-
-        if (this.CompareTag("LeftHand"))
+        else if (this.CompareTag("LeftHand"))
         {
             distance3D = _objectRigidbody.worldCenterOfMass - transform.position;
             gravityTorqueVector = Vector3.Cross(distance3D, _objectRigidbody.mass * gravityAcc); // wrt. global coord. system
@@ -835,18 +842,38 @@ public class JointController : MonoBehaviour
                                                                                                            _kinematicLocalOrientation,
                                                                                                            this._objectRigidbody, gravityTorqueVectorLocal,
                                                                                                            DELTATIME,
-                                                                                                           debugModeAntagonistic, drawModeAntagonistic);
+                                                                                                           debugModeAntagonistic, drawModeAntagonistic,
+                                                                                                           this.gameObject);
 
             if (debugModeAntagonistic)
             {
                 Debug.Log("[INFO: " + this.gameObject.name + "] Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorque: " + requiredAntagonisticLocalTorque);
             }
 
-            if (applyAntTorque)
+            //if (applyAntTorque)
+            //{
+            //    this._objectRigidbody.AddRelativeTorque(requiredAntagonisticLocalTorque, ForceMode.Force); // [Local]
+            //}
+
+            if (applyAntTorqueX)
             {
-                this._objectRigidbody.AddRelativeTorque(requiredAntagonisticLocalTorque, ForceMode.Force); // [Local]
+                this._objectRigidbody.AddRelativeTorque(new Vector3(requiredAntagonisticLocalTorque.x, 0f, 0f), ForceMode.Force); // [Local]
+            }
+            if (applyAntTorqueY)
+            {
+                this._objectRigidbody.AddRelativeTorque(new Vector3(0f, requiredAntagonisticLocalTorque.y, 0f), ForceMode.Force); // [Local]
+            }
+            if (applyAntTorqueZ)
+            {
+                this._objectRigidbody.AddRelativeTorque(new Vector3(0f, 0f, requiredAntagonisticLocalTorque.z), ForceMode.Force); // [Local]
             }
         }
+
+        #endregion
+
+        #region Spring Gain
+
+        SetSpringGain();
 
         #endregion
     }
@@ -1285,46 +1312,140 @@ public class JointController : MonoBehaviour
 
     #endregion
 
-    private void OnCollisionStay(Collision collision)
-    {
-        if (this.gameObject.CompareTag("RightHand"))
-        {
-            if (collision.gameObject.CompareTag("Dynamic Obstacle") || collision.gameObject.CompareTag("Static Obstacle"))
-            {
-                SpringJoint spring = GetComponent<SpringJoint>();
-                //spring.spring = 0;
+    #region Hand Springs
 
+    private void SetSpringGain()
+    {
+        if (this.gameObject.CompareTag("LeftHand"))
+        {
+            SpringJoint spring = GetComponent<SpringJoint>();
+
+            if (safetyRegionLeft.hasLeftTargetReached)
+            {
+                //spring.spring = 10000f;
+            }
+            else if (!safetyRegionLeft.hasLeftTargetReached)
+            {
+                //spring.spring = 10000f;
             }
         }
-        else if(this.gameObject.CompareTag("LeftHand"))
+        else if (this.gameObject.CompareTag("RightHand"))
         {
-            if (collision.gameObject.CompareTag("Dynamic Obstacle") || collision.gameObject.CompareTag("Static Obstacle"))
+            SpringJoint spring = GetComponent<SpringJoint>();
+
+            if (safetyRegionRight.hasRightTargetReached)
             {
-                SpringJoint spring = GetComponent<SpringJoint>();
-                //spring.spring = 0;
+                //spring.spring = 10000f;
             }
+            else if (!safetyRegionRight.hasRightTargetReached)
+            {
+                //spring.spring = 10000f;
+            }
+        }
+    }
+
+
+    /*
+    private void SetSpringGain()
+    {
+        if (this.gameObject.CompareTag("LeftHand"))
+        {
+            SpringJoint spring = GetComponent<SpringJoint>();
+
+            if (safetyRegionLeft.hasLeftTargetReached && !springReachedLeft)
+            {
+                spring.spring = Mathf.Lerp(0f, 10000f, t);
+                t += Time.deltaTime;
+
+                if (t > 1.0f)
+                {
+                    t = 0f;
+                    springReachedLeft = true;
+                }
+            }
+            else if (!safetyRegionLeft.hasLeftTargetReached)
+            {
+                spring.spring = Mathf.Lerp(10000f, 0, t);
+                t += Time.deltaTime;
+                springReachedLeft = false;
+            }
+        }
+        else if (this.gameObject.CompareTag("RightHand"))
+        {
+            SpringJoint spring = GetComponent<SpringJoint>();
+
+            if (safetyRegionRight.hasRightTargetReached && !springReachedRight)
+            {
+                spring.spring = Mathf.Lerp(0f, 10000f, t);
+                t += Time.deltaTime;
+
+                if (t > 1.0f)
+                {
+                    t = 0f;
+                    springReachedRight = true;
+                }
+            }
+            else if(!safetyRegionRight.hasRightTargetReached)
+            {
+                spring.spring = Mathf.Lerp(10000f, 0, t);
+                t += Time.deltaTime;
+                springReachedRight = false;
+            }
+        }
+    }
+    */
+
+    /*
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (this.gameObject.CompareTag("LeftHand"))
+        {
+        }
+        else if (this.gameObject.CompareTag("RightHand"))
+        {
+            StartCoroutine(IncreaseSpring());
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (this.gameObject.CompareTag("RightHand"))
+        if (this.gameObject.CompareTag("LeftHand"))
         {
-            if (collision.gameObject.CompareTag("Dynamic Obstacle") || collision.gameObject.CompareTag("Static Obstacle"))
-            {
-                SpringJoint spring = GetComponent<SpringJoint>();
-                //spring.spring = 0;
-            } 
         }
-        else if (this.gameObject.CompareTag("LeftHand"))
+        else if (this.gameObject.CompareTag("RightHand"))
         {
-            if (collision.gameObject.CompareTag("Dynamic Obstacle") || collision.gameObject.CompareTag("Static Obstacle"))
-            {
-                SpringJoint spring = GetComponent<SpringJoint>();
-                //spring.spring = 0;
-            }
+            StartCoroutine(DecreaseSpring());
         }
     }
 
+    IEnumerator IncreaseSpring()
+    {
+        SpringJoint spring = GetComponent<SpringJoint>();
 
+        float timeElapsed = 0;
+        while (timeElapsed < 1f)
+        {
+            spring.spring = Mathf.Lerp(0f, 10000f, timeElapsed / 1f);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        spring.spring = 10000f;
+    }
+
+    IEnumerator DecreaseSpring()
+    {
+        SpringJoint spring = GetComponent<SpringJoint>();
+
+        float timeElapsed = 0;
+        while (timeElapsed < 1f)
+        {
+            spring.spring = Mathf.Lerp(10000f, 0f, timeElapsed / 1f);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        spring.spring = 0f;
+    }
+    */
+
+    #endregion
 }

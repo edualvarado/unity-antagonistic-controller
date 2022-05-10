@@ -17,14 +17,28 @@ public class AntagonisticGains : MonoBehaviour
 
     #region Instance Fields
 
+    [Header("Antagonistic Control - Gains")]
+    public bool manualMode;
+    public float expectedMaxMassLeft = 10f;
+    public float expectedMaxMassRight = 10f;
+
+    [Header("Antagonistic Control - Left")]
+    [Range(0.5f, 8f)] public float stiffnessMultiplierLeft;
+    public float realMassLeft;
+    public float expectedMassLeft;
+
+    [Header("Antagonistic Control - Right")]
+    [Range(0.5f, 8f)] public float stiffnessMultiplierRight;
+    public float realMassRight;
+    public float expectedMassRight;
+
+    [Header("Antagonistic Control - Settings")]
     public JointController rightHandController;
     public JointController rightForeArmController;
     public JointController rightArmController;
     public JointController leftHandController;
     public JointController leftForeArmController;
     public JointController leftArmController;
-
-    [Range(0.5f, 5f)] public float stiffnessMultiplier;
 
     public float handKLX;
     public float handKLY;
@@ -37,6 +51,9 @@ public class AntagonisticGains : MonoBehaviour
     public float armKLX;
     public float armKLY;
     public float armKLZ;
+
+    public SafetyRegionLeft safetyRegionLeft;
+    public SafetyRegionRight safetyRegionRight;
 
     #endregion
 
@@ -51,7 +68,10 @@ public class AntagonisticGains : MonoBehaviour
 
     private void Start()
     {
-        // TODO: Initialize values slider
+        stiffnessMultiplierLeft = 3f;
+        stiffnessMultiplierRight = 3f;
+
+        // TODO: UI Initialize values slider
         //stiffnessSlider.minValue = 0.5f;
         //stiffnessSlider.maxValue = 5f;
     }
@@ -59,33 +79,56 @@ public class AntagonisticGains : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // TODO
+        // TODO UI
         //stiffnessMultiplier = stiffnessSlider.value;
         //stiffnessValue.text = stiffnessMultiplier.ToString();
 
-        rightHandController.pLX = handKLX * stiffnessMultiplier;
-        rightHandController.pLY = handKLY * stiffnessMultiplier;
-        rightHandController.pLZ = handKLZ * stiffnessMultiplier;
+        // Retrieve mass
+        expectedMassLeft = safetyRegionLeft.targetObstacle.expectedMass;
+        expectedMassRight = safetyRegionRight.targetObstacle.expectedMass;
+        realMassLeft = safetyRegionLeft.targetObstacle.realMass;
+        realMassRight = safetyRegionRight.targetObstacle.realMass;
 
-        rightForeArmController.pLX = foreArmKLX * stiffnessMultiplier;
-        rightForeArmController.pLY = foreArmKLY * stiffnessMultiplier;
-        rightForeArmController.pLZ = foreArmKLZ * stiffnessMultiplier;
+        if (!manualMode)
+        {
+            stiffnessMultiplierLeft = Mathf.Lerp(0.5f, 8f, expectedMassLeft/expectedMaxMassLeft);
+            stiffnessMultiplierRight = Mathf.Lerp(0.5f, 8f, expectedMassRight/expectedMaxMassRight);
 
-        rightArmController.pLX = armKLX * stiffnessMultiplier;
-        rightArmController.pLY = armKLY * stiffnessMultiplier;
-        rightArmController.pLZ = armKLZ * stiffnessMultiplier;
+            if (expectedMassLeft == 0f)
+                stiffnessMultiplierLeft = 3f;
 
-        leftHandController.pLX = handKLX * stiffnessMultiplier;
-        leftHandController.pLY = handKLY * stiffnessMultiplier;
-        leftHandController.pLZ = handKLZ * stiffnessMultiplier;
+            if (expectedMassRight == 0f)
+                stiffnessMultiplierRight = 3f;
+        }
 
-        leftForeArmController.pLX = foreArmKLX * stiffnessMultiplier;
-        leftForeArmController.pLY = foreArmKLY * stiffnessMultiplier;
-        leftForeArmController.pLZ = foreArmKLZ * stiffnessMultiplier;
+        SetMultipliedStiffness();
+    }
 
-        leftArmController.pLX = armKLX * stiffnessMultiplier;
-        leftArmController.pLY = armKLX * stiffnessMultiplier;
-        leftArmController.pLZ = armKLX * stiffnessMultiplier;
+    private void SetMultipliedStiffness()
+    {
+        rightHandController.pLX = handKLX * stiffnessMultiplierRight;
+        rightHandController.pLY = handKLY * stiffnessMultiplierRight;
+        rightHandController.pLZ = handKLZ * stiffnessMultiplierRight;
+
+        rightForeArmController.pLX = foreArmKLX * stiffnessMultiplierRight;
+        rightForeArmController.pLY = foreArmKLY * stiffnessMultiplierRight;
+        rightForeArmController.pLZ = foreArmKLZ * stiffnessMultiplierRight;
+
+        rightArmController.pLX = armKLX * stiffnessMultiplierRight;
+        rightArmController.pLY = armKLY * stiffnessMultiplierRight;
+        rightArmController.pLZ = armKLZ * stiffnessMultiplierRight;
+
+        leftHandController.pLX = handKLX * stiffnessMultiplierLeft;
+        leftHandController.pLY = handKLY * stiffnessMultiplierLeft;
+        leftHandController.pLZ = handKLZ * stiffnessMultiplierLeft;
+
+        leftForeArmController.pLX = foreArmKLX * stiffnessMultiplierLeft;
+        leftForeArmController.pLY = foreArmKLY * stiffnessMultiplierLeft;
+        leftForeArmController.pLZ = foreArmKLZ * stiffnessMultiplierLeft;
+
+        leftArmController.pLX = armKLX * stiffnessMultiplierLeft;
+        leftArmController.pLY = armKLX * stiffnessMultiplierLeft;
+        leftArmController.pLZ = armKLX * stiffnessMultiplierLeft;
     }
 
     #endregion
