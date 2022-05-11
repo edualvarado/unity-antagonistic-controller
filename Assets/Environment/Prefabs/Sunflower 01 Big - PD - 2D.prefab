@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: 476825226228312728}
   - component: {fileID: 476825226228312735}
   - component: {fileID: 476825226228312734}
+  - component: {fileID: 566346838601184977}
   m_Layer: 0
   m_Name: SM_Prop_Sunflower_01
   m_TagString: Untagged
@@ -450,3 +451,18 @@ MonoBehaviour:
   _rb: {fileID: 476825226228312728}
   _joint: {fileID: 476825226228312735}
   root: {fileID: 476825225225854356}
+--- !u!114 &566346838601184977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476825226228312732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be9ef54a640de3949a2bfcebc5e0e04f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  realMass: 0
+  expectedMass: 0
+  setSameMass: 1

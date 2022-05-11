@@ -873,7 +873,7 @@ public class JointController : MonoBehaviour
 
         #region Spring Gain
 
-        SetSpringGain();
+        //SetSpringGain();
 
         #endregion
     }
@@ -1314,6 +1314,7 @@ public class JointController : MonoBehaviour
 
     #region Hand Springs
 
+    /*
     private void SetSpringGain()
     {
         if (this.gameObject.CompareTag("LeftHand"))
@@ -1343,67 +1344,18 @@ public class JointController : MonoBehaviour
             }
         }
     }
-
-
-    /*
-    private void SetSpringGain()
-    {
-        if (this.gameObject.CompareTag("LeftHand"))
-        {
-            SpringJoint spring = GetComponent<SpringJoint>();
-
-            if (safetyRegionLeft.hasLeftTargetReached && !springReachedLeft)
-            {
-                spring.spring = Mathf.Lerp(0f, 10000f, t);
-                t += Time.deltaTime;
-
-                if (t > 1.0f)
-                {
-                    t = 0f;
-                    springReachedLeft = true;
-                }
-            }
-            else if (!safetyRegionLeft.hasLeftTargetReached)
-            {
-                spring.spring = Mathf.Lerp(10000f, 0, t);
-                t += Time.deltaTime;
-                springReachedLeft = false;
-            }
-        }
-        else if (this.gameObject.CompareTag("RightHand"))
-        {
-            SpringJoint spring = GetComponent<SpringJoint>();
-
-            if (safetyRegionRight.hasRightTargetReached && !springReachedRight)
-            {
-                spring.spring = Mathf.Lerp(0f, 10000f, t);
-                t += Time.deltaTime;
-
-                if (t > 1.0f)
-                {
-                    t = 0f;
-                    springReachedRight = true;
-                }
-            }
-            else if(!safetyRegionRight.hasRightTargetReached)
-            {
-                spring.spring = Mathf.Lerp(10000f, 0, t);
-                t += Time.deltaTime;
-                springReachedRight = false;
-            }
-        }
-    }
-    */
-
-    /*
+    */   
     private void OnCollisionEnter(Collision collision)
     {
         if (this.gameObject.CompareTag("LeftHand"))
         {
+            StartCoroutine(IncreaseSpring());
+            //Debug.Log("DEBUG LEFT ENTERED!");
         }
         else if (this.gameObject.CompareTag("RightHand"))
         {
             StartCoroutine(IncreaseSpring());
+            //Debug.Log("DEBUG RIGHT ENTERED!");
         }
     }
 
@@ -1411,13 +1363,21 @@ public class JointController : MonoBehaviour
     {
         if (this.gameObject.CompareTag("LeftHand"))
         {
+            SpringJoint spring = GetComponent<SpringJoint>();
+            spring.spring = 0f;
+
+            //Debug.Log("DEBUG LEFT EXITED!");
         }
         else if (this.gameObject.CompareTag("RightHand"))
         {
-            StartCoroutine(DecreaseSpring());
+            SpringJoint spring = GetComponent<SpringJoint>();
+            spring.spring = 0f;
+
+            //Debug.Log("DEBUG RIGHT EXITED!");
         }
     }
 
+    
     IEnumerator IncreaseSpring()
     {
         SpringJoint spring = GetComponent<SpringJoint>();
@@ -1445,7 +1405,7 @@ public class JointController : MonoBehaviour
         }
         spring.spring = 0f;
     }
-    */
+    
 
     #endregion
 }
