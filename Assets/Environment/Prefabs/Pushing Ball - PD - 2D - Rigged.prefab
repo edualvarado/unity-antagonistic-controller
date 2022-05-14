@@ -175,11 +175,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8124980633431487869}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be9ef54a640de3949a2bfcebc5e0e04f, type: 3}
+  m_Script: {fileID: 11500000, guid: fb25b110fc8a2664c91d9acd72b0a2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  realMass: 2.5
-  expectedMass: 2.5
+  realMass: 0
+  expectedMass: 0
   setSameMass: 1
 --- !u!1 &8124980634332702083
 GameObject:
@@ -608,7 +608,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8124980634712141282}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be9ef54a640de3949a2bfcebc5e0e04f, type: 3}
+  m_Script: {fileID: 11500000, guid: fb25b110fc8a2664c91d9acd72b0a2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   realMass: 0
@@ -629,7 +629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8124980634941932525
 Transform:
   m_ObjectHideFlags: 0

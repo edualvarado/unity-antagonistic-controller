@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7730116666910270742}
   - component: {fileID: 7730116666910270740}
   - component: {fileID: 7730116666910270741}
-  - component: {fileID: 203727921}
+  - component: {fileID: 5405750365856168754}
   m_Layer: 0
   m_Name: Inverse Pendulum
   m_TagString: Untagged
@@ -167,7 +167,7 @@ MonoBehaviour:
   _rb: {fileID: 7730116666910270742}
   _joint: {fileID: 7730116666910270740}
   root: {fileID: 7730116668081042925}
---- !u!114 &203727921
+--- !u!114 &5405750365856168754
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,12 +176,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7730116666910270738}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be9ef54a640de3949a2bfcebc5e0e04f, type: 3}
+  m_Script: {fileID: 11500000, guid: fb25b110fc8a2664c91d9acd72b0a2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   realMass: 0
   expectedMass: 0
+  realVelocity: 0
+  expectedVelocity: 0
   setSameMass: 1
+  setSameVelocity: 1
 --- !u!1 &7730116667789688205
 GameObject:
   m_ObjectHideFlags: 0

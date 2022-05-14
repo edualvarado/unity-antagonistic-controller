@@ -1,5 +1,71 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &82703614
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 82703615}
+  - component: {fileID: 82703617}
+  - component: {fileID: 82703616}
+  m_Layer: 0
+  m_Name: RightSafetyRegion-3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &82703615
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82703614}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4570854229453088925}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &82703617
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82703614}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &82703616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82703614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc456f99b4d26b040a3a8975bf71c38c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1013239509
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,6 +178,72 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 3
+--- !u!1 &1728702831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1728702832}
+  - component: {fileID: 1728702834}
+  - component: {fileID: 1728702833}
+  m_Layer: 0
+  m_Name: RightSafetyRegion-2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1728702832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728702831}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4570854229453088925}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1728702834
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728702831}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.75
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1728702833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728702831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b70f562a2c48034598804d24d6f4894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2124374411
 GameObject:
   m_ObjectHideFlags: 0
@@ -2021,6 +2153,8 @@ Transform:
   m_Children:
   - {fileID: 7170379306008190284}
   - {fileID: 7170379306721617695}
+  - {fileID: 1728702832}
+  - {fileID: 82703615}
   m_Father: {fileID: 4570854228875619745}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4157,6 +4291,8 @@ MonoBehaviour:
     distance: 0
     realMass: 0
     expectedMass: 0
+    realVelocity: 0
+    expectedVelocity: 0
   nowObstacle: {fileID: 0}
   prevObstacle: {fileID: 0}
   colliderChanged: 0
@@ -4329,6 +4465,10 @@ MonoBehaviour:
   originOffset: {x: 0.3, y: 0, z: 0.3}
   radiusRegion: 0.75
   reactionTime: 0.5
+  manualMode: 0
+  realVelocityRight: 0
+  expectedVelocityRight: 0
+  expectedMaxVelocityRight: 10
   obstacles: []
   targetObstacle:
     obstacle: {fileID: 0}
@@ -4336,6 +4476,8 @@ MonoBehaviour:
     distance: 0
     realMass: 0
     expectedMass: 0
+    realVelocity: 0
+    expectedVelocity: 0
   nowObstacle: {fileID: 0}
   prevObstacle: {fileID: 0}
   colliderChanged: 0
@@ -4352,6 +4494,14 @@ MonoBehaviour:
   hasRightTargetReached: 0
   hasRightStartedMovingOut: 0
   isRightInRange: 0
+  sphereAllCollidersRight: 0
+  onTriggerEventRight2: {fileID: 1728702833}
+  sphereColliderRight2: {fileID: 1728702834}
+  sphereColliderRight2Center: {x: 0, y: 0, z: 0.1}
+  sphereColliderRight2Multiplier: 0
+  onTriggerEventRight3: {fileID: 82703616}
+  sphereColliderRight3: {fileID: 82703617}
+  sphereColliderRight3Center: {x: 0, y: 0, z: 0.1}
 --- !u!1 &7170379307079623658
 GameObject:
   m_ObjectHideFlags: 0

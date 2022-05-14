@@ -22,6 +22,8 @@ public class SafetyRegionLeft : SafetyRegion
 
     #region Instance Fields
 
+
+
     [Header("Left Hand - Obstacles")]
     [SerializeField]
     public List<Obstacle> obstacles = new List<Obstacle>();
@@ -95,9 +97,9 @@ public class SafetyRegionLeft : SafetyRegion
 
             // TODO: Retrieve mass
             if(other.gameObject.GetComponent<Rigidbody>())
-                obstacles.Add(new Obstacle(other, closestPoint, Vector3.Distance(closestPoint, raycastOriginLeft), other.gameObject.GetComponent<ObstacleMass>().realMass, other.gameObject.GetComponent<ObstacleMass>().expectedMass));
+                obstacles.Add(new Obstacle(other, closestPoint, Vector3.Distance(closestPoint, raycastOriginLeft), other.gameObject.GetComponent<ObstacleDynamics>().realMass, other.gameObject.GetComponent<ObstacleDynamics>().expectedMass, other.gameObject.GetComponent<ObstacleDynamics>().realVelocity, other.gameObject.GetComponent<ObstacleDynamics>().expectedVelocity));
             else
-                obstacles.Add(new Obstacle(other, closestPoint, Vector3.Distance(closestPoint, raycastOriginLeft), other.GetComponentInParent<ObstacleMass>().realMass, other.GetComponentInParent<ObstacleMass>().expectedMass));
+                obstacles.Add(new Obstacle(other, closestPoint, Vector3.Distance(closestPoint, raycastOriginLeft), other.GetComponentInParent<ObstacleDynamics>().realMass, other.GetComponentInParent<ObstacleDynamics>().expectedMass, other.GetComponentInParent<ObstacleDynamics>().realVelocity, other.GetComponentInParent<ObstacleDynamics>().expectedVelocity));
         }
     }
 

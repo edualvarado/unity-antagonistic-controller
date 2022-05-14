@@ -45,7 +45,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2460987158544030854
 Transform:
   m_ObjectHideFlags: 0
@@ -138,7 +138,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000000027939677, y: 0.008738916, z: 0.0000000030267984}
+  m_ConnectedAnchor: {x: -0.0000000011641532, y: 0.0087389145, z: 6.9849193e-10}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -231,7 +231,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3405838052846763998}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be9ef54a640de3949a2bfcebc5e0e04f, type: 3}
+  m_Script: {fileID: 11500000, guid: fb25b110fc8a2664c91d9acd72b0a2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   realMass: 0

@@ -2382,7 +2382,9 @@ MonoBehaviour:
   setMirror: 1
   syncRootsPositions: 1
   syncRootsRotations: 1
-  syncLegs: 0
+  syncLeftArm: 0
+  syncRightArm: 0
+  syncLegs: 1
   upperLeftLegP: {fileID: 0}
   bottomLeftLegP: {fileID: 0}
   leftFoot1P: {fileID: 0}
@@ -2480,7 +2482,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7244432966600211281}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4201bfb83a7dd840bfd7eb233edad57, type: 3}
   m_Name: 

@@ -85,6 +85,8 @@ public class WindowGraph : MonoBehaviour
         float graphHeight = graphContainer.sizeDelta.y;
         float yMaximum = 100f;
         float xSize = 10f;
+        //float yMaximum = 1f;
+        //float xSize = 1f;
 
         GameObject lastCircleGameObject = null;
         for (int i = 0; i < valueList.Count; i++)

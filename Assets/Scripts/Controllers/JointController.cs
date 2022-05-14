@@ -313,12 +313,16 @@ public class JointController : MonoBehaviour
             _rightForeArmPointX = _rightForeArmGraph.CreateCircle(_rightForeArmGraphContainer, new Vector2(0, 0), Color.red, "rightForeArmPointX");
             _rightForeArmLineX = _rightForeArmGraph.CreateLine(_rightForeArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.red, "rightForeArmLineX");
             _rightForeArmLineXCurrent = _rightForeArmGraph.CreateLine(_rightForeArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.black, "rightForeArmLineXCurrent");
+
+            /* No DOF */
+            /*
             _rightForeArmPointY = _rightForeArmGraph.CreateCircle(_rightForeArmGraphContainer, new Vector2(0, 0), Color.green, "rightForeArmPointY");
             _rightForeArmLineY = _rightForeArmGraph.CreateLine(_rightForeArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.green, "rightForeArmLineY");
             _rightForeArmLineYCurrent = _rightForeArmGraph.CreateLine(_rightForeArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.black, "rightForeArmLineYCurrent");
             _rightForeArmPointZ = _rightForeArmGraph.CreateCircle(_rightForeArmGraphContainer, new Vector2(0, 0), Color.blue, "rightForeArmPointZ");
             _rightForeArmLineZ = _rightForeArmGraph.CreateLine(_rightForeArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.blue, "rightForeArmLineZ");
             _rightForeArmLineZCurrent = _rightForeArmGraph.CreateLine(_rightForeArmGraphContainer, new Vector2(0, 0), new Vector2(0, 0), Color.black, "rightForeArmLineZCurrent");
+            */
         }
 
         // Window Graph - Right Arm
@@ -441,7 +445,26 @@ public class JointController : MonoBehaviour
         // Window Graph Update - Right Hand
         if (this.gameObject.CompareTag("RightHand"))
         {
-            _rightHandGraph.MoveCircle(_rightHandPointX, new Vector2(pLX, pHX));
+            // Moving point
+            //_rightHandGraph.MoveCircle(_rightHandPointX, new Vector2(pLX, pHX));
+            // Max value to reach: 80f
+            if (slopeX > 1f)
+            {
+                if((pHX / 80f) * (_rightHandGraphContainer.sizeDelta.y) >= _rightHandGraphContainer.sizeDelta.y)
+                {
+                    _rightHandGraph.MoveCircle(_rightHandPointX, new Vector2((_rightHandGraphContainer.sizeDelta.x / slopeX), Mathf.Clamp((pHX / 80f) * (_rightHandGraphContainer.sizeDelta.y), 0, _rightHandGraphContainer.sizeDelta.y)));
+                }
+                else
+                {
+                    _rightHandGraph.MoveCircle(_rightHandPointX, new Vector2((pLX / 80f) * _rightHandGraphContainer.sizeDelta.x, Mathf.Clamp((pHX / 80f) * (_rightHandGraphContainer.sizeDelta.y), 0, _rightHandGraphContainer.sizeDelta.y)));
+                }
+            }
+            else if (slopeX < 1f)
+            {
+                _rightHandGraph.MoveCircle(_rightHandPointX, new Vector2((pLX / 80f) * _rightHandGraphContainer.sizeDelta.x, (pHX / 80f) * (_rightHandGraphContainer.sizeDelta.y)));
+            }
+
+            // Moving line
             if (slopeX > 1f)
             {
                 _rightHandGraph.MoveLine(_rightHandLineX, Vector2.zero, new Vector2((_rightHandGraphContainer.sizeDelta.x / slopeX), _rightHandGraphContainer.sizeDelta.y));
@@ -459,7 +482,26 @@ public class JointController : MonoBehaviour
                 _rightHandGraph.MoveLine(_rightHandLineXCurrent, Vector2.zero, new Vector2(_rightHandGraphContainer.sizeDelta.x, _rightHandGraphContainer.sizeDelta.y * slopeXCurrent));
             }
 
-            _rightHandGraph.MoveCircle(_rightHandPointY, new Vector2(pLY, pHY));
+            // Moving point
+            //_rightHandGraph.MoveCircle(_rightHandPointY, new Vector2(pLY, pHY));
+            // Max value to reach: 80f
+            if (slopeY > 1f)
+            {
+                if ((pHY / 80f) * (_rightHandGraphContainer.sizeDelta.y) >= _rightHandGraphContainer.sizeDelta.y)
+                {
+                    _rightHandGraph.MoveCircle(_rightHandPointY, new Vector2((_rightHandGraphContainer.sizeDelta.x / slopeY), Mathf.Clamp((pHY / 80f) * (_rightHandGraphContainer.sizeDelta.y), 0, _rightHandGraphContainer.sizeDelta.y)));
+                }
+                else
+                {
+                    _rightHandGraph.MoveCircle(_rightHandPointY, new Vector2((pLY / 80f) * _rightHandGraphContainer.sizeDelta.x, Mathf.Clamp((pHY / 80f) * (_rightHandGraphContainer.sizeDelta.y), 0, _rightHandGraphContainer.sizeDelta.y)));
+                }
+            }
+            else if (slopeY < 1f)
+            {
+                _rightHandGraph.MoveCircle(_rightHandPointY, new Vector2((pLY / 80f) * _rightHandGraphContainer.sizeDelta.x, (pHY / 80f) * (_rightHandGraphContainer.sizeDelta.y)));
+            }
+
+            // Moving line
             if (slopeY > 1f)
             {
                 _rightHandGraph.MoveLine(_rightHandLineY, Vector2.zero, new Vector2((_rightHandGraphContainer.sizeDelta.x / slopeY), _rightHandGraphContainer.sizeDelta.y));
@@ -477,7 +519,26 @@ public class JointController : MonoBehaviour
                 _rightHandGraph.MoveLine(_rightHandLineYCurrent, Vector2.zero, new Vector2(_rightHandGraphContainer.sizeDelta.x, _rightHandGraphContainer.sizeDelta.y * slopeYCurrent));
             }
 
-            _rightHandGraph.MoveCircle(_rightHandPointZ, new Vector2(pLZ, pHZ));
+            // Moving point
+            //_rightHandGraph.MoveCircle(_rightHandPointZ, new Vector2(pLZ, pHZ));
+            // Max value to reach: 80f
+            if (slopeZ > 1f)
+            {
+                if ((pHZ / 80f) * (_rightHandGraphContainer.sizeDelta.y) >= _rightHandGraphContainer.sizeDelta.y)
+                {
+                    _rightHandGraph.MoveCircle(_rightHandPointZ, new Vector2((_rightHandGraphContainer.sizeDelta.x / slopeZ), Mathf.Clamp((pHZ / 80f) * (_rightHandGraphContainer.sizeDelta.y), 0, _rightHandGraphContainer.sizeDelta.y)));
+                }
+                else
+                {
+                    _rightHandGraph.MoveCircle(_rightHandPointZ, new Vector2((pLZ / 80f) * _rightHandGraphContainer.sizeDelta.x, Mathf.Clamp((pHZ / 80f) * (_rightHandGraphContainer.sizeDelta.y), 0, _rightHandGraphContainer.sizeDelta.y)));
+                }
+            }
+            else if (slopeZ < 1f)
+            {
+                _rightHandGraph.MoveCircle(_rightHandPointZ, new Vector2((pLZ / 80f) * _rightHandGraphContainer.sizeDelta.x, (pHZ / 80f) * (_rightHandGraphContainer.sizeDelta.y)));
+            }
+
+            // Moving line
             if (slopeZ > 1f)
             {
                 _rightHandGraph.MoveLine(_rightHandLineZ, Vector2.zero, new Vector2((_rightHandGraphContainer.sizeDelta.x / slopeZ), _rightHandGraphContainer.sizeDelta.y));
@@ -499,7 +560,26 @@ public class JointController : MonoBehaviour
         // Window Graph Update - Right Fore Arm
         if (this.gameObject.CompareTag("RightForeArm"))
         {
-            _rightForeArmGraph.MoveCircle(_rightForeArmPointX, new Vector2(pLX, pHX));
+            // Moving point
+            //_rightForeArmGraph.MoveCircle(_rightForeArmPointX, new Vector2(pLX, pHX));
+            // Max value to reach: 800f
+            if (slopeX > 1f)
+            {
+                if ((pHX / 800f) * (_rightForeArmGraphContainer.sizeDelta.y) >= _rightForeArmGraphContainer.sizeDelta.y)
+                {
+                    _rightForeArmGraph.MoveCircle(_rightForeArmPointX, new Vector2((_rightForeArmGraphContainer.sizeDelta.x / slopeX), Mathf.Clamp((pHX / 800f) * (_rightForeArmGraphContainer.sizeDelta.y), 0, _rightForeArmGraphContainer.sizeDelta.y)));
+                }
+                else
+                {
+                    _rightForeArmGraph.MoveCircle(_rightForeArmPointX, new Vector2((pLX / 800f) * _rightForeArmGraphContainer.sizeDelta.x, Mathf.Clamp((pHX / 800f) * (_rightForeArmGraphContainer.sizeDelta.y), 0, _rightForeArmGraphContainer.sizeDelta.y)));
+                }
+            }
+            else if (slopeX < 1f)
+            {
+                _rightForeArmGraph.MoveCircle(_rightForeArmPointX, new Vector2((pLX / 800f) * _rightForeArmGraphContainer.sizeDelta.x, (pHX / 800f) * (_rightForeArmGraphContainer.sizeDelta.y)));
+            }
+
+            // Moving line
             if (slopeX > 1f)
             {
                 _rightForeArmGraph.MoveLine(_rightForeArmLineX, Vector2.zero, new Vector2((_rightForeArmGraphContainer.sizeDelta.x / slopeX), _rightForeArmGraphContainer.sizeDelta.y));
@@ -517,7 +597,29 @@ public class JointController : MonoBehaviour
                 _rightForeArmGraph.MoveLine(_rightForeArmLineXCurrent, Vector2.zero, new Vector2(_rightForeArmGraphContainer.sizeDelta.x, _rightForeArmGraphContainer.sizeDelta.y * slopeXCurrent));
             }
 
-            _rightForeArmGraph.MoveCircle(_rightForeArmPointY, new Vector2(pLY, pHY));
+            /* No DOF */
+            /*
+
+            // Moving point
+            //_rightForeArmGraph.MoveCircle(_rightForeArmPointY, new Vector2(pLY, pHY));
+            // Max value to reach: 40f
+            if (slopeY > 1f)
+            {
+                if ((pHY / 40f) * (_rightForeArmGraphContainer.sizeDelta.y) >= _rightForeArmGraphContainer.sizeDelta.y)
+                {
+                    _rightForeArmGraph.MoveCircle(_rightForeArmPointY, new Vector2((_rightForeArmGraphContainer.sizeDelta.x / slopeY), Mathf.Clamp((pHY / 40f) * (_rightForeArmGraphContainer.sizeDelta.y), 0, _rightForeArmGraphContainer.sizeDelta.y)));
+                }
+                else
+                {
+                    _rightForeArmGraph.MoveCircle(_rightForeArmPointY, new Vector2((pLY / 40f) * _rightForeArmGraphContainer.sizeDelta.x, Mathf.Clamp((pHY / 40f) * (_rightForeArmGraphContainer.sizeDelta.y), 0, _rightForeArmGraphContainer.sizeDelta.y)));
+                }
+            }
+            else if (slopeY < 1f)
+            {
+                _rightForeArmGraph.MoveCircle(_rightForeArmPointY, new Vector2((pLY / 40f) * _rightForeArmGraphContainer.sizeDelta.x, (pHY / 40f) * (_rightForeArmGraphContainer.sizeDelta.y)));
+            }
+
+            // Moving line
             if (slopeY > 1f)
             {
                 _rightForeArmGraph.MoveLine(_rightForeArmLineY, Vector2.zero, new Vector2((_rightForeArmGraphContainer.sizeDelta.x / slopeY), _rightForeArmGraphContainer.sizeDelta.y));
@@ -535,7 +637,26 @@ public class JointController : MonoBehaviour
                 _rightForeArmGraph.MoveLine(_rightForeArmLineYCurrent, Vector2.zero, new Vector2(_rightForeArmGraphContainer.sizeDelta.x, _rightForeArmGraphContainer.sizeDelta.y * slopeYCurrent));
             }
 
-            _rightForeArmGraph.MoveCircle(_rightForeArmPointZ, new Vector2(pLZ, pHZ));
+            // Moving point
+            //_rightForeArmGraph.MoveCircle(_rightForeArmPointZ, new Vector2(pLZ, pHZ));
+            // Max value to reach: 40f
+            if (slopeZ > 1f)
+            {
+                if ((pHZ / 800f) * (_rightForeArmGraphContainer.sizeDelta.y) >= _rightForeArmGraphContainer.sizeDelta.y)
+                {
+                    _rightForeArmGraph.MoveCircle(_rightForeArmPointZ, new Vector2((_rightForeArmGraphContainer.sizeDelta.x / slopeZ), Mathf.Clamp((pHZ / 800f) * (_rightForeArmGraphContainer.sizeDelta.y), 0, _rightForeArmGraphContainer.sizeDelta.y)));
+                }
+                else
+                {
+                    _rightForeArmGraph.MoveCircle(_rightForeArmPointZ, new Vector2((pLZ / 800f) * _rightForeArmGraphContainer.sizeDelta.x, Mathf.Clamp((pHZ / 800f) * (_rightForeArmGraphContainer.sizeDelta.y), 0, _rightForeArmGraphContainer.sizeDelta.y)));
+                }
+            }
+            else if (slopeZ < 1f)
+            {
+                _rightForeArmGraph.MoveCircle(_rightForeArmPointZ, new Vector2((pLZ / 800f) * _rightForeArmGraphContainer.sizeDelta.x, (pHZ / 800f) * (_rightForeArmGraphContainer.sizeDelta.y)));
+            }
+
+            // Moving line
             if (slopeZ > 1f)
             {
                 _rightForeArmGraph.MoveLine(_rightForeArmLineZ, Vector2.zero, new Vector2((_rightForeArmGraphContainer.sizeDelta.x / slopeZ), _rightForeArmGraphContainer.sizeDelta.y));
@@ -552,12 +673,33 @@ public class JointController : MonoBehaviour
             {
                 _rightForeArmGraph.MoveLine(_rightForeArmLineZCurrent, Vector2.zero, new Vector2(_rightForeArmGraphContainer.sizeDelta.x, _rightForeArmGraphContainer.sizeDelta.y * slopeZCurrent));
             }
+
+            */
         }
 
         // Window Graph Update - Right Arm
         if (this.gameObject.CompareTag("RightArm"))
         {
-            _rightArmGraph.MoveCircle(_rightArmPointX, new Vector2(pLX, pHX));
+            // Moving point
+            //_rightArmGraph.MoveCircle(_rightArmPointX, new Vector2(pLX, pHX));
+            // Max value to reach: 160f
+            if (slopeX > 1f)
+            {
+                if ((pHX / 160f) * (_rightArmGraphContainer.sizeDelta.y) >= _rightArmGraphContainer.sizeDelta.y)
+                {
+                    _rightArmGraph.MoveCircle(_rightArmPointX, new Vector2((_rightArmGraphContainer.sizeDelta.x / slopeX), Mathf.Clamp((pHX / 160f) * (_rightArmGraphContainer.sizeDelta.y), 0, _rightArmGraphContainer.sizeDelta.y)));
+                }
+                else
+                {
+                    _rightArmGraph.MoveCircle(_rightArmPointX, new Vector2((pLX / 160f) * _rightArmGraphContainer.sizeDelta.x, Mathf.Clamp((pHX / 160f) * (_rightArmGraphContainer.sizeDelta.y), 0, _rightArmGraphContainer.sizeDelta.y)));
+                }
+            }
+            else if (slopeX < 1f)
+            {
+                _rightArmGraph.MoveCircle(_rightArmPointX, new Vector2((pLX / 160f) * _rightArmGraphContainer.sizeDelta.x, (pHX / 160f) * (_rightArmGraphContainer.sizeDelta.y)));
+            }
+
+            // Moving line
             if (slopeX > 1f)
             {
                 _rightArmGraph.MoveLine(_rightArmLineX, Vector2.zero, new Vector2((_rightArmGraphContainer.sizeDelta.x / slopeX), _rightArmGraphContainer.sizeDelta.y));
@@ -575,7 +717,26 @@ public class JointController : MonoBehaviour
                 _rightArmGraph.MoveLine(_rightArmLineXCurrent, Vector2.zero, new Vector2(_rightArmGraphContainer.sizeDelta.x, _rightArmGraphContainer.sizeDelta.y * slopeXCurrent));
             }
 
-            _rightArmGraph.MoveCircle(_rightArmPointY, new Vector2(pLY, pHY));
+            // Moving point
+            //_rightArmGraph.MoveCircle(_rightArmPointY, new Vector2(pLY, pHY));
+            // Max value to reach: 160f
+            if (slopeY > 1f)
+            {
+                if ((pHY / 160f) * (_rightArmGraphContainer.sizeDelta.y) >= _rightArmGraphContainer.sizeDelta.y)
+                {
+                    _rightArmGraph.MoveCircle(_rightArmPointY, new Vector2((_rightArmGraphContainer.sizeDelta.x / slopeY), Mathf.Clamp((pHY / 160f) * (_rightArmGraphContainer.sizeDelta.y), 0, _rightArmGraphContainer.sizeDelta.y)));
+                }
+                else
+                {
+                    _rightArmGraph.MoveCircle(_rightArmPointY, new Vector2((pLY / 160f) * _rightArmGraphContainer.sizeDelta.x, Mathf.Clamp((pHY / 160f) * (_rightArmGraphContainer.sizeDelta.y), 0, _rightArmGraphContainer.sizeDelta.y)));
+                }
+            }
+            else if (slopeY < 1f)
+            {
+                _rightArmGraph.MoveCircle(_rightArmPointY, new Vector2((pLY / 160f) * _rightArmGraphContainer.sizeDelta.x, (pHY / 160f) * (_rightArmGraphContainer.sizeDelta.y)));
+            }
+
+            // Moving line
             if (slopeY > 1f)
             {
                 _rightArmGraph.MoveLine(_rightArmLineY, Vector2.zero, new Vector2((_rightArmGraphContainer.sizeDelta.x / slopeY), _rightArmGraphContainer.sizeDelta.y));
@@ -593,7 +754,26 @@ public class JointController : MonoBehaviour
                 _rightArmGraph.MoveLine(_rightArmLineYCurrent, Vector2.zero, new Vector2(_rightArmGraphContainer.sizeDelta.x, _rightArmGraphContainer.sizeDelta.y * slopeYCurrent));
             }
 
-            _rightArmGraph.MoveCircle(_rightArmPointZ, new Vector2(pLZ, pHZ));
+            // Moving point
+            //_rightArmGraph.MoveCircle(_rightArmPointZ, new Vector2(pLZ, pHZ));
+            // Max value to reach: 1600f
+            if (slopeZ > 1f)
+            {
+                if ((pHZ / 1600f) * (_rightArmGraphContainer.sizeDelta.y) >= _rightArmGraphContainer.sizeDelta.y)
+                {
+                    _rightArmGraph.MoveCircle(_rightArmPointZ, new Vector2((_rightArmGraphContainer.sizeDelta.x / slopeZ), Mathf.Clamp((pHZ / 1600f) * (_rightArmGraphContainer.sizeDelta.y), 0, _rightArmGraphContainer.sizeDelta.y)));
+                }
+                else
+                {
+                    _rightArmGraph.MoveCircle(_rightArmPointZ, new Vector2((pLZ / 1600f) * _rightArmGraphContainer.sizeDelta.x, Mathf.Clamp((pHZ / 1600f) * (_rightArmGraphContainer.sizeDelta.y), 0, _rightArmGraphContainer.sizeDelta.y)));
+                }
+            }
+            else if (slopeZ < 1f)
+            {
+                _rightArmGraph.MoveCircle(_rightArmPointZ, new Vector2((pLZ / 1600f) * _rightArmGraphContainer.sizeDelta.x, (pHZ / 1600f) * (_rightArmGraphContainer.sizeDelta.y)));
+            }
+
+            // Moving line
             if (slopeZ > 1f)
             {
                 _rightArmGraph.MoveLine(_rightArmLineZ, Vector2.zero, new Vector2((_rightArmGraphContainer.sizeDelta.x / slopeZ), _rightArmGraphContainer.sizeDelta.y));
@@ -1349,12 +1529,12 @@ public class JointController : MonoBehaviour
     {
         if (this.gameObject.CompareTag("LeftHand"))
         {
-            StartCoroutine(IncreaseSpring());
+            //StartCoroutine(IncreaseSpring());
             //Debug.Log("DEBUG LEFT ENTERED!");
         }
         else if (this.gameObject.CompareTag("RightHand"))
         {
-            StartCoroutine(IncreaseSpring());
+            //StartCoroutine(IncreaseSpring());
             //Debug.Log("DEBUG RIGHT ENTERED!");
         }
     }
@@ -1363,15 +1543,15 @@ public class JointController : MonoBehaviour
     {
         if (this.gameObject.CompareTag("LeftHand"))
         {
-            SpringJoint spring = GetComponent<SpringJoint>();
-            spring.spring = 0f;
+            //SpringJoint spring = GetComponent<SpringJoint>();
+            //spring.spring = 0f;
 
             //Debug.Log("DEBUG LEFT EXITED!");
         }
         else if (this.gameObject.CompareTag("RightHand"))
         {
-            SpringJoint spring = GetComponent<SpringJoint>();
-            spring.spring = 0f;
+            //SpringJoint spring = GetComponent<SpringJoint>();
+            //spring.spring = 0f;
 
             //Debug.Log("DEBUG RIGHT EXITED!");
         }

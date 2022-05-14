@@ -19,6 +19,8 @@ public class SetSkeletonsV3 : MonoBehaviour
     public bool setMirror = false;
     public bool syncRootsPositions = false;
     public bool syncRootsRotations = false;
+    public bool syncLeftArm = false;
+    public bool syncRightArm = false;
 
     // JUST PROVISIONAL TO MAKE THE PICTURE
     public bool syncLegs = false;
@@ -262,6 +264,16 @@ public class SetSkeletonsV3 : MonoBehaviour
         if (syncRightHand)
         {
             SyncRightHand();
+        }
+
+        if (syncLeftArm)
+        {
+            SyncLeftArm();
+        }
+
+        if (syncRightArm)
+        {
+            SyncRightArm();
         }
     }
 
@@ -1231,14 +1243,40 @@ public class SetSkeletonsV3 : MonoBehaviour
 
     private void SyncRightHand()
     {
-        rightHandP.position = rightHandK.position;
+        //rightHandP.position = rightHandK.position;
         rightHandP.rotation = rightHandK.rotation;
     }
 
     private void SyncLeftHand()
     {
+        //leftHandP.position = leftHandK.position;
+        leftHandP.rotation = leftHandK.rotation;
+    }
+
+    private void SyncLeftArm()
+    {
+        // Left Arm
+        for (int i = 0; i < SetSkeletonsV3.bonesLeftArm; i++)
+        {
+            physicalLeftArmsBones[i].rotation = kinematicLeftArmsBones[i].rotation;
+            physicalLeftArmsBones[i].position = kinematicLeftArmsBones[i].position;
+        }
+
         leftHandP.position = leftHandK.position;
         leftHandP.rotation = leftHandK.rotation;
+    }
+
+    private void SyncRightArm()
+    {
+        // Right Arm
+        for (int i = 0; i < SetSkeletonsV3.bonesRightArm; i++)
+        {
+            physicalRightArmsBones[i].rotation = kinematicRightArmsBones[i].rotation;
+            physicalRightArmsBones[i].position = kinematicRightArmsBones[i].position;
+        }
+
+        rightHandP.position = rightHandK.position;
+        rightHandP.rotation = rightHandK.rotation;
     }
 
     private void ResetInterpolatedSkeleton()

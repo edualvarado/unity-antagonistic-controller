@@ -17,7 +17,7 @@ public class AntagonisticGains : MonoBehaviour
 
     #region Instance Fields
 
-    [Header("Antagonistic Control - Gains")]
+    [Header("Antagonistic Control - Gains INTERACTIVE")]
     public bool manualMode;
     public float expectedMaxMassLeft = 10f;
     public float expectedMaxMassRight = 10f;

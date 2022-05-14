@@ -15,11 +15,11 @@ public class SafetyRegion : MonoBehaviour
 {
     #region Instance Fields
 
-    [Header("Safety Region - Settings")]
+    [Header("Safety Region - Settings INTERACTIVE")]
     public Transform originRegion;
     public Vector3 originOffset;
     public float radiusRegion;
-    public float reactionTime;
+    [Range(0.2f, 2f)] public float reactionTime;
 
     #endregion
 }
