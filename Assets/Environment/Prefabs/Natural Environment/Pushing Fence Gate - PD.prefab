@@ -352,7 +352,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0.61774886, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.08347839, y: 1.2977693, z: -0.0327258}
+  m_ConnectedAnchor: {x: -0.08347827, y: 1.2977693, z: -0.032726157}
   m_UseSpring: 1
   m_Spring:
     spring: 20
@@ -390,4 +390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   realMass: 0
   expectedMass: 0
+  realVelocity: 0
+  expectedVelocity: 0
   setSameMass: 1
+  setSameVelocity: 0

@@ -180,7 +180,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   realMass: 0
   expectedMass: 0
+  realVelocity: 0
+  expectedVelocity: 0
   setSameMass: 1
+  setSameVelocity: 0
 --- !u!1 &8124980634332702083
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,7 +616,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   realMass: 0
   expectedMass: 0
+  realVelocity: 0
+  expectedVelocity: 0
   setSameMass: 1
+  setSameVelocity: 0
 --- !u!1 &8124980634941932526
 GameObject:
   m_ObjectHideFlags: 0

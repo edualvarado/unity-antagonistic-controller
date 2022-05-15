@@ -590,7 +590,10 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: OBI_ONI_SUPPORTED
+    4: OBI_ONI_SUPPORTED
+    7: OBI_ONI_SUPPORTED
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

@@ -27,7 +27,7 @@ public class SafetyRegionRight : SafetyRegion
     public bool manualMode;
     public float realVelocityRight;
     public float expectedVelocityRight;
-    public float expectedMaxVelocityRight = 40f;
+    public float expectedMaxVelocityRight = 10f;
 
     [Header("Right Hand - Obstacles")]
     [SerializeField]
@@ -72,7 +72,8 @@ public class SafetyRegionRight : SafetyRegion
     public Vector3 sphereColliderRight3Center;
     //public float sphereColliderRight3Multiplier;
 
-
+    [Header("Hand Spring")]
+    public SpringJoint rightHandSpring;
 
     #endregion
 
@@ -83,9 +84,8 @@ public class SafetyRegionRight : SafetyRegion
         sphereColliderRight = GetComponent<SphereCollider>();
         rightTargetTransform = GameObject.Find("Target Right Hand").GetComponent<Transform>();
 
-        // Initialize
+        // Initialize by default
         reactionTime = 0.5f;
-
     }
 
     void Update()
@@ -110,7 +110,7 @@ public class SafetyRegionRight : SafetyRegion
 
         if (!manualMode)
         {
-            reactionTime = Mathf.Lerp(2f, 0.1f, expectedVelocityRight / expectedMaxVelocityRight);
+            reactionTime = Mathf.Lerp(2f, 0.3f, expectedVelocityRight / expectedMaxVelocityRight);
         }
     }
 
@@ -121,6 +121,9 @@ public class SafetyRegionRight : SafetyRegion
     {
         if ((other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle")))
         {
+            // TEST - Setting the spring based on the reaction time
+            StartCoroutine(IncreaseSpring());
+
             //Debug.Log("[INFO] New obstacle ENTERS RIGHT: " + other.name);
 
             // We protect the origin, and get the closest point in the external object to the previous body part to protect
@@ -287,16 +290,28 @@ public class SafetyRegionRight : SafetyRegion
     // When an object exits in the Safety Region
     private void OnTriggerExit(Collider other)
     {
+        // TEST - Setting the spring based on the reaction time
+        StartCoroutine(DecreaseSpring());
+
         if ((other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle")))
         {
             //Debug.Log("[TEST] Obstacle EXITS RIGHT: " + other.name);
 
             // Remove the obstacle instance from the dynamic list
-            obstacles.RemoveAll(x => x.obstacle == other);
+            //obstacles.RemoveAll(x => x.obstacle == other);
+
+            var itemsToRemove = obstacles.Where(x => x.obstacle == other); 
+            foreach (var i in itemsToRemove)
+            {
+                obstacles.Remove(i);
+                break;
+            }
+
+
 
             // Set target back to original position
             // This should only happen if NO objects are inside the region
-            if(obstacles.Count == 0)
+            if (obstacles.Count == 0)
             {
                 // Starts moving out
                 hasRightStartedMovingIn = false;
@@ -512,7 +527,13 @@ public class SafetyRegionRight : SafetyRegion
             //Debug.Log("[TEST] Obstacle EXITS RIGHT: " + other.name);
 
             // Remove the obstacle instance from the dynamic list
-            obstacles.RemoveAll(x => x.obstacle == other);
+            //obstacles.RemoveAll(x => x.obstacle == other);
+            var itemsToRemove = obstacles.Where(x => x.obstacle == other);
+            foreach (var i in itemsToRemove)
+            {
+                obstacles.Remove(i);
+                break;
+            }
 
             // Set target back to original position
             // This should only happen if NO objects are inside the region
@@ -528,6 +549,32 @@ public class SafetyRegionRight : SafetyRegion
                 rightTarget.SetTargetBack(reactionTime, hasRightStartedMovingOut);
             }
         }
+    }
+
+    // Hand Springs
+
+    IEnumerator IncreaseSpring()
+    {
+        float timeElapsed = 0;
+        while (timeElapsed < reactionTime)
+        {
+            rightHandSpring.spring = Mathf.Lerp(0f, 10000f, timeElapsed / reactionTime);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        rightHandSpring.spring = 10000f;
+    }
+
+    IEnumerator DecreaseSpring()
+    {
+        float timeElapsed = 0;
+        while (timeElapsed < reactionTime)
+        {
+            rightHandSpring.spring = Mathf.Lerp(10000f, 0f, timeElapsed / reactionTime);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        rightHandSpring.spring = 0f;
     }
 
     private void OnDrawGizmos()

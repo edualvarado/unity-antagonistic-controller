@@ -252,7 +252,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -3.7252902e-11, y: 0.00038661837, z: 0.010457004}
+  m_ConnectedAnchor: {x: 3.7252902e-11, y: 0.00038661837, z: 0.010457004}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -350,7 +350,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   realMass: 0
   expectedMass: 0
+  realVelocity: 0
+  expectedVelocity: 0
   setSameMass: 1
+  setSameVelocity: 0
 --- !u!1 &4937977706303351712
 GameObject:
   m_ObjectHideFlags: 0

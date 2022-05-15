@@ -159,7 +159,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   realMass: 0
   expectedMass: 0
+  realVelocity: 0
+  expectedVelocity: 0
   setSameMass: 1
+  setSameVelocity: 0
 --- !u!1 &3955096703939413783
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,7 +327,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   realMass: 0
   expectedMass: 0
+  realVelocity: 0
+  expectedVelocity: 0
   setSameMass: 1
+  setSameVelocity: 0
 --- !u!1 &6449992840007645822
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,7 +716,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: -0.35, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -1.5323741e-13, y: 0.7602101, z: -0.0000012854487}
+  m_ConnectedAnchor: {x: -0.0000012854487, y: 0.7602101, z: 1.5323741e-13}
   m_UseSpring: 1
   m_Spring:
     spring: 250
@@ -748,4 +754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   realMass: 0
   expectedMass: 0
+  realVelocity: 0
+  expectedVelocity: 0
   setSameMass: 1
+  setSameVelocity: 0

@@ -66,6 +66,72 @@ MonoBehaviour:
   onTriggerExit:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &777530831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 777530832}
+  - component: {fileID: 777530833}
+  - component: {fileID: 777530834}
+  m_Layer: 0
+  m_Name: LeftSafetyRegion-3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &777530832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777530831}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4570854229453088925}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &777530833
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777530831}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &777530834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777530831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b3a5b2bde2eec74596de2af36606367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1013239509
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,6 +299,72 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b70f562a2c48034598804d24d6f4894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &2042127928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2042127929}
+  - component: {fileID: 2042127930}
+  - component: {fileID: 2042127931}
+  m_Layer: 0
+  m_Name: LeftSafetyRegion-2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2042127929
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042127928}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4570854229453088925}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2042127930
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042127928}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.75
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2042127931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042127928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8339c0f3583b5a34cb45b72db36247a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onTriggerEnter:
@@ -2155,6 +2287,8 @@ Transform:
   - {fileID: 7170379306721617695}
   - {fileID: 1728702832}
   - {fileID: 82703615}
+  - {fileID: 2042127929}
+  - {fileID: 777530832}
   m_Father: {fileID: 4570854228875619745}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4284,6 +4418,10 @@ MonoBehaviour:
   originOffset: {x: -0.3, y: 0, z: 0.3}
   radiusRegion: 0.75
   reactionTime: 0.5
+  manualMode: 1
+  realVelocityLeft: 0
+  expectedVelocityLeft: 0
+  expectedMaxVelocityLeft: 10
   obstacles: []
   targetObstacle:
     obstacle: {fileID: 0}
@@ -4309,6 +4447,15 @@ MonoBehaviour:
   hasLeftTargetReached: 0
   hasLeftStartedMovingOut: 0
   isLeftInRange: 0
+  sphereAllCollidersLeft: 0
+  onTriggerEventLeft2: {fileID: 2042127931}
+  sphereColliderLeft2: {fileID: 2042127930}
+  sphereColliderLeft2Center: {x: 0, y: 0, z: 0.1}
+  sphereColliderLeft2Multiplier: 0
+  onTriggerEventLeft3: {fileID: 777530834}
+  sphereColliderLeft3: {fileID: 777530833}
+  sphereColliderLeft3Center: {x: 0, y: 0, z: 0.1}
+  leftHandSpring: {fileID: 0}
 --- !u!1 &7170379306135414507
 GameObject:
   m_ObjectHideFlags: 0
@@ -4465,7 +4612,7 @@ MonoBehaviour:
   originOffset: {x: 0.3, y: 0, z: 0.3}
   radiusRegion: 0.75
   reactionTime: 0.5
-  manualMode: 0
+  manualMode: 1
   realVelocityRight: 0
   expectedVelocityRight: 0
   expectedMaxVelocityRight: 10
@@ -4502,6 +4649,7 @@ MonoBehaviour:
   onTriggerEventRight3: {fileID: 82703616}
   sphereColliderRight3: {fileID: 82703617}
   sphereColliderRight3Center: {x: 0, y: 0, z: 0.1}
+  rightHandSpring: {fileID: 0}
 --- !u!1 &7170379307079623658
 GameObject:
   m_ObjectHideFlags: 0

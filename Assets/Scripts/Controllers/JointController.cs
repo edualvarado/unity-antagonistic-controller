@@ -1525,6 +1525,8 @@ public class JointController : MonoBehaviour
         }
     }
     */   
+
+    /*
     private void OnCollisionEnter(Collision collision)
     {
         if (this.gameObject.CompareTag("LeftHand"))
@@ -1585,7 +1587,7 @@ public class JointController : MonoBehaviour
         }
         spring.spring = 0f;
     }
-    
+    */
 
     #endregion
 }
