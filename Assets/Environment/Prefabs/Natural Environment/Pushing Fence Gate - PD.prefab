@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &905095937100774607
 Transform:
   m_ObjectHideFlags: 0
@@ -352,7 +352,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0.61774886, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.08347827, y: 1.2977693, z: -0.032726157}
+  m_ConnectedAnchor: {x: -0.08347982, y: 1.2977693, z: -0.032726515}
   m_UseSpring: 1
   m_Spring:
     spring: 20
@@ -365,8 +365,8 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: 4.008096
-    max: 174.38063
+    min: -42.748825
+    max: 48.823532
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0

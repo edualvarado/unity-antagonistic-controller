@@ -74,6 +74,7 @@ public class SafetyRegionRight : SafetyRegion
 
     [Header("Hand Spring")]
     public SpringJoint rightHandSpring;
+    public bool modifySpring;
 
     #endregion
 
@@ -122,7 +123,8 @@ public class SafetyRegionRight : SafetyRegion
         if ((other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle")))
         {
             // TEST - Setting the spring based on the reaction time
-            StartCoroutine(IncreaseSpring());
+            if(modifySpring)
+                StartCoroutine(IncreaseSpring());
 
             //Debug.Log("[INFO] New obstacle ENTERS RIGHT: " + other.name);
 
@@ -291,7 +293,8 @@ public class SafetyRegionRight : SafetyRegion
     private void OnTriggerExit(Collider other)
     {
         // TEST - Setting the spring based on the reaction time
-        StartCoroutine(DecreaseSpring());
+        if (modifySpring)
+            StartCoroutine(DecreaseSpring());
 
         if ((other.CompareTag("Dynamic Obstacle") || other.CompareTag("Static Obstacle")))
         {
