@@ -697,7 +697,7 @@ MonoBehaviour:
   shooterCameraMode: 0
   rotationSpeed: 280
   blockCamera: 0
-  moveForwardOnly: 0
+  moveForwardOnly: 1
   moveDirection: {x: 0, y: 0, z: 0}
   _inputs: {x: 0, y: 0, z: 0}
   inputMagnitude: 0
@@ -4415,8 +4415,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originRegion: {fileID: 1904840852391078110}
-  originOffset: {x: -0.3, y: 0, z: 0.3}
-  radiusRegion: 0.75
+  originOffset: {x: -0.3, y: 0, z: 0.6}
+  radiusRegion: 0.6
   reactionTime: 0.5
   manualMode: 1
   realVelocityLeft: 0
@@ -4456,6 +4456,7 @@ MonoBehaviour:
   sphereColliderLeft3: {fileID: 777530833}
   sphereColliderLeft3Center: {x: 0, y: 0, z: 0.1}
   leftHandSpring: {fileID: 0}
+  modifySpring: 1
 --- !u!1 &7170379306135414507
 GameObject:
   m_ObjectHideFlags: 0
@@ -4609,8 +4610,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originRegion: {fileID: 3849705244601195322}
-  originOffset: {x: 0.3, y: 0, z: 0.3}
-  radiusRegion: 0.75
+  originOffset: {x: 0.3, y: 0, z: 0.6}
+  radiusRegion: 0.6
   reactionTime: 0.5
   manualMode: 1
   realVelocityRight: 0
@@ -4650,6 +4651,7 @@ MonoBehaviour:
   sphereColliderRight3: {fileID: 82703617}
   sphereColliderRight3Center: {x: 0, y: 0, z: 0.1}
   rightHandSpring: {fileID: 0}
+  modifySpring: 1
 --- !u!1 &7170379307079623658
 GameObject:
   m_ObjectHideFlags: 0

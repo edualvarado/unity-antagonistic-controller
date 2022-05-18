@@ -86,7 +86,7 @@ public class SafetyRegionRight : SafetyRegion
         rightTargetTransform = GameObject.Find("Target Right Hand").GetComponent<Transform>();
 
         // Initialize by default
-        reactionTime = 0.5f;
+        //reactionTime = 0.5f;
     }
 
     void Update()

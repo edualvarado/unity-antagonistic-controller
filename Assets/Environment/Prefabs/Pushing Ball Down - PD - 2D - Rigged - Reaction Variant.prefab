@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7725201384904080052
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7934167859137094753, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: applyX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934167859137094753, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: targetAngle
+      value: -62
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934167859137094754, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934167860845794037, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: m_Name
+      value: Pushing Ball Down - PD - 2D - Rigged - Reaction
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934167860845794038, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934167860845794038, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 14.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934167860845794038, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.645
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934167860845794038, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 12.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934167860845794038, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934167860845794038, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934167860845794038, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934167860845794038, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934167860845794038, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934167860845794038, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934167860845794038, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8224436831276380236, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: m_Drag
+      value: 2.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}

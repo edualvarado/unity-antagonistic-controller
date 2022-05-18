@@ -19,7 +19,7 @@ public class SafetyRegion : MonoBehaviour
     public Transform originRegion;
     public Vector3 originOffset;
     public float radiusRegion;
-    [Range(0.2f, 2f)] public float reactionTime;
+    [Range(0.1f, 2f)] public float reactionTime;
 
     #endregion
 }

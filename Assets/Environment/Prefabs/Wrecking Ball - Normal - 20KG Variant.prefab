@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7787771206392724051
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7040546468927194261, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}
+      propertyPath: m_Name
+      value: Wrecking Ball - Normal - 20KG
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040546468927194261, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040546468927194262, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040546468927194262, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040546468927194262, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.588
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040546468927194262, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040546468927194262, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040546468927194262, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040546468927194262, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040546468927194262, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040546468927194262, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040546468927194262, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040546468927194262, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040546470732221315, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}
+      propertyPath: m_Mass
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040546470732221341, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f3dd3b3c3c948b04fb375830de0bd7bf, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d5847a15253e80f42bf7ab3f996c46cf, type: 3}

@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 4803218072009187566}
   m_Layer: 10
   m_Name: SM_Prop_Fence_Wood_02
-  m_TagString: Dynamic Obstacle
+  m_TagString: Static Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1957534440595553077}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0.119, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6449992840156958243}
@@ -94,8 +94,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1957534440595553077}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -113,7 +113,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.4992933, y: 1.06, z: 0.2}
+  m_Size: {x: 2.4992933, y: 1.06, z: 0.1}
   m_Center: {x: -1.2499669, y: 0.72, z: 0}
 --- !u!138 &1957534440595553065
 FixedJoint:
@@ -289,10 +289,10 @@ HingeJoint:
   m_Anchor: {x: 0, y: -0.35, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0.7602101, z: 0}
+  m_ConnectedAnchor: {x: 0.0000051417956, y: 0.7602101, z: -0.0000051417956}
   m_UseSpring: 1
   m_Spring:
-    spring: 250
+    spring: 100
     damper: 10
     targetPosition: 0
   m_UseMotor: 0
@@ -302,8 +302,8 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: -32.700897
-    max: 31.53836
+    min: -15
+    max: 15
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -716,10 +716,10 @@ HingeJoint:
   m_Anchor: {x: 0, y: -0.35, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000001285449, y: 0.7602101, z: 0.000002570897}
+  m_ConnectedAnchor: {x: 0.0000038563467, y: 0.7602101, z: 0.000005141794}
   m_UseSpring: 1
   m_Spring:
-    spring: 250
+    spring: 100
     damper: 10
     targetPosition: 0
   m_UseMotor: 0
@@ -729,8 +729,8 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: -32.700897
-    max: 31.53836
+    min: -15
+    max: 15
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0

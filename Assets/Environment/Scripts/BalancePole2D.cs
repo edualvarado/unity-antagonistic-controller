@@ -15,6 +15,9 @@ public class BalancePole2D: MonoBehaviour
     public ConfigurableJoint _joint;
     public Transform root;
 
+    public bool applyX;
+    public bool applyZ;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,8 +65,11 @@ public class BalancePole2D: MonoBehaviour
         //Debug.Log("torqueAppliedX in PD: " + torqueAppliedX);
         //Debug.Log("torqueAppliedZ in PD: " + torqueAppliedZ);
 
-        _rb.AddRelativeTorque(torqueAppliedX * Vector3.right);
-        _rb.AddRelativeTorque(torqueAppliedZ * -Vector3.forward);
+        if(applyX)
+            _rb.AddRelativeTorque(torqueAppliedX * Vector3.right);
+
+        if(applyZ)
+            _rb.AddRelativeTorque(torqueAppliedZ * -Vector3.forward);
 
         //float torqueApplied = _PID.GetOutput(angleError, Time.fixedDeltaTime);
         //Debug.Log("torqueApplied in PD: " + torqueApplied); 
