@@ -167,6 +167,8 @@ MonoBehaviour:
   _rb: {fileID: 7730116666910270742}
   _joint: {fileID: 7730116666910270740}
   root: {fileID: 7730116668081042925}
+  applyX: 1
+  applyZ: 1
 --- !u!114 &5405750365856168754
 MonoBehaviour:
   m_ObjectHideFlags: 0
