@@ -39,6 +39,9 @@ public class IKArmsPlacement : MonoBehaviour
     public bool activateIKLeft;
     public bool activateIKRight;
 
+    // TEST
+    public SafetyRegionLeft safetyRegionLeft;
+
     #endregion
 
     #region Unity Methods
@@ -61,16 +64,27 @@ public class IKArmsPlacement : MonoBehaviour
             // If the IK is active, set the position and rotation directly to the target 
             if (enableArmsIK)
             {
+                if(safetyRegionLeft.obstacles.Count != 0)
+                {
+                    animator.SetLookAtWeight(headWeight);
+                    animator.SetLookAtPosition(safetyRegionLeft.targetObstacle.location);
+                }
+                else
+                {
+                    animator.SetLookAtWeight(0f);
+                }
+
+
                 // Set the look target position, if one has been assigned, just the first it encounters
                 if (rightTarget.target.position != null)
                 {
-                    animator.SetLookAtWeight(headWeight);
-                    animator.SetLookAtPosition(rightTarget.target.position);
+                    //animator.SetLookAtWeight(headWeight);
+                    //animator.SetLookAtPosition(rightTarget.target.position);
                 }
                 else if(leftTarget.target.position != null)
                 {
-                    animator.SetLookAtWeight(headWeight);
-                    animator.SetLookAtPosition(leftTarget.target.position);
+                    //animator.SetLookAtWeight(headWeight);
+                    //animator.SetLookAtPosition(safetyRegionLeft.targetObstacle.location);
                 }
 
                 // Set the right hand target position and rotation, if one has been assigned

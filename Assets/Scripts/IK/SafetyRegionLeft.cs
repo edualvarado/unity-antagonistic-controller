@@ -25,9 +25,11 @@ public class SafetyRegionLeft : SafetyRegion
 
     // Continue of "Safety Region - Settings INTERACTIVE"
     public bool manualMode;
-    public float realVelocityLeft;
-    public float expectedVelocityLeft;
+    public float realVelocityLeft = 0f;
+    public float expectedVelocityLeft = 0f;
     public float expectedMaxVelocityLeft = 10f;
+    public float realVelocityLeftOld = 0f; // TEST
+    public float expectedVelocityLeftOld = 0f; // TEST
 
     [Header("Left Hand - Obstacles")]
     [SerializeField]
@@ -76,6 +78,10 @@ public class SafetyRegionLeft : SafetyRegion
     public SpringJoint leftHandSpring;
     public bool modifySpring;
 
+
+    //TEST
+    float reactionTimeOld = 10f;
+
     #endregion
 
     #region Unity Methods
@@ -102,13 +108,30 @@ public class SafetyRegionLeft : SafetyRegion
         sphereColliderLeft2.radius += sphereAllCollidersLeft;
         sphereColliderLeft3.radius += sphereAllCollidersLeft;
 
+        // Retrieve velocity (max) - TEST
+
+        //expectedVelocityLeftOld = targetObstacle.expectedVelocity;
+        //if (expectedVelocityLeftOld >= expectedVelocityLeft)
+        //{
+        //    expectedVelocityLeft = targetObstacle.expectedVelocity;
+        //}
+        //realVelocityLeftOld = targetObstacle.realVelocity;
+        //if (realVelocityLeftOld >= realVelocityLeft)
+        //{
+        //    realVelocityLeft = targetObstacle.realVelocity;
+        //}
+
         // Retrieve velocity
         expectedVelocityLeft = targetObstacle.expectedVelocity;
         realVelocityLeft = targetObstacle.realVelocity;
 
+
         if (!manualMode)
         {
             reactionTime = Mathf.Lerp(2f, 0.3f, expectedVelocityLeft / expectedMaxVelocityLeft);
+
+
+
         }
     }
 

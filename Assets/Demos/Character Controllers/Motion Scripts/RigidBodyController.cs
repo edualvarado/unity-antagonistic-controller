@@ -134,12 +134,17 @@ public class RigidBodyController : MonoBehaviour
 
         if (_body.isKinematic)
         {
+            // Commented now - TEST
+
             transform.position += moveDirection * moveSpeed * offsetKinematicMovement * inputMagnitude * Time.deltaTime;
 
             _velocity.y += Physics.gravity.y * Time.fixedDeltaTime;
 
             if (_isGrounded && _velocity.y < 0)
                 _velocity.y = 0f;
+
+
+            /////
 
             //transform.position += -Vector3.up * _velocity.y * Time.fixedDeltaTime;
         }

@@ -692,7 +692,7 @@ MonoBehaviour:
   joystickMode: 0
   fightMode: 0
   rootKinematicSkeleton: {fileID: 4301555423947334394}
-  moveSpeed: 1
+  moveSpeed: 0.8
   offsetKinematicMovement: 3
   shooterCameraMode: 0
   rotationSpeed: 280

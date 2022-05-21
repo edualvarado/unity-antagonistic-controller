@@ -149,6 +149,14 @@ public class JointController : MonoBehaviour
     public bool debugModeAntagonistic;
     public bool drawModeAntagonistic;
 
+    [Header("Antagonistic Controller - Plot")]
+    [UPyPlot.UPyPlotController.UPyProbe]
+    public float antTorqueX;
+    [UPyPlot.UPyPlotController.UPyProbe]
+    public float antTorqueY;
+    [UPyPlot.UPyPlotController.UPyProbe]
+    public float antTorqueZ;
+
     [Header("Antagonistic Controller - Settings - X")]
     public float pLX;
     public float pHX;
@@ -1029,6 +1037,11 @@ public class JointController : MonoBehaviour
             {
                 Debug.Log("[INFO: " + this.gameObject.name + "] Antagonistic PD Controller (Angle-axis) requiredAntagonisticTorque: " + requiredAntagonisticLocalTorque);
             }
+
+            // PLOT
+            antTorqueX = requiredAntagonisticLocalTorque.x;
+            antTorqueY = requiredAntagonisticLocalTorque.y;
+            antTorqueZ = requiredAntagonisticLocalTorque.z;
 
             //if (applyAntTorque)
             //{

@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7034065376401721213
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2687016107427484956, guid: 52898e4acc6f3ea4fa0c868dfe0191f3, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687016107427484956, guid: 52898e4acc6f3ea4fa0c868dfe0191f3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687016107427484956, guid: 52898e4acc6f3ea4fa0c868dfe0191f3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687016107427484956, guid: 52898e4acc6f3ea4fa0c868dfe0191f3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687016107427484956, guid: 52898e4acc6f3ea4fa0c868dfe0191f3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.40496218
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687016107427484956, guid: 52898e4acc6f3ea4fa0c868dfe0191f3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.16964296
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687016107427484956, guid: 52898e4acc6f3ea4fa0c868dfe0191f3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.887818
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687016107427484956, guid: 52898e4acc6f3ea4fa0c868dfe0191f3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.13786283
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687016107427484956, guid: 52898e4acc6f3ea4fa0c868dfe0191f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 22.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687016107427484956, guid: 52898e4acc6f3ea4fa0c868dfe0191f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -493.32098
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687016107427484956, guid: 52898e4acc6f3ea4fa0c868dfe0191f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -11.838
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687016107427484958, guid: 52898e4acc6f3ea4fa0c868dfe0191f3, type: 3}
+      propertyPath: m_Name
+      value: Cinema Light
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 52898e4acc6f3ea4fa0c868dfe0191f3, type: 3}

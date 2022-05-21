@@ -828,13 +828,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7d2e76647679d4fa32da2973a65483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manualMode: 1
-  expectedMaxMassLeft: 10
-  expectedMaxMassRight: 10
-  stiffnessMultiplierLeft: 0
+  manualMode: 0
+  expectedMaxMassLeft: 5
+  expectedMaxMassRight: 5
+  stiffnessMultiplierLeft: 1
   realMassLeft: 0
   expectedMassLeft: 0
-  stiffnessMultiplierRight: 0
+  stiffnessMultiplierRight: 1
   realMassRight: 0
   expectedMassRight: 0
   rightHandController: {fileID: 3092514556484229594}
@@ -843,15 +843,15 @@ MonoBehaviour:
   leftHandController: {fileID: 3092514557242679201}
   leftForeArmController: {fileID: 3092514556973599890}
   leftArmController: {fileID: 3092514557591848794}
-  handKLX: 80
-  handKLY: 80
-  handKLZ: 80
-  foreArmKLX: 800
-  foreArmKLY: 40
-  foreArmKLZ: 800
-  armKLX: 160
-  armKLY: 160
-  armKLZ: 1600
+  handKLX: 52
+  handKLY: 52
+  handKLZ: 52
+  foreArmKLX: 520
+  foreArmKLY: 26
+  foreArmKLZ: 520
+  armKLX: 104
+  armKLY: 104
+  armKLZ: 1040
   safetyRegionLeft: {fileID: 0}
   safetyRegionRight: {fileID: 0}
 --- !u!1 &4765623532839076803
@@ -5535,7 +5535,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000015174187, y: 0.2761449, z: -0.00000021234155}
+  m_ConnectedAnchor: {x: -0.00000015174196, y: 0.27614394, z: -0.00000021234155}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 1
@@ -5714,7 +5714,7 @@ SpringJoint:
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000024925464, y: 0.00000020861657, z: -0.0000004463074}
+  m_ConnectedAnchor: {x: 0.00000024925455, y: -0.0000007450577, z: -0.00000044630735}
   serializedVersion: 2
   m_Spring: 0
   m_Damper: 0.2

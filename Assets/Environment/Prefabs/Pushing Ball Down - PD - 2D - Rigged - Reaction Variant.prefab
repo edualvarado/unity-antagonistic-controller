@@ -23,6 +23,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pushing Ball Down - PD - 2D - Rigged - Reaction
       objectReference: {fileID: 0}
+    - target: {fileID: 7934167860845794037, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7934167860845794038, guid: 995c9f7f20395d242b3ea594b62f445e, type: 3}
       propertyPath: m_RootOrder
       value: 0

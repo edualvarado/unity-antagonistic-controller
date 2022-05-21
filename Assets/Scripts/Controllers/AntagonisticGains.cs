@@ -24,12 +24,14 @@ public class AntagonisticGains : MonoBehaviour
 
     [Header("Antagonistic Control - Left")]
     //[Range(0.5f, 8f)] public float stiffnessMultiplierLeft;
+    [UPyPlot.UPyPlotController.UPyProbe]
     [Range(0.05f, 1f)] public float stiffnessMultiplierLeft;
     public float realMassLeft;
     public float expectedMassLeft;
 
     [Header("Antagonistic Control - Right")]
     //[Range(0.5f, 8f)] public float stiffnessMultiplierRight;
+    [UPyPlot.UPyPlotController.UPyProbe]
     [Range(0.05f, 1f)] public float stiffnessMultiplierRight;
     public float realMassRight;
     public float expectedMassRight;
@@ -93,14 +95,14 @@ public class AntagonisticGains : MonoBehaviour
 
         if (!manualMode)
         {
-            stiffnessMultiplierLeft = Mathf.Lerp(0.5f, 8f, expectedMassLeft/expectedMaxMassLeft);
-            stiffnessMultiplierRight = Mathf.Lerp(0.5f, 8f, expectedMassRight/expectedMaxMassRight);
+            stiffnessMultiplierLeft = Mathf.Lerp(0.05f, 1f, expectedMassLeft/expectedMaxMassLeft);
+            stiffnessMultiplierRight = Mathf.Lerp(0.05f, 1f, expectedMassRight/expectedMaxMassRight);
 
             if (expectedMassLeft == 0f)
-                stiffnessMultiplierLeft = 3f;
+                stiffnessMultiplierLeft = 0.5f;
 
             if (expectedMassRight == 0f)
-                stiffnessMultiplierRight = 3f;
+                stiffnessMultiplierRight = 0.5f;
         }
 
         SetMultipliedStiffness();
