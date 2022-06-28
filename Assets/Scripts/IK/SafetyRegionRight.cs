@@ -76,6 +76,15 @@ public class SafetyRegionRight : SafetyRegion
     public SpringJoint rightHandSpring;
     public bool modifySpring;
 
+    [Header("New Reaction Time")]
+    public float newReactionTime;
+    public float securityWeight;
+    public float differenceDistance;
+    public float preReactionTime;
+
+    [Header("Hand RB")]
+    public Rigidbody handRB;
+
     #endregion
 
     #region Unity Methods
@@ -112,6 +121,10 @@ public class SafetyRegionRight : SafetyRegion
         if (!manualMode)
         {
             reactionTime = Mathf.Lerp(2f, 0.3f, expectedVelocityRight / expectedMaxVelocityRight);
+
+            differenceDistance = Vector3.Distance(hitRightFixed, raycastOriginRight);
+            preReactionTime = (differenceDistance / expectedVelocityRight);
+            newReactionTime = Mathf.Clamp(securityWeight * preReactionTime, 0.3f, 2f);
         }
     }
 
@@ -250,8 +263,15 @@ public class SafetyRegionRight : SafetyRegion
                     if (!isRightInRange)
                     {
                         Debug.Log("WALL UPDATE RIGHT");
+                        //handRB.freezeRotation = false;
+
                         Vector3 offset = (rightTargetTransform.up * hitOffsetRight.y) + (rightTargetTransform.right * hitOffsetRight.x) + (rightTargetTransform.forward * hitOffsetRight.z);
                         rightTarget.SetTargetUpdate(hitRightFixed, offset, 0.5f); // TODO: Time that takes to make the small jump
+                    }
+                    else
+                    {
+                        Debug.Log("NOW FIX HAND");
+                        //handRB.freezeRotation = true;
                     }
                 }
             }
@@ -505,7 +525,7 @@ public class SafetyRegionRight : SafetyRegion
 
                 // Method in charge of moving behaviour, which changes if we are on the move or we arrived
                 // hasRightStartedMovingIn will be TRUE until we reach the object
-                rightTarget.SetTargetStay(reactionTime, hasRightStartedMovingIn);
+                //rightTarget.SetTargetStay(reactionTime, hasRightStartedMovingIn); // COMMENTED FOR TEST
             }
 
             // Allow IK from this point

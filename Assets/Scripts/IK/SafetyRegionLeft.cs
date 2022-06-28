@@ -79,8 +79,8 @@ public class SafetyRegionLeft : SafetyRegion
     public bool modifySpring;
 
 
-    //TEST
-    float reactionTimeOld = 10f;
+    [Header("Hand RB")]
+    public Rigidbody handRB;
 
     #endregion
 
@@ -267,8 +267,15 @@ public class SafetyRegionLeft : SafetyRegion
                     if (!isLeftInRange)
                     {
                         Debug.Log("WALL UPDATE LEFT");
+                        handRB.freezeRotation = false;
+
                         Vector3 offset = (leftTargetTransform.up * hitOffsetLeft.y) + (leftTargetTransform.right * hitOffsetLeft.x) + (leftTargetTransform.forward * hitOffsetLeft.z);
                         leftTarget.SetTargetUpdate(hitLeftFixed, offset, 0.5f); // TODO: Time that takes to make the small jump
+                    }
+                    else
+                    {
+                        Debug.Log("NOW FIX HAND");
+                        handRB.freezeRotation = true;
                     }
                 }
             }

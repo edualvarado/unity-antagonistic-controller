@@ -6,6 +6,7 @@ from matplotlib import rc
 
 idx = []
 stiffnessLeft, stiffnessRight = [],[]
+stiffnessNeutral = []
 
 minLimitX = 0
 maxLimitX = 12.5
@@ -18,12 +19,14 @@ with open("plot-stiffness-faster-01.txt") as f:
         idx.append(index/10)
         stiffnessLeft.append(values[0])
         stiffnessRight.append(values[1])
+        stiffnessNeutral.append(0.5)
 
 ###
 
 # 1. Plot Total Forces
 plt.plot(idx, stiffnessLeft, '-', label='Left Arm', color="blue")
 plt.plot(idx, stiffnessRight, '-', label='Right Arm', color="red")
+plt.plot(idx, stiffnessNeutral, '--', label='Default', color="grey")
 
 #x_sm = np.array(idx)
 #y_sm = np.array(stiffnessLeft)
@@ -38,7 +41,7 @@ plt.plot(idx, stiffnessRight, '-', label='Right Arm', color="red")
 #
 
 plt.ylabel('Stiffness Multiplier')
-plt.gca().set_ylabel(r'Stiffness Multiplier $\alpha_s$')
+plt.gca().set_ylabel(r'Stiffness $(k_{L} - k_{Lmin})/(k_{Lmax} - k_{Lmin}) $')
 
 
 plt.xlabel('Time [s]')

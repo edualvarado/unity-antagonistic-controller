@@ -116,16 +116,16 @@ public class AntagonisticArm : MonoBehaviour
                 Debug.DrawRay(sphereAnt.position, Quaternion.AngleAxis(minAngleY, -sphereAnt.transform.forward) * sphereAnt.transform.up * 10f, Color.red);
             }
 
-            // Draw line conecting root with COM
-            Debug.DrawLine(sphereAnt.position, _rbAnt.worldCenterOfMass, Color.yellow);
+            // Draw line conecting root with COM // COMMENTED FOR TEST
+            //Debug.DrawLine(sphereAnt.position, _rbAnt.worldCenterOfMass, Color.yellow);
 
             // Draw external force
-            Debug.DrawRay(_rbAnt.worldCenterOfMass, _rbAnt.mass * gravityAcc, Color.yellow);
-            Debug.DrawRay(_rbAnt.worldCenterOfMass, externalForce, Color.magenta);
+            //Debug.DrawRay(_rbAnt.worldCenterOfMass, _rbAnt.mass * gravityAcc, Color.yellow);
+            //Debug.DrawRay(_rbAnt.worldCenterOfMass, externalForce, Color.magenta);
 
             // Draw torque produced by external
-            Debug.DrawRay(sphereAnt.position, gravityTorqueVector, Color.yellow);
-            Debug.DrawRay(sphereAnt.position, externalTorqueVector, Color.magenta);
+            //Debug.DrawRay(sphereAnt.position, gravityTorqueVector, Color.yellow);
+            //Debug.DrawRay(sphereAnt.position, externalTorqueVector, Color.magenta);
         }
     }
 

@@ -106,7 +106,7 @@ public class SetSkeletonsV3 : MonoBehaviour
         RightUpperArm,
         RightLowerArm,
     }
-    private AnchorPoint previousAnchor;
+    public AnchorPoint previousAnchor;
 
     #endregion
 
@@ -477,6 +477,10 @@ public class SetSkeletonsV3 : MonoBehaviour
 
                 // ==
 
+                //leftShoulderConnector.GetComponent<Rigidbody>().isKinematic = true;
+                //leftShoulderJoint.connectedBody = null;
+                //leftShoulderConnector.SetActive(true);
+                //leftShoulderJoint.connectedBody = leftShoulderConnector.GetComponent<Rigidbody>();
                 leftShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
                 leftShoulderConnector.SetActive(false);
 
@@ -486,6 +490,10 @@ public class SetSkeletonsV3 : MonoBehaviour
                 leftForeArmConnector.GetComponent<Rigidbody>().isKinematic = false;
                 leftForeArmConnector.SetActive(false);
 
+                //rightShoulderConnector.GetComponent<Rigidbody>().isKinematic = true;
+                //rightShoulderJoint.connectedBody = null;
+                //rightShoulderConnector.SetActive(true);
+                //rightShoulderJoint.connectedBody = rightShoulderConnector.GetComponent<Rigidbody>();
                 rightShoulderConnector.GetComponent<Rigidbody>().isKinematic = false;
                 rightShoulderConnector.SetActive(false);
 

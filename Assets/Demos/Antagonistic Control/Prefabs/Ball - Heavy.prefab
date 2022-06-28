@@ -13,11 +13,10 @@ GameObject:
   - component: {fileID: 42305217015976489}
   - component: {fileID: 2699906311800985693}
   - component: {fileID: 7227796475226617454}
-  - component: {fileID: -3991357285259168311}
-  - component: {fileID: 7189249044424163501}
-  m_Layer: 10
-  m_Name: Ball - Slow Apple
-  m_TagString: Dynamic Obstacle
+  - component: {fileID: 6144894834491908517}
+  m_Layer: 0
+  m_Name: Ball - Heavy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2449481422480573348}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -43,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2449481422480573348}
-  m_Mesh: {fileID: 4300000, guid: 58502ac7e6c9a654483dd5141159ef9e, type: 3}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &42305217015976489
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fdf18c58b725a2f469593ece1786d307, type: 2}
+  - {fileID: 2100000, guid: a38a748b04c349443b769d9b24784e45, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,12 +91,12 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2449481422480573348}
-  m_Material: {fileID: 13400000, guid: d0067e6f10e7de84aa507334f26d4ca4, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.075
-  m_Center: {x: 0, y: 0.06, z: 0}
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7227796475226617454
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -114,19 +113,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-3991357285259168311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2449481422480573348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 914d716ed736d914d9f9b0575dad0ae4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7189249044424163501
+--- !u!114 &6144894834491908517
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

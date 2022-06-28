@@ -3563,7 +3563,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556606207}
-  m_LocalRotation: {x: 0.1111044, y: 0.62021995, z: -0.08933416, w: 0.7713641}
+  m_LocalRotation: {x: 0.111104384, y: 0.62021995, z: -0.089334145, w: 0.7713641}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -12900,6 +12900,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 61120158}
     m_Modifications:
+    - target: {fileID: 442100375, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
+      propertyPath: safetyRegionLeft
+      value: 
+      objectReference: {fileID: 1760035941}
     - target: {fileID: 448683945012981884, guid: 10927b75176d16c498bd116a44a1328f, type: 3}
       propertyPath: m_Name
       value: ybot_rig_arms_v6_split_kinematic - v4
@@ -13254,6 +13258,10 @@ PrefabInstance:
     - target: {fileID: 373444843594063573, guid: 3a34dda436035f2428b542d2d76a681e, type: 3}
       propertyPath: applyZ
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1807768656257354488, guid: 3a34dda436035f2428b542d2d76a681e, type: 3}
+      propertyPath: m_Drag
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a34dda436035f2428b542d2d76a681e, type: 3}
@@ -13727,6 +13735,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 661615335}
     - target: {fileID: 1344637898, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: manualMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1344637898, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: safetyRegionLeft
       value: 
       objectReference: {fileID: 1760035941}
@@ -13734,6 +13746,14 @@ PrefabInstance:
       propertyPath: safetyRegionRight
       value: 
       objectReference: {fileID: 1926183465}
+    - target: {fileID: 1344637898, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: stiffnessMultiplierLeft
+      value: 0.661
+      objectReference: {fileID: 0}
+    - target: {fileID: 1344637898, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
+      propertyPath: stiffnessMultiplierRight
+      value: 0.683
+      objectReference: {fileID: 0}
     - target: {fileID: 2093957698, guid: ef60c5a9752b0f3459e94df71460f8bd, type: 3}
       propertyPath: m_ConnectedBody
       value: 
