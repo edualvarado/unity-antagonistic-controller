@@ -1,0 +1,159 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a8b6a4f5fd9b744a5d48dba91a8d59, type: 3}
+  m_Name: MxMPreProcessDataCustom-2
+  m_EditorClassIdentifier: 
+  m_targetPrefab: {fileID: 919132149155446097, guid: 14321bea8553c044ca4c172f8f356073, type: 3}
+  m_poseInterval: 0.05
+  m_trajectoryTimes: []
+  m_poseJoints: []
+  m_tagNames:
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - Tag 1
+  - DoNotUse
+  - Reserved
+  m_favourTagNames:
+  - Favour Tag 1
+  - Favour Tag 2
+  - Favour Tag 3
+  - Favour Tag 4
+  - Favour Tag 5
+  - Favour Tag 6
+  - Favour Tag 7
+  - Favour Tag 8
+  - Favour Tag 9
+  - Favour Tag 10
+  - Favour Tag 11
+  - Favour Tag 12
+  - Favour Tag 13
+  - Favour Tag 14
+  - Favour Tag 15
+  - Favour Tag 16
+  - Favour Tag 17
+  - Favour Tag 18
+  - Favour Tag 19
+  - Favour Tag 20
+  - Favour Tag 21
+  - Favour Tag 22
+  - Favour Tag 23
+  - Favour Tag 24
+  - Favour Tag 25
+  - Favour Tag 26
+  - Favour Tag 27
+  - Favour Tag 28
+  - Favour Tag 29
+  - Favour Tag 30
+  - Favour Tag 31
+  - Favour Tag 32
+  m_userTagNames:
+  - User Tag 1
+  - User Tag 2
+  - User Tag 3
+  - User Tag 4
+  - User Tag 5
+  - User Tag 6
+  - User Tag 7
+  - User Tag 8
+  - User Tag 9
+  - User Tag 10
+  - User Tag 11
+  - User Tag 12
+  - User Tag 13
+  - User Tag 14
+  - User Tag 15
+  - User Tag 16
+  - User Tag 17
+  - User Tag 18
+  - User Tag 19
+  - User Tag 20
+  - User Tag 21
+  - User Tag 22
+  - User Tag 23
+  - User Tag 24
+  - User Tag 25
+  - User Tag 26
+  - User Tag 27
+  - User Tag 28
+  - User Tag 29
+  - User Tag 30
+  - User Tag 31
+  - User Tag 32
+  m_eventNames: []
+  m_getBonesByName: 0
+  m_lastSaveDirectory: Assets/Plugins/MotionMatching/Custom/MxMAnimDataCustom2
+  m_lastCreatedAnimData: {fileID: 11400000, guid: f41d4006dc2ee5f499f816363fb3b76b, type: 2}
+  m_hideSubAssets: 1
+  m_jointVelocityGlobal: 0
+  m_compositeCategories:
+  - CatagoryName: Composite Category
+    Composites: []
+    IgnoreEdges_default: 0
+    Extrapolate_default: 1
+    FlattenTrajectory_default: 0
+    RuntimeSplicing_default: 0
+    RequireTags_default: 0
+    FavourTags_default: 0
+  m_overrideConfigModule: {fileID: 11400000, guid: 32c1ff2fef3daf043a403372854e968a, type: 2}
+  m_overrideTagModule: {fileID: 11400000, guid: 6b7014982c117a4419587441e184f2a2, type: 2}
+  m_overrideEventModule: {fileID: 11400000, guid: 1e3c70b0e11d14d4c9eaa577f4c3fa44, type: 2}
+  m_animModules:
+  - {fileID: 11400000, guid: db8632e0b0760b948ace3361ba303823, type: 2}
+  - {fileID: 11400000, guid: 5ea4a05c23a41004d88e6843e70e779a, type: 2}
+  - {fileID: 11400000, guid: 64d8a8f31f150bb48829fb293e6646ca, type: 2}
+  m_animIdleSets: []
+  m_blendSpaces: []
+  m_motionTimingPresets: {fileID: 0}
+  m_embedAnimClipsInAnimData: 0
+  m_generateModifiedClipsOnPreProcess: 0
+  m_generalFoldout: 1
+  m_trajectoryFoldout: 0
+  m_poseFoldout: 0
+  m_animationFoldout: 1
+  m_animModuleFoldout: 1
+  m_compositeFoldout: 0
+  m_idleSetFoldout: 0
+  m_blendSpaceFoldout: 0
+  m_metaDataFoldout: 1
+  m_tagsFoldout: 0
+  m_favourTagsFoldout: 0
+  m_userTagsFoldout: 0
+  m_eventsFoldout: 0
+  m_motionTimingFoldout: 1
+  m_preProcessFoldout: 1

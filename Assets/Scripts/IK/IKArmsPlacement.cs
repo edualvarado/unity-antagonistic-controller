@@ -3,9 +3,11 @@
    * Author: Eduardo Alvarado
    * Email: eduardo.alvarado-pinero@polytechnique.edu
    * Date: Created by LIX on 27/01/2021
-   * Project: ** WORKING TITLE **
-   * Last update: 17/03/2022
+   * Project: Generating Upper-Body Motion for Real-Time Characters
+   * Last update: 30/06/2022
 *****************************************************/
+
+// TODO: CHECK THIS SCRIPT WHEN WE HAVE THE WHOLE METHOD
 
 using UnityEngine;
 using System;
@@ -17,14 +19,16 @@ public class IKArmsPlacement : MonoBehaviour
 {
     #region Read-only & Static Fields
 
-    protected Animator animator;
+    protected Animator _anim;
 
     #endregion
 
     #region Instance Fields
 
-    [Header("Arms Placement - Options")]
+    [Header("Arms Placement - Basic")]
     public bool enableArmsIK = false;
+
+    [Header("Arms Placement - Options")]
     [Range(0f, 1f)] public float rightArmWeight;
     [Range(0f, 1f)] public float leftArmWeight;
     public Vector3 rotationOffsetRight;
@@ -49,7 +53,8 @@ public class IKArmsPlacement : MonoBehaviour
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        // Getting components from Inspector
+        _anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -60,24 +65,23 @@ public class IKArmsPlacement : MonoBehaviour
 
     void OnAnimatorIK()
     {
-        if (animator)
+        if (_anim)
         {
             // If the IK is active, set the position and rotation directly to the target 
             if (enableArmsIK)
             {
-                if(safetyRegionLeft.obstacles.Count != 0)
+                if (safetyRegionLeft.obstacles.Count != 0)
                 {
                     //animator.SetLookAtWeight(headWeight);
                     //StartCoroutine(Lerp());
-                    animator.SetLookAtWeight(headWeight);
+                    _anim.SetLookAtWeight(headWeight);
 
-                    animator.SetLookAtPosition(safetyRegionLeft.targetObstacle.location);
+                    _anim.SetLookAtPosition(safetyRegionLeft.targetObstacle.location);
                 }
                 else
                 {
-                    animator.SetLookAtWeight(0f);
+                    _anim.SetLookAtWeight(0f);
                 }
-
 
                 // Set the look target position, if one has been assigned, just the first it encounters
                 //if (rightTarget.target.position != null)
@@ -96,17 +100,17 @@ public class IKArmsPlacement : MonoBehaviour
                 {
                     if(!alwaysZero)
                     {
-                        animator.SetIKPositionWeight(AvatarIKGoal.RightHand, rightArmWeight);
-                        animator.SetIKRotationWeight(AvatarIKGoal.RightHand, rightArmWeight);
-                        animator.SetIKPosition(AvatarIKGoal.RightHand, rightTarget.target.position);
-                        animator.SetIKRotation(AvatarIKGoal.RightHand, rightTarget.target.rotation * Quaternion.Euler(new Vector3(rotationOffsetRight.x, rotationOffsetRight.y, rotationOffsetRight.z))); // TEST
+                        _anim.SetIKPositionWeight(AvatarIKGoal.RightHand, rightArmWeight);
+                        _anim.SetIKRotationWeight(AvatarIKGoal.RightHand, rightArmWeight);
+                        _anim.SetIKPosition(AvatarIKGoal.RightHand, rightTarget.target.position);
+                        _anim.SetIKRotation(AvatarIKGoal.RightHand, rightTarget.target.rotation * Quaternion.Euler(new Vector3(rotationOffsetRight.x, rotationOffsetRight.y, rotationOffsetRight.z))); // TEST
                     }
                     else
                     {
-                        animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0f);
-                        animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 0f);
-                        animator.SetIKPosition(AvatarIKGoal.RightHand, rightTarget.target.position);
-                        animator.SetIKRotation(AvatarIKGoal.RightHand, rightTarget.target.rotation * Quaternion.Euler(new Vector3(rotationOffsetRight.x, rotationOffsetRight.y, rotationOffsetRight.z))); // TEST
+                        _anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0f);
+                        _anim.SetIKRotationWeight(AvatarIKGoal.RightHand, 0f);
+                        _anim.SetIKPosition(AvatarIKGoal.RightHand, rightTarget.target.position);
+                        _anim.SetIKRotation(AvatarIKGoal.RightHand, rightTarget.target.rotation * Quaternion.Euler(new Vector3(rotationOffsetRight.x, rotationOffsetRight.y, rotationOffsetRight.z))); // TEST
                     }
 
                 }
@@ -116,17 +120,17 @@ public class IKArmsPlacement : MonoBehaviour
                 {
                     if(!alwaysZero)
                     {
-                        animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, leftArmWeight);
-                        animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, leftArmWeight);
-                        animator.SetIKPosition(AvatarIKGoal.LeftHand, leftTarget.target.position);
-                        animator.SetIKRotation(AvatarIKGoal.LeftHand, leftTarget.target.rotation * Quaternion.Euler(new Vector3(rotationOffsetLeft.x, rotationOffsetLeft.y, rotationOffsetLeft.z))); // TEST
+                        _anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, leftArmWeight);
+                        _anim.SetIKRotationWeight(AvatarIKGoal.LeftHand, leftArmWeight);
+                        _anim.SetIKPosition(AvatarIKGoal.LeftHand, leftTarget.target.position);
+                        _anim.SetIKRotation(AvatarIKGoal.LeftHand, leftTarget.target.rotation * Quaternion.Euler(new Vector3(rotationOffsetLeft.x, rotationOffsetLeft.y, rotationOffsetLeft.z))); // TEST
                     }
                     else
                     {
-                        animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0f);
-                        animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0f);
-                        animator.SetIKPosition(AvatarIKGoal.LeftHand, leftTarget.target.position);
-                        animator.SetIKRotation(AvatarIKGoal.LeftHand, leftTarget.target.rotation * Quaternion.Euler(new Vector3(rotationOffsetLeft.x, rotationOffsetLeft.y, rotationOffsetLeft.z))); // TEST
+                        _anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0f);
+                        _anim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0f);
+                        _anim.SetIKPosition(AvatarIKGoal.LeftHand, leftTarget.target.position);
+                        _anim.SetIKRotation(AvatarIKGoal.LeftHand, leftTarget.target.rotation * Quaternion.Euler(new Vector3(rotationOffsetLeft.x, rotationOffsetLeft.y, rotationOffsetLeft.z))); // TEST
                     }
 
                 }
@@ -134,25 +138,12 @@ public class IKArmsPlacement : MonoBehaviour
             // If the IK is not active, set the position and rotation of the hand and head back to the original position
             else
             {
-                animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
-                animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
-                animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0);
-                animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0);
-                animator.SetLookAtWeight(0);
+                _anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
+                _anim.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
+                _anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0);
+                _anim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0);
+                _anim.SetLookAtWeight(0);
             }
-        }
-    }
-
-    IEnumerator Lerp()
-    {
-        float timeElapsed = 0;
-        while (timeElapsed < 0.2f)
-        {
-            headWeight = Mathf.Lerp(0, 0.5f, timeElapsed / 0.2f);
-            animator.SetLookAtWeight(headWeight);
-
-            timeElapsed += Time.deltaTime;
-            yield return null;
         }
     }
 
