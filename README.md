@@ -24,7 +24,7 @@ offers precise and explicit control over the character’s behavior and style, w
 
 
 <p align="center">
-  <img src="Docs/Gifs/with-without.gif" width="100%">
+  <img src="Docs/Gifs/with-without.gif" width="75%">
 </p>
 <p align="center"><em>Figure 1: Examples of anticipation and two-ways interactions with different obstacles. Left: Baseline animation. Right: Ours.</em></p>
 
@@ -34,37 +34,37 @@ offers precise and explicit control over the character’s behavior and style, w
 We propose a hybrid character model for upper-body interactions that merges both, a kinematic input animation and lightweight physics. Our anchor system aims to blend both, in a way that is simple for the user to define which limbs are affected by physics during the animation. For example, you can decide that your torso follows the kinematic animation, while the head, or one arm, is fully driven by physics. The decision on which limbs are simulated is driven by the anchor *a* and remains fully dynamic, and can be activated or deactivated at run-time for each body part.
 
 <p align="center">
-  <img src="Docs/Images/interactions-2.jpg" width="100%">
+  <img src="Docs/Images/interactions-2.jpg" width="75%">
 </p>
 <p align="center"><em>Figure 2: Different anchor configurations of our hybrid model.</em></p>
 
 <p align="center">
-  <img src="Docs/Gifs/anchor.gif" width="100%">
+  <img src="Docs/Gifs/anchor.gif" width="75%">
 </p>
 <p align="center"><em>Figure 3: Results of using our hybrid model on an arbitrary animation.</em></p>
 
 Then, our goal is to not only having a passive physical version of the chosen limb, but actuated based. PD controllers are able to convert an angular error to a spring-like force with certain stiffness to do this. However, setting a fixed value of tension though its gains do not allow the skeleton to reach preciselly a target orientation while external torques are applied, such as the effect of weight. On the other hand, changing the gains over time to minimize the error do also change the stiffness, and therefore the style of the motion. For this purpose, we rely on antagonistic controllers. This controllers guarantee to reach an equilibrium at any arbitrary target orientation, while preserving the motion style by decoupling stiffness and position control.
 
 <p align="center">
-  <img src="Docs/Gifs/antagonistic.gif" width="100%">
+  <img src="Docs/Gifs/antagonistic.gif" width="75%">
 </p>
 <p align="center"><em>Figure 4: Actuated physical limb using antagonistric controllers. The target orientation remains unchanged while we modify the amount of muscular tension.</em></p>
 
 In a final step, we need to make the character aware of its surroundings. To leverage our antagonisic control, we now use an anticipation approach based on ray-casting and a set of procedural rules to modify the kinematic skeleton, and consequently driving the active ragdoll skeleton, resulting therefore in a responsive skeleton version of the original key-framed animation.
 
 <p align="center">
-  <img src="Docs/Images/interactions-15.jpg" width="100%">
+  <img src="Docs/Images/interactions-15.jpg" width="75%">
 </p>
 <p align="center"><em>Figure 5: Our anticipation system detects the obstacles in front of the character and collects the metadata from the environment.</em></p>
 
 The anticipation system can be as well use to model a linear relationship between the mass information of the objects coming from the metadata of the environment and the amount of stiffness in our antagonistic control, making gestures stiffer when the character anticipates to act against heavier obstacles, or more relaxed when it acts against elements that it anticipates to be lighter. The set of procedural rules allows us to adapt the reaction time of the character too, based on the object's velocity.
 
 <p align="center">
-  <img src="Docs/Gifs/mass.gif" width="40%">
+  <img src="Docs/Gifs/mass.gif" width="50%">
 &nbsp; &nbsp;
-  <img src="Docs/Gifs/time.gif" width="40%">
+  <img src="Docs/Gifs/time.gif" width="60%">
 </p>
-<p align="center"><em>Figure 4: .</em></p>
+<p align="center"><em>Figure 6: Left: The character adapts its muscular rigidity to interact with heavier obstacles. Right: Effect of changing the reaction time.</em></p>
 
 *For more information about the method and mathematical background behind the approach, please refer to the paper.*
 
