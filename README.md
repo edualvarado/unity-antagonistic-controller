@@ -127,8 +127,10 @@ The repository contains a natural environment containing different dynamic, non-
 </p>
 
 <p align="center">
-  <img src="Docs/Images/interactions-14.jpg" width="40%">
-&nbsp; &nbsp;
+  <img src="Docs/Images/interactions-14.jpg" width="75%">
+</p>
+
+<p align="center">
   <img src="Docs/Images/interactions.jpg" width="40%">
 </p>
 
