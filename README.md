@@ -120,16 +120,16 @@ In the folder `Scenes`, you can find the scene `Terrain Deformation - Showcases`
 <a name="Results"></a>
 ## Results
 
+The repository contains a natural environment containing different dynamic, non-rigid assets that the character can interact with. 
+
 <p align="center">
-  <img src="Docs/Images/terrains.png" width="100%">
+  <img src="Docs/Gifs/rotatingFieldShort.gif" width="75%">
 </p>
 
 <p align="center">
-  <img src="Docs/Gifs/quad.gif" width="60%">
-</p>
-
-<p align="center">
-  <img src="Docs/Gifs/basic-footprints.gif" width="60%">
+  <img src="Docs/Images/interactions-14.jpg" width="40%">
+&nbsp; &nbsp;
+  <img src="Docs/Images/interactions.jpg" width="40%">
 </p>
 
 <a name="Citation"></a>
@@ -137,26 +137,15 @@ In the folder `Scenes`, you can find the scene `Terrain Deformation - Showcases`
 
 ```bibtex
 @article{10.3389/frvir.2022.801856,
-title = {Real-Time Locomotion on Soft Grounds With Dynamic Footprints},
-author = {Alvarado, Eduardo and Paliard, Chloé and Rohmer, Damien and Cani, Marie-Paule},
-doi = {10.3389/FRVIR.2022.801856},
-journal = {Frontiers in Virtual Reality},
-volume = {3},
-pages = {3},
-year = {2022},
-month = {mar},
-copyright = {All rights reserved},
-issn = {2673-4192},
-url = {https://hal.inria.fr/hal-03630136},
-urldate = {2022-04-05}
+title = {TODO},
 }
 ```
 <a name="Links"></a>
 ## Links
 
-- [Project Page](https://edualvarado.com/real-time-locomotion-on-soft-grounds/)
-- [Paper](https://hal.inria.fr/hal-03630136)
-- [Video](https://www.youtube.com/watch?v=aWBntnCOwEE)
+- [Project Page](https://edualvarado.com/generating-upper-body-motion/)
+- [Paper]()
+- [Video]()
 
 <a name="License"></a>
 ## License
