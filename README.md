@@ -102,15 +102,25 @@ Go to `Assets > Scenes > Examples` and open the `Scene - Basic` scene. Click in 
 
 The character is composed of three simultaneous models:
 * **Kinematic**: Contains a state-machine with keyframed motion clips, such as walking or running, and two IK layers: one for the feet and another for the arms.
-* **Ragdoll**: Physically-based model composed of rigid-bodis and antagonistic joints. A master script called `AntagonisticGains` is used to modify the stiffness of the actuated physical model, and can be set manually or automatically by using the metadata.
-* **Interpolated**: Auxiliary model to define the anchor system and blend both, kinematic and ragdoll rigs. The script `SetSkeletons` can be used to define the anchor in the upper-body.
+* **Ragdoll**: Physically-based model composed of rigid-bodies and antagonistic joints. A master script called `AntagonisticGains` is used to modify the stiffness gains at a high-level in the actuated physical model, and they can be set manually or automatically based on external metadata.
+* **Interpolated**: Auxiliary model to define the anchor in our hybrid system and blend both, kinematic and ragdoll rigs. The script `SetSkeletons` can be used to define the anchor in the upper-body.
 
 Each antagonistic controller is defined by a set of gains for each Degree-of-Freedom (DOF):
 * **k_L** and **k_H**: Lower and upper proportional gains of the controller.
 * **I**: Integral gain.
 * **D**: Derivative gain.
 
-Each controller status and stiffness configuration can be defined mathematically by a so-called isoline that represents the current orientation, target orientation and stiffness amount to be used when performing the movement. This isoline is described by the **slope** and **intercept** of the controller. Besides, each of them is contrainst to be rotated within some limits defined by the antagonistic controller, the **min soft limit** and **max soft limit**. This isolines can be displayed by activating the `canvas` in the hierarchy.
+Each controller status and stiffness configuration can be defined mathematically by a so-called isoline, that represents the current orientation, target orientation and stiffness amount to be used when performing the movement. This isoline is described by the `slope` and `intercept` of the controller. Besides, each of them is constraint to be rotated within some angular limits defined by the antagonistic controller, `min soft limit` and `max soft limit`. These isolines can be displayed in real-time by activating the `canvas` in the hierarchy.
+
+<p align="center">
+  <img src="Docs/Images/isoline-15.jpg" width="85%">
+</p>
+
+Two main elements are affected by the set of procedural rules, the **mass** and **velocity** of the obstacle. A summary of the internal and external parameters, along with a definition and description of how they affect the motion is shown below:
+
+<p align="center">
+  <img src="Docs/Images/table.jpg" width="85%">
+</p>
 
 *For more information about the procedural rules to modify the character's behaviour, please refer to the paper.*
 
