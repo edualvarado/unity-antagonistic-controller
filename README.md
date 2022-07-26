@@ -131,7 +131,7 @@ The repository contains a natural environment containing different dynamic, non-
 </p>
 
 <p align="center">
-  <img src="Docs/Images/interactions.jpg" width="40%">
+  <img src="Docs/Images/interactions.jpg" width="75%">
 </p>
 
 <a name="Citation"></a>
