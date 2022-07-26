@@ -60,7 +60,7 @@ In a final step, we need to make the character aware of its surroundings. To lev
 The anticipation system can be as well use to model a linear relationship between the mass information of the objects coming from the metadata of the environment and the amount of stiffness in our antagonistic control, making gestures stiffer when the character anticipates to act against heavier obstacles, or more relaxed when it acts against elements that it anticipates to be lighter. The set of procedural rules allows us to adapt the reaction time of the character too, based on the object's velocity.
 
 <p align="center">
-  <img src="Docs/Gifs/mass.gif" width="45%">
+  <img src="Docs/Gifs/mass.gif" width="43%">
 &nbsp; &nbsp;
   <img src="Docs/Gifs/time.gif" width="50%">
 </p>
