@@ -131,15 +131,15 @@ The repository contains a natural environment containing different dynamic, non-
 </p>
 
 <p align="center">
-  <img src="Docs/Gifs/interactions-9.jpg" width="40%">
+  <img src="Docs/Images/interactions-9.jpg" width="40%">
 &nbsp; &nbsp;
-  <img src="Docs/Gifs/interactions-10.jpg" width="40%">
+  <img src="Docs/Images/interactions-10.jpg" width="40%">
 </p>
 
 <p align="center">
-  <img src="Docs/Gifs/interactions-11.jpg" width="40%">
+  <img src="Docs/Images/interactions-11.jpg" width="40%">
 &nbsp; &nbsp;
-  <img src="Docs/Gifs/interactions-12.jpg" width="40%">
+  <img src="Docs/Images/interactions-12.jpg" width="40%">
 </p>
 
 <a name="Citation"></a>
