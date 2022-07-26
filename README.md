@@ -62,7 +62,7 @@ The anticipation system can be as well use to model a linear relationship betwee
 <p align="center">
   <img src="Docs/Gifs/mass.gif" width="45%">
 &nbsp; &nbsp;
-  <img src="Docs/Gifs/time.gif" width="55%">
+  <img src="Docs/Gifs/time.gif" width="50%">
 </p>
 <p align="center"><em>Figure 6: Left: The character adapts its muscular rigidity to interact with heavier obstacles. Right: Effect of changing the reaction time.</em></p>
 
