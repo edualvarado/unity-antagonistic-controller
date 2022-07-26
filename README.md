@@ -113,7 +113,7 @@ Each antagonistic controller is defined by a set of gains for each Degree-of-Fre
 Each controller status and stiffness configuration can be defined mathematically by a so-called isoline, that represents the current orientation, target orientation and stiffness amount to be used when performing the movement. This isoline is described by the `slope` and `intercept` of the controller. Besides, each of them is constraint to be rotated within some angular limits defined by the antagonistic controller, `min soft limit` and `max soft limit`. These isolines can be displayed in real-time by activating the `canvas` in the hierarchy.
 
 <p align="center">
-  <img src="Docs/Images/isoline.jpg" width="85%">
+  <img src="Docs/Images/isolines.jpg" width="85%">
 </p>
 
 Two main elements are affected by the set of procedural rules, the **mass** and **velocity** of the obstacle. A summary of the internal and external parameters, along with a definition and description of how they affect the motion is shown below:
