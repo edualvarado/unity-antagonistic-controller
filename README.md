@@ -1,10 +1,10 @@
-# Generating Upper-Body Motion for Real-Time Characters Making theirWay through Dynamic Environments
+# Generating Upper-Body Motion for Real-Time Characters Making their Way through Dynamic Environments
 
 ![teaser](Docs/Images/interactions-1.jpg)
 
-- [Generating Upper-Body Motion for Real-Time Characters Making theirWay through Dynamic Environments](#generating-upper-body-motion-for-real-time-characters-making-theirway-through-dynamic-environments)
+- [Generating Upper-Body Motion for Real-Time Characters Making their Way through Dynamic Environments](#generating-upper-body-motion-for-real-time-characters-making-their-way-through-dynamic-environments)
   - [Introduction](#introduction)
-  - [Real-time Terrain Deformation](#real-time-terrain-deformation)
+  - [Generating Upper-Body Motion for Real-Time](#generating-upper-body-motion-for-real-time)
   - [Instructions](#instructions)
   - [Results](#results)
   - [Citation](#citation)
@@ -15,7 +15,7 @@
 <a name="Introduction"></a>
 ## Introduction
 
-This repository provides the codes used to reproduce the results shown in the following paper: **Generating Upper-Body Motion for Real-Time Characters Making theirWay through Dynamic Environments**. Eduardo Alvarado, Damien Rohmer, Marie-Paule Cani.
+This repository provides the codes used to reproduce the results shown in the following paper: **Generating Upper-Body Motion for Real-Time Characters Making their Way through Dynamic Environments**. Eduardo Alvarado, Damien Rohmer, Marie-Paule Cani.
 
 This system takes as input a character model, ie. a mesh geometry with a rigged skeleton being animated by an arbitrary kinematic animations (e.g., keyframed clip, MoCap data) in order to build a responsive, partial physically-based version of the input skeleton. This real-time model allows to genereate plausible upper-body interactions from single motion clips, regardless of the nature of the environment, including non-rigid obstacles such as vegetation.
 
@@ -26,34 +26,49 @@ offers precise and explicit control over the character’s behavior and style, w
 <p align="center">
   <img src="Docs/Gifs/with-without.gif" width="100%">
 </p>
-<p align="center"><em>Figure 1: Left: Baseline animation. Right: Ours.</em></p>
-
-<p align="center">
-  <img src="Docs/Gifs/bananas-interactions.gif" width="40%">
-&nbsp; &nbsp;
-  <img src="Docs/Gifs/flowers-interactions.gif" width="40%">
-</p>
-
-<p align="center">
-  <img src="Docs/Gifs/lianas-interactions.gif" width="40%">
-&nbsp; &nbsp;
-  <img src="Docs/Gifs/plants-interactions.gif" width="40%">
-</p>
-<p align="center"><em>Figure 2: Examples of anticipation and two-ways interactions with different obstacles.</em></p>
+<p align="center"><em>Figure 1: Examples of anticipation and two-ways interactions with different obstacles. Left: Baseline animation. Right: Ours.</em></p>
 
 <a name="steps"></a>
-## Real-time Terrain Deformation
+## Generating Upper-Body Motion for Real-Time
 
-We propose a model for the forces that the character applies to the ground when its feet are in contact with it, based on its kinematics and the nature of the ground. The resulting interaction forces over time are used to compute a plausible ground deformation.
-
-The static forces that the model exerts on the ground are estimated based on the character's mass *m*, the contact area between the feet and the ground and the balance described by the contribution of each foot to the character's weight. In addition, a dynamic force model during contact takes into consideration the force that each foot generates due to its change of momentum when it lands into the ground with certain velocity. In order to define the time needed for the character to be fully stopped by a given type of terrain, we introduce an external parameter called the *characteristic time τ*. Therefore, a given forward kinematics motion provided as input can be associated to different forces, ie. a large magnitude of momentum force on a hard terrain with small *τ* value, and small force magnitude with long effect on a soft terrain with large *τ*.
+We propose a hybrid character model for upper-body interactions that merges both, a kinematic input animation and lightweight physics. Our anchor system aims to blend both, in a way that is simple for the user to define which limbs are affected by physics during the animation. For example, you can decide that your torso follows the kinematic animation, while the head, or one arm, is fully driven by physics. The decision on which limbs are simulated is driven by the anchor *a* and remains fully dynamic, and can be activated or deactivated at run-time for each body part.
 
 <p align="center">
-  <img src="Docs/Images/forces.png" width="100%">
+  <img src="Docs/Images/interactions-2.gif" width="100%">
 </p>
-<p align="center"><em>Figure 2: Forces generated during the kinematic motion. Blue: weight - Red: momentum forces - Black: foot-to-ground forces.</em></p>
+<p align="center"><em>Figure 2: .</em></p>
 
-Finally, we use a linear plastic model for terrain compression along with a ray-casting method to map the estimated forces into the respective ground deformation. Parameters such as the Young Modulus of Elasticity *E* or Poisson ratio *ν* can be modified to change the behavior of the terrain under deformation.
+<p align="center">
+  <img src="Docs/Gifs/anchor.gif" width="100%">
+</p>
+<p align="center"><em>Figure 3: .</em></p>
+
+Then, our goal is to not only having a passive physical version of the chosen limb, but actuated based. PD controllers are able to convert an angular error to a spring-like force with certain stiffness to do this. However, setting a fixed value of tension though its gains do not allow the skeleton to reach preciselly a target orientation while external torques are applied, such as the effect of weight. On the other hand, changing the gains over time to minimize the error do also change the stiffness, and therefore the style of the motion. For this purpose, we rely on antagonistic controllers. This controllers guarantee to reach an equilibrium at any arbitrary target orientation, while preserving the motion style by decoupling stiffness and position control.
+
+<p align="center">
+  <img src="Docs/Images/antagonistic.gif" width="100%">
+</p>
+<p align="center"><em>Figure 4: .</em></p>
+
+In a final step, we need to make the character aware of its surroundings. To leverage our antagonisic control, we now use an anticipation approach based on ray-casting and a set of procedural rules to modify the kinematic skeleton, and consequently driving the active ragdoll skeleton, resulting therefore in a responsive skeleton version of the original key-framed animation.
+
+<p align="center">
+  <img src="Docs/Images/interactions-4.jpg" width="40%">
+&nbsp; &nbsp;
+  <img src="Docs/Images/interactions-15.jpg" width="40%">
+</p>
+
+The anticipation system can be as well use to model a linear relationship between the mass information of the objects coming from the metadata of the environment and the amount of stiffness in our antagonistic control, making gestures stiffer when the character anticipates to act against heavier obstacles, or more relaxed when it acts against elements that it anticipates to be lighter. The set of procedural rules allows us to adapt the reaction time of the character too, based on the object's velocity.
+
+<p align="center">
+  <img src="Docs/Gifs/mass.gif" width="100%">
+</p>
+<p align="center"><em>Figure 4: .</em></p>
+
+<p align="center">
+  <img src="Docs/Gifs/time.gif" width="100%">
+</p>
+<p align="center"><em>Figure 4: .</em></p>
 
 *For more information about the method and mathematical background behind the approach, please refer to the paper.*
 
