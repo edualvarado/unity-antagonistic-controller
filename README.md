@@ -127,7 +127,7 @@ Two main elements are affected by the set of procedural rules, the **mass** and 
 <a name="Results"></a>
 ## Results
 
-The repository contains a natural environment containing different dynamic, non-rigid assets that the character can interact with. 
+The repository contains a natural environment in the scene `Scene - Outdoor Environment` containing different dynamic, non-rigid assets that the character can interact with. 
 
 <p align="center">
   <img src="Docs/Gifs/rotatingFieldShort.gif" width="75%">
