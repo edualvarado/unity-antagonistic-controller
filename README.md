@@ -153,7 +153,7 @@ The repository contains a natural environment containing different dynamic, non-
 ## Citation
 
 ```bibtex
-@article{10.3389/frvir.2022.801856,
+@article{,
 title = {TODO},
 }
 ```
