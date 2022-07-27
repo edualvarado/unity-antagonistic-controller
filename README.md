@@ -2,15 +2,13 @@
 
 ![teaser](Docs/Images/interactions-1.jpg)
 
-- [Generating Upper-Body Motion for Real-Time Characters Making their Way through Dynamic Environments](#generating-upper-body-motion-for-real-time-characters-making-their-way-through-dynamic-environments)
-  - [Introduction](#introduction)
-  - [Generating Upper-Body Motion for Real-Time](#generating-upper-body-motion-for-real-time)
-  - [Instructions](#instructions)
-  - [Results](#results)
-  - [Citation](#citation)
-  - [Links](#links)
-  - [License](#license)
-
+- [Introduction](#introduction)
+- [Generating Upper-Body Motion for Real-Time](#generating-upper-body-motion-for-real-time)
+- [Instructions](#instructions)
+- [Results](#results)
+- [Citation](#citation)
+- [Links](#links)
+- [License](#license)
 
 <a name="Introduction"></a>
 ## Introduction
