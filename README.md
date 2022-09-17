@@ -151,16 +151,22 @@ The repository contains a natural environment in the scene `Scene - Outdoor Envi
 ## Citation
 
 ```bibtex
-@article{,
-title = {TODO},
+@article {10.1111:cgf.14633,
+journal = {Computer Graphics Forum},
+title = {{Generating Upper-Body Motion for Real-Time Characters Making their Way through Dynamic Environments}},
+author = {Alvarado, Eduardo and Rohmer, Damien and Cani, Marie-Paule},
+year = {2022},
+publisher = {The Eurographics Association and John Wiley & Sons Ltd.},
+ISSN = {1467-8659},
+DOI = {10.1111/cgf.14633}
 }
 ```
 <a name="Links"></a>
 ## Links
 
 - [Project Page](https://edualvarado.com/generating-upper-body-motion/)
-- [Paper]()
-- [Video]()
+- [Paper](https://hal.inria.fr/hal-03757439v1)
+- [Video](https://youtu.be/dq4FJH1atWM)
 
 <a name="License"></a>
 ## License
